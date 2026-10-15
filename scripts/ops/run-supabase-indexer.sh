@@ -27,7 +27,8 @@ const out = {
   SUPABASE_URL: `https://${ref}.supabase.co`,
   DATABASE_URL: `postgresql://postgres.${ref}:${encodeURIComponent(pw)}@${host}:5432/postgres`,
   DATABASE_SSL_CA_PATH: "data/certificates/supabase-ca.crt",
-  DATABASE_SSL_CA_SHA256: e.DATABASE_SSL_CA_SHA256,
+  // Pin of data/certificates/supabase-ca.crt (Supabase Root 2021 CA, valid to 2031-04-26); checked against the live pooler chain.
+  DATABASE_SSL_CA_SHA256: "807025ad50d4ed219d2c9c7d299c004f824eb00cf7f65afef607d07b72e6cafa",
   INDEXER_POLICY_JSON: JSON.stringify({ confirmations: 2, batchBlocks: 500, maxBatches: 40, pollIntervalMs: 15000 }),
   INDEXER_MARKETS_JSON: JSON.stringify([
     { symbol: "TSLA", side: "long", startBlock: "135836548", deployment: JSON.parse(e.LENDING_DEPLOYMENT_JSON) },
