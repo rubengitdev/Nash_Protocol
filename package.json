@@ -81,7 +81,9 @@
     "rh:gas:reconcile": "node --import tsx scripts/reconcile-rh-gas.mjs .env.testnet",
     "test:market-expansion": "node --import tsx --test tests/rh-expansion.test.mjs",
     "rh:prices:status": "node --import tsx scripts/check-reference-prices.mjs apps/web/.env",
-    "rh:prices:runtime": "node --import tsx scripts/check-reference-prices.mjs --runtime"
+    "rh:prices:runtime": "node --import tsx scripts/check-reference-prices.mjs --runtime",
+    "testnet:verify": "node scripts/check-testnet-verified.mjs",
+    "testnet:verify:publish": "node scripts/verify-testnet-sources.mjs"
   },
   "devDependencies": {
     "concurrently": "^10.0.5",
