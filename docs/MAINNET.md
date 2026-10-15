@@ -104,7 +104,7 @@ All markets (TSLA, AMZN, PLTR, AMD; long and short each) are NORMAL at micro siz
 | Uniswap V2 factory (reused, v1) | `0xF3e3F49BCF467FC2b710ab9997AF53aA0f1cED02` | n/a |
 | Protocol owner, deployer and keeper (one wallet) | `0xd09D9c87ECfe008B4D6D3cEbeAd25103c16d9a7C` | n/a |
 
-Source verification on the explorer is incomplete: Sourcify matched only part of the set on 2026-10-16 (see the run output of `node scripts/verify-rh-mainnet-sources.mjs`); the Blockscout mainnet API sits behind a bot challenge, so `forge verify-contract` could not be used from a script. Retry later or verify from a browser session.
+Source verification: `node scripts/verify-rh-mainnet-sources.mjs` matched **28 of 28** Nash contracts on Sourcify on 2026-10-16 (the first attempt matched only 4 and the second all 28, so Sourcify is intermittent: rerun it if a later check shows gaps). Blockscout shows Sourcify matches on each address page. The Blockscout mainnet API sits behind a bot challenge, so `forge verify-contract` cannot be scripted against it. The deployment record files live on the `mainnet` branch; check it out to run the mainnet scripts.
 
 ## 4. Emergency runbook
 
