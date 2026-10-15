@@ -84,19 +84,27 @@ Mainnet markets launch capped at 1.5× leverage.
 
 Watch logs, HTTP error rate, publisher heartbeat, keeper actions and oracle freshness. Review caps at 24 h and 72 h; raise only by a transaction from the project wallet.
 
-## 3. Address registry (fill from verified receipts only)
+## 3. Address registry
 
-| Contract | Address | Verified |
+Deployed 2026-10-16 from the project wallet. The machine-readable record is `packages/contracts/deployments/mainnet-4663.json`; the reused Uniswap V2 factory and pools are in `mainnet-4663-v1.json`. Status: 45 deployment transactions (nonce 887 to 931) and 32 market-opening transactions confirmed; `deploy-rh-mainnet-full.mjs --verify` and `enable-rh-mainnet-markets.mjs --verify` pass. Cost: 0.000492 ETH for the deployment (the dry run predicted 0.00049), 0.001532 ETH for the seed tokens, about 0.00003 ETH for opening the markets.
+
+All markets (TSLA, AMZN, PLTR, AMD; long and short each) are NORMAL at micro size (0.25 USDG into each long pair, 0.001 stock into each short pair; caps are the micro caps). The reused pools already held liquidity, so the pool-seeding step was skipped. LeverageRouter, ShortRouter, AutoProtect and the vault are still paused. Application flags (`TRADING_ENABLED`, `LENDING_ENABLED`, `MARGIN_TRADING_ENABLED`) are `false`.
+
+| Contract | Address (proxy) | Implementation |
 | :--- | :--- | :--- |
-| NashMarketRegistry | | |
-| NashRouter | | |
-| AutoProtectModule | | |
-| ShortRouter | | |
-| NashVault | | |
-| Oracle (VerifiedFeedOracle / CompositeSanityOracle) | | |
-| NashPair per market | | |
-| LeverageRouter / MarginRouter | | |
+| NashMarketRegistry | `0x62Ec9001F335A18C4eB8F4560419F2C52508419c` | `0xEeAF61F01905B96E2B018Dd497cc63644D04eCf1` |
+| NashRouter (lending) | `0x11d08d677DB43Ab5E551DDA89604421D3f236e27` | `0xDB5813fFB2fd0a62Bfb338F8773174ce75a43A97` |
+| AutoProtectModule | `0xfF1b47c5F081eD41221d93a7CFE70deCA0C9d52D` | `0x18079c12DEd8d8444917cc11753a58cD53109a03` |
+| ShortRouter | `0xBc00dB2b2a0131C6eC4DEa2dD9CcbAF543f1201E` | `0xf381dFF97E591B987B3668674E5dBBadff7eA2Ce` |
+| NashVault | `0xA29A58864C48112d5373C9e18E89Ec568b5Ea58c` | `0xE8464d9266ec2E137528cb95991046EccA5dbf7C` |
+| LeverageRouter | `0x8125aa942B5720505CB0DbeFe9E9873AAbD39aEA` | `0x15046C7457f81a198C4973B18293e68407682115` |
+| VerifiedFeedOracle | `0x117c0383422aB1D47DBDB612eF3E4FE10c5B7B08` | `0x1374493f701846843d7B40BFA7887ae4B32EB5c8` |
+| NashPair (shared implementation) | see the record, one proxy per market and side | `0xb9bbbEE335CE264135c19fFd82e17BCEd1061453` |
+| MarginRouter (shared implementation) | see the record, one proxy per market | `0x6a5AD84EeA6271889F01dA5a6D84d6807849943E` |
+| Uniswap V2 factory (reused, v1) | `0xF3e3F49BCF467FC2b710ab9997AF53aA0f1cED02` | n/a |
 | Protocol owner, deployer and keeper (one wallet) | `0xd09D9c87ECfe008B4D6D3cEbeAd25103c16d9a7C` | n/a |
+
+Source verification on the explorer is incomplete: Sourcify matched only part of the set on 2026-10-16 (see the run output of `node scripts/verify-rh-mainnet-sources.mjs`); the Blockscout mainnet API sits behind a bot challenge, so `forge verify-contract` could not be used from a script. Retry later or verify from a browser session.
 
 ## 4. Emergency runbook
 

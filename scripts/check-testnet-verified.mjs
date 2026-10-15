@@ -6,6 +6,7 @@
 // address is published and verified. Ends with the list of contracts and their explorer URLs.
 //
 // Built to be screen-recorded: one clear step at a time, plain-English captions, no secrets.
+// Nothing it prints reveals where the repo lives on your machine: file locations are shown by file name only.
 //
 // Usage:  node scripts/check-testnet-verified.mjs [--fast] [--plain] [--record <file>]
 //   --fast    no pauses between lines (CI or a quick look)
@@ -15,6 +16,7 @@
 // Exit code: 0 when every contract is verified, 1 otherwise.
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
+import { basename } from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
 
 const args = process.argv.slice(2);
@@ -40,16 +42,17 @@ const LINE = (PLAIN ? "-" : "─").repeat(78);
 const pause = (ms) => (FAST ? Promise.resolve() : sleep(ms));
 const out = (s = "") => console.log(s);
 const short = (a) => `${a.slice(0, 6)}…${a.slice(-4)}`.replace("…", PLAIN ? ".." : "…");
+const shownFile = (p) => basename(p); // never print a directory: it would expose the local working path
 const url = (a) => `${EXPLORER}/address/${a}?tab=contract`;
 
 // ---- deployment record -----------------------------------------------------------------------
 function loadRecord() {
-  if (existsSync(RECORD_PATH)) return { json: JSON.parse(readFileSync(RECORD_PATH, "utf8")), source: RECORD_PATH };
+  if (existsSync(RECORD_PATH)) return { json: JSON.parse(readFileSync(RECORD_PATH, "utf8")), source: shownFile(RECORD_PATH) };
   try {
     const text = execFileSync("git", ["show", `testnet:${RECORD_PATH}`], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] });
-    return { json: JSON.parse(text), source: `branch testnet:${RECORD_PATH}` };
+    return { json: JSON.parse(text), source: `branch testnet:${shownFile(RECORD_PATH)}` };
   } catch {
-    console.error(`Cannot find the deployment record (${RECORD_PATH}). Check out the testnet branch or pass --record <file>.`);
+    console.error(`Cannot find the deployment record (${shownFile(RECORD_PATH)}). Check out the testnet branch or pass --record <file>.`);
     process.exit(2);
   }
 }
@@ -139,6 +142,14 @@ async function explorerStatus(address) {
     verifiedAt: j.verified_at ?? null,
   };
 }
+
+// An unexpected error would otherwise print a stack trace full of absolute local paths.
+const fail = (e) => {
+  console.error(`Unexpected error: ${e?.message ?? e}`);
+  process.exit(2);
+};
+process.on("uncaughtException", fail);
+process.on("unhandledRejection", fail);
 
 // ---- run -------------------------------------------------------------------------------------
 const { json: rec, source } = loadRecord();

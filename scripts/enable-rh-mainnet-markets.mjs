@@ -124,9 +124,12 @@ function buildOperations(record, config, poolStock, deadline) {
     call(`${s}-caps-short`, a.registry, registryAbi, "updateCaps", [ids.shortMarketId, CAPS.short.supply, CAPS.short.borrow]);
     call(`${s}-fund-long`, usdg, v.erc20Abi, "transfer", [a[`long-${s}`], LONG_DEBT_LIQUIDITY]);
     call(`${s}-fund-short`, m.token, v.erc20Abi, "transfer", [a[`short-${s}`], SHORT_STOCK_LIQUIDITY]);
-    call(`${s}-approve-stock`, m.token, v.erc20Abi, "approve", [router, poolStock[m.symbol]]);
-    call(`${s}-approve-usdg`, usdg, v.erc20Abi, "approve", [router, POOL_USDG]);
-    call(`${s}-seed-pool`, router, marginAbi, "seedLiquidity", [poolStock[m.symbol], POOL_USDG, 1n, deadline]);
+    // poolStock is 0 when the reused Uniswap V2 pool already holds liquidity: seedLiquidity only accepts an empty pool.
+    if (poolStock[m.symbol] > 0n) {
+      call(`${s}-approve-stock`, m.token, v.erc20Abi, "approve", [router, poolStock[m.symbol]]);
+      call(`${s}-approve-usdg`, usdg, v.erc20Abi, "approve", [router, POOL_USDG]);
+      call(`${s}-seed-pool`, router, marginAbi, "seedLiquidity", [poolStock[m.symbol], POOL_USDG, 1n, deadline]);
+    }
     call(`${s}-authorize-router`, a.registry, registryAbi, "setAuthorizedRouter", [router, true]);
     call(`${s}-unpause-router`, router, marginAbi, "setPaused", [false]);
     call(`${s}-open-long`, a.registry, registryAbi, "setMarketStatus", [ids.longMarketId, STATUS_NORMAL]);
@@ -138,7 +141,7 @@ function buildOperations(record, config, poolStock, deadline) {
 function requiredFunds(config, poolStock) {
   const need = { USDG: 0n };
   for (const m of config.markets) {
-    need.USDG += LONG_DEBT_LIQUIDITY + POOL_USDG;
+    need.USDG += LONG_DEBT_LIQUIDITY + (poolStock[m.symbol] > 0n ? POOL_USDG : 0n);
     need[m.symbol] = SHORT_STOCK_LIQUIDITY + poolStock[m.symbol];
   }
   return need;
@@ -255,8 +258,10 @@ try {
     for (const m of config.markets) {
       const price = await main.client.readContract({ address: record.addresses.oracle, abi: oracleAbi, functionName: "getPrice", args: [m.token] });
       prices[m.symbol] = price;
-      // Same USD value as POOL_USDG (6 decimals), converted at the oracle price (18 decimals).
-      poolStock[m.symbol] = (POOL_USDG * 10n ** 12n * 10n ** BigInt(m.decimals)) / price;
+      // A pool that already holds liquidity (the reused v1 pools do) cannot be seeded again and needs no seed.
+      const [seededStock, seededUsdg] = await main.client.readContract({ address: record.addresses[`margin-${m.symbol.toLowerCase()}`], abi: marginAbi, functionName: "reserves" });
+      // Otherwise: same USD value as POOL_USDG (6 decimals), converted at the oracle price (18 decimals).
+      poolStock[m.symbol] = seededStock > 0n || seededUsdg > 0n ? 0n : (POOL_USDG * 10n ** 12n * 10n ** BigInt(m.decimals)) / price;
     }
     const need = requiredFunds(config, poolStock);
     const have = await balances(main.client, config, account.address);
