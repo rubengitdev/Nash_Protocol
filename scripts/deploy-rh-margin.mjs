@@ -11,6 +11,7 @@ import {
   json,
   save,
   submit,
+  deployProxy,
   verifyRuntime,
   verifyBinding,
   updateEnv,
@@ -90,6 +91,21 @@ try {
     ctx.persist();
     console.log(json({ role, address: m[role], verified: true }));
   }
+  // Upgradeable contracts: implementation plus an initialized ERC1967 proxy, journaled like any other deploy.
+  async function deployUpgradeable(role, name, initArgs) {
+    if (!m[role]) {
+      const result = await deployProxy(ctx, role, name, initArgs, (stage) =>
+        stage.replace(/^deploy-/, "margin-v1-deploy-"),
+      );
+      m[role] = result.address;
+      m[`${role}Implementation`] = result.implementation;
+      ctx.persist();
+    }
+    await verifyRuntime(client, m[role], name);
+    m[`${role}CodeHash`] = v.keccak256(await client.getCode({ address: m[role] }));
+    ctx.persist();
+    console.log(json({ role, address: m[role], verified: true }));
+  }
   await deploy("factory", "UniswapV2Factory", [deployer.address], true);
   const factory = raw("UniswapV2Factory"),
     poolArtifact = raw("UniswapV2Pair");
@@ -132,7 +148,7 @@ try {
       [plan.shortSlug, d.debt, d.collateral],
     ),
   );
-  await deploy("shortPair", "NashPair", [
+  await deployUpgradeable("shortPair", "NashPair", [
     shortId,
     d.debt,
     d.collateral,
@@ -185,7 +201,7 @@ try {
     BigInt(plan.shortLiquidationLtvBps),
     BigInt(plan.shortMaxLeverageBps),
   ]);
-  await deploy("router", "MarginRouter", [
+  await deployUpgradeable("router", "MarginRouter", [
     d.collateral,
     d.debt,
     d.pair,

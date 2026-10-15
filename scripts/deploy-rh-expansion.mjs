@@ -10,6 +10,7 @@ import {
   json,
   save,
   submit,
+  deployProxy,
   verifyRuntime,
   verifyBinding,
   updateEnv,
@@ -199,10 +200,14 @@ try {
     "USDG_FUNDING_REQUIRED",
   );
   ctx.persist();
+  // Upgradeable Nash contracts are deployed as an implementation plus an initialized ERC1967 proxy.
+  const UPGRADEABLE = new Set(["NashPair", "MarginRouter"]);
   async function deploy(role, name, args) {
-    const receipt = await submit(ctx, id(`deploy-${role}`), deployer, {
-      data: v.encodeDeployData({ ...artifact(name), args }),
-    });
+    const receipt = UPGRADEABLE.has(name)
+      ? (await deployProxy(ctx, role, name, args, id)).receipt
+      : await submit(ctx, id(`deploy-${role}`), deployer, {
+          data: v.encodeDeployData({ ...artifact(name), args }),
+        });
     assert(receipt.contractAddress, "DEPLOYED_ADDRESS_MISSING");
     assert(
       !entry.contracts[role] ||

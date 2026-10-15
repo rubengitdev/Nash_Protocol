@@ -11,7 +11,7 @@ The relaunch keeps the product exactly as it was. What changed is the name, the 
 | Solidity contracts | `LevierPair`, `LevierRouter`, `LevierMarketRegistry`, `LevierVault`, `LevierProxies`, `DeployLevier` | `NashPair`, `NashRouter`, `NashMarketRegistry`, `NashVault`, `NashProxies`, `DeployNash` (files renamed, 152 tests still green) |
 | Vault share tokens | `lvUSDG`, `lvUSD` | `nUSDG`, `nUSD` |
 | Market and vault slugs | `levier-tsla-usdg-mainnet` ... | `nash-tsla-usdg-mainnet` ... |
-| Env | `MAINNET_LEVIER_VAULT_ADDRESS`; JSON key `levierVault` | `MAINNET_NASH_VAULT_ADDRESS`; `nashVault` |
+| Env | `MAINNET_LEVIER_VAULT_ADDRESS`; `PROTOCOL_ADDRESSES` keys `levierRouter`, `levierVault` | `MAINNET_NASH_VAULT_ADDRESS`; `nashRouter`, `nashVault` |
 | Hooks | `useLevierMarkets`, `useLevierVault`, `useLevierPortfolio` | `useNash*` |
 | CLI | `scripts/levier` (`levier testnet ...`) | `scripts/nash` (`pnpm nash testnet ...`) |
 | Visual identity | Acid lime on olive-black; Inter, Tomorrow, Fraunces | Navy, emerald, silver, white; Newsreader, Montserrat, JetBrains Mono, Caveat ([`BRAND.md`](BRAND.md)) |
@@ -20,6 +20,7 @@ The relaunch keeps the product exactly as it was. What changed is the name, the 
 | Hosted URLs in scripts | Hard-coded Levier Railway site and Levier contract addresses | `NASH_TESTNET_SITE`, and addresses read from `.env.testnet` |
 | Seed data | Fictional markets incl. META, AAPL, GOOGL, SPY; mainnet rows with invented TVL | Local-only fixture limited to the 5 catalog assets, testnet only |
 | Docs | Old plan with Levier project ids, URLs and deployer address | Rewritten without any of them |
+| Testnet deploy pipeline | Deployed registry, router and pairs with v1 constructor arguments, which the upgradeable contracts reject | Deploys implementation plus an initialized ERC1967 proxy; `verifyRuntime` is proxy-aware; stage hand-offs scripted (`scripts/testnet-glue.mjs`). Rehearsed on a fork ([`TESTNET.md`](TESTNET.md)) |
 
 Also fixed along the way: comparison table named assets (AAPL, SPY) that are not in the catalog; a competitor liquidation-penalty range that could not be sourced was removed; leverage claims follow the network (2.5× testnet, 1.5× mainnet at launch).
 
@@ -33,13 +34,13 @@ Also fixed along the way: comparison table named assets (AAPL, SPY) that are not
 
 ## Reusing a Levier env file
 
-The web validates its environment strictly, so a Levier `.env.testnet` fails on the renamed `levierVault` key. Convert it:
+The web validates its environment strictly, so a Levier `.env.testnet` fails on the renamed `levierRouter` and `levierVault` keys. Convert it:
 
 ```bash
 node scripts/migrate-levier-env.mjs ../levier/.env.testnet .env.testnet
 ```
 
-Only the key and variable above are renamed; addresses, slugs and secrets are copied unchanged. Note that doing this points the app at Levier-era contracts. For a real relaunch, deploy Nash contracts ([`TESTNET.md`](TESTNET.md)).
+Only the keys and variable above are renamed; addresses, slugs and secrets are copied unchanged. Note that doing this points the app at Levier-era contracts. For a real relaunch, deploy Nash contracts ([`TESTNET.md`](TESTNET.md)).
 
 ## Decisions
 
@@ -61,4 +62,5 @@ Still open:
 
 - Root `test:*` scripts point at a `tests/` directory that was git-ignored in the Levier repository and is missing here.
 - `scripts/deploy-rh-lending.mjs` refuses to broadcast by design; testnet deployment goes through `scripts/rh-live.mjs` and its approval gates.
+- `pnpm prepare:rh-suite` and `pnpm simulate:rh-modules` still estimate module deployment from v1 constructor data; they are optional and not part of the rehearsed flow.
 - Analytics, Pons markets and wallet writes need a deployment and an indexer; see [`LOCALHOST.md`](LOCALHOST.md).

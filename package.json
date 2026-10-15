@@ -52,6 +52,7 @@
     "rh:publisher:serve": "node --import tsx scripts/run-rh-publisher.mjs --serve .env.testnet",
     "test:publisher": "node --import tsx --test tests/rh-publisher.test.mjs",
     "rh:lending:status": "node --import tsx scripts/check-rh-lending.mjs .env.testnet",
+    "rh:glue": "node scripts/testnet-glue.mjs",
     "rh:indexer:migrate": "node --import tsx scripts/run-rh-indexer.mjs --migrate .env.testnet",
     "rh:indexer:sync": "node --import tsx scripts/run-rh-indexer.mjs --sync .env.testnet",
     "rh:indexer:serve": "node --import tsx scripts/run-rh-indexer.mjs --serve .env.testnet",
