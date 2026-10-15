@@ -292,7 +292,7 @@ export function TradePanel({
           <button
             onClick={() => setPositionType("LONG")}
             className={`py-3 rounded-sm transition-all ${
-              isLong ? "bg-brand text-white" : "text-muted hover:text-white"
+              isLong ? "bg-go text-black" : "text-muted hover:text-white"
             }`}
           >
             LONG
@@ -385,7 +385,7 @@ export function TradePanel({
                 onClick={() => setLeverage(stepVal)}
                 className={`py-2 rounded-sm text-xs font-sans font-bold transition-all ${
                   leverage === stepVal
-                    ? "bg-brand text-white"
+                    ? "bg-silver-light text-black"
                     : "bg-surface-subtle border border-white/10 text-muted hover:text-white"
                 }`}
               >
@@ -417,7 +417,7 @@ export function TradePanel({
           </div>
           <div className="flex justify-between text-muted">
             <span>LIQUIDATION BUFFER</span>
-            <span className="font-bold text-brand">
+            <span className="font-bold text-go">
               {numericCollateral > 0
                 ? `${distanceToLiquidation.toFixed(1)}%`
                 : "—"}
@@ -483,7 +483,7 @@ export function TradePanel({
                 ? "bg-[#ff4d4d] text-white hover:bg-red-600"
                 : isMultiply
                   ? "bg-white text-[#000000] hover:bg-gray-200"
-                  : "bg-brand text-white hover:bg-brand-hover"
+                  : "bg-go text-black hover:bg-go-hover"
           }`}
         >
           {!env.TRADING_ENABLED ? (

@@ -136,7 +136,7 @@ export function OpenPositionsTable({
                   <td className="py-3.5 px-3 sm:px-4 md:px-5 font-semibold whitespace-nowrap">
                     <span
                       className={
-                        pos.pnlUsd >= 0 ? "text-brand" : "text-[#ff4d4d]"
+                        pos.pnlUsd >= 0 ? "text-go" : "text-[#ff4d4d]"
                       }
                     >
                       {pos.pnlUsd >= 0 ? "+" : ""}${pos.pnlUsd.toFixed(2)} (

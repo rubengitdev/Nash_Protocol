@@ -13,7 +13,7 @@
 
 ### Palette
 
-Taken from the brand banner (`nash-X-banner.png`): a black field, brushed-steel ribbons, white type. There is no hue. Colour only appears for status.
+Taken from the brand banner (`nash-X-banner.png`): a black field, brushed-steel ribbons, white type. The brand itself has no hue. One green and the status colours appear only where they mean something.
 
 | Token | Hex | Use |
 | :--- | :--- | :--- |
@@ -25,12 +25,24 @@ Taken from the brand banner (`nash-X-banner.png`): a black field, brushed-steel 
 | **Silver** | `#c4c4c4` · `#e5e5e5` | The logo's metal, secondary highlights (`--silver`, `--silver-light`) |
 | **Grey** | `#8d8d8d` | Secondary text (`--muted`), the grey of "Leverage, at" in the banner |
 | **White** | `#f5f5f5` | Primary text (`--text`) |
+| **Go green** | `#2ee6a6` · `#7df2c8` · `#14b07f` | Actions that commit funds, and good states (`--go`, `--go-soft`, `--go-deep`; Tailwind `go-*`) |
 | Danger | `#d6153c` · `#ff5d73` | Liquidation, losses and shock states |
 | Warning | `#f5a623` | Stale or at-risk states |
 
-Positive values are white, negative values are red. A button is steel with black type. Nothing else is coloured, and the ribbon is never recoloured.
+### Where green is used
 
-The accent variables are still called `--green` and `--emerald` (and Tailwind's `emerald-*` and `brand-*`) because those names predate the palette and several hundred rules reference them. They now resolve to steel. `apps/web/src/app/globals.css` holds the single token source; Tailwind mirrors it in `apps/web/tailwind.config.ts`.
+Green is a signal, not decoration. The rule: **green means "go" or "good"**. If an element is neither, it stays steel.
+
+| Role | Examples | Why green |
+| :--- | :--- | :--- |
+| Primary action that commits funds or starts the flow | Connect wallet, Explore/Launch app, Deposit, Borrow, Open Long, Confirm, Approve, Submit in the China and Pons panels (`.app-button`, `.nash-btn-primary`, `.launch`, `bg-go`) | One obvious next step on each screen |
+| Long / deposit side of a pair | the Long tab, the Deposit tab, Auto-Protect "enabled" | The affirmative side; the opposite (Short) is red |
+| Good state | live dots, "Healthy", "Active", market session open, confirmed transaction banners, safe health factor and LTV, liquidation buffer, a gain (`.pons-positive`, green PnL and 24h change) | Reads at a glance, like a status light |
+| Safe region in a figure | the safe set and the guarded health factor on the How it works board | Safe against unsafe (red) |
+
+Stays steel, on purpose: navigation, links, headings and italics, selected filters and tabs (a selection is neutral), leverage steps, MAX buttons, the logo, badges, focus rings, and every secondary or "ghost" button. Losses and danger are red, warnings are amber. A selected tab that is not a side or an action uses white-on-black, never green.
+
+The accent variables are still called `--green` and `--emerald` (and Tailwind's `emerald-*` and `brand-*`) because those names predate the palette and several hundred rules reference them. They resolve to steel; green has its own tokens (`--go*`, `go-*`). `apps/web/src/app/globals.css` holds the single token source; Tailwind mirrors it in `apps/web/tailwind.config.ts`.
 
 ### Logo rules
 

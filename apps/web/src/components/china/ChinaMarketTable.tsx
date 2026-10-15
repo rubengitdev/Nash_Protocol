@@ -295,8 +295,8 @@ function MarketTableRow({
       <td className="py-3.5 px-4 whitespace-nowrap">
         {market?.status === "NORMAL" ? (
           <div className="flex items-center gap-1.5 whitespace-nowrap">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#e5e5e5] animate-pulse shrink-0" />
-            <span className="text-xs font-display font-medium text-[#e5e5e5]">Active</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#2ee6a6] animate-pulse shrink-0" />
+            <span className="text-xs font-display font-medium text-[#2ee6a6]">Active</span>
             <span className="text-[#606060] text-xs">·</span>
             <span className="text-[11px] text-[#8d8d8d] font-mono">Regular Hours</span>
           </div>
@@ -434,7 +434,7 @@ function MarketCardView({
             {market && market.priceChange24hPercent !== 0 ? (
               <span
                 className={`font-mono text-xs font-semibold whitespace-nowrap ${
-                  isUp ? "text-[#e5e5e5]" : "text-[#ff6b6b]"
+                  isUp ? "text-[#2ee6a6]" : "text-[#ff6b6b]"
                 }`}
               >
                 {formatPercent(market.priceChange24hPercent, true)}

@@ -142,14 +142,14 @@ function PonsMarketCard({
               <p
                 className={`tabular-nums text-sm m-0 transition-all rounded inline-block ${
                   priceFlash === "up"
-                    ? "text-[#e5e5e5] font-bold drop-shadow-md"
+                    ? "text-[#2ee6a6] font-bold drop-shadow-md"
                     : priceFlash === "down"
                     ? "text-red-400 font-bold drop-shadow-md"
                     : "text-white drop-shadow"
                 }`}
               >
                 ${m.price > 0 ? m.price.toPrecision(4) : "N/A"}
-                {priceFlash === "up" && <span className="ml-1 text-xs text-[#e5e5e5]">↑</span>}
+                {priceFlash === "up" && <span className="ml-1 text-xs text-[#2ee6a6]">↑</span>}
                 {priceFlash === "down" && <span className="ml-1 text-xs text-red-400">↓</span>}
               </p>
             </div>
@@ -329,8 +329,8 @@ export function PonsMarketTable({
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e5e5e5] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#e5e5e5]"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2ee6a6] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2ee6a6]"></span>
             </span>
             <span className="font-semibold text-[#f5f5f5]">Robinhood Chain Live Polling</span>
           </div>

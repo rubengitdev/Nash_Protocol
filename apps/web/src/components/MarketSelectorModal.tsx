@@ -210,7 +210,7 @@ export function MarketSelectorModal({
                         </div>
                         <div
                           className={`text-xs font-mono font-medium ${
-                            m.change24h >= 0 ? "text-[var(--green)]" : "text-[#d6153c]"
+                            m.change24h >= 0 ? "text-[var(--go)]" : "text-[#d6153c]"
                           }`}
                         >
                           {m.change24h >= 0 ? "+" : ""}
@@ -219,7 +219,7 @@ export function MarketSelectorModal({
                       </div>
 
                       {isSelected && (
-                        <Check className="w-4 h-4 text-[var(--green)] shrink-0 ml-1" />
+                        <Check className="w-4 h-4 text-[var(--go)] shrink-0 ml-1" />
                       )}
                     </button>
                   );

@@ -62,8 +62,8 @@ export function CABadge({ address, className = '', truncate = false }: CABadgePr
         className={`inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 rounded-full bg-[#101010]/95 border border-[#282828] hover:border-[var(--green)] hover:bg-[#171717] text-[10px] sm:text-[11px] font-mono transition-all cursor-pointer select-none group shadow-[0_2px_8px_rgba(0,0,0,0.5)] max-w-full text-left ${className}`}
       >
         <span className="relative flex h-2 w-2 shrink-0 items-center justify-center">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--green)] opacity-60"></span>
-          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--green)]"></span>
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--go)] opacity-60"></span>
+          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--go)]"></span>
         </span>
 
         <span className="text-[#8a8a8a] font-semibold text-[9px] sm:text-[10px] tracking-wider uppercase shrink-0">
@@ -76,7 +76,7 @@ export function CABadge({ address, className = '', truncate = false }: CABadgePr
 
         <span className="inline-flex items-center ml-0.5 shrink-0">
           {copied ? (
-            <span className="flex items-center gap-1 text-[var(--green)] text-[10px] font-semibold animate-in fade-in zoom-in-95 duration-150">
+            <span className="flex items-center gap-1 text-[var(--go)] text-[10px] font-semibold animate-in fade-in zoom-in-95 duration-150">
               <svg
                 className="w-3 h-3 stroke-[2.5]"
                 fill="none"

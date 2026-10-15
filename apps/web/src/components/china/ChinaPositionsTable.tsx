@@ -362,7 +362,7 @@ export function ChinaPositionsTable({
                             isClosed
                               ? "text-[#919191]"
                               : isUp
-                              ? "text-[#e5e5e5]"
+                              ? "text-[#2ee6a6]"
                               : "text-[#ff6b6b]"
                           }`}
                         >
@@ -373,7 +373,7 @@ export function ChinaPositionsTable({
                             isClosed
                               ? "text-[#727272]"
                               : isUp
-                              ? "text-[#e5e5e5] opacity-80"
+                              ? "text-[#2ee6a6] opacity-80"
                               : "text-[#ff6b6b] opacity-80"
                           }`}
                         >
@@ -491,7 +491,7 @@ export function ChinaPositionsTable({
               <button
                 disabled={isProcessing}
                 onClick={handleConfirmRepay}
-                className="px-3 py-1.5 rounded bg-[#e5e5e5] hover:bg-[#f3f3f3] text-[#000000] font-display text-xs font-bold"
+                className="px-3 py-1.5 rounded bg-[#2ee6a6] hover:bg-[#7df2c8] text-[#000000] font-display text-xs font-bold"
               >
                 {isProcessing ? "Repaying..." : "Confirm Repay"}
               </button>

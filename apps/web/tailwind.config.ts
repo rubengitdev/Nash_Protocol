@@ -25,6 +25,13 @@ const config: Config = {
           deep: '#6d6d6d',
           muted: 'rgba(229,229,229, 0.15)',
         },
+        // Green: actions that commit funds, and states that are good (live, safe, confirmed, a gain).
+        go: {
+          DEFAULT: '#2ee6a6',
+          hover: '#7df2c8',
+          dark: '#14b07f',
+          muted: 'rgba(46,230,166, 0.15)',
+        },
         brand: {
           DEFAULT: '#e5e5e5',
           hover: '#ffffff',

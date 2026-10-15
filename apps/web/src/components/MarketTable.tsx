@@ -33,7 +33,7 @@ export function MarketTable({ markets, isLoading }: MarketTableProps) {
             onClick={() => setActiveCategory(cat)}
             className={`px-3 sm:px-4 py-2 rounded-sm text-[11px] uppercase tracking-widest font-bold whitespace-nowrap transition-all ${
               activeCategory === cat
-                ? "bg-brand text-white"
+                ? "bg-silver-light text-black"
                 : "bg-surface text-muted hover:text-white border border-white/10"
             }`}
           >
@@ -162,7 +162,7 @@ export function MarketTable({ markets, isLoading }: MarketTableProps) {
                     <td className="py-3.5 px-3 sm:px-4 md:px-6 text-right font-sans whitespace-nowrap">
                       <Link
                         href={marketPath(market.assetSymbol)}
-                        className="px-3 sm:px-4 py-2 bg-brand hover:bg-brand-hover text-white text-[11px] font-sans font-bold uppercase tracking-wider rounded-sm transition-all inline-flex items-center gap-1 shadow-sm"
+                        className="px-3 sm:px-4 py-2 bg-go hover:bg-go-hover text-black text-[11px] font-sans font-bold uppercase tracking-wider rounded-sm transition-all inline-flex items-center gap-1 shadow-sm"
                       >
                         <span>View market</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />

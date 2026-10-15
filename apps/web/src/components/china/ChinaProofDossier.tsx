@@ -48,7 +48,7 @@ export function ChinaProofDossier({
           <div className="flex items-center gap-2 whitespace-nowrap">
             {isNative && (
               <>
-                <span className="w-2.5 h-2.5 rounded-full bg-[#e5e5e5] shadow-[0_0_8px_rgba(229,229,229,0.6)] shrink-0" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#2ee6a6] shadow-[0_0_8px_rgba(46,230,166,0.6)] shrink-0" />
                 <span className="text-xs uppercase font-display font-bold text-[#e5e5e5] tracking-wider whitespace-nowrap">
                   Verified Native Asset · Robinhood Chain 4663
                 </span>

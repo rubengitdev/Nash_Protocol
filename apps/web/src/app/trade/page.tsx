@@ -157,7 +157,7 @@ function PonsTradeWorkspace() {
       <div className="trade-page flex flex-col items-center justify-center min-h-[40vh] text-center">
         <p className="text-white text-base font-bold mb-2">Market not found</p>
         <p className="text-[var(--muted)] text-sm mb-4">No active market found for {assetQuery || "requested asset"}.</p>
-        <a href="/trade" className="px-4 py-2 bg-[var(--green)] text-black rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity">
+        <a href="/trade" className="px-4 py-2 bg-[var(--go)] text-black rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity">
           Return to Trade
         </a>
       </div>
@@ -395,7 +395,7 @@ const tradeStyles = `
           color: var(--fg);
           background: rgba(255,255,255, 0.1);
         }
-        .order-tabs .tab.active.long { background: rgba(229,229,229, 0.15); color: var(--green); }
+        .order-tabs .tab.active.long { background: rgba(46,230,166, 0.15); color: var(--go); }
         .order-tabs .tab.active.short { background: rgba(255,107,107, 0.15); color: #ff6b6b; }
         
         .input-group label {

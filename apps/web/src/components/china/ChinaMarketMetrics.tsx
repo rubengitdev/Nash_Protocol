@@ -61,7 +61,7 @@ export function ChinaMarketMetrics({
           <div className="flex items-baseline gap-2 mt-1 whitespace-nowrap">
             <span
               className={`text-xl font-bold font-mono whitespace-nowrap ${
-                isUp ? "text-[#e5e5e5]" : "text-[#ff6b6b]"
+                isUp ? "text-[#2ee6a6]" : "text-[#ff6b6b]"
               }`}
             >
               {market ? formatPercent(market.priceChange24hPercent, true) : "—"}
@@ -280,7 +280,7 @@ function ChinaInteractiveChart({
             <span className="text-[10px] text-[#858585] uppercase font-display tracking-wider">
               Market Depth &amp; Verified Price History
             </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#e5e5e5] animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#2ee6a6] animate-pulse" />
           </div>
           <div className="flex items-baseline gap-3 mt-1">
             <h4 className="text-xl font-bold font-mono text-[#f5f5f5]">
@@ -288,7 +288,7 @@ function ChinaInteractiveChart({
             </h4>
             <span
               className={`text-xs font-mono font-semibold ${
-                isPointUp ? "text-[#e5e5e5]" : "text-[#ff6b6b]"
+                isPointUp ? "text-[#2ee6a6]" : "text-[#ff6b6b]"
               }`}
             >
               {formatPercent(activeChange, true)}

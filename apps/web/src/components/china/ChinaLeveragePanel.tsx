@@ -276,7 +276,7 @@ export function ChinaLeveragePanel({
               <span className="text-[#858585] font-sans truncate">Health Factor</span>
               <span
                 className={`font-bold shrink-0 ${
-                  estimatedHf > 1.5 ? "text-[#e5e5e5]" : estimatedHf > 1.2 ? "text-[#f5a623]" : "text-[#ff6b6b]"
+                  estimatedHf > 1.5 ? "text-[#2ee6a6]" : estimatedHf > 1.2 ? "text-[#f5a623]" : "text-[#ff6b6b]"
                 }`}
               >
                 {estimatedHf.toFixed(2)}
@@ -311,7 +311,7 @@ export function ChinaLeveragePanel({
               disabled={numMargin <= 0}
               className={`w-full py-3 px-4 rounded font-display font-bold text-xs uppercase transition-all tracking-wider ${
                 numMargin > 0
-                  ? "bg-[#e5e5e5] hover:bg-[#ffffff] text-[#000000] shadow-[0_0_14px_rgba(229,229,229,0.25)] cursor-pointer"
+                  ? "bg-[#2ee6a6] hover:bg-[#7df2c8] text-[#000000] shadow-[0_0_14px_rgba(46,230,166,0.3)] cursor-pointer"
                   : "bg-[#161616] text-[#727272] border border-[#1f1f1f] cursor-not-allowed"
               }`}
             >
@@ -326,10 +326,10 @@ export function ChinaLeveragePanel({
 
           {/* Confirmation Feedback Banner & Open Position Card */}
           {confirmedTxHash && (
-            <div className="mt-4 p-3.5 bg-[rgba(229,229,229,0.06)] border border-[rgba(229,229,229,0.3)] rounded-sm text-xs font-mono text-[#e5e5e5] flex flex-col gap-3">
+            <div className="mt-4 p-3.5 bg-[rgba(46,230,166,0.06)] border border-[rgba(46,230,166,0.3)] rounded-sm text-xs font-mono text-[#2ee6a6] flex flex-col gap-3">
               <div>
                 <div className="font-bold font-display uppercase tracking-wide flex items-center gap-1.5">
-                  <svg className="w-4 h-4 text-[#e5e5e5] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <svg className="w-4 h-4 text-[#2ee6a6] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-sm">Long Position Successfully Opened</span>
@@ -347,7 +347,7 @@ export function ChinaLeveragePanel({
                 <div className="bg-[#000000] border border-[rgba(229,229,229,0.25)] p-3 rounded-sm text-xs text-[#f5f5f5] flex flex-col gap-2">
                   <div className="flex items-center justify-between border-b border-[#181818] pb-2">
                     <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-[#e5e5e5] animate-pulse shrink-0" />
+                      <span className="w-2 h-2 rounded-full bg-[#2ee6a6] animate-pulse shrink-0" />
                       <span className="font-display font-bold text-xs uppercase tracking-wider text-[#e5e5e5]">
                         Active Open Position
                       </span>

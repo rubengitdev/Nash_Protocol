@@ -55,7 +55,7 @@ export function ChinaWalletSignatureModal({
         {/* MODAL HEADER */}
         <div className="flex items-center justify-between border-b border-[#161616] pb-3">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#e5e5e5] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-[#2ee6a6] animate-pulse" />
             <h3 className="text-sm font-bold font-display text-[#f5f5f5] uppercase tracking-wider">
               Wallet Signature Request
             </h3>
@@ -150,7 +150,7 @@ export function ChinaWalletSignatureModal({
             </button>
             <button
               onClick={handleConfirmSign}
-              className="px-4 py-1.5 rounded bg-[#e5e5e5] hover:bg-[#f3f3f3] text-[#000000] font-display font-bold text-xs transition-all shadow-[0_0_12px_rgba(229,229,229,0.25)] flex items-center gap-1.5"
+              className="px-4 py-1.5 rounded bg-[#2ee6a6] hover:bg-[#7df2c8] text-[#000000] font-display font-bold text-xs transition-all shadow-[0_0_12px_rgba(229,229,229,0.25)] flex items-center gap-1.5"
             >
               <span>Sign &amp; Confirm in Wallet</span>
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

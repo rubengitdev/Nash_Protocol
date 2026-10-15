@@ -103,8 +103,8 @@ export function TransactionPreviewModal({
         )}
 
         {isSuccess && (
-          <div className="bg-brand/15 border border-brand/40 p-4 rounded-sm space-y-2 text-xs">
-            <div className="flex items-center gap-2 text-brand font-bold">
+          <div className="bg-go/15 border border-go/40 p-4 rounded-sm space-y-2 text-xs">
+            <div className="flex items-center gap-2 text-go font-bold">
               <CheckCircle2 className="w-5 h-5" />
               <span>TRANSACTION CONFIRMED ON-CHAIN</span>
             </div>
@@ -207,7 +207,7 @@ export function TransactionPreviewModal({
             <button
               onClick={onConfirm}
               disabled={isExecuting}
-              className="w-2/3 py-3 bg-brand hover:bg-brand-hover disabled:bg-gray-700 text-white font-extrabold rounded-sm transition-all uppercase tracking-widest inline-flex items-center justify-center gap-2"
+              className="w-2/3 py-3 bg-go hover:bg-go-hover disabled:bg-gray-700 text-black font-extrabold rounded-sm transition-all uppercase tracking-widest inline-flex items-center justify-center gap-2"
             >
               {isExecuting ? (
                 <>

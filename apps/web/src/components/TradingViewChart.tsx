@@ -18,7 +18,7 @@ export function TradingViewChart({
   data,
   colors: {
     backgroundColor = "transparent",
-    lineColor = "#e5e5e5", // Nash brand green
+    lineColor = "#e5e5e5", // steel
     textColor = "#7d7d7d", // Nash muted text
     areaTopColor = "rgba(229,229,229, 0.16)",
     areaBottomColor = "rgba(229,229,229, 0.0)",

@@ -97,7 +97,7 @@ export function AutoProtectModal({
             disabled={!env.TRADING_ENABLED || isSaving}
             className={`px-3 py-1.5 rounded-sm text-xs font-sans font-bold uppercase transition-all ${
               isEnabled
-                ? "bg-brand text-white"
+                ? "bg-go text-black"
                 : "bg-surface text-muted border border-white/10"
             }`}
           >
@@ -150,7 +150,7 @@ export function AutoProtectModal({
 
         {/* Feedback info */}
         {isDone && (
-          <div className="bg-brand/15 border border-brand/40 p-3 rounded-sm text-xs text-brand flex items-center gap-2">
+          <div className="bg-go/15 border border-go/40 p-3 rounded-sm text-xs text-go flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4" />
             <span>RULE CONFIGURED ON-CHAIN SUCCESSFULLY</span>
           </div>
@@ -160,7 +160,7 @@ export function AutoProtectModal({
         <button
           onClick={handleSave}
           disabled={!env.TRADING_ENABLED || isSaving}
-          className="w-full py-3.5 bg-brand hover:bg-brand-hover disabled:bg-gray-700 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-sm transition-all inline-flex items-center justify-center gap-2"
+          className="w-full py-3.5 bg-go hover:bg-go-hover disabled:bg-gray-700 text-black font-sans font-bold text-xs uppercase tracking-widest rounded-sm transition-all inline-flex items-center justify-center gap-2"
         >
           {isSaving ? (
             <>

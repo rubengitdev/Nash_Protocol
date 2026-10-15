@@ -111,7 +111,7 @@ export function PortfolioSummary({
         </div>
         <button
           onClick={onOpenAutoProtect}
-          className="w-full py-2 bg-surface-subtle hover:bg-brand hover:text-white text-white border border-white/10 rounded-sm text-xs font-bold uppercase transition-all inline-flex items-center justify-center gap-1.5"
+          className="w-full py-2 bg-surface-subtle hover:bg-silver-light hover:text-black text-white border border-white/10 rounded-sm text-xs font-bold uppercase transition-all inline-flex items-center justify-center gap-1.5"
         >
           <span>CONFIGURE RULES</span>
           <ArrowUpRight className="w-3.5 h-3.5" />

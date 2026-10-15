@@ -42,7 +42,7 @@
 
 /* Single token source: mirrors apps/web/tailwind.config.ts theme.extend.colors.
    Palette, taken from the brand banner: black, graphite, brushed silver, white. No hue.
-   Only status colours (danger, warning) carry colour. Names such as --green and --emerald predate the
+   Colour is reserved for meaning: green for go and good, red for danger, amber for warning. Names such as --green and --emerald predate the
    palette and are kept so that every existing reference follows the accent. */
 :root {
   --bg: #000000;
@@ -59,6 +59,11 @@
   --emerald: var(--green);
   --emerald-soft: #ffffff;
   --green-deep: #6d6d6d;
+  /* "Go" green: the one hue besides status red/amber. It marks actions that commit funds, and states
+     that are good (live, safe, confirmed, a gain). Everything else stays steel. */
+  --go: #2ee6a6;
+  --go-soft: #7df2c8;
+  --go-deep: #14b07f;
   --silver: #c4c4c4;
   --silver-light: #e5e5e5;
   --danger: #d6153c;
@@ -278,7 +283,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--green);
+  background: var(--go);
   flex-shrink: 0;
 }
 .live-dot::after {
@@ -286,7 +291,7 @@
   position: absolute;
   inset: -4px;
   border-radius: 50%;
-  border: 1px solid var(--green);
+  border: 1px solid var(--go);
   animation: live-pulse 2s ease-out infinite;
 }
 @keyframes live-pulse {
@@ -300,7 +305,7 @@
   }
 }
 .launch {
-  background: var(--green);
+  background: var(--go);
   color: #101010;
   border-radius: 5px;
   font-size: 14px;
@@ -312,7 +317,7 @@
   align-items: center;
 }
 .launch:hover {
-  background: #ffffff;
+  background: var(--go-soft);
 }
 .launch span {
   padding-left: 12px;
@@ -586,7 +591,7 @@ button:hover .arrow-chip {
   display: block;
   width: 30%;
   height: 100%;
-  background: var(--green);
+  background: var(--go);
 }
 .meter-label {
   display: flex;
@@ -743,7 +748,7 @@ button:hover .arrow-chip {
   flex-shrink: 0;
 }
 .comparison-table td.comparison-col-nash svg {
-  color: var(--green);
+  color: var(--go);
 }
 .comparison-table td:last-child svg {
   color: var(--muted);
@@ -1726,7 +1731,7 @@ button:hover .arrow-chip {
   align-items: center;
   justify-content: space-between;
   gap: 22px;
-  background: linear-gradient(135deg, var(--green), var(--green-deep));
+  background: linear-gradient(135deg, var(--go), var(--go-deep));
   color: var(--bg);
   padding: 15px 20px;
   border-radius: 5px;
@@ -1734,7 +1739,7 @@ button:hover .arrow-chip {
   font-weight: 500;
 }
 .app-button:hover {
-  background: #ffffff;
+  background: var(--go-soft);
 }
 .app-button.secondary {
   background: transparent;
@@ -2169,7 +2174,7 @@ button:hover .arrow-chip {
   text-align: left;
 }
 .app-button:disabled:hover {
-  background: var(--green);
+  background: var(--go);
 }
 .app-button.secondary:disabled:hover {
   background: transparent;
@@ -2213,7 +2218,7 @@ button:hover .arrow-chip {
 }
 .market-action [role="status"] {
   padding: 14px 16px;
-  border-left: 2px solid var(--green);
+  border-left: 2px solid var(--go);
   background: #161616;
 }
 .margin-position-row {
@@ -2280,7 +2285,7 @@ button:hover .arrow-chip {
   color: #f5c984;
 }
 .transaction-result-icon.success {
-  color: var(--green);
+  color: var(--go);
   background: #212121;
 }
 .transaction-result-icon.failed {
@@ -2663,11 +2668,11 @@ button:hover .arrow-chip {
   border-radius: 50%;
   flex-shrink: 0;
 }
-.pons-dot.eligible { background: var(--green); box-shadow: 0 0 6px rgba(229,229,229, 0.4); }
+.pons-dot.eligible { background: var(--go); box-shadow: 0 0 6px rgba(46,230,166, 0.5); }
 .pons-dot.ineligible { background: #606060; }
 
 /* Change colors */
-.pons-positive { color: #ffffff !important; }
+.pons-positive { color: var(--go) !important; }
 .pons-negative { color: #d6153c !important; }
 
 /* Badges */
@@ -2681,9 +2686,9 @@ button:hover .arrow-chip {
   text-transform: uppercase;
 }
 .pons-badge.eligible {
-  background: rgba(229,229,229, 0.12);
-  color: var(--green);
-  border: 1px solid rgba(229,229,229, 0.25);
+  background: rgba(46,230,166, 0.12);
+  color: var(--go);
+  border: 1px solid rgba(46,230,166, 0.3);
 }
 .pons-badge.ineligible {
   background: rgba(255,255,255, 0.04);

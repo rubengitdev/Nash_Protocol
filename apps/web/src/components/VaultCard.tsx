@@ -164,7 +164,7 @@ export function VaultCard({ vault }: VaultCardProps) {
       <button
         disabled={!env.TRADING_ENABLED}
         onClick={() => setIsModalOpen(true)}
-        className="w-full py-3 bg-brand hover:bg-brand-hover text-white font-bold text-xs uppercase tracking-widest rounded-sm transition-all inline-flex items-center justify-center gap-2"
+        className="w-full py-3 bg-go hover:bg-go-hover text-black font-bold text-xs uppercase tracking-widest rounded-sm transition-all inline-flex items-center justify-center gap-2"
       >
         <span>DEPOSIT CAPITAL</span>
         <ArrowUpRight className="w-4 h-4" />
@@ -199,7 +199,7 @@ export function VaultCard({ vault }: VaultCardProps) {
                 onClick={() => setActiveModalTab("DEPOSIT")}
                 className={`py-2 rounded-sm ${
                   activeModalTab === "DEPOSIT"
-                    ? "bg-brand text-white"
+                    ? "bg-go text-black"
                     : "text-muted"
                 }`}
               >
@@ -232,7 +232,7 @@ export function VaultCard({ vault }: VaultCardProps) {
             </div>
 
             {isDone && (
-              <div className="bg-brand/15 border border-brand/40 p-3 rounded-sm text-xs text-brand flex items-center gap-2">
+              <div className="bg-go/15 border border-go/40 p-3 rounded-sm text-xs text-go flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4" />
                 <span>DEPOSIT CONFIRMED ON-CHAIN</span>
               </div>
@@ -246,7 +246,7 @@ export function VaultCard({ vault }: VaultCardProps) {
                 !amount ||
                 parseFloat(amount) <= 0
               }
-              className="w-full py-3 bg-brand hover:bg-brand-hover disabled:bg-gray-700 text-white font-bold text-xs uppercase tracking-widest rounded-sm transition-all inline-flex items-center justify-center gap-2"
+              className="w-full py-3 bg-go hover:bg-go-hover disabled:bg-gray-700 text-black font-bold text-xs uppercase tracking-widest rounded-sm transition-all inline-flex items-center justify-center gap-2"
             >
               {isProcessing ? (
                 <>

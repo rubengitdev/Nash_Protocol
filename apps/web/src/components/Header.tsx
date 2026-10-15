@@ -244,7 +244,7 @@ export function Header() {
                         <div className="flex items-center gap-3 font-sans text-xs">
                             <button
                                 onClick={() => setIsWalletModalOpen(true)}
-                                className="px-4 py-2 bg-[var(--green)] hover:bg-[#ffffff] text-[#101010] font-semibold tracking-wide rounded transition-all text-xs"
+                                className="px-4 py-2 bg-[var(--go)] hover:bg-[var(--go-soft)] text-[#000000] font-semibold tracking-wide rounded transition-all text-xs"
                             >
                                 {isConnected && formattedAddress ? (
                                     <span>{formattedAddress}</span>

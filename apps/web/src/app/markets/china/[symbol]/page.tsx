@@ -149,7 +149,7 @@ export default function ChinaAssetDetailPage({
             <div className="flex items-center gap-1.5 font-display text-xs whitespace-nowrap">
               <span
                 className={`w-2 h-2 rounded-full shrink-0 ${
-                  market?.marketSession === "REGULAR" ? "bg-[#e5e5e5] animate-pulse" : "bg-[#919191]"
+                  market?.marketSession === "REGULAR" ? "bg-[#2ee6a6] animate-pulse" : "bg-[#919191]"
                 }`}
               />
               <span className="text-[#f5f5f5] font-bold whitespace-nowrap">
@@ -160,7 +160,7 @@ export default function ChinaAssetDetailPage({
 
             <div className="flex items-center gap-2 text-xs font-mono whitespace-nowrap">
               <span className="text-[#919191] whitespace-nowrap">Chainlink Feed:</span>
-              <span className="text-[#e5e5e5] font-semibold whitespace-nowrap">Healthy (1s)</span>
+              <span className="text-[#2ee6a6] font-semibold whitespace-nowrap">Healthy (1s)</span>
             </div>
           </div>
         </div>

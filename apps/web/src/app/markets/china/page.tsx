@@ -56,7 +56,7 @@ export default function ChinaMarketsPage() {
             Market Session
           </span>
           <div className="flex items-center gap-1.5 mt-1 whitespace-nowrap">
-            <span className="w-2 h-2 rounded-full bg-[#e5e5e5] animate-pulse shrink-0" />
+            <span className="w-2 h-2 rounded-full bg-[#2ee6a6] animate-pulse shrink-0" />
             <span className="text-sm font-bold font-display text-[#f5f5f5] whitespace-nowrap">
               US Regular Hours
             </span>

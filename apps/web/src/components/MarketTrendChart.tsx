@@ -71,7 +71,7 @@ export function MarketTrendChart({
 
   const areaD = `${pathD} L ${width} ${height} L 0 ${height} Z`;
 
-  const strokeColor = isPositive ? '#b5b5b5' : '#ff4949';
+  const strokeColor = isPositive ? '#2ee6a6' : '#ff4949';
   const gradientId = `trend-gradient-${symbol}-${Math.random().toString(36).substring(2, 7)}`;
 
   return (

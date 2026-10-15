@@ -157,8 +157,8 @@ export function HowItWorksBoard({ step, active, reduceMotion, cycleMs }: Props) 
         <svg className="hiwb-svg" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${tone.fig}. ${tone.title}`}>
           <defs>
             <linearGradient id="hiwb-safe" x1="0" y1="1" x2="0" y2="0">
-              <stop offset="0" stopColor="#e5e5e5" stopOpacity="0.04" />
-              <stop offset="1" stopColor="#e5e5e5" stopOpacity="0.28" />
+              <stop offset="0" stopColor="#2ee6a6" stopOpacity="0.04" />
+              <stop offset="1" stopColor="#2ee6a6" stopOpacity="0.28" />
             </linearGradient>
             <pattern id="hiwb-hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
               <line x1="0" y1="0" x2="0" y2="9" stroke="#d6153c" strokeWidth="1" strokeOpacity="0.22" />

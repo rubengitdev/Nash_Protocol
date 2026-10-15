@@ -63,9 +63,9 @@ export function OracleHealthIndicator({ status, loading }: OracleHealthIndicator
           background: currentColor;
         }
         .oracle-indicator.healthy {
-          color: var(--green);
-          background: rgba(229,229,229, 0.1);
-          border-color: rgba(229,229,229, 0.2);
+          color: var(--go);
+          background: rgba(46,230,166, 0.1);
+          border-color: rgba(46,230,166, 0.25);
         }
         .oracle-indicator.warning {
           color: #f5a623;

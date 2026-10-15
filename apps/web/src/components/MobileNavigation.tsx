@@ -139,7 +139,7 @@ export function MobileNavigation({
               onClose();
               onConnectWallet();
             }}
-            className="w-full py-3 bg-[var(--green)] text-[#101010] font-semibold text-center rounded text-sm hover:bg-[#ffffff] transition-colors"
+            className="w-full py-3 bg-[var(--go)] text-[#000000] font-semibold text-center rounded text-sm hover:bg-[var(--go-soft)] transition-colors"
           >
             {isConnected && formattedAddress
               ? formattedAddress
