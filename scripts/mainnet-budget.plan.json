@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "note": "Inputs for scripts/estimate-mainnet-budget.mjs. Gas units come from fork rehearsals of the same contract set (see docs/MAINNET_BUDGET.md); re-measure with `pnpm rh:mainnet:full:plan` before broadcasting.",
+  "targetBandUsd": { "min": 5, "max": 7 },
+  "chainId": 4663,
+  "rpcUrl": "https://rpc.mainnet.chain.robinhood.com",
+  "ethUsdFeed": "0x78F3556b67E17Df817D51Ef5a990cDaF09E8d3A9",
+  "feedMaxAgeSeconds": 93600,
+  "calibration": {
+    "factor": 1.56,
+    "basis": "Recorded estimate of 0.0015 ETH for a 48.05M gas rehearsal at 0.02 gwei: 0.0015 / (48.05e6 * 0.02e-9) = 1.56. Covers the L1 data component that an EVM fork does not meter."
+  },
+  "safetyBufferPct": 25,
+  "gasLineItems": [
+    { "name": "Core + oracle + isolated markets + margin + vault (non-Pons, 41 tx)", "gas": 48050000 },
+    { "name": "Pons perp stack + market listing (10 tx)", "gas": 6700000 }
+  ],
+  "fixedEthLineItems": [
+    { "name": "Keeper wallet funding (Auto-Protect transactions)", "eth": 0.0005 }
+  ],
+  "excluded": [
+    "Seed liquidity for the first market (token cost, roughly $4.42 for a micro-sized market in the last rehearsal)",
+    "Domain, hosting and database subscriptions"
+  ]
+}

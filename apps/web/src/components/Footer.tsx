@@ -1,0 +1,120 @@
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+
+import { X_URL, X_LABEL, X_TITLE, HAS_X } from '../lib/social';
+
+const COLUMNS: Array<{ label: string; links: Array<{ name: string; href: string }> }> = [
+    {
+        label: 'Learn',
+        links: [
+            { name: 'The argument', href: '/#manifesto' },
+            { name: 'How it works', href: '/#how-it-works' },
+            { name: 'Isolation', href: '/#isolation' },
+            { name: 'FAQ', href: '/#faq' },
+        ],
+    },
+    {
+        label: 'Participate',
+        links: [
+            { name: 'Markets', href: '/markets' },
+            { name: 'Lending', href: '/lending' },
+            { name: 'Trade', href: '/trade' },
+            { name: 'Earn', href: '/earn' },
+        ],
+    },
+    {
+        label: 'Protocol',
+        links: [
+            { name: 'Portfolio', href: '/portfolio' },
+            { name: 'Analytics', href: '/analytics' },
+            { name: 'Roadmap', href: '/#roadmap' },
+            { name: 'The letter', href: '/#letter' },
+        ],
+    },
+];
+
+export function Footer() {
+    const scrollToTop = (e: React.MouseEvent) => {
+        e.preventDefault();
+        if (typeof window !== 'undefined') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
+    return (
+        <footer className="footer-wrap section-wrap border-t border-[var(--line)] bg-[var(--bg)]">
+            <div className="footer-top">
+                <div className="footer-brand">
+                    <Link href="/" className="wordmark flex items-center gap-2.5" aria-label="Nash Protocol home">
+                        <img
+                            src="/brand/nash-mark-160.png"
+                            alt=""
+                            width={44}
+                            height={41}
+                            className="h-11 w-auto shrink-0 drop-shadow-[0_0_10px_rgba(46,230,166,0.22)]"
+                        />
+                        <span className="wordmark-text">
+                            <span className="wordmark-name">NASH</span>
+                            <span className="wordmark-sub">PROTOCOL</span>
+                        </span>
+                    </Link>
+                    <p>
+                        The credit and leverage layer for tokenized assets
+                        <br />
+                        on Robinhood Chain. Isolated markets, aligned incentives.
+                    </p>
+                    <a href="#main" onClick={scrollToTop} className="back-top">
+                        Back to top ↑
+                    </a>
+                </div>
+
+                <div className="footer-links">
+                    {COLUMNS.map((column) => (
+                        <div className="footer-links-group" key={column.label}>
+                            <span className="footer-links-label">{column.label}</span>
+                            <nav className="footer-links-list" aria-label={column.label}>
+                                {column.links.map((link) => (
+                                    <Link key={link.name} href={link.href} className="hover:text-[var(--green)] transition-colors">
+                                        {link.name}
+                                    </Link>
+                                ))}
+                            </nav>
+                        </div>
+                    ))}
+
+                    {HAS_X && (
+                        <div className="footer-links-group">
+                            <span className="footer-links-label">Community</span>
+                            <a
+                                href={X_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={X_LABEL}
+                                title={X_TITLE}
+                                className="p-2 rounded border border-[var(--line)] bg-[var(--panel-subtle)] text-[var(--muted)] hover:text-[var(--green)] hover:border-[var(--green)] transition-all flex items-center justify-center shrink-0 w-fit"
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden="true">
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                </svg>
+                            </a>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            <p className="nash-disclaimer">
+                Nash Protocol is experimental software on Robinhood Chain. Leverage can lose all of your collateral. Nothing
+                here is financial advice. Nash Protocol is an independent project and is not affiliated with,
+                endorsed by, or sponsored by Robinhood.
+            </p>
+
+            <div className="footer-bottom">
+                <span>© 2026 Nash Protocol</span>
+                <span className="text-[var(--green)]">ROBINHOOD CHAIN PROTOCOL</span>
+                <span>Credit. Exposure. Equilibrium.</span>
+            </div>
+        </footer>
+    );
+}

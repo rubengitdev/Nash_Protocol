@@ -1,0 +1,152 @@
+"use client";
+
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import { X_URL, X_LABEL, X_TITLE, HAS_X } from "../lib/social";
+interface MobileNavigationProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConnectWallet?: () => void;
+  isConnected?: boolean;
+  formattedAddress?: string;
+}
+
+export function MobileNavigation({
+  isOpen,
+  onClose,
+  onConnectWallet,
+  isConnected,
+  formattedAddress,
+}: MobileNavigationProps) {
+  const pathname = usePathname();
+  const isLanding = pathname === "/";
+
+  if (!isOpen) return null;
+
+  const innerNavLinks = [
+    { name: "Markets", href: "/markets" },
+    { name: "China Equities", href: "/markets/china" },
+    { name: "Pons (Graduated)", href: "/markets/pons" },
+    { name: "Lending", href: "/lending" },
+    { name: "Trade (Leverage)", href: "/trade" },
+    { name: "Earn (Vaults)", href: "/earn" },
+    { name: "Portfolio", href: "/portfolio" },
+    { name: "Analytics", href: "/analytics" },
+  ];
+
+  return (
+    <nav
+      id="mobile-nav"
+      className="mobile-nav flex flex-col fixed top-[79px] left-0 right-0 max-h-[calc(100dvh-79px)] overflow-y-auto overscroll-contain bg-[#0d1017] border-b border-[#283249] px-[6%] py-4 z-50 animate-appear shadow-2xl"
+      aria-label="Mobile navigation"
+    >
+      {isLanding ? (
+        <>
+          <Link
+            href="/markets"
+            onClick={onClose}
+            className="py-3 text-left border-b border-[#1c2334] text-[#cfd6e6] hover:text-[var(--green)]"
+          >
+            Markets ↗
+          </Link>
+          <Link
+            href="/lending"
+            onClick={onClose}
+            className="py-3 text-left border-b border-[#1c2334] text-[#cfd6e6] hover:text-[var(--green)]"
+          >
+            Lending ↗
+          </Link>
+          <a
+            href="#products"
+            onClick={onClose}
+            className="py-3 text-left border-b border-[#1c2334] text-[#cfd6e6] hover:text-[var(--green)]"
+          >
+            Products
+          </a>
+          <a
+            href="#faq"
+            onClick={onClose}
+            className="py-3 text-left border-b border-[#1c2334] text-[#cfd6e6] hover:text-[var(--green)]"
+          >
+            FAQ
+          </a>
+          <Link
+            href="/markets"
+            onClick={onClose}
+            className="py-3 text-left border-b border-[#1c2334] text-[var(--green)] font-medium flex items-center justify-between"
+          >
+            <span>Launch App</span>
+            <span>↗</span>
+          </Link>
+        </>
+      ) : (
+        <>
+          {innerNavLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                aria-current={isActive ? "page" : undefined}
+                onClick={onClose}
+                className={`py-3 text-left border-b border-[#1c2334] text-sm ${
+                  isActive
+                    ? "text-[var(--green)] font-semibold"
+                    : "text-[#cfd6e6] hover:text-white"
+                }`}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+        </>
+      )}
+
+      {/* Social / X Link */}
+      <div className="py-3 border-b border-[#1c2334] flex items-center">
+        {HAS_X && (
+
+        <a
+          href={X_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onClose}
+          aria-label={X_LABEL}
+          title={X_TITLE}
+          className="p-2 border border-[#212a3e] text-[#c3cce0] hover:text-[var(--green)] hover:border-[var(--green)] rounded transition-colors flex items-center justify-center"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="w-4 h-4"
+            aria-hidden="true"
+          >
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+          </svg>
+        </a>
+
+        )}
+      </div>
+
+      {onConnectWallet && (
+        <div className="pt-4 pb-2">
+          <button
+            onClick={() => {
+              onClose();
+              onConnectWallet();
+            }}
+            className="w-full py-3 bg-[var(--green)] text-[#0b1429] font-semibold text-center rounded text-sm hover:bg-[#7df2c8] transition-colors"
+          >
+            {isConnected && formattedAddress
+              ? formattedAddress
+              : "Connect Wallet"}
+          </button>
+        </div>
+      )}
+    </nav>
+  );
+}
