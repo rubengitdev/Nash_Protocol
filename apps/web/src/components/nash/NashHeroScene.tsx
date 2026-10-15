@@ -3,10 +3,10 @@
 /**
  * Nash Protocol hero scene.
  *
- * Two characters inside a ring of three silver ribbons (the three strands of the N mark):
- *  - behind and above: a marble bust of John Nash, a stylised statue that fades into the dark;
- *  - in front: the faceless hooded figure of Satoshi Nakamoto.
- * Both are carved procedurally in a Web Worker (see figures.ts), so the hero ships no model or texture files.
+ * The faceless hooded figure of Satoshi Nakamoto inside a ring of three silver ribbons (the three
+ * strands of the N mark). The rings are drawn larger than the frame on purpose: they run off the top and
+ * bottom of the hero. The figure is carved procedurally in a Web Worker (see figures.ts), so the hero
+ * ships no model or texture files.
  */
 
 import { useEffect, useRef } from 'react';
@@ -27,6 +27,9 @@ const EMERALD = 0x2ee6a6;
 
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+const SAT_SCALE = 2.2;
+const SAT_Y = -0.35;
+const RING = 1.4; // the rings are this much larger than their original size
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
 function makeBackground(size = 1024) {
@@ -99,7 +102,7 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
     const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 80);
     const camTarget = new THREE.Vector3(0, 0.4, 0);
 
-    // Environment reflections: the silver ribbons, and the studio light that makes the marble read.
+    // Environment reflections: the silver ribbons and the soft studio light on the cloth.
     const pmrem = track(new THREE.PMREMGenerator(renderer));
     const envScene = new RoomEnvironment();
     const envRT = pmrem.fromScene(envScene, 0.04);
@@ -107,7 +110,7 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
     track(envRT.texture);
     const envMap = envRT.texture;
 
-    // Lights: back-left emerald, back-right silver-blue, a crown highlight, a soft key for the marble face.
+    // Lights: back-left emerald, back-right silver-blue, a crown highlight, a soft key.
     scene.add(new THREE.AmbientLight(0x22356e, 0.2));
     const rimA = new THREE.DirectionalLight(EMERALD, 3.0); rimA.position.set(-5, 2.2, -3.6); scene.add(rimA);
     const rimB = new THREE.DirectionalLight(0x9db8ff, 3.0); rimB.position.set(5, 2, -3.2); scene.add(rimB);
@@ -118,17 +121,6 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
     const stage = new THREE.Group();
     world.add(stage);
 
-    const marble = track(new THREE.MeshPhysicalMaterial({
-      vertexColors: true,
-      roughness: 0.55,
-      metalness: 0,
-      envMap,
-      envMapIntensity: 0.6,
-      clearcoat: 0.12,
-      clearcoatRoughness: 0.45,
-      transparent: true,
-      opacity: 0,
-    }));
     const cloth = track(new THREE.MeshPhysicalMaterial({
       vertexColors: true,
       roughness: 0.84,
@@ -142,33 +134,22 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
       opacity: 0,
     }));
 
-    // Nash looms behind and above; Satoshi stands in front, a little smaller, facing the headline.
-    const nashPivot = new THREE.Group();
-    nashPivot.position.set(0, 2.0, -1.9);
-    nashPivot.scale.setScalar(1.95);
-    stage.add(nashPivot);
+    // Satoshi fills the ring, turned toward the headline.
     const satoshiPivot = new THREE.Group();
-    satoshiPivot.position.set(0.15, -1.15, 0);
-    satoshiPivot.scale.setScalar(1.3);
+    satoshiPivot.position.set(-0.25, SAT_Y, 0);
+    satoshiPivot.scale.setScalar(SAT_SCALE);
     stage.add(satoshiPivot);
 
-    const reveal = { nash: -1, satoshi: -1 }; // start time of each fade-in, once its mesh exists
+    let revealAt = -1; // start time of the fade-in, once the mesh exists
     let elapsed = 0;
-    const quality = coarse ? 'low' : 'high';
-    const jobs = [
-      { which: 'satoshi' as const, pivot: satoshiPivot, material: cloth },
-      { which: 'nash' as const, pivot: nashPivot, material: marble },
-    ].map(({ which, pivot, material }) => {
-      const job = loadFigure(which, quality);
-      job.promise
-        .then(({ geometry }) => {
-          track(geometry);
-          pivot.add(new THREE.Mesh(geometry, material));
-          reveal[which] = elapsed;
-        })
-        .catch(() => { /* the ring and the dust still render without the figures */ });
-      return job;
-    });
+    const job = loadFigure(coarse ? 'low' : 'high');
+    job.promise
+      .then(({ geometry }) => {
+        track(geometry);
+        satoshiPivot.add(new THREE.Mesh(geometry, cloth));
+        revealAt = elapsed;
+      })
+      .catch(() => { /* the rings and the dust still render without the figure */ });
 
     // ---- rings
     const rings = new THREE.Group();
@@ -188,11 +169,11 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
 
     // Vertical halo behind both figures.
     const halo = new THREE.Group();
-    halo.position.set(0, 0.9, -3.0);
-    const haloTube = new THREE.Mesh(track(new THREE.TorusGeometry(3.5, 0.055, 32, 360)), silver);
-    const haloGlow = new THREE.Mesh(track(new THREE.TorusGeometry(3.5, 0.012, 12, 360)), glowMat);
+    halo.position.set(0, 0.9, -3.5);
+    const haloTube = new THREE.Mesh(track(new THREE.TorusGeometry(3.5 * RING, 0.07, 32, 480)), silver);
+    const haloGlow = new THREE.Mesh(track(new THREE.TorusGeometry(3.5 * RING, 0.016, 12, 480)), glowMat);
     haloGlow.position.z = 0.04;
-    const haloOuter = new THREE.Mesh(track(new THREE.TorusGeometry(3.95, 0.007, 8, 360)), track(new THREE.MeshBasicMaterial({ color: 0x8aa0c8, transparent: true, opacity: 0.5 })));
+    const haloOuter = new THREE.Mesh(track(new THREE.TorusGeometry(3.95 * RING, 0.009, 8, 480)), track(new THREE.MeshBasicMaterial({ color: 0x8aa0c8, transparent: true, opacity: 0.5 })));
     halo.add(haloTube, haloGlow, haloOuter);
     rings.add(halo);
 
@@ -202,15 +183,15 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
     const tilt = new THREE.Group();
     tilt.rotation.set(1.18, 0, 0.3);
     orbit.add(tilt);
-    const bandGeo = track(new THREE.CylinderGeometry(4.3, 4.3, 0.17, 360, 1, true));
-    for (const offset of [-0.36, 0, 0.36]) {
+    const bandGeo = track(new THREE.CylinderGeometry(4.3 * RING, 4.3 * RING, 0.22, 480, 1, true));
+    for (const offset of [-0.5, 0, 0.5]) {
       const band = new THREE.Mesh(bandGeo, silver);
       band.position.y = offset;
       tilt.add(band);
     }
-    const edge = new THREE.Mesh(track(new THREE.TorusGeometry(4.302, 0.009, 8, 360)), glowMat);
+    const edge = new THREE.Mesh(track(new THREE.TorusGeometry(4.302 * RING, 0.012, 8, 480)), glowMat);
     edge.rotation.x = Math.PI / 2;
-    edge.position.y = 0.09;
+    edge.position.y = 0.11;
     tilt.add(edge);
 
     // Strategy nodes drifting along the middle strand.
@@ -218,7 +199,7 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
     const nodes: THREE.Group[] = [];
     for (let i = 0; i < 3; i++) {
       const n = new THREE.Group();
-      const core = new THREE.Mesh(track(new THREE.SphereGeometry(0.04, 24, 16)), glowMat);
+      const core = new THREE.Mesh(track(new THREE.SphereGeometry(0.06, 24, 16)), glowMat);
       const halo2 = new THREE.Sprite(track(new THREE.SpriteMaterial({ map: glowTex, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0.1 })));
       halo2.scale.setScalar(0.1);
       n.add(core, halo2);
@@ -320,17 +301,11 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
       pointer.y = lerp(pointer.y, pointer.ty, 0.045);
       const scroll = clamp01(window.scrollY / Math.max(1, container.clientHeight));
 
-      // Depth parallax: the statue moves least, the hooded figure most.
-      const nashIn = fade(marble, reveal.nash);
-      const satIn = fade(cloth, reveal.satoshi);
-      nashPivot.rotation.y = -0.16 + pointer.x * 0.12 + Math.sin(t * 0.3) * 0.03;
-      nashPivot.rotation.x = 0.1 + pointer.y * 0.03 + Math.sin(t * 0.5) * 0.008;
-      nashPivot.position.x = pointer.x * 0.12;
-      nashPivot.position.y = 2.0 + Math.sin(t * 0.6) * 0.03 - (1 - nashIn) * 0.25;
-      satoshiPivot.rotation.y = -0.42 + pointer.x * 0.22 + Math.sin(t * 0.35) * 0.04;
+      const satIn = fade(cloth, revealAt);
+      satoshiPivot.rotation.y = -0.42 + pointer.x * 0.2 + Math.sin(t * 0.35) * 0.04;
       satoshiPivot.rotation.x = pointer.y * 0.035 + Math.sin(t * 0.6) * 0.008;
-      satoshiPivot.position.x = 0.15 - pointer.x * 0.1;
-      satoshiPivot.position.y = -1.15 + Math.sin(t * 0.8) * 0.03 - (1 - satIn) * 0.3;
+      satoshiPivot.position.x = -0.25 - pointer.x * 0.12;
+      satoshiPivot.position.y = SAT_Y + Math.sin(t * 0.8) * 0.04 - (1 - satIn) * 0.4;
       stage.position.y = -scroll * 0.5;
 
       rings.scale.setScalar(lerp(0.72, 1, intro));
@@ -343,7 +318,7 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
 
       nodes.forEach((n, i) => {
         const a = t * 0.55 + (i * Math.PI * 2) / 3;
-        n.position.set(Math.cos(a) * 4.302, 0, Math.sin(a) * 4.302);
+        n.position.set(Math.cos(a) * 4.302 * RING, 0, Math.sin(a) * 4.302 * RING);
       });
       dust.rotation.y = t * 0.012;
 
@@ -357,7 +332,7 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
 
     return () => {
       cancelAnimationFrame(raf);
-      jobs.forEach((job) => job.cancel());
+      job.cancel();
       ro.disconnect();
       io.disconnect();
       window.removeEventListener('pointermove', onMove);

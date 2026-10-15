@@ -873,92 +873,7 @@ button:hover .arrow-chip {
   }
 }
 
-/* Stat Band — full-bleed acid-green strip, between Hero and Products.
-   Asymmetric terminal-readout composition: one primary stat, two secondary. */
-.stat-band {
-  background: var(--green);
-  color: var(--bg);
-}
-.stat-band-inner {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding-top: 44px;
-  padding-bottom: 44px;
-  text-align: left;
-}
-.stat-band-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1.3px;
-  color: rgba(5, 10, 24, 0.65);
-  margin-bottom: 28px;
-}
-.stat-band-eyebrow .live-dot,
-.stat-band-eyebrow .live-dot::after {
-  background: var(--bg);
-  border-color: var(--bg);
-}
-.stat-band-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 56px;
-}
-.stat-band-item {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-  padding-top: 14px;
-  border-top: 2px solid var(--silver);
-  min-width: 128px;
-}
-.stat-band-item strong {
-  font-family: var(--display);
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1;
-}
-.stat-band-primary {
-  min-width: 160px;
-}
-.stat-band-primary strong {
-  font-size: clamp(48px, 6vw, 84px);
-}
-.stat-band-secondary {
-  display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
-}
-.stat-band-secondary .stat-band-item strong {
-  font-size: clamp(24px, 2.4vw, 32px);
-}
-.stat-band-item span {
-  font-size: 13px;
-  color: rgba(5, 10, 24, 0.72);
-  max-width: 220px;
-}
-@media (max-width: 640px) {
-  .stat-band-inner {
-    padding-top: 32px;
-    padding-bottom: 32px;
-  }
-  .stat-band-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 28px;
-  }
-  .stat-band-secondary {
-    gap: 28px;
-  }
-}
-
-/* How It Works — one looping illustration (vault, lever, guard) with three step tabs beneath */
+/* How It Works — one instrument board (see nash.css, .hiwb) with a caption and three step tabs beneath */
 .hiw {
   /* Fills one screen: the stage takes whatever height the title and header leave over */
   display: flex;
@@ -980,172 +895,10 @@ button:hover .arrow-chip {
   background: var(--panel);
   overflow: hidden;
 }
-.hiw-svg {
-  display: block;
-  flex: 1 1 auto;
-  width: 100%;
-  height: 100%;
-  min-height: 240px;
-}
-
-/* Line */
-.hiw-rail { stroke: var(--line); stroke-width: 2; stroke-dasharray: 2 8; stroke-linecap: round; }
-.hiw-rail-on {
-  fill: var(--green);
-  transform-box: fill-box;
-  transform-origin: 0 50%;
-  transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
-}
-.hiw-node { fill: var(--panel); stroke: var(--line); stroke-width: 2; transition: fill 0.3s, stroke 0.3s; }
-.hiw-node.is-on { fill: var(--green); stroke: var(--green); }
-.hiw-pulse {
-  fill: none;
-  stroke: var(--green);
-  stroke-width: 2;
-  transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-/* Scenes rest in their finished state; the active scene replays its animation */
-.hiw-scene { opacity: 0.42; transition: opacity 0.4s; }
-.hiw-scene.is-active { opacity: 1; }
-.hiw-label { font-family: var(--body); font-size: 12px; fill: var(--muted); }
-.hiw-label.is-dark { fill: var(--bg); font-weight: 600; }
-.hiw-label-asset { font-size: 13px; fill: var(--text); }
-
-/* 1. Vault and shares */
-.hiw-vault { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.4s; }
-.hiw-s1.is-active .hiw-vault { stroke: var(--green); }
-.hiw-chip { fill: var(--panel-hover); stroke: var(--green); stroke-width: 1.75; }
-
-/* 2. Lever */
-.hiw-fulcrum { fill: var(--panel); stroke: var(--green); stroke-width: 2; stroke-linejoin: round; }
-.hiw-beam { transform-box: fill-box; transform-origin: 50% 50%; }
-.hiw-ghost { fill: none; stroke: none; }
-.hiw-beam-bar { fill: var(--text); opacity: 0.7; }
-.hiw-weight { fill: var(--panel-hover); stroke: var(--muted); stroke-width: 1.5; }
-.hiw-weight.is-lime { fill: var(--green); stroke: var(--green); }
-.hiw-coin { fill: var(--green); opacity: 0; }
-.hiw-side { opacity: 0; }
-.hiw-side path { fill: none; stroke: var(--green); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.hiw-side .hiw-label { fill: var(--text); font-size: 13px; }
-
-/* 3. Guard */
-.hiw-price { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
-.hiw-track { fill: var(--panel-hover); stroke: var(--line); stroke-width: 1.5; }
-.hiw-health { fill: var(--green); transform-box: fill-box; transform-origin: 0 50%; transform: scaleX(0.72); }
-.hiw-position { fill: var(--muted); transform-box: fill-box; transform-origin: 0 50%; transform: scaleX(0.7); }
-.hiw-notch { stroke: var(--green); stroke-width: 2; stroke-dasharray: 3 3; }
-.hiw-liq { stroke: var(--danger); stroke-width: 2; }
-.hiw-brackets { transform-box: fill-box; transform-origin: 50% 50%; }
-.hiw-brackets path { fill: none; stroke: var(--green); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-
-/* Animations: only once the section has scrolled into view, only on the active scene */
-.hiw-stage.is-playing .hiw-s1.is-active .hiw-chip {
-  animation: hiw-drop 0.8s cubic-bezier(0.34, 1.3, 0.64, 1) calc(0.2s + var(--i) * 0.28s) both;
-}
-.hiw-stage.is-playing .hiw-s2.is-active .hiw-coin {
-  animation: hiw-coin 0.9s ease-in-out calc(0.2s + var(--i) * 0.3s) both;
-}
-.hiw-stage.is-playing .hiw-s2.is-active .hiw-beam {
-  animation: hiw-tilt 3.6s cubic-bezier(0.65, 0, 0.35, 1) both;
-}
-.hiw-stage.is-playing .hiw-s2.is-active .hiw-side-long { animation: hiw-long 3.6s linear both; }
-.hiw-stage.is-playing .hiw-s2.is-active .hiw-side-short { animation: hiw-short 3.6s linear both; }
-.hiw-stage.is-playing .hiw-s3.is-active .hiw-price { animation: hiw-price 3.6s ease-out both; }
-.hiw-stage.is-playing .hiw-s3.is-active .hiw-health { animation: hiw-health 3.6s cubic-bezier(0.65, 0, 0.35, 1) both; }
-.hiw-stage.is-playing .hiw-s3.is-active .hiw-brackets { animation: hiw-guard 3.6s ease-out both; }
-.hiw-stage.is-playing .hiw-s3.is-active .hiw-position { animation: hiw-position 3.6s cubic-bezier(0.65, 0, 0.35, 1) both; }
-
-@keyframes hiw-drop {
-  from { transform: translateY(-150px); opacity: 0; }
-  30% { opacity: 1; }
-  to { transform: none; opacity: 1; }
-}
-@keyframes hiw-coin {
-  0% { transform: translate(0, 0); opacity: 0; }
-  15%, 80% { opacity: 1; }
-  100% { transform: translate(172px, -16px); opacity: 0; }
-}
-@keyframes hiw-tilt {
-  0%, 20% { transform: rotate(0deg); }
-  34%, 50% { transform: rotate(-7deg); }
-  62% { transform: rotate(0deg); }
-  76%, 92% { transform: rotate(7deg); }
-  100% { transform: rotate(0deg); }
-}
-@keyframes hiw-long {
-  0%, 30% { opacity: 0; }
-  36%, 50% { opacity: 1; }
-  56%, 100% { opacity: 0; }
-}
-@keyframes hiw-short {
-  0%, 72% { opacity: 0; }
-  78%, 92% { opacity: 1; }
-  98%, 100% { opacity: 0; }
-}
-@keyframes hiw-price {
-  from { stroke-dashoffset: 1; }
-  35%, to { stroke-dashoffset: 0; }
-}
-@keyframes hiw-health {
-  0%, 28% { transform: scaleX(0.86); fill: var(--green); }
-  48%, 58% { transform: scaleX(0.22); fill: var(--danger); }
-  78%, 100% { transform: scaleX(0.72); fill: var(--green); }
-}
-@keyframes hiw-guard {
-  0%, 50% { opacity: 0; transform: scale(1.25); }
-  60%, 100% { opacity: 1; transform: scale(1); }
-}
-@keyframes hiw-position {
-  0%, 58% { transform: scaleX(1); }
-  72%, 100% { transform: scaleX(0.7); }
-}
-
-/* 3D scene (three.js) and per-step caption */
-.hiw-visual {
-  position: relative;
-  flex: 1 1 auto;
-  min-height: 320px;
-}
-.hiw-canvas {
-  position: absolute;
-  inset: 0;
-}
-.hiw-canvas canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.hiw-tags {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-.hiw-tagpill {
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding: 3px 10px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(11, 20, 41, 0.88);
-  color: var(--text);
-  font-family: var(--body);
-  font-size: 12px;
-  line-height: 1.4;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.3s;
-  will-change: transform;
-}
-.hiw-tagpill.is-on { opacity: 1; }
-.hiw-tagpill.is-lime { border-color: var(--green); color: var(--green); }
-.hiw-tagpill.is-danger { border-color: var(--danger); color: #ff6b86; }
 .hiw-caption {
   min-height: 3.2em;
   margin: 0;
-  padding: 20px 16px 22px;
+  padding: 12px 16px 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1153,7 +906,7 @@ button:hover .arrow-chip {
   gap: 12px;
   text-align: center;
   font-family: var(--display);
-  font-size: clamp(20px, 2vw, 28px);
+  font-size: clamp(18px, 1.7vw, 24px);
   line-height: 1.3;
   color: var(--text);
   animation: hiw-caption-in 0.45s ease both;
@@ -1210,9 +963,7 @@ button:hover .arrow-chip {
 .hiw-tab:focus-visible { outline: 2px solid var(--green); outline-offset: -4px; border-radius: 4px; }
 
 @media (max-width: 760px) {
-  .hiw-visual { min-height: 360px; }
   .hiw-caption { min-height: 4em; padding: 16px 16px 18px; }
-  .hiw-tagpill { font-size: 11px; padding: 2px 8px; }
   .hiw-br { display: inline; }
   .hiw { padding-top: 104px; padding-bottom: 32px; }
   .hiw-stage { margin-top: 24px; }

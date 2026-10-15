@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import type { FigureMesh, FigureName, Quality } from './figures';
+import type { FigureMesh, Quality } from './figures';
 
 export interface LoadedFigure {
   geometry: THREE.BufferGeometry;
@@ -17,10 +17,10 @@ function toGeometry(mesh: FigureMesh) {
 }
 
 /**
- * Carves a figure in a Web Worker. Where workers are unavailable it falls back to the main thread, on a
+ * Carves the figure in a Web Worker. Where workers are unavailable it falls back to the main thread, on a
  * timer so the first frame is not blocked.
  */
-export function loadFigure(which: FigureName, quality: Quality): { promise: Promise<LoadedFigure>; cancel: () => void } {
+export function loadFigure(quality: Quality): { promise: Promise<LoadedFigure>; cancel: () => void } {
   let worker: Worker | null = null;
   let cancelled = false;
   const promise = new Promise<LoadedFigure>((resolve, reject) => {
@@ -30,7 +30,7 @@ export function loadFigure(which: FigureName, quality: Quality): { promise: Prom
         try {
           const { buildFigureMesh } = await import('./figures');
           const started = performance.now();
-          const mesh = buildFigureMesh(which, quality);
+          const mesh = buildFigureMesh(quality);
           resolve({ geometry: toGeometry(mesh), ms: Math.round(performance.now() - started) });
         } catch (error) {
           reject(error);
@@ -53,7 +53,7 @@ export function loadFigure(which: FigureName, quality: Quality): { promise: Prom
       worker = null;
       fallback();
     };
-    worker.postMessage({ id: 0, which, quality });
+    worker.postMessage({ id: 0, quality });
   });
   return {
     promise,

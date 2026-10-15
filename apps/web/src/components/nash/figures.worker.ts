@@ -1,19 +1,18 @@
 /// <reference lib="webworker" />
-// Carves a hero figure off the main thread and hands the buffers back without copying.
-import { buildFigureMesh, type FigureName, type Quality } from './figures';
+// Carves the hero figure off the main thread and hands the buffers back without copying.
+import { buildFigureMesh, type Quality } from './figures';
 
 interface Request {
   id: number;
-  which: FigureName;
   quality: Quality;
 }
 
 self.onmessage = (event: MessageEvent<Request>) => {
-  const { id, which, quality } = event.data;
+  const { id, quality } = event.data;
   const started = performance.now();
-  const mesh = buildFigureMesh(which, quality);
+  const mesh = buildFigureMesh(quality);
   (self as unknown as Worker).postMessage(
-    { id, which, mesh, ms: Math.round(performance.now() - started) },
+    { id, mesh, ms: Math.round(performance.now() - started) },
     [mesh.positions.buffer, mesh.normals.buffer, mesh.colors.buffer, mesh.indices.buffer],
   );
 };

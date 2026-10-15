@@ -9,7 +9,7 @@
 | Name | **Nash Protocol** (short form: **Nash**) |
 | Tagline | *Leverage, at equilibrium.* |
 | Mark | The brushed-silver ribbon **N**: three parallel strands in dynamic balance. Source file: `Nash-Protocol-Logo.png` (transparent PNG). Derived assets live in `apps/web/public/brand/` |
-| Image language | Futuristic, high quality, calm. The hero is two characters inside a ring of three silver ribbons (the same three strands as the mark): in front, Satoshi Nakamoto as a faceless hooded figure; behind and above, John Nash as a marble statue. See section 3 |
+| Image language | Futuristic, high quality, calm. The hero is Satoshi Nakamoto as a large faceless hooded figure inside an oversized ring of three silver ribbons (the same three strands as the mark), with Nash present as a blackboard of formulas. See section 3 |
 
 ### Palette
 
@@ -68,15 +68,15 @@ A fifth voice appears only in the hero's formulas: **Computer Modern** (KaTeX's 
 | Label | Montserrat 600, 11 to 12 px, uppercase, tracking `0.1em` to `0.2em` |
 | Data | JetBrains Mono 500, 10.5 to 12 px, tracking `0.06em` to `0.14em` |
 
-## 3. The hero: two characters and a blackboard
+## 3. The hero: a figure and a blackboard
 
-**Satoshi in front, no face.** A hooded figure whose face is a deep void under a thick, rolled hood. Nakamoto is a pseudonym: the idea has no face.
+**Satoshi, no face.** A hooded figure whose face is a deep void under a thick, rolled hood. Nakamoto is a pseudonym: the idea has no face. The figure fills the ring, turned slightly toward the headline, dark and matte so the ring and the formulas carry the light. The ring is drawn larger than the frame on purpose and runs off the top and bottom of the hero.
 
-**Nash behind, a statue.** A marble bust in the classical manner, with a face, so the person behind the idea is present. It is a stylised sculpture, not a portrait or a likeness study. The lower bust dissolves into the dark, so the statue looms rather than competes. Satoshi is dark and matte; Nash is pale and veined: the two figures differ in value so each reads at a glance.
+The figure is carved in code: a signed-distance field blended smoothly, meshed once in a Web Worker (`figures.ts`, `sculpt.ts`), with ambient occlusion baked into vertex colour. There is no model or texture file. On phones the grid is coarser. The figure fades in when its mesh is ready, so the ring and the page never wait for it.
 
-Both are carved in code: signed-distance fields blended smoothly, meshed once in a Web Worker (`figures.ts`, `sculpt.ts`), with ambient occlusion baked into vertex colour. There is no model or texture file. On phones the grid is coarser. The figures fade in when their mesh is ready, so the ring and the page never wait for them.
+(An earlier version had a marble bust of Nash behind Satoshi. It was dropped: the formulas already carry Nash, and one figure reads more clearly.)
 
-**The blackboard.** In the 1970s Nash was "The Phantom of Fine Hall," scribbling arcane equations on blackboards at night. The hero is that blackboard: formulas typeset in **Computer Modern** (via KaTeX, at build time, so the browser receives static HTML), silver for Nash, emerald for Nakamoto and the protocol. Each carries its source in the tag:
+**The blackboard.** In the 1970s Nash was "The Phantom of Fine Hall," scribbling arcane equations on blackboards at night. The hero is that blackboard: formulas typeset in **Computer Modern** (via KaTeX, at build time, so the browser receives static HTML), silver for Nash, emerald for Nakamoto. Each carries its source in the tag:
 
 | Formula | Tag | Source |
 | :--- | :--- | :--- |
@@ -86,13 +86,21 @@ Both are carved in code: signed-distance fields blended smoothly, meshed once in
 | `T_attack(n): nᶜ ≪ eⁿ` | the attacker's effort · NSA, 1955 | Nash's letters contrast "a relatively small power of" the key length with exponential effort. They state nothing about the legitimate user's effort, so none is claimed |
 | `SHA256²(h) < 2^(256−k)` | proof-of-work · 2008 | Nakamoto §4: a hash that "begins with a number of zero bits"; work is exponential in that number |
 | `q_z = 1 if p ≤ q; (q/p)^z if p > q` | honest majority · §11 | Nakamoto §11, the attacker's catch-up probability (verified against the whitepaper text) |
-| `x · y = k` | constant product · margin pool | the margin pool is a Uniswap V2 pair |
-| `LTV = D/C ≤ LLTV`, `HF = C·LLTV/D > 1` | loan-to-value, health factor | this protocol |
-| Payoff matrix (3,3 / 0,5 / 5,0 / 1,1) | prisoner's dilemma | the textbook example; the equilibrium cell (1,1) glows. "Change the rules, change the equilibrium" is the design brief |
 
-The matrix is chosen on purpose: the equilibrium of the prisoner's dilemma is stable but not best. A protocol's job is to design the game so the stable outcome is also a good one.
 
 To add or edit a formula, change the list in `scripts/render-formulas.mjs`, run it, and commit `formulas.generated.ts`.
+
+### The "How it works" board
+
+The section keeps its three steps (Deposit, Borrow or trade, Auto-Protect) but is drawn as an instrument board, in the same blueprint language: a plot with a grid, axes and registration marks, and a side panel with a typeset formula, animated readouts and a one-line note. It is SVG driven by one clock, with no WebGL, and it pauses off screen. All numbers are illustrative and labelled so on the figure.
+
+| Step | Figure | The idea from Nash |
+| :--- | :--- | :--- |
+| Deposit | Collateral C against debt D. The line D = LLTV·C splits the plane; the safe set `S` grows with the deposit | A strategy set that is convex and closed, the kind Nash's 1950 existence proof works on |
+| Borrow or trade | A point inside `S`, its health factor, and a Long/Short payoff chart at 2× | A strategy is a side and a size; the rules decide the payoff |
+| Auto-Protect | Health factor over a falling price. The guard trims twice, each time returning the position to HF 1.30; the same position without a guard crosses 1.00 | A fixed point: after every shock the position returns to where it was safe |
+
+The step 3 curve is a deterministic simulation in `HowItWorksBoard.tsx` (`simulate`), using the real health-factor formula; the guard thresholds there (1.15 to act, 1.30 to return) are illustration values, not protocol parameters.
 
 ## 4. Narrative
 
@@ -128,7 +136,7 @@ Every historical claim on the site was checked against a source (below). Anythin
 | Tokens and `@font-face` | `apps/web/src/app/globals.css` (head), `apps/web/tailwind.config.ts` |
 | Landing styles | `apps/web/src/app/nash.css` |
 | Hero 3D scene | `apps/web/src/components/nash/NashHeroScene.tsx` |
-| The two characters | `figures.ts` (the fields), `sculpt.ts` (mesher), `figures.worker.ts` and `loadFigure.ts` (off the main thread) |
+| The figure | `figures.ts` (the field), `sculpt.ts` (mesher), `figures.worker.ts` and `loadFigure.ts` (off the main thread) |
 | Formulas | `HeroFormulas.tsx`, `formulas.generated.ts`, generated by `scripts/render-formulas.mjs` |
 | Sections | `apps/web/src/components/nash/*` |
 | Metadata and OG image | `apps/web/src/app/layout.tsx`, `apps/web/public/og.png` |

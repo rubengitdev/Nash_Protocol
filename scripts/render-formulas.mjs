@@ -13,8 +13,7 @@
 //                     about the legitimate user's effort, which the letters do not state.
 //   pow               Nakamoto 2008 section 4: a hash that "begins with a number of zero bits"
 //   catch-up          Nakamoto 2008 section 11: the attacker's catch-up probability q_z
-//   health, ltv       Nash Protocol: health factor and loan-to-value
-//   amm               the margin pool is a Uniswap V2 pair: constant product x * y = k
+//   hiw-*             the "How it works" board: the safe strategy set, a leveraged payoff, the guard condition
 import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
@@ -37,9 +36,9 @@ const FORMULAS = [
     id: "catch-up",
     latex: String.raw`q_z=\begin{cases}1 & p\le q\\[4pt]\left(\dfrac{q}{p}\right)^{\!z} & p>q\end{cases}`,
   },
-  { id: "health", latex: String.raw`\mathrm{HF}=\dfrac{C\cdot\mathrm{LLTV}}{D}\;>\;1` },
-  { id: "ltv", latex: String.raw`\mathrm{LTV}=\dfrac{D}{C}\;\le\;\mathrm{LLTV}` },
-  { id: "amm", latex: String.raw`x\cdot y=k` },
+  { id: "hiw-set", latex: String.raw`S=\left\{(C,D)\;:\;D\le\mathrm{LLTV}\cdot C\right\}` },
+  { id: "hiw-payoff", latex: String.raw`\mathrm{PnL}=\pm\,L\cdot m\cdot E` },
+  { id: "hiw-guard", latex: String.raw`\mathrm{HF}=\dfrac{C\cdot\mathrm{LLTV}}{D}\;\ge\;h_{\mathrm{guard}}` },
 ];
 
 const out = {};
