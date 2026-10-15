@@ -21,8 +21,8 @@ contract PonsPerpMainnetForkTest is Test {
     address constant WETH = 0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73;
     address constant USDG = 0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168;
     address constant OWNER = 0xd09D9c87ECfe008B4D6D3cEbeAd25103c16d9a7C;
-    address constant LEVIER = 0xeC0b618cAdd930791329E834E11DCfD8213249C0;
-    address constant GRADUATED = 0x492F71Fb6CB10F923b0740436F5CD39c7c9a177A; // LEVERA, graduated
+    address constant LEGACY_PONS_TOKEN = 0xeC0b618cAdd930791329E834E11DCfD8213249C0;
+    address constant GRADUATED = 0x492F71Fb6CB10F923b0740436F5CD39c7c9a177A; // graduated Pons token
 
     PonsV4TwapOracle oracle;
     PonsLiquidityVault vault;
@@ -69,7 +69,7 @@ contract PonsPerpMainnetForkTest is Test {
         );
         vm.startPrank(OWNER);
         vault.setManager(address(manager));
-        oracle.listAsset(LEVIER);
+        oracle.listAsset(LEGACY_PONS_TOKEN);
         oracle.listAsset(GRADUATED);
         vm.stopPrank();
     }
@@ -86,18 +86,18 @@ contract PonsPerpMainnetForkTest is Test {
     }
 
     function testNashListedButNotOpenUntilGraduation() public {
-        IPonsFactory.LaunchedToken memory launch = IPonsFactory(PONS_FACTORY).getLaunchedToken(LEVIER);
-        (bytes32 poolId,,,,,) = oracle.assets(LEVIER);
-        assertEq(poolId, keccak256(abi.encode(address(0), LEVIER, launch.poolFee, launch.tickSpacing, PONS_HOOK)));
+        IPonsFactory.LaunchedToken memory launch = IPonsFactory(PONS_FACTORY).getLaunchedToken(LEGACY_PONS_TOKEN);
+        (bytes32 poolId,,,,,) = oracle.assets(LEGACY_PONS_TOKEN);
+        assertEq(poolId, keccak256(abi.encode(address(0), LEGACY_PONS_TOKEN, launch.poolFee, launch.tickSpacing, PONS_HOOK)));
         if (launch.phase == 2) return; // graduated since this test was written
         vm.expectRevert(PonsV4TwapOracle.PoolNotInitialized.selector);
-        oracle.poke(LEVIER);
+        oracle.poke(LEGACY_PONS_TOKEN);
 
         vm.startPrank(OWNER);
-        manager.setMarket(LEVIER, 20_000, 1_000, 20e6, 100e6);
+        manager.setMarket(LEGACY_PONS_TOKEN, 20_000, 1_000, 20e6, 100e6);
         manager.setOpeningPaused(false);
         vm.stopPrank();
         vm.expectRevert(PonsPerpManager.NotGraduated.selector);
-        manager.openPosition(LEVIER, true, 1e6, 20_000);
+        manager.openPosition(LEGACY_PONS_TOKEN, true, 1e6, 20_000);
     }
 }
