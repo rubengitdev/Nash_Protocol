@@ -161,7 +161,14 @@ const rpc = async (method, params = []) => {
   return j.result;
 };
 async function sourcify(address) {
-  const j = await getJson(`${SOURCIFY}/v2/contract/${CHAIN_ID}/${address}?fields=compilation,proxyResolution`);
+  // Sourcify is occasionally slow to answer or briefly reports "no match" for a contract it holds; ask again before
+  // declaring a contract unverified, so a hiccup does not turn a recording red.
+  let j;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    j = await getJson(`${SOURCIFY}/v2/contract/${CHAIN_ID}/${address}?fields=compilation,proxyResolution`);
+    if (!j.notFound && j.match) break;
+    await sleep(1500 * (attempt + 1));
+  }
   if (j.notFound || !j.match) return { exact: false };
   return {
     exact: j.match === "exact_match",
