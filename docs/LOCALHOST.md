@@ -35,10 +35,11 @@ Everything binds to `127.0.0.1` only. The credentials are throwaway values that 
 | Landing page, 3D hero, every section | Fully working |
 | Markets, Earn | Populated from `supabase/seed.sql`. **The numbers are an illustrative fixture, not real data** |
 | Reference prices | Live, read from the public price providers |
-| Lending, Trade (long/short), Portfolio, Analytics, Pons | Render with their empty or "not enabled" states. They need Nash contracts deployed on Robinhood testnet and an indexer, which `localnet` does not provide |
-| Wallet writes | Disabled: `LENDING_ENABLED`, `MARGIN_TRADING_ENABLED` and `TRADING_ENABLED` are `false` and the web env holds a schema-valid **placeholder** deployment |
+| Analytics, Lending | Read the **real Nash testnet deployment** (`apps/web/.env` holds its addresses after the pipeline ran): Analytics reports 2 of 2 markets verified, Lending shows TSLA/USDG with execution disabled |
+| Trade (long/short), Portfolio, Pons | Render with their empty or "not enabled" states: the markets are paused, and Pons has no testnet deployment |
+| Wallet writes | Disabled: `LENDING_ENABLED`, `MARGIN_TRADING_ENABLED` and `TRADING_ENABLED` are `false`. Before any deployment the web env holds a schema-valid **placeholder** deployment instead of real addresses |
 
-To exercise real contracts, deploy to testnet ([`TESTNET.md`](TESTNET.md)), then put the real addresses into `apps/web/.env`.
+The deployment addresses are in [`TESTNET.md`](TESTNET.md). To try wallet flows, the market must be active and prices fresh: run the price publisher (`pnpm rh:publisher:serve`), then set `LENDING_ENABLED=true` in `apps/web/.env`. Browser-wallet flows have not been exercised yet, so treat them as untested.
 
 ## Commands
 
@@ -46,7 +47,7 @@ To exercise real contracts, deploy to testnet ([`TESTNET.md`](TESTNET.md)), then
 | :--- | :--- |
 | `pnpm localnet:up` | Start the stack; applies migrations and the fixture on a fresh database. Idempotent |
 | `pnpm localnet:up --reseed` | Reload `supabase/seed.sql` |
-| `pnpm localnet:up --force-env` | Rewrite the generated `.env` files |
+| `pnpm localnet:up --force-env` | Rewrite the generated `.env` files. **This discards real deployment addresses** written by the testnet pipeline; do not run it after a deployment |
 | `pnpm localnet:down` | Stop containers (data kept) |
 | `pnpm localnet:reset` | Stop, delete the database volume, start fresh |
 | `pnpm --filter @nash/web build` | Production build check |
@@ -55,7 +56,8 @@ To exercise real contracts, deploy to testnet ([`TESTNET.md`](TESTNET.md)), then
 
 - **`Docker is not reachable`**: start Docker (or Podman's Docker socket) and retry.
 - **Port already in use**: something else holds 3001, 3002 or 5432x. Stop it, or change the host port in `docker/localnet/compose.yml`.
-- **`Invalid ENV fields: ...` when the web starts**: the web validates its environment strictly (zero-fallback). Run `pnpm localnet:up --force-env` to regenerate a valid one.
+- **API exits with `SUPABASE_SERVICE_ROLE_KEY: String must contain at least 1 character(s)`**: the API loads `../../.env.testnet` before `.env`, and dotenv does not override variables that are already defined. A deployment profile that carries `SUPABASE_*` or `DATABASE_URL` (placeholders copied from the template) shadows the local `.env`. Delete those keys from `.env.testnet`; the deployment pipeline does not use them.
+- **`Invalid ENV fields: ...` when the web starts**: the web validates its environment strictly (zero-fallback). Before a deployment, `pnpm localnet:up --force-env` regenerates a valid placeholder one. After a deployment that would discard the real addresses, so restore them from `packages/contracts/deployments/testnet-46630.json` (on the `testnet` branch) instead.
 - **Markets page empty**: confirm the API is up (`curl localhost:3001/health`) and the database has rows (`pnpm localnet:up --reseed`).
 - **Hero shows a still logo instead of the 3D scene**: the browser could not create a WebGL context. The page still works; try a browser with hardware acceleration enabled.
 - **Slow first page load in dev**: Next compiles routes on demand. `pnpm --filter @nash/web build && pnpm --filter @nash/web start` serves the optimized build.

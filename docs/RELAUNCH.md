@@ -49,7 +49,7 @@ Resolved on 2026-10-15:
 - **Language:** English only, like the original site.
 - **Footer:** the non-affiliation sentence was removed at the owner's request; the footer now carries only the experimental-software, leverage-risk and not-financial-advice notice.
 - **Git:** a private GitHub repository with `main`, `testnet`, `mainnet`.
-- **Testnet:** deploy with the existing testnet deployer, staged, with owner confirmation before each broadcast ([`TESTNET.md`](TESTNET.md)).
+- **Testnet:** deployed on 2026-10-15 with the existing testnet deployer, in two confirmed stages (core lending, then margin) after a fork rehearsal ([`TESTNET.md`](TESTNET.md)).
 
 Still open:
 

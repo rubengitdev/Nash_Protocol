@@ -22,7 +22,7 @@ Named for John Nash, whose equilibrium says a system is stable when no one can d
 | Smart contracts | Renamed to `Nash*`; **152 Foundry tests passing** (unit, fuzz, invariants, upgradeability) |
 | Web app | New identity, landing page with 3D hero, all app pages re-themed; production build passes |
 | Localhost | One-command stack (Postgres + PostgREST in Docker, API, web). No cloud credentials needed |
-| Robinhood testnet (46630) | **Not yet broadcast.** The full pipeline (core lending, then margin) was rehearsed end to end on a testnet fork with real tokens and prices; runbook: [`docs/TESTNET.md`](docs/TESTNET.md) |
+| Robinhood testnet (46630) | **Deployed 2026-10-15**: core lending and margin (long/short), funded acceptance passed, all markets paused, execution flags off. Addresses and runbook: [`docs/TESTNET.md`](docs/TESTNET.md) |
 | Robinhood mainnet (4663) | Not deployed. Plan and budget estimator ready: [`docs/MAINNET.md`](docs/MAINNET.md), [`docs/MAINNET_BUDGET.md`](docs/MAINNET_BUDGET.md) |
 
 > The contracts have not been audited. Leverage can lose all of your collateral. Nothing here is financial advice.

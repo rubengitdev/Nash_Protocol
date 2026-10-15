@@ -8,15 +8,37 @@
 | Gas | ETH, about 0.01 gwei on testnet at the time of writing |
 | USDG faucet | <https://faucet.paxos.com/> |
 
-## Status
+## Status: deployed 2026-10-15
 
-The full runbook below was **rehearsed end to end on an Anvil fork of testnet on 2026-10-15** with the real TSLA and USDG tokens and live Robinhood reference prices. Nothing has been broadcast to the real testnet yet.
+Stages 1 and 2 were rehearsed on an Anvil fork and then **broadcast to the real testnet** from the deployer `0xFE29…3B10` with the real TSLA and USDG tokens and live Robinhood reference prices. Blocks 135,835,698 to 135,842,726, 63 transactions, **0.00028 ETH** in total fees.
 
-| Stage | Rehearsal result |
+| Contract | Address (proxy) | Implementation |
+| :--- | :--- | :--- |
+| NashMarketRegistry | [`0xa765…93d4`](https://explorer.testnet.chain.robinhood.com/address/0xa765b0a37d45c87a0a4338cab9dc890507cf93d4) | [`0x6193…d7bd`](https://explorer.testnet.chain.robinhood.com/address/0x6193fa2a2c8c1a2b7b44d672de245aef9c8ed7bd) |
+| NashRouter | [`0x4760…20cc`](https://explorer.testnet.chain.robinhood.com/address/0x4760509de76cf084de0b61e55173d0c3192920cc) | [`0x2361…21db`](https://explorer.testnet.chain.robinhood.com/address/0x23611b3fa33e95f49583861062bca9ef2d4b21db) |
+| NashVault (`nUSDG`) | [`0xb378…9006`](https://explorer.testnet.chain.robinhood.com/address/0xb37840da67d01ffb4fac77f56201eed9cd7f9006) | [`0x6cb6…0db0`](https://explorer.testnet.chain.robinhood.com/address/0x6cb67a96399b090f9d9345a1b6ba7f2b45190db0) |
+| AutoProtectModule | [`0xb2d4…8ea2`](https://explorer.testnet.chain.robinhood.com/address/0xb2d4cb95d3f43d815c448f0a3dd5e270e5208ea2) | [`0xbeae…1001`](https://explorer.testnet.chain.robinhood.com/address/0xbeae7837a7b71075aac39dc649205409e1bd1001) |
+| LeverageRouter | [`0x30d3…3019`](https://explorer.testnet.chain.robinhood.com/address/0x30d3ba85a542a48a2e6d7e20ad2ae75bd8ea3019) | [`0x698f…f508`](https://explorer.testnet.chain.robinhood.com/address/0x698f830bfb601f781c45f106ce4656b73273f508) |
+| ShortRouter | [`0x745c…6027`](https://explorer.testnet.chain.robinhood.com/address/0x745c7038b51712297ad0f10dae027d0009756027) | [`0xab6e…7d94`](https://explorer.testnet.chain.robinhood.com/address/0xab6e8489840c9a428746e799dc52b83bb4347d94) |
+| NashPair TSLA/USDG | [`0x45ca…1a1b`](https://explorer.testnet.chain.robinhood.com/address/0x45ca70e8f78c14773338d9c1a771c3887ede1a1b) | [`0xc14a…8279`](https://explorer.testnet.chain.robinhood.com/address/0xc14acc095ec04217ce61f14838a059d7ab8b8279) |
+| RhTestnetReferenceOracle | [`0x2a15…c869`](https://explorer.testnet.chain.robinhood.com/address/0x2a15ad2b007943de27faad46d15d78453f46c869) | not a proxy |
+| NashPair TSLA short | [`0xbc41…14b8`](https://explorer.testnet.chain.robinhood.com/address/0xbc414d8ac3cc530d7e1e027f4c46757e426e14b8) | [`0xb642…d750`](https://explorer.testnet.chain.robinhood.com/address/0xb642f88d93569295a783035fd29dbf7b4cd1d750) |
+| MarginRouter | [`0xd3a0…6fda`](https://explorer.testnet.chain.robinhood.com/address/0xd3a00803dedef75a28007317ab0cbb075a116fda) | [`0x5bb3…369f`](https://explorer.testnet.chain.robinhood.com/address/0x5bb350d93a02bb0a7a4e3046b34dbd5c1f4d369f) |
+| Uniswap V2 pool (TSLA/USDG) | [`0x61eB…2865`](https://explorer.testnet.chain.robinhood.com/address/0x61eB7118E5DE9faDFCbb1663a19Bc444D9a72865) | vendored V2 |
+
+Tokens: USDG `0x7E955252E15c84f5768B83c41a71F9eba181802F`, TSLA `0xC9f9c86933092BbbfFF3CCb4b105A4A94bf3Bd4E`.
+
+Final state, read back from the chain independently of the pipeline: the registry owner is the deployer; the registry holds 2 markets (TSLA long and TSLA short), both **paused**; the vault is "Nash USDG Yield Vault" / `nUSDG` over USDG with deposits paused; the leverage router and Auto-Protect are paused; every proxy points at its own implementation. Application execution flags (`LENDING_ENABLED`, `MARGIN_TRADING_ENABLED`, `TRADING_ENABLED`) are `false`.
+
+| Stage | Result |
 | :--- | :--- |
-| 1. Core lending (TSLA/USDG) | Registry, router, vault, Auto-Protect, leverage and short routers as proxies, reference oracle, pair proxy. Funded deposit → borrow → repay → withdraw: `FUNDED_LENDING_LIFECYCLE_PASSED`. Finalize: 8 contracts, 31 transactions verified, allowances zero, market left paused |
-| 2. Margin (long and short) | Uniswap V2 pool, short pair proxy, `MarginRouter` proxy, pool seeded, short opened and closed with zero debt, collateral and router dust left over |
-| 3. Pons group | Not deployed on testnet (see below) |
+| 1. Core lending (TSLA/USDG) | `FUNDED_LENDING_LIFECYCLE_PASSED` (seed liquidity, deposit, borrow, repay, withdraw), finalize: 8 contracts, 31 transactions verified, allowances zero |
+| 2. Margin (long and short) | Pool seeded with 34.86 USDG; a long and a short each opened and closed with zero debt, zero collateral and zero router dust left |
+| 3. Pons group | Not deployed (see below) |
+
+The machine-readable record (addresses, implementations, code hashes, every transaction hash) is `packages/contracts/deployments/testnet-46630.json` on the **`testnet` branch**, with the pipeline's evidence reports under `docs/evidence/`. `node scripts/export-deployment-record.mjs` regenerates it from the journal.
+
+The app reads this deployment: `/api/analytics` reports **2 of 2 markets verified** at the current block. Browser-wallet flows have **not** been exercised.
 
 ## What the rehearsal fixed
 
