@@ -45,6 +45,7 @@ Run the whole sequence and the pause runbook against `anvil --fork-url $RPC_URL 
 ### Phase 2: Full deployment (owner broadcasts)
 
 ```bash
+bash scripts/ops/init-mainnet-profile.sh   # hidden prompt for the key; refuses any wallet but the project wallet; every broadcast switch stays off
 pnpm rh:mainnet:full:plan          # read-only plan and gas estimate
 # set MAINNET_FULL_BROADCAST_ENABLED=true in .env.mainnet.core.local
 pnpm rh:mainnet:full:deploy        # OWNER runs; journaled and resumable
