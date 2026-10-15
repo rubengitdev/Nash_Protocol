@@ -106,6 +106,15 @@ All markets (TSLA, AMZN, PLTR, AMD; long and short each) are NORMAL at micro siz
 
 Source verification: `node scripts/verify-rh-mainnet-sources.mjs` matched **28 of 28** Nash contracts on Sourcify on 2026-10-16 (the first attempt matched only 4 and the second all 28, so Sourcify is intermittent: rerun it if a later check shows gaps). Blockscout shows Sourcify matches on each address page. The Blockscout mainnet API sits behind a bot challenge, so `forge verify-contract` cannot be scripted against it. The deployment record files live on the `mainnet` branch; check it out to run the mainnet scripts.
 
+### Showing the verification on camera
+
+```bash
+PS1='$ '                    # once, so the prompt that returns at the end shows no directory
+pnpm -s mainnet:verify      # -s hides pnpm's banner, which prints the directory
+```
+
+`scripts/check-mainnet-verified.mjs` is read-only. It checks every Nash address on chain and on Sourcify (exact match, and each proxy must point at the listed implementation), checks the reused Uniswap V2 addresses against the vendored Uniswap V2 bytecode, and ends with the explorer link of each contract. It clears the screen and scrollback first, so the command line and prompt that show your working directory are gone, replaces the terminal title, and scrubs the current directory, the home directory and the user name from everything it prints. Add `--no-clear` to keep the screen, `--fast` to skip the pauses, `--plain` for no colours. The Blockscout mainnet API is behind a bot challenge, so the explorer itself cannot be queried from a script; the links open in a browser.
+
 ## 4. Emergency runbook
 
 Trigger on any of: stale or wrong oracle, unexpected liquidation, abnormal outflow, an exploit report, keeper or publisher down longer than the oracle staleness window.

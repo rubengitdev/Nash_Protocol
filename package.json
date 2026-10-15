@@ -83,7 +83,8 @@
     "rh:prices:status": "node --import tsx scripts/check-reference-prices.mjs apps/web/.env",
     "rh:prices:runtime": "node --import tsx scripts/check-reference-prices.mjs --runtime",
     "testnet:verify": "node scripts/check-testnet-verified.mjs",
-    "testnet:verify:publish": "node scripts/verify-testnet-sources.mjs"
+    "testnet:verify:publish": "node scripts/verify-testnet-sources.mjs",
+    "mainnet:verify": "node scripts/check-mainnet-verified.mjs"
   },
   "devDependencies": {
     "concurrently": "^10.0.5",
