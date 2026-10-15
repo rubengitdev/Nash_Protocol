@@ -22,7 +22,7 @@ Named for John Nash, whose equilibrium says a system is stable when no one can d
 | Smart contracts | Renamed to `Nash*`; **152 Foundry tests passing** (unit, fuzz, invariants, upgradeability) |
 | Web app | New identity, landing page with 3D hero, all app pages re-themed; production build passes |
 | Localhost | One-command stack (Postgres + PostgREST in Docker, API, web). No cloud credentials needed |
-| Robinhood testnet (46630) | **Not yet deployed under the Nash name.** Runbook and scripts ready: [`docs/TESTNET.md`](docs/TESTNET.md) |
+| Robinhood testnet (46630) | **Deployed 2026-10-15**: core lending and margin (long/short), funded acceptance passed, all markets paused, execution flags off. Addresses and runbook: [`docs/TESTNET.md`](docs/TESTNET.md) |
 | Robinhood mainnet (4663) | Not deployed. Plan and budget estimator ready: [`docs/MAINNET.md`](docs/MAINNET.md), [`docs/MAINNET_BUDGET.md`](docs/MAINNET_BUDGET.md) |
 
 > The contracts have not been audited. Leverage can lose all of your collateral. Nothing here is financial advice.
@@ -154,4 +154,4 @@ Engineering principles inherited from the Levier codebase and kept: English-only
 
 ## Brand
 
-Deep navy, emerald, silver and white; a type system derived from John Nash's own work and habits (journal serif for the argument, geometric sans for the interface, monospace for the machine, a hand for the margin notes). Full guide with sources: [`docs/BRAND.md`](docs/BRAND.md).
+Black, graphite, brushed silver and white, taken from the brand banner; a type system derived from John Nash's own work and habits (journal serif for the argument, geometric sans for the interface, monospace for the machine, a hand for the margin notes). Full guide with sources: [`docs/BRAND.md`](docs/BRAND.md).

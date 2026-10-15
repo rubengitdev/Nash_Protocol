@@ -51,19 +51,19 @@ export function ChinaWalletSignatureModal({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-[#080f20] border border-[#1b2438] shadow-[0_0_40px_rgba(0,0,0,0.8)] rounded-sm max-w-md w-full p-5 flex flex-col gap-4 font-sans text-xs animate-in fade-in zoom-in-95 duration-150">
+      <div className="bg-[#0a0a0a] border border-[#242424] shadow-[0_0_40px_rgba(0,0,0,0.8)] rounded-sm max-w-md w-full p-5 flex flex-col gap-4 font-sans text-xs animate-in fade-in zoom-in-95 duration-150">
         {/* MODAL HEADER */}
-        <div className="flex items-center justify-between border-b border-[#101c37] pb-3">
+        <div className="flex items-center justify-between border-b border-[#161616] pb-3">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#2ee6a6] animate-pulse" />
-            <h3 className="text-sm font-bold font-display text-[#eef2fa] uppercase tracking-wider">
+            <h3 className="text-sm font-bold font-display text-[#f5f5f5] uppercase tracking-wider">
               Wallet Signature Request
             </h3>
           </div>
           {step === "READY" && (
             <button
               onClick={onClose}
-              className="text-[#7a859f] hover:text-white transition-colors"
+              className="text-[#858585] hover:text-white transition-colors"
               aria-label="Close dialog"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -74,41 +74,41 @@ export function ChinaWalletSignatureModal({
         </div>
 
         {/* NETWORK & ACCOUNT BADGE */}
-        <div className="flex items-center justify-between bg-[#141612] border border-[#24271f] p-2.5 rounded-sm">
+        <div className="flex items-center justify-between bg-[#151515] border border-[#252525] p-2.5 rounded-sm">
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded-full bg-[#2ee6a6] text-[#050a18] font-bold font-display flex items-center justify-center text-[10px]">
+            <div className="w-5 h-5 rounded-full bg-[#e5e5e5] text-[#000000] font-bold font-display flex items-center justify-center text-[10px]">
               RH
             </div>
             <div>
-              <span className="text-[10px] text-[#8791aa] block font-display">Target Network</span>
-              <span className="font-mono text-[#eef2fa] text-[11px]">Robinhood Chain (4663)</span>
+              <span className="text-[10px] text-[#919191] block font-display">Target Network</span>
+              <span className="font-mono text-[#f5f5f5] text-[11px]">Robinhood Chain (4663)</span>
             </div>
           </div>
           <div className="text-right">
-            <span className="text-[10px] text-[#8791aa] block font-display">Account</span>
-            <span className="font-mono text-[#2ee6a6] text-[11px]">{displayAddress}</span>
+            <span className="text-[10px] text-[#919191] block font-display">Account</span>
+            <span className="font-mono text-[#e5e5e5] text-[11px]">{displayAddress}</span>
           </div>
         </div>
 
         {/* TRANSACTION SPECIFICATION */}
-        <div className="bg-[#050a18] border border-[#101c37] p-3.5 rounded-sm flex flex-col gap-2.5">
-          <div className="flex items-center justify-between border-b border-[#0d172e] pb-2">
-            <span className="text-[#8791aa] font-display uppercase text-[10px]">Contract Method</span>
-            <span className="text-[#eef2fa] font-mono text-[11px] font-semibold">
+        <div className="bg-[#000000] border border-[#161616] p-3.5 rounded-sm flex flex-col gap-2.5">
+          <div className="flex items-center justify-between border-b border-[#0e0e0e] pb-2">
+            <span className="text-[#919191] font-display uppercase text-[10px]">Contract Method</span>
+            <span className="text-[#f5f5f5] font-mono text-[11px] font-semibold">
               {txDetails.actionName}
             </span>
           </div>
 
           {txDetails.details.map((item, idx) => (
             <div key={idx} className="flex items-center justify-between text-[11px]">
-              <span className="text-[#7a859f]">{item.label}</span>
-              <span className="font-mono text-[#eef2fa]">{item.value}</span>
+              <span className="text-[#858585]">{item.label}</span>
+              <span className="font-mono text-[#f5f5f5]">{item.value}</span>
             </div>
           ))}
 
-          <div className="flex items-center justify-between pt-2 border-t border-[#0d172e] text-[11px]">
-            <span className="text-[#7a859f]">Network Gas Fee</span>
-            <span className="font-mono text-[#98a2ba]">
+          <div className="flex items-center justify-between pt-2 border-t border-[#0e0e0e] text-[11px]">
+            <span className="text-[#858585]">Network Gas Fee</span>
+            <span className="font-mono text-[#a2a2a2]">
               {txDetails.gasEstimateEth || "~0.00018 ETH ($0.45)"}
             </span>
           </div>
@@ -116,24 +116,24 @@ export function ChinaWalletSignatureModal({
 
         {/* STATUS STEP INDICATOR */}
         {step === "SIGNING" && (
-          <div className="p-3 bg-[#10141e] border border-[#1e2639] rounded text-center flex flex-col items-center gap-2">
-            <div className="w-5 h-5 border-2 border-[#2ee6a6] border-t-transparent rounded-full animate-spin" />
-            <span className="text-[#2ee6a6] font-display font-medium text-[11px]">
+          <div className="p-3 bg-[#141414] border border-[#262626] rounded text-center flex flex-col items-center gap-2">
+            <div className="w-5 h-5 border-2 border-[#e5e5e5] border-t-transparent rounded-full animate-spin" />
+            <span className="text-[#e5e5e5] font-display font-medium text-[11px]">
               Awaiting Signature in Wallet...
             </span>
-            <span className="text-[10px] text-[#8791aa]">
+            <span className="text-[10px] text-[#919191]">
               Please confirm the transaction request in your wallet extension.
             </span>
           </div>
         )}
 
         {step === "BROADCASTING" && (
-          <div className="p-3 bg-[#10141e] border border-[#1e2639] rounded text-center flex flex-col items-center gap-2">
-            <div className="w-5 h-5 border-2 border-[#2ee6a6] border-t-transparent rounded-full animate-spin" />
-            <span className="text-[#2ee6a6] font-display font-medium text-[11px]">
+          <div className="p-3 bg-[#141414] border border-[#262626] rounded text-center flex flex-col items-center gap-2">
+            <div className="w-5 h-5 border-2 border-[#e5e5e5] border-t-transparent rounded-full animate-spin" />
+            <span className="text-[#e5e5e5] font-display font-medium text-[11px]">
               Broadcasting to Robinhood Chain...
             </span>
-            <span className="text-[10px] text-[#8791aa]">
+            <span className="text-[10px] text-[#919191]">
               Submitting transaction to block inclusion.
             </span>
           </div>
@@ -144,13 +144,13 @@ export function ChinaWalletSignatureModal({
           <div className="flex items-center justify-end gap-2.5 pt-1">
             <button
               onClick={onClose}
-              className="px-3 py-1.5 rounded bg-[#0f1a33] hover:bg-[#151c2b] text-[#cdd4e4] border border-[#1a2a4d] font-display text-xs transition-colors"
+              className="px-3 py-1.5 rounded bg-[#141414] hover:bg-[#1c1c1c] text-[#d4d4d4] border border-[#262626] font-display text-xs transition-colors"
             >
               Reject
             </button>
             <button
               onClick={handleConfirmSign}
-              className="px-4 py-1.5 rounded bg-[#2ee6a6] hover:bg-[#39efb2] text-[#050a18] font-display font-bold text-xs transition-all shadow-[0_0_12px_rgba(46,230,166,0.25)] flex items-center gap-1.5"
+              className="px-4 py-1.5 rounded bg-[#2ee6a6] hover:bg-[#7df2c8] text-[#000000] font-display font-bold text-xs transition-all shadow-[0_0_12px_rgba(229,229,229,0.25)] flex items-center gap-1.5"
             >
               <span>Sign &amp; Confirm in Wallet</span>
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

@@ -53,7 +53,7 @@ export default function ChinaAssetDetailPage({
       >
         <DataState title="Unknown Asset Identifier">
           Please check the symbol or return to the{" "}
-          <Link href="/markets/china" className="text-[#2ee6a6] underline">
+          <Link href="/markets/china" className="text-[#e5e5e5] underline">
             Chinese Equities directory
           </Link>
           .
@@ -110,22 +110,22 @@ export default function ChinaAssetDetailPage({
       description={`Verified tokenized exposure to ${asset.company} on Robinhood Chain with isolated credit and spot-backed leverage.`}
     >
       {/* ASSET HEADER CARD */}
-      <section className="bg-[#080f20] border border-[#16254a] p-5 sm:p-6 rounded-sm mb-6 font-sans">
+      <section className="bg-[#0a0a0a] border border-[#222222] p-5 sm:p-6 rounded-sm mb-6 font-sans">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded bg-[#101c37] border border-[#1a2a4d] flex items-center justify-center font-display font-bold text-[#2ee6a6] text-lg shrink-0">
+            <div className="w-12 h-12 rounded bg-[#161616] border border-[#262626] flex items-center justify-center font-display font-bold text-[#e5e5e5] text-lg shrink-0">
               {asset.ticker.slice(0, 3)}
             </div>
             <div>
               <div className="flex items-center gap-2 whitespace-nowrap">
-                <h1 className="text-xl sm:text-2xl font-bold font-display text-[#eef2fa] whitespace-nowrap">
+                <h1 className="text-xl sm:text-2xl font-bold font-display text-[#f5f5f5] whitespace-nowrap">
                   {asset.ticker}
                 </h1>
-                <span className="text-xs px-2 py-0.5 rounded bg-[#101c37] border border-[#1a2a4d] text-[#c3cce0] font-display whitespace-nowrap">
+                <span className="text-xs px-2 py-0.5 rounded bg-[#161616] border border-[#262626] text-[#cccccc] font-display whitespace-nowrap">
                   {asset.instrumentType} · {asset.underlyingExchange}
                 </span>
                 {isNative ? (
-                  <span className="text-xs px-2 py-0.5 rounded bg-[rgba(46,230,166,0.1)] text-[#2ee6a6] border border-[rgba(46,230,166,0.25)] font-display font-medium whitespace-nowrap">
+                  <span className="text-xs px-2 py-0.5 rounded bg-[rgba(229,229,229,0.1)] text-[#e5e5e5] border border-[rgba(229,229,229,0.25)] font-display font-medium whitespace-nowrap">
                     Native 4663
                   </span>
                 ) : isExternal ? (
@@ -133,46 +133,46 @@ export default function ChinaAssetDetailPage({
                     External Product
                   </span>
                 ) : (
-                  <span className="text-xs px-2 py-0.5 rounded bg-[#161d2e] text-[#8791aa] border border-[#212c45] font-display whitespace-nowrap">
+                  <span className="text-xs px-2 py-0.5 rounded bg-[#1d1d1d] text-[#919191] border border-[#2c2c2c] font-display whitespace-nowrap">
                     Research Pipeline
                   </span>
                 )}
               </div>
-              <p className="text-xs text-[#8e9bb8] mt-1 max-w-xl">
+              <p className="text-xs text-[#8d8d8d] mt-1 max-w-xl">
                 {asset.description}
               </p>
             </div>
           </div>
 
           {/* Session & Oracle Chips */}
-          <div className="flex flex-row md:flex-col items-start md:items-end justify-between md:justify-center gap-2 shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-[#101c37] whitespace-nowrap">
+          <div className="flex flex-row md:flex-col items-start md:items-end justify-between md:justify-center gap-2 shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-[#161616] whitespace-nowrap">
             <div className="flex items-center gap-1.5 font-display text-xs whitespace-nowrap">
               <span
                 className={`w-2 h-2 rounded-full shrink-0 ${
-                  market?.marketSession === "REGULAR" ? "bg-[#2ee6a6] animate-pulse" : "bg-[#8791aa]"
+                  market?.marketSession === "REGULAR" ? "bg-[#2ee6a6] animate-pulse" : "bg-[#919191]"
                 }`}
               />
-              <span className="text-[#eef2fa] font-bold whitespace-nowrap">
+              <span className="text-[#f5f5f5] font-bold whitespace-nowrap">
                 {market?.marketSession === "REGULAR" ? "Session Open" : "Market Closed"}
               </span>
-              <span className="text-[#7a859f] whitespace-nowrap">({market?.sessionTimeRemaining})</span>
+              <span className="text-[#858585] whitespace-nowrap">({market?.sessionTimeRemaining})</span>
             </div>
 
             <div className="flex items-center gap-2 text-xs font-mono whitespace-nowrap">
-              <span className="text-[#8791aa] whitespace-nowrap">Chainlink Feed:</span>
+              <span className="text-[#919191] whitespace-nowrap">Chainlink Feed:</span>
               <span className="text-[#2ee6a6] font-semibold whitespace-nowrap">Healthy (1s)</span>
             </div>
           </div>
         </div>
 
         {/* 5-TAB WORKSPACE NAVIGATION */}
-        <div className="flex items-center gap-2 overflow-x-auto border-t border-[#101c37] mt-6 pt-4 font-display text-xs">
+        <div className="flex items-center gap-2 overflow-x-auto border-t border-[#161616] mt-6 pt-4 font-display text-xs">
           <button
             onClick={() => setActiveTab("overview")}
             className={`px-3.5 py-2 rounded font-bold transition-all whitespace-nowrap ${
               activeTab === "overview"
-                ? "bg-[#2ee6a6] text-[#050a18] shadow-[0_0_12px_rgba(46,230,166,0.25)]"
-                : "text-[#8e9bb8] hover:text-white bg-[#0d172e] border border-[#182a52]"
+                ? "bg-[#e5e5e5] text-[#000000] shadow-[0_0_12px_rgba(229,229,229,0.25)]"
+                : "text-[#8d8d8d] hover:text-white bg-[#0e0e0e] border border-[#292929]"
             }`}
           >
             01 / Overview &amp; Chart
@@ -181,8 +181,8 @@ export default function ChinaAssetDetailPage({
             onClick={() => setActiveTab("trade")}
             className={`px-3.5 py-2 rounded font-bold transition-all whitespace-nowrap ${
               activeTab === "trade"
-                ? "bg-[#2ee6a6] text-[#050a18] shadow-[0_0_12px_rgba(46,230,166,0.25)]"
-                : "text-[#8e9bb8] hover:text-white bg-[#0d172e] border border-[#182a52]"
+                ? "bg-[#e5e5e5] text-[#000000] shadow-[0_0_12px_rgba(229,229,229,0.25)]"
+                : "text-[#8d8d8d] hover:text-white bg-[#0e0e0e] border border-[#292929]"
             }`}
           >
             02 / Spot Trade
@@ -191,8 +191,8 @@ export default function ChinaAssetDetailPage({
             onClick={() => setActiveTab("borrow")}
             className={`px-3.5 py-2 rounded font-bold transition-all whitespace-nowrap ${
               activeTab === "borrow"
-                ? "bg-[#2ee6a6] text-[#050a18] shadow-[0_0_12px_rgba(46,230,166,0.25)]"
-                : "text-[#8e9bb8] hover:text-white bg-[#0d172e] border border-[#182a52]"
+                ? "bg-[#e5e5e5] text-[#000000] shadow-[0_0_12px_rgba(229,229,229,0.25)]"
+                : "text-[#8d8d8d] hover:text-white bg-[#0e0e0e] border border-[#292929]"
             }`}
           >
             03 / Collateral &amp; Borrow
@@ -201,8 +201,8 @@ export default function ChinaAssetDetailPage({
             onClick={() => setActiveTab("leverage")}
             className={`px-3.5 py-2 rounded font-bold transition-all whitespace-nowrap ${
               activeTab === "leverage"
-                ? "bg-[#2ee6a6] text-[#050a18] shadow-[0_0_12px_rgba(46,230,166,0.25)]"
-                : "text-[#8e9bb8] hover:text-white bg-[#0d172e] border border-[#182a52]"
+                ? "bg-[#e5e5e5] text-[#000000] shadow-[0_0_12px_rgba(229,229,229,0.25)]"
+                : "text-[#8d8d8d] hover:text-white bg-[#0e0e0e] border border-[#292929]"
             }`}
           >
             04 / Leveraged Long
@@ -211,8 +211,8 @@ export default function ChinaAssetDetailPage({
             onClick={() => setActiveTab("proof")}
             className={`px-3.5 py-2 rounded font-bold transition-all whitespace-nowrap ${
               activeTab === "proof"
-                ? "bg-[#2ee6a6] text-[#050a18] shadow-[0_0_12px_rgba(46,230,166,0.25)]"
-                : "text-[#8e9bb8] hover:text-white bg-[#0d172e] border border-[#182a52]"
+                ? "bg-[#e5e5e5] text-[#000000] shadow-[0_0_12px_rgba(229,229,229,0.25)]"
+                : "text-[#8d8d8d] hover:text-white bg-[#0e0e0e] border border-[#292929]"
             }`}
           >
             05 / Proof &amp; Acceptance Dossier
@@ -234,13 +234,13 @@ export default function ChinaAssetDetailPage({
         {/* RIGHT COLUMN: INTERACTIVE TRANSACTION PANELS (STICKY SIDEBAR) */}
         <div className="lg:col-span-5 xl:col-span-4 min-w-0 flex flex-col gap-3 lg:sticky lg:top-20">
           {/* Quick Action Mode Tab Switcher */}
-          <div className="bg-[#080f20] border border-[#16254a] p-1 rounded-sm flex items-center gap-1 font-display text-xs">
+          <div className="bg-[#0a0a0a] border border-[#222222] p-1 rounded-sm flex items-center gap-1 font-display text-xs">
             <button
               onClick={() => setActiveTab("trade")}
               className={`flex-1 py-1.5 px-1 sm:px-2 text-center rounded transition-all font-medium truncate ${
                 activeTab === "trade" || activeTab === "overview" || activeTab === "proof"
-                  ? "bg-[#2ee6a6] text-[#050a18] font-bold shadow-[0_0_8px_rgba(46,230,166,0.2)]"
-                  : "text-[#8e9bb8] hover:text-white bg-[#0d172e]"
+                  ? "bg-[#e5e5e5] text-[#000000] font-bold shadow-[0_0_8px_rgba(229,229,229,0.2)]"
+                  : "text-[#8d8d8d] hover:text-white bg-[#0e0e0e]"
               }`}
             >
               Spot Trade
@@ -249,8 +249,8 @@ export default function ChinaAssetDetailPage({
               onClick={() => setActiveTab("borrow")}
               className={`flex-1 py-1.5 px-1 sm:px-2 text-center rounded transition-all font-medium truncate ${
                 activeTab === "borrow"
-                  ? "bg-[#2ee6a6] text-[#050a18] font-bold shadow-[0_0_8px_rgba(46,230,166,0.2)]"
-                  : "text-[#8e9bb8] hover:text-white bg-[#0d172e]"
+                  ? "bg-[#e5e5e5] text-[#000000] font-bold shadow-[0_0_8px_rgba(229,229,229,0.2)]"
+                  : "text-[#8d8d8d] hover:text-white bg-[#0e0e0e]"
               }`}
             >
               Borrow
@@ -259,8 +259,8 @@ export default function ChinaAssetDetailPage({
               onClick={() => setActiveTab("leverage")}
               className={`flex-1 py-1.5 px-1 sm:px-2 text-center rounded transition-all font-medium truncate ${
                 activeTab === "leverage"
-                  ? "bg-[#2ee6a6] text-[#050a18] font-bold shadow-[0_0_8px_rgba(46,230,166,0.2)]"
-                  : "text-[#8e9bb8] hover:text-white bg-[#0d172e]"
+                  ? "bg-[#e5e5e5] text-[#000000] font-bold shadow-[0_0_8px_rgba(229,229,229,0.2)]"
+                  : "text-[#8d8d8d] hover:text-white bg-[#0e0e0e]"
               }`}
             >
               Leverage 2x

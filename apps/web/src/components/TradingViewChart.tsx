@@ -18,10 +18,10 @@ export function TradingViewChart({
   data,
   colors: {
     backgroundColor = "transparent",
-    lineColor = "#2ee6a6", // Nash brand green
-    textColor = "#707d9c", // Nash muted text
-    areaTopColor = "rgba(46,230,166, 0.16)",
-    areaBottomColor = "rgba(46,230,166, 0.0)",
+    lineColor = "#e5e5e5", // steel
+    textColor = "#7d7d7d", // Nash muted text
+    areaTopColor = "rgba(229,229,229, 0.16)",
+    areaBottomColor = "rgba(229,229,229, 0.0)",
   } = {},
 }: ChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
@@ -42,17 +42,17 @@ export function TradingViewChart({
         fontFamily: "'Inter', sans-serif",
       },
       grid: {
-        vertLines: { color: "rgba(255, 255, 255, 0.03)" },
-        horzLines: { color: "rgba(255, 255, 255, 0.03)" },
+        vertLines: { color: "rgba(255,255,255, 0.03)" },
+        horzLines: { color: "rgba(255,255,255, 0.03)" },
       },
       crosshair: {
         vertLine: {
-          color: "rgba(46,230,166, 0.3)",
+          color: "rgba(229,229,229, 0.3)",
           width: 1,
           style: 3,
         },
         horzLine: {
-          color: "rgba(46,230,166, 0.3)",
+          color: "rgba(229,229,229, 0.3)",
           width: 1,
           style: 3,
         },

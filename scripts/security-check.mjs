@@ -5,10 +5,11 @@ import { join, relative } from "node:path";
 const root = process.cwd();
 const values = new Set();
 const browserValues = new Set();
-// Values that are public by construction (loopback, the public Robinhood RPC hostnames). Provider URLs
-// that embed an API key stay tracked, so this does not weaken leak detection.
+// Values that are public by construction: loopback, the public Robinhood RPC hostnames, and the
+// "your-..." placeholders from the committed *.example templates. Provider URLs that embed an API
+// key stay tracked, so this does not weaken leak detection.
 const PUBLIC_VALUE =
-  /^https?:\/\/(?:127\.0\.0\.1|localhost)(?::\d+)?(?:\/\S*)?$|^https:\/\/rpc\.(?:testnet|mainnet)\.chain\.robinhood\.com\/?$/;
+  /^https?:\/\/(?:127\.0\.0\.1|localhost)(?::\d+)?(?:\/\S*)?$|^https:\/\/rpc\.(?:testnet|mainnet)\.chain\.robinhood\.com\/?$|^(?:your[-_]|https:\/\/your-project\.)/i;
 function envFiles(directory) {
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
     if (

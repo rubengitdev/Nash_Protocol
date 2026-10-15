@@ -52,7 +52,8 @@ const policy = {
 const tokens = { USDG: usdg };
 const pairs = {};
 const rows = [];
-for (const m of config.markets) {
+// Only markets present in the deployment record (a market added after launch has no pair or router yet).
+for (const m of config.markets.filter((x) => record.markets?.[x.symbol])) {
   const s = m.symbol.toLowerCase();
   const token = v.getAddress(m.token);
   tokens[m.symbol] = token;

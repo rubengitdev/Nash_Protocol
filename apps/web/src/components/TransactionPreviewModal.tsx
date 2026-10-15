@@ -103,8 +103,8 @@ export function TransactionPreviewModal({
         )}
 
         {isSuccess && (
-          <div className="bg-brand/15 border border-brand/40 p-4 rounded-sm space-y-2 text-xs">
-            <div className="flex items-center gap-2 text-brand font-bold">
+          <div className="bg-go/15 border border-go/40 p-4 rounded-sm space-y-2 text-xs">
+            <div className="flex items-center gap-2 text-go font-bold">
               <CheckCircle2 className="w-5 h-5" />
               <span>TRANSACTION CONFIRMED ON-CHAIN</span>
             </div>
@@ -126,8 +126,8 @@ export function TransactionPreviewModal({
         )}
 
         {isError && (
-          <div className="bg-[#FF4D4D]/10 border border-[#FF4D4D]/30 p-4 rounded-sm space-y-1 text-xs">
-            <div className="flex items-center gap-2 text-[#FF4D4D] font-bold">
+          <div className="bg-[#ff4d4d]/10 border border-[#ff4d4d]/30 p-4 rounded-sm space-y-1 text-xs">
+            <div className="flex items-center gap-2 text-[#ff4d4d] font-bold">
               <AlertTriangle className="w-5 h-5" />
               <span>TRANSACTION REVERTED</span>
             </div>
@@ -148,7 +148,7 @@ export function TransactionPreviewModal({
           </div>
           <div className="flex justify-between items-center text-muted">
             <span>BORROWED DEBT</span>
-            <span className="font-bold text-[#FFB800]">
+            <span className="font-bold text-[#ffb800]">
               ${borrowedAmount.toFixed(2)} {debtToken}
             </span>
           </div>
@@ -170,13 +170,13 @@ export function TransactionPreviewModal({
           </div>
           <div className="flex justify-between items-center py-1 border-b border-white/10">
             <span className="text-muted">EST. LIQUIDATION PRICE</span>
-            <span className="font-bold text-[#FF4D4D]">
+            <span className="font-bold text-[#ff4d4d]">
               ${estimatedLiquidationPrice.toFixed(2)}
             </span>
           </div>
           <div className="flex justify-between items-center py-1 border-b border-white/10">
             <span className="text-muted">BORROW APR</span>
-            <span className="font-bold text-[#FFB800]">
+            <span className="font-bold text-[#ffb800]">
               {borrowApr.toFixed(2)}%
             </span>
           </div>
@@ -199,7 +199,7 @@ export function TransactionPreviewModal({
           <button
             onClick={onClose}
             disabled={isExecuting}
-            className="w-1/3 py-3 bg-surface-subtle hover:bg-[#0b1429] text-muted hover:text-white font-bold rounded-sm border border-white/10 transition-all uppercase disabled:opacity-50"
+            className="w-1/3 py-3 bg-surface-subtle hover:bg-[#101010] text-muted hover:text-white font-bold rounded-sm border border-white/10 transition-all uppercase disabled:opacity-50"
           >
             {isSuccess ? "CLOSE" : "CANCEL"}
           </button>
@@ -207,7 +207,7 @@ export function TransactionPreviewModal({
             <button
               onClick={onConfirm}
               disabled={isExecuting}
-              className="w-2/3 py-3 bg-brand hover:bg-brand-hover disabled:bg-gray-700 text-white font-extrabold rounded-sm transition-all uppercase tracking-widest inline-flex items-center justify-center gap-2"
+              className="w-2/3 py-3 bg-go hover:bg-go-hover disabled:bg-gray-700 text-black font-extrabold rounded-sm transition-all uppercase tracking-widest inline-flex items-center justify-center gap-2"
             >
               {isExecuting ? (
                 <>

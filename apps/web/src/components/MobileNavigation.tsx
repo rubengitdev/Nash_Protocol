@@ -39,7 +39,7 @@ export function MobileNavigation({
   return (
     <nav
       id="mobile-nav"
-      className="mobile-nav flex flex-col fixed top-[79px] left-0 right-0 max-h-[calc(100dvh-79px)] overflow-y-auto overscroll-contain bg-[#0d1017] border-b border-[#283249] px-[6%] py-4 z-50 animate-appear shadow-2xl"
+      className="mobile-nav flex flex-col fixed top-[79px] left-0 right-0 max-h-[calc(100dvh-79px)] overflow-y-auto overscroll-contain bg-[#101010] border-b border-[#323232] px-[6%] py-4 z-50 animate-appear shadow-2xl"
       aria-label="Mobile navigation"
     >
       {isLanding ? (
@@ -47,35 +47,35 @@ export function MobileNavigation({
           <Link
             href="/markets"
             onClick={onClose}
-            className="py-3 text-left border-b border-[#1c2334] text-[#cfd6e6] hover:text-[var(--green)]"
+            className="py-3 text-left border-b border-[#232323] text-[#d6d6d6] hover:text-[var(--green)]"
           >
             Markets ↗
           </Link>
           <Link
             href="/lending"
             onClick={onClose}
-            className="py-3 text-left border-b border-[#1c2334] text-[#cfd6e6] hover:text-[var(--green)]"
+            className="py-3 text-left border-b border-[#232323] text-[#d6d6d6] hover:text-[var(--green)]"
           >
             Lending ↗
           </Link>
           <a
             href="#products"
             onClick={onClose}
-            className="py-3 text-left border-b border-[#1c2334] text-[#cfd6e6] hover:text-[var(--green)]"
+            className="py-3 text-left border-b border-[#232323] text-[#d6d6d6] hover:text-[var(--green)]"
           >
             Products
           </a>
           <a
             href="#faq"
             onClick={onClose}
-            className="py-3 text-left border-b border-[#1c2334] text-[#cfd6e6] hover:text-[var(--green)]"
+            className="py-3 text-left border-b border-[#232323] text-[#d6d6d6] hover:text-[var(--green)]"
           >
             FAQ
           </a>
           <Link
             href="/markets"
             onClick={onClose}
-            className="py-3 text-left border-b border-[#1c2334] text-[var(--green)] font-medium flex items-center justify-between"
+            className="py-3 text-left border-b border-[#232323] text-[var(--green)] font-medium flex items-center justify-between"
           >
             <span>Launch App</span>
             <span>↗</span>
@@ -91,10 +91,10 @@ export function MobileNavigation({
                 href={link.href}
                 aria-current={isActive ? "page" : undefined}
                 onClick={onClose}
-                className={`py-3 text-left border-b border-[#1c2334] text-sm ${
+                className={`py-3 text-left border-b border-[#232323] text-sm ${
                   isActive
                     ? "text-[var(--green)] font-semibold"
-                    : "text-[#cfd6e6] hover:text-white"
+                    : "text-[#d6d6d6] hover:text-white"
                 }`}
               >
                 {link.name}
@@ -105,7 +105,7 @@ export function MobileNavigation({
       )}
 
       {/* Social / X Link */}
-      <div className="py-3 border-b border-[#1c2334] flex items-center">
+      <div className="py-3 border-b border-[#232323] flex items-center">
         {HAS_X && (
 
         <a
@@ -115,7 +115,7 @@ export function MobileNavigation({
           onClick={onClose}
           aria-label={X_LABEL}
           title={X_TITLE}
-          className="p-2 border border-[#212a3e] text-[#c3cce0] hover:text-[var(--green)] hover:border-[var(--green)] rounded transition-colors flex items-center justify-center"
+          className="p-2 border border-[#2a2a2a] text-[#cccccc] hover:text-[var(--green)] hover:border-[var(--green)] rounded transition-colors flex items-center justify-center"
         >
           <svg
             width="16"
@@ -139,7 +139,7 @@ export function MobileNavigation({
               onClose();
               onConnectWallet();
             }}
-            className="w-full py-3 bg-[var(--green)] text-[#0b1429] font-semibold text-center rounded text-sm hover:bg-[#7df2c8] transition-colors"
+            className="w-full py-3 bg-[var(--go)] text-[#000000] font-semibold text-center rounded text-sm hover:bg-[var(--go-soft)] transition-colors"
           >
             {isConnected && formattedAddress
               ? formattedAddress

@@ -155,14 +155,15 @@ export function artifact(name) {
   );
   return { abi: result.abi, bytecode: result.bytecode.object };
 }
-export async function verifyRuntime(client, address, name) {
-  const compiled = JSON.parse(
+function compiledRuntime(name) {
+  return JSON.parse(
     readFileSync(`packages/contracts/out/${name}.sol/${name}.json`, "utf8"),
   ).deployedBytecode;
-  const actual = await client.getCode({ address });
-  assert(actual && actual !== "0x", "DEPLOYMENT_CODE_MISSING");
-  const normalize = (code) => {
-    let hex = code.slice(2).toLowerCase();
+}
+// Runtime comparison that ignores immutable slots (their values are set at deployment).
+function sameRuntime(code, compiled) {
+  const normalize = (hexCode) => {
+    let hex = hexCode.slice(2).toLowerCase();
     for (const references of Object.values(compiled.immutableReferences ?? {}))
       for (const { start, length } of references)
         hex =
@@ -171,11 +172,72 @@ export async function verifyRuntime(client, address, name) {
           hex.slice((start + length) * 2);
     return hex;
   };
+  return normalize(code) === normalize(compiled.object);
+}
+/**
+ * Verifies that `address` runs the compiled `name` contract and returns its code hash.
+ * Upgradeable Nash contracts are ERC1967 proxies: then the proxy runtime must be the compiled
+ * ERC1967Proxy, the implementation slot must point at code equal to the compiled `name`, and the
+ * returned identity is the implementation's code hash.
+ */
+export async function verifyRuntime(client, address, name) {
+  const compiled = compiledRuntime(name);
+  const actual = await client.getCode({ address });
+  assert(actual && actual !== "0x", "DEPLOYMENT_CODE_MISSING");
+  if (sameRuntime(actual, compiled)) return v.keccak256(actual);
+  const slot = await client.getStorageAt({ address, slot: implementationSlot });
+  assert(slot && BigInt(slot) !== 0n, "COMPILED_RUNTIME_MISMATCH");
+  assert(sameRuntime(actual, compiledRuntime("ERC1967Proxy")), "PROXY_RUNTIME_MISMATCH");
+  const implementation = v.getAddress(`0x${slot.slice(-40)}`);
+  const implementationCode = await client.getCode({ address: implementation });
   assert(
-    normalize(actual) === normalize(compiled.object),
-    "COMPILED_RUNTIME_MISMATCH",
+    implementationCode &&
+      implementationCode !== "0x" &&
+      sameRuntime(implementationCode, compiled),
+    "IMPLEMENTATION_RUNTIME_MISMATCH",
   );
-  return v.keccak256(actual);
+  return v.keccak256(implementationCode);
+}
+/**
+ * Deploys `contract` as an implementation plus an ERC1967 proxy initialized in the same transaction,
+ * through the gated, journaled `submit` path. Returns the proxy address and the verified identity.
+ */
+export async function deployProxy(ctx, role, contract, initArgs, idFor = (stage) => stage) {
+  const implementation = artifact(contract);
+  const proxy = artifact("ERC1967Proxy");
+  const implementationReceipt = await submit(
+    ctx,
+    idFor(`deploy-${role}-implementation`),
+    ctx.deployer,
+    {
+      data: v.encodeDeployData({
+        abi: implementation.abi,
+        bytecode: implementation.bytecode,
+        args: [],
+      }),
+    },
+  );
+  assert(implementationReceipt.contractAddress, "DEPLOYMENT_ADDRESS_MISSING");
+  const initializer = v.encodeFunctionData({
+    abi: implementation.abi,
+    functionName: "initialize",
+    args: initArgs,
+  });
+  const receipt = await submit(ctx, idFor(`deploy-${role}`), ctx.deployer, {
+    data: v.encodeDeployData({
+      abi: proxy.abi,
+      bytecode: proxy.bytecode,
+      args: [implementationReceipt.contractAddress, initializer],
+    }),
+  });
+  assert(receipt.contractAddress, "DEPLOYMENT_ADDRESS_MISSING");
+  const codeHash = await verifyRuntime(ctx.client, receipt.contractAddress, contract);
+  return {
+    address: receipt.contractAddress,
+    implementation: implementationReceipt.contractAddress,
+    codeHash,
+    receipt,
+  };
 }
 const implementationSlot =
   "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc";

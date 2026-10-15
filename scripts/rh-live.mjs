@@ -21,6 +21,7 @@ import {
   fingerprint,
   verifyBinding,
   verifyRuntime,
+  deployProxy,
   submit,
   safeFailure,
 } from "./lib/rh-live.mjs";
@@ -83,6 +84,15 @@ try {
     );
     ctx.persist();
     return receipt.contractAddress;
+  }
+  // Nash contracts are UUPS proxies: deploy the implementation and a proxy initialized in one transaction.
+  async function deployUpgradeable(role, name, initArgs) {
+    const result = await deployProxy(ctx, role, name, initArgs);
+    state[role] = result.address;
+    state[`${role}Implementation`] = result.implementation;
+    state[`${role}CodeHash`] = result.codeHash;
+    ctx.persist();
+    return result.address;
   }
   if (mode === "--prepare") {
     const updates = {};
@@ -155,7 +165,7 @@ try {
     console.log("TESTNET_CONFIGURATION_PREPARED_NO_TRANSACTIONS");
   } else if (mode === "--deploy-base") {
     // Independent of the reference-oracle choice. No market can borrow yet.
-    await deploy("NashMarketRegistry", [deployer.address], "registry");
+    await deployUpgradeable("registry", "NashMarketRegistry", [deployer.address]);
     assert(
       same(
         await read(state.registry, "NashMarketRegistry", "owner"),
@@ -163,7 +173,7 @@ try {
       ),
       "REGISTRY_OWNER_MISMATCH",
     );
-    await deploy("NashRouter", [], "router");
+    await deployUpgradeable("router", "NashRouter", [deployer.address]);
     await invoke(
       "authorize-router",
       state.registry,
@@ -195,27 +205,18 @@ try {
     await verifyModuleInputs(ctx, config);
     const manifest = { chainId: 46630, modules: {}, executionEnabled: false };
     for (const spec of moduleSpecs(config, deployer.address)) {
-      const receipt = await submit(ctx, `deploy-${spec.role}`, deployer, {
-        data: v.encodeDeployData({
-          ...artifact(spec.contract),
-          args: spec.args,
-        }),
-      });
-      assert(receipt.contractAddress, "DEPLOYMENT_ADDRESS_MISSING");
-      const codeHash = await verifyModule(
-        ctx,
-        config,
-        spec,
-        receipt.contractAddress,
-      );
-      state[spec.role] = receipt.contractAddress;
+      const deployed = await deployProxy(ctx, spec.role, spec.contract, spec.args);
+      const codeHash = await verifyModule(ctx, config, spec, deployed.address);
+      state[spec.role] = deployed.address;
+      state[`${spec.role}Implementation`] = deployed.implementation;
       state[`${spec.role}CodeHash`] = codeHash;
       ctx.persist();
       manifest.modules[spec.role] = {
-        address: receipt.contractAddress,
+        address: deployed.address,
+        implementation: deployed.implementation,
         codeHash,
-        transactionHash: receipt.transactionHash,
-        blockNumber: String(receipt.blockNumber),
+        transactionHash: deployed.receipt.transactionHash,
+        blockNumber: String(deployed.receipt.blockNumber),
         initialState: "paused",
       };
     }
@@ -352,18 +353,14 @@ try {
         ),
       );
       ctx.persist();
-      await deploy(
-        "NashPair",
-        [
-          state.marketId,
-          binding.collateral,
-          binding.debt,
-          state.oracle,
-          state.registry,
-          deployer.address,
-        ],
-        "pair",
-      );
+      await deployUpgradeable("pair", "NashPair", [
+        state.marketId,
+        binding.collateral,
+        binding.debt,
+        state.oracle,
+        state.registry,
+        deployer.address,
+      ]);
       // Register with a zero LTV so the brief add/pause interval cannot permit borrowing.
       await invoke(
         "register-market",

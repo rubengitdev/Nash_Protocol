@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#050a18",
+  themeColor: "#000000",
   colorScheme: "dark",
 };
 
@@ -51,7 +51,7 @@ export default function RootLayout({
         <link rel="preload" href="/fonts/newsreader-roman.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/montserrat.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       </head>
-      <body className="bg-[#050a18] text-[#eef2fa] min-h-screen flex flex-col font-sans selection:bg-[#2ee6a6] selection:text-[#050a18] antialiased">
+      <body className="bg-[#000000] text-[#f5f5f5] min-h-screen flex flex-col font-sans selection:bg-[#e5e5e5] selection:text-[#000000] antialiased">
         <Web3Provider>
           <Header />
           <main id="main" className="flex-1 w-full mx-auto pt-[79px] min-[901px]:pt-[86px] min-[1051px]:pt-[100px]">

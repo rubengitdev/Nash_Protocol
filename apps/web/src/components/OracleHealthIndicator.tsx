@@ -52,7 +52,7 @@ export function OracleHealthIndicator({ status, loading }: OracleHealthIndicator
           font-weight: 600;
           letter-spacing: 0.04em;
           text-transform: uppercase;
-          background: rgba(255, 255, 255, 0.04);
+          background: rgba(255,255,255, 0.04);
           border: 1px solid var(--line);
           color: var(--muted);
         }
@@ -63,19 +63,19 @@ export function OracleHealthIndicator({ status, loading }: OracleHealthIndicator
           background: currentColor;
         }
         .oracle-indicator.healthy {
-          color: var(--green);
+          color: var(--go);
           background: rgba(46,230,166, 0.1);
-          border-color: rgba(46,230,166, 0.2);
+          border-color: rgba(46,230,166, 0.25);
         }
         .oracle-indicator.warning {
           color: #f5a623;
-          background: rgba(245, 166, 35, 0.1);
-          border-color: rgba(245, 166, 35, 0.2);
+          background: rgba(245,166,35, 0.1);
+          border-color: rgba(245,166,35, 0.2);
         }
         .oracle-indicator.critical {
           color: #d6153c;
-          background: rgba(255, 107, 107, 0.1);
-          border-color: rgba(255, 107, 107, 0.2);
+          background: rgba(255,107,107, 0.1);
+          border-color: rgba(255,107,107, 0.2);
         }
         .deviation-warn {
           margin-left: 4px;

@@ -59,7 +59,7 @@ export function WalletModal({ isOpen, onClose }: WalletModalProps) {
                 disconnect();
                 onClose();
               }}
-              className="w-full py-3 bg-[#FF4D4D]/10 hover:bg-[#FF4D4D] text-[#FF4D4D] hover:text-white border border-[#FF4D4D]/30 font-bold text-xs rounded-sm transition-all uppercase tracking-widest"
+              className="w-full py-3 bg-[#ff4d4d]/10 hover:bg-[#ff4d4d] text-[#ff4d4d] hover:text-white border border-[#ff4d4d]/30 font-bold text-xs rounded-sm transition-all uppercase tracking-widest"
             >
               DISCONNECT WALLET
             </button>
@@ -97,7 +97,7 @@ export function WalletModal({ isOpen, onClose }: WalletModalProps) {
                     }
                   }}
                   disabled={isPending}
-                  className="w-full text-left p-3.5 bg-surface-subtle hover:bg-[#0b1429] border border-white/10 hover:border-brand rounded-sm transition-all group flex justify-between items-center"
+                  className="w-full text-left p-3.5 bg-surface-subtle hover:bg-[#101010] border border-white/10 hover:border-brand rounded-sm transition-all group flex justify-between items-center"
                 >
                   <div>
                     <span className="font-bold text-white font-sans text-xs group-hover:text-brand transition-colors block">

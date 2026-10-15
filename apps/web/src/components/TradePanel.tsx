@@ -229,7 +229,7 @@ export function TradePanel({
             </div>
             <div className="bg-surface-subtle p-4 rounded-sm border border-white/10 space-y-1">
               <span className="text-[10px] text-muted block">BORROW APR</span>
-              <span className="font-bold text-[#FFB800] font-sans text-sm">
+              <span className="font-bold text-[#ffb800] font-sans text-sm">
                 {activeMarket?.borrowApr}%
               </span>
             </div>
@@ -292,7 +292,7 @@ export function TradePanel({
           <button
             onClick={() => setPositionType("LONG")}
             className={`py-3 rounded-sm transition-all ${
-              isLong ? "bg-brand text-white" : "text-muted hover:text-white"
+              isLong ? "bg-go text-black" : "text-muted hover:text-white"
             }`}
           >
             LONG
@@ -301,7 +301,7 @@ export function TradePanel({
             onClick={() => setPositionType("SHORT")}
             className={`py-3 rounded-sm transition-all ${
               isShort
-                ? "bg-[#FF4D4D] text-white"
+                ? "bg-[#ff4d4d] text-white"
                 : "text-muted hover:text-white"
             }`}
           >
@@ -311,7 +311,7 @@ export function TradePanel({
             onClick={() => setPositionType("MULTIPLY")}
             className={`py-3 rounded-sm transition-all ${
               isMultiply
-                ? "bg-white text-[#030814]"
+                ? "bg-white text-[#000000]"
                 : "text-muted hover:text-white"
             }`}
           >
@@ -385,7 +385,7 @@ export function TradePanel({
                 onClick={() => setLeverage(stepVal)}
                 className={`py-2 rounded-sm text-xs font-sans font-bold transition-all ${
                   leverage === stepVal
-                    ? "bg-brand text-white"
+                    ? "bg-silver-light text-black"
                     : "bg-surface-subtle border border-white/10 text-muted hover:text-white"
                 }`}
               >
@@ -405,19 +405,19 @@ export function TradePanel({
           </div>
           <div className="flex justify-between text-muted">
             <span>BORROWED DEBT</span>
-            <span className="font-bold text-[#FFB800]">
+            <span className="font-bold text-[#ffb800]">
               ${borrowedDebtUsd.toFixed(2)}
             </span>
           </div>
           <div className="flex justify-between text-muted border-t border-white/10 pt-2">
             <span>EST. LIQUIDATION PRICE</span>
-            <span className="font-bold text-[#FF4D4D]">
+            <span className="font-bold text-[#ff4d4d]">
               {numericCollateral > 0 ? `$${liquidationPrice.toFixed(2)}` : "—"}
             </span>
           </div>
           <div className="flex justify-between text-muted">
             <span>LIQUIDATION BUFFER</span>
-            <span className="font-bold text-brand">
+            <span className="font-bold text-go">
               {numericCollateral > 0
                 ? `${distanceToLiquidation.toFixed(1)}%`
                 : "—"}
@@ -427,12 +427,12 @@ export function TradePanel({
 
         {/* Market Status Alert Banners */}
         {activeMarket?.status === "REDUCE_ONLY" && (
-          <div className="bg-[#FF8800]/10 border border-[#FF8800]/30 p-3 rounded-sm text-xs font-sans text-[#FF8800] space-y-1">
+          <div className="bg-[#ff8800]/10 border border-[#ff8800]/30 p-3 rounded-sm text-xs font-sans text-[#ff8800] space-y-1">
             <div className="font-bold uppercase flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#FF8800] animate-pulse inline-block" />
+              <span className="w-2 h-2 rounded-full bg-[#ff8800] animate-pulse inline-block" />
               REDUCE-ONLY MODE ACTIVE
             </div>
-            <p className="text-[11px] text-[#FF8800]/80">
+            <p className="text-[11px] text-[#ff8800]/80">
               US Equity market is currently closed. New leverage orders are
               paused until next session.
             </p>
@@ -440,12 +440,12 @@ export function TradePanel({
         )}
 
         {activeMarket?.status === "PAUSED" && (
-          <div className="bg-[#FF4D4D]/10 border border-[#FF4D4D]/30 p-3 rounded-sm text-xs font-sans text-[#FF4D4D] space-y-1">
+          <div className="bg-[#ff4d4d]/10 border border-[#ff4d4d]/30 p-3 rounded-sm text-xs font-sans text-[#ff4d4d] space-y-1">
             <div className="font-bold uppercase flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#FF4D4D] animate-pulse inline-block" />
+              <span className="w-2 h-2 rounded-full bg-[#ff4d4d] animate-pulse inline-block" />
               CIRCUIT BREAKER ACTIVE (PAUSED)
             </div>
-            <p className="text-[11px] text-[#FF4D4D]/80">
+            <p className="text-[11px] text-[#ff4d4d]/80">
               Trading is suspended due to extreme volatility or oracle
               protection.
             </p>
@@ -480,10 +480,10 @@ export function TradePanel({
             activeMarket?.status === "PAUSED"
               ? "bg-white/10 text-white/40 cursor-not-allowed border border-white/10"
               : isShort
-                ? "bg-[#FF4D4D] text-white hover:bg-red-600"
+                ? "bg-[#ff4d4d] text-white hover:bg-red-600"
                 : isMultiply
-                  ? "bg-white text-[#030814] hover:bg-gray-200"
-                  : "bg-brand text-white hover:bg-brand-hover"
+                  ? "bg-white text-[#000000] hover:bg-gray-200"
+                  : "bg-go text-black hover:bg-go-hover"
           }`}
         >
           {!env.TRADING_ENABLED ? (

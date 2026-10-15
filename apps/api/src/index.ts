@@ -87,13 +87,16 @@ app.use(
   },
 );
 
-const PORT = parseInt(config.PORT, 10);
-app.listen(PORT, config.API_BIND_HOST, () => {
-  console.log(
-    `[Nash API] Microservice listening on http://${config.API_BIND_HOST}:${PORT}`,
-  );
-  console.log(`[Nash API] Default Network: ${config.NETWORK_MODE}`);
-  console.log(`[Nash API] Supabase Live Mode: ${isLiveSupabase}`);
-});
+// On Vercel the platform invokes the exported app as a function; listening there would hang.
+if (!process.env.VERCEL) {
+  const PORT = parseInt(config.PORT, 10);
+  app.listen(PORT, config.API_BIND_HOST, () => {
+    console.log(
+      `[Nash API] Microservice listening on http://${config.API_BIND_HOST}:${PORT}`,
+    );
+    console.log(`[Nash API] Default Network: ${config.NETWORK_MODE}`);
+    console.log(`[Nash API] Supabase Live Mode: ${isLiveSupabase}`);
+  });
+}
 
 export default app;

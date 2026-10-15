@@ -9,29 +9,46 @@
 | Name | **Nash Protocol** (short form: **Nash**) |
 | Tagline | *Leverage, at equilibrium.* |
 | Mark | The brushed-silver ribbon **N**: three parallel strands in dynamic balance. Source file: `Nash-Protocol-Logo.png` (transparent PNG). Derived assets live in `apps/web/public/brand/` |
-| Image language | Futuristic, high quality, calm. The hero is a faceless hooded figure inside a ring of three silver ribbons: the same three strands as the mark |
+| Image language | Futuristic, high quality, calm. The hero is Satoshi Nakamoto as a large faceless hooded figure inside an oversized ring of three silver ribbons (the same three strands as the mark), with Nash present as a blackboard of formulas. See section 3 |
 
 ### Palette
 
+Taken from the brand banner (`nash-X-banner.png`): a black field, brushed-steel ribbons, white type. The brand itself has no hue. One green and the status colours appear only where they mean something.
+
 | Token | Hex | Use |
 | :--- | :--- | :--- |
-| Abyss navy | `#050a18` | Page background (`--bg`) |
-| Deep panel | `#0b1429` · `#0e1a33` · `#13244a` | Surfaces and hover states |
-| Line | `#1a2a4d` | Hairlines and borders |
-| Navy | `#0b1f4b` · `#1b3a8f` | Gradients, atmosphere |
-| **Emerald** | `#2ee6a6` | The only accent: links, actions, "best response" italics (`--green` / `--emerald`) |
-| Emerald soft / deep | `#7df2c8` · `#0a7a58` | Hover, glow / dark fills |
-| **Silver** | `#b8c2d4` · `#dce3f0` | Secondary text, the logo's metal |
-| **White** | `#eef2fa` | Primary text |
-| Danger | `#d6153c` · `#ff5d73` | Liquidation and shock states only |
+| **Black** | `#000000` | Page background (`--bg`), the banner's field |
+| Graphite | `#0a0a0a` · `#101010` · `#151515` · `#1c1c1c` | Raised sections, panels, hover states (`--bg-raised`, `--panel`, `--panel-subtle`, `--panel-hover`) |
+| Line | `#262626` | Hairlines and borders (`--line`) |
+| **Steel** | `#e5e5e5` | The accent: actions, links, italics, highlights (`--green` / `--emerald`; see the note below) |
+| Steel soft / deep | `#ffffff` · `#6d6d6d` | Hover, glow / dark fills |
+| **Silver** | `#c4c4c4` · `#e5e5e5` | The logo's metal, secondary highlights (`--silver`, `--silver-light`) |
+| **Grey** | `#8d8d8d` | Secondary text (`--muted`), the grey of "Leverage, at" in the banner |
+| **White** | `#f5f5f5` | Primary text (`--text`) |
+| **Go green** | `#2ee6a6` · `#7df2c8` · `#14b07f` | Actions that commit funds, and good states (`--go`, `--go-soft`, `--go-deep`; Tailwind `go-*`) |
+| Danger | `#d6153c` · `#ff5d73` | Liquidation, losses and shock states |
+| Warning | `#f5a623` | Stale or at-risk states |
 
-Emerald is used sparingly: if everything glows, nothing does. The variable is still called `--green` because that name predates the rebrand and 142 rules reference it.
+### Where green is used
+
+Green is a signal, not decoration. The rule: **green means "go" or "good"**. If an element is neither, it stays steel.
+
+| Role | Examples | Why green |
+| :--- | :--- | :--- |
+| Primary action that commits funds or starts the flow | Connect wallet, Explore/Launch app, Deposit, Borrow, Open Long, Confirm, Approve, Submit in the China and Pons panels (`.app-button`, `.nash-btn-primary`, `.launch`, `bg-go`) | One obvious next step on each screen |
+| Long / deposit side of a pair | the Long tab, the Deposit tab, Auto-Protect "enabled" | The affirmative side; the opposite (Short) is red |
+| Good state | live dots, "Healthy", "Active", market session open, confirmed transaction banners, safe health factor and LTV, liquidation buffer, a gain (`.pons-positive`, green PnL and 24h change) | Reads at a glance, like a status light |
+| Safe region in a figure | the safe set and the guarded health factor on the How it works board | Safe against unsafe (red) |
+
+Stays steel, on purpose: navigation, links, headings and italics, selected filters and tabs (a selection is neutral), leverage steps, MAX buttons, the logo, badges, focus rings, and every secondary or "ghost" button. Losses and danger are red, warnings are amber. A selected tab that is not a side or an action uses white-on-black, never green.
+
+The accent variables are still called `--green` and `--emerald` (and Tailwind's `emerald-*` and `brand-*`) because those names predate the palette and several hundred rules reference them. They resolve to steel; green has its own tokens (`--go*`, `go-*`). `apps/web/src/app/globals.css` holds the single token source; Tailwind mirrors it in `apps/web/tailwind.config.ts`.
 
 ### Logo rules
 
-- Use the mark on navy or black only; the silver reads best against dark.
+- Use the mark on black only; the silver reads best against the banner's field.
 - Clear space equal to one strand width on every side.
-- Wordmark: `NASH` in Montserrat 700, tracking `0.34em`, silver-light, over `PROTOCOL` in Montserrat 500, tracking `0.52em`, emerald.
+- Wordmark: `NASH` in Montserrat 700, tracking `0.34em`, silver-light, over `PROTOCOL` in Montserrat 500, tracking `0.52em`, steel.
 - Never recolour the ribbon, add outlines, or place it on a busy photo.
 
 ## 2. Typography: the Equilibrium Stack
@@ -45,17 +62,17 @@ The brief asked for a clean modern sans (Montserrat or Roboto) and, separately, 
 | **The Machine**: numbers, addresses, data, the letter | **JetBrains Mono** | Cryptography and exact figures. Nash's 1955 NSA correspondence is about ciphers; the agency's replies were typed |
 | **The Hand**: margin notes only | **Caveat** | Nash's NSA letters were handwritten, and in the 1970s he was "The Phantom of Fine Hall," scribbling arcane equations on blackboards at night. Used for short annotations, never body copy |
 
-All four are SIL Open Font License, self-hosted from `apps/web/public/fonts/` (no third-party request at runtime).
+A fifth voice appears only in the hero's formulas: **Computer Modern** (KaTeX's fonts), the typeface of mathematics journals, so the equations look like the page of a paper. The first four are SIL Open Font License, self-hosted from `apps/web/public/fonts/` (no third-party request at runtime); KaTeX's fonts are bundled by the build and load only when the formulas render.
 
 ### Rules
 
 1. **No single typeface dominates a screen.** Each plays its best response to the others, which is the equilibrium idea applied to layout. A headline may pair serif roman with serif *italic*; a label is sans caps; a figure is mono.
-2. **Italic is the best response.** Set the word the sentence turns on in emerald italic: *Leverage, at **equilibrium.***
+2. **Italic is the best response.** Set the word the sentence turns on in steel italic: *Leverage, at **equilibrium.***
 3. **Sentence case, short, ending in a period.** Headlines are statements ("Isolated by design."), borrowed from the reference site's rhythm.
 4. **Numbered like a paper.** Sections are `§ 01 / THE ARGUMENT`, not `Section 1`.
 5. **Math is real.** The Nash condition is typeset as `∀ i : uᵢ(s*) ≥ uᵢ(sᵢ, s*₋ᵢ)` in serif italic with proper subscripts.
 6. **Tabular figures** (`tabular-nums`) for anything that changes: prices, LTV, counters.
-7. **Hand-written notes are margin notes**: one short line, rotated a few degrees, emerald-soft, `aria-hidden`.
+7. **Hand-written notes are margin notes**: one short line, rotated a few degrees, white, `aria-hidden`.
 
 ### Scale
 
@@ -68,7 +85,41 @@ All four are SIL Open Font License, self-hosted from `apps/web/public/fonts/` (n
 | Label | Montserrat 600, 11 to 12 px, uppercase, tracking `0.1em` to `0.2em` |
 | Data | JetBrains Mono 500, 10.5 to 12 px, tracking `0.06em` to `0.14em` |
 
-## 3. Narrative
+## 3. The hero: a figure and a blackboard
+
+**Satoshi, no face.** A hooded figure whose face is a deep void under a thick, rolled hood. Nakamoto is a pseudonym: the idea has no face. The figure fills the ring, turned slightly toward the headline, dark and matte so the ring and the formulas carry the light. The ring is drawn larger than the frame on purpose and runs off the top and bottom of the hero.
+
+The figure is carved in code: a signed-distance field blended smoothly, meshed once in a Web Worker (`figures.ts`, `sculpt.ts`), with ambient occlusion baked into vertex colour. There is no model or texture file. On phones the grid is coarser. The figure fades in when its mesh is ready, so the ring and the page never wait for it.
+
+(An earlier version had a marble bust of Nash behind Satoshi. It was dropped: the formulas already carry Nash, and one figure reads more clearly.)
+
+**The blackboard.** In the 1970s Nash was "The Phantom of Fine Hall," scribbling arcane equations on blackboards at night. The hero is that blackboard: formulas typeset in **Computer Modern** (via KaTeX, at build time, so the browser receives static HTML), silver for Nash, white for Nakamoto. Each carries its source in the tag:
+
+| Formula | Tag | Source |
+| :--- | :--- | :--- |
+| `∀i: uᵢ(sᵢ*, s*₋ᵢ) ≥ uᵢ(sᵢ, s*₋ᵢ)` | Nash equilibrium · 1950 | Nash, *Equilibrium points in n-person games*, PNAS 1950 |
+| `σ* ∈ BR(σ*)` | a fixed point · 1950 | the same paper: an equilibrium is a fixed point of the best-response correspondence |
+| `max (u₁(x)−d₁)(u₂(x)−d₂)` | the bargaining problem · 1950 | Nash, *The Bargaining Problem*, Econometrica 1950 |
+| `T_attack(n): nᶜ ≪ eⁿ` | the attacker's effort · NSA, 1955 | Nash's letters contrast "a relatively small power of" the key length with exponential effort. They state nothing about the legitimate user's effort, so none is claimed |
+| `SHA256²(h) < 2^(256−k)` | proof-of-work · 2008 | Nakamoto §4: a hash that "begins with a number of zero bits"; work is exponential in that number |
+| `q_z = 1 if p ≤ q; (q/p)^z if p > q` | honest majority · §11 | Nakamoto §11, the attacker's catch-up probability (verified against the whitepaper text) |
+
+
+To add or edit a formula, change the list in `scripts/render-formulas.mjs`, run it, and commit `formulas.generated.ts`.
+
+### The "How it works" board
+
+The section keeps its three steps (Deposit, Borrow or trade, Auto-Protect) but is drawn as an instrument board, in the same blueprint language: a plot with a grid, axes and registration marks, and a side panel with a typeset formula, animated readouts and a one-line note. It is SVG driven by one clock, with no WebGL, and it pauses off screen. All numbers are illustrative and labelled so on the figure.
+
+| Step | Figure | The idea from Nash |
+| :--- | :--- | :--- |
+| Deposit | Collateral C against debt D. The line D = LLTV·C splits the plane; the safe set `S` grows with the deposit | A strategy set that is convex and closed, the kind Nash's 1950 existence proof works on |
+| Borrow or trade | A point inside `S`, its health factor, and a Long/Short payoff chart at 2× | A strategy is a side and a size; the rules decide the payoff |
+| Auto-Protect | Health factor over a falling price. The guard trims twice, each time returning the position to HF 1.30; the same position without a guard crosses 1.00 | A fixed point: after every shock the position returns to where it was safe |
+
+The step 3 curve is a deterministic simulation in `HowItWorksBoard.tsx` (`simulate`), using the real health-factor formula; the guard thresholds there (1.15 to act, 1.30 to return) are illustration values, not protocol parameters.
+
+## 4. Narrative
 
 The site argues one idea at a time, in this order:
 
@@ -86,20 +137,23 @@ The site argues one idea at a time, in this order:
 
 Every historical claim on the site was checked against a source (below). Anything that could not be confirmed was cut or softened, for example: Hex is described as a game Princeton students called "Nash," not as Nash's invention (Piet Hein created it in 1942 and Nash said he found it independently). Roadmap phases are labelled honestly (In progress / Planned); "Live" is reserved for a phase that is actually deployed, and nothing is deployed under the Nash name yet. Governance and staking are Phase IV, not live.
 
-## 4. Sources
+## 5. Sources
 
 - John Forbes Nash Jr.: birth and death, Duffin's "He is a mathematical genius," the 28-page thesis, PNAS pp. 48 to 49, Nobel 1994, Abel 2015, "The Phantom of Fine Hall." <https://en.wikipedia.org/wiki/John_Forbes_Nash_Jr.>
 - The 1955 NSA letters (handwritten by Nash; NSA replies typed; the quoted sentence "It means that it is quite feasible to design ciphers that are effectively unbreakable."). <https://gwern.net/doc/cs/cryptography/nash/1955-nash>
 - Hex: Piet Hein 1942; Nash's independent claim; players called the game "Nash"; no draws. <https://en.wikipedia.org/wiki/Hex_(board_game)>
 - *Ideal Money*, Southern Economic Journal 69(1), 4 to 11 (2002): money as a technology. <https://ideas.repec.org/a/wly/soecon/v69y2002i1p4-11.html>
+- Satoshi Nakamoto, *Bitcoin: A Peer-to-Peer Electronic Cash System* (2008), sections 4, 6 and 11: <https://bitcoin.org/bitcoin.pdf>
 - Layout and type reference: <https://www.newt.foundation/> (GT Sectra serif plus sans, short sentence-case headings).
 
-## 5. Where it lives in code
+## 6. Where it lives in code
 
 | Concern | File |
 | :--- | :--- |
 | Tokens and `@font-face` | `apps/web/src/app/globals.css` (head), `apps/web/tailwind.config.ts` |
 | Landing styles | `apps/web/src/app/nash.css` |
-| Hero 3D scene | `apps/web/src/components/nash/NashHeroScene.tsx` (procedural, no model files) |
+| Hero 3D scene | `apps/web/src/components/nash/NashHeroScene.tsx` |
+| The figure | `figures.ts` (the field), `sculpt.ts` (mesher), `figures.worker.ts` and `loadFigure.ts` (off the main thread) |
+| Formulas | `HeroFormulas.tsx`, `formulas.generated.ts`, generated by `scripts/render-formulas.mjs` |
 | Sections | `apps/web/src/components/nash/*` |
 | Metadata and OG image | `apps/web/src/app/layout.tsx`, `apps/web/public/og.png` |

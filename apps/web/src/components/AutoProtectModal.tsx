@@ -97,7 +97,7 @@ export function AutoProtectModal({
             disabled={!env.TRADING_ENABLED || isSaving}
             className={`px-3 py-1.5 rounded-sm text-xs font-sans font-bold uppercase transition-all ${
               isEnabled
-                ? "bg-brand text-white"
+                ? "bg-go text-black"
                 : "bg-surface text-muted border border-white/10"
             }`}
           >
@@ -111,7 +111,7 @@ export function AutoProtectModal({
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span className="text-muted">TRIGGER DELEVERAGE LTV</span>
-                <span className="font-bold text-[#FFB800]">{triggerLtv}%</span>
+                <span className="font-bold text-[#ffb800]">{triggerLtv}%</span>
               </div>
               <input
                 type="range"
@@ -120,7 +120,7 @@ export function AutoProtectModal({
                 value={triggerLtv}
                 onChange={(e) => setTriggerLtv(Number(e.target.value))}
                 disabled={!env.TRADING_ENABLED || isSaving}
-                className="w-full accent-[#14b07f] bg-surface-subtle h-2 rounded-none cursor-pointer border border-white/10"
+                className="w-full accent-[#b5b5b5] bg-surface-subtle h-2 rounded-none cursor-pointer border border-white/10"
               />
               <span className="text-[10px] text-muted block">
                 KEEPER EXECUTES DELEVERAGE WHEN LTV HITS {triggerLtv}%.
@@ -139,7 +139,7 @@ export function AutoProtectModal({
                 value={targetLtv}
                 onChange={(e) => setTargetLtv(Number(e.target.value))}
                 disabled={!env.TRADING_ENABLED || isSaving}
-                className="w-full accent-[#14b07f] bg-surface-subtle h-2 rounded-none cursor-pointer border border-white/10"
+                className="w-full accent-[#b5b5b5] bg-surface-subtle h-2 rounded-none cursor-pointer border border-white/10"
               />
               <span className="text-[10px] text-muted block">
                 TARGET LTV POST-EXECUTION IS RESTORED TO {targetLtv}%.
@@ -150,7 +150,7 @@ export function AutoProtectModal({
 
         {/* Feedback info */}
         {isDone && (
-          <div className="bg-brand/15 border border-brand/40 p-3 rounded-sm text-xs text-brand flex items-center gap-2">
+          <div className="bg-go/15 border border-go/40 p-3 rounded-sm text-xs text-go flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4" />
             <span>RULE CONFIGURED ON-CHAIN SUCCESSFULLY</span>
           </div>
@@ -160,7 +160,7 @@ export function AutoProtectModal({
         <button
           onClick={handleSave}
           disabled={!env.TRADING_ENABLED || isSaving}
-          className="w-full py-3.5 bg-brand hover:bg-brand-hover disabled:bg-gray-700 text-white font-sans font-bold text-xs uppercase tracking-widest rounded-sm transition-all inline-flex items-center justify-center gap-2"
+          className="w-full py-3.5 bg-go hover:bg-go-hover disabled:bg-gray-700 text-black font-sans font-bold text-xs uppercase tracking-widest rounded-sm transition-all inline-flex items-center justify-center gap-2"
         >
           {isSaving ? (
             <>
