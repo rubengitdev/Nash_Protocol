@@ -32,7 +32,7 @@ export function ParticleWave() {
     let count = 0;
 
     const render = () => {
-      ctx.fillStyle = '#030814';
+      ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, width, height);
 
       count += 0.012; // Slow animation speed
@@ -50,7 +50,7 @@ export function ParticleWave() {
           const alpha = Math.max(0.1, 1 - iy / rows) * 0.6;
           const size = Math.max(0.8, (1 - iy / rows) * 2.2);
 
-          ctx.fillStyle = `rgba(20,176,127, ${alpha})`;
+          ctx.fillStyle = `rgba(181,181,181, ${alpha})`;
           ctx.beginPath();
           ctx.arc(x, y, size, 0, Math.PI * 2, true);
           ctx.fill();
@@ -71,7 +71,7 @@ export function ParticleWave() {
   return (
     <div className="w-full relative overflow-hidden my-4 border-y border-white/10">
       <canvas ref={canvasRef} className="w-full block h-[360px]" />
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#030814] via-transparent to-[#030814] opacity-60" />
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#000000] via-transparent to-[#000000] opacity-60" />
     </div>
   );
 }

@@ -41,12 +41,12 @@ export function PortfolioSummary({
     } else if (health >= 1.2) {
       return {
         label: "CAUTION",
-        color: "bg-surface-subtle text-[#FFB800] border-white/10",
+        color: "bg-surface-subtle text-[#ffb800] border-white/10",
       };
     } else {
       return {
         label: "AT RISK",
-        color: "bg-surface-subtle text-[#FF4D4D] border-white/10",
+        color: "bg-surface-subtle text-[#ff4d4d] border-white/10",
       };
     }
   };

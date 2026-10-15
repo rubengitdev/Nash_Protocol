@@ -71,19 +71,19 @@ export function MarketTrendChart({
 
   const areaD = `${pathD} L ${width} ${height} L 0 ${height} Z`;
 
-  const strokeColor = isPositive ? '#14b07f' : '#FF4949';
+  const strokeColor = isPositive ? '#b5b5b5' : '#ff4949';
   const gradientId = `trend-gradient-${symbol}-${Math.random().toString(36).substring(2, 7)}`;
 
   return (
     <div className={`relative w-full ${className}`}>
       {/* 24h Change Badge Header */}
       <div className="flex justify-between items-center text-[11px] font-mono mb-2">
-        <span className="text-[#7f8cab] uppercase tracking-wider text-[10px]">7D PRICE TREND</span>
+        <span className="text-[#8c8c8c] uppercase tracking-wider text-[10px]">7D PRICE TREND</span>
         <div
           className={`flex items-center gap-1 font-bold px-2 py-0.5 rounded-xs border text-[10px] ${
             isPositive
-              ? 'text-[#14b07f] bg-[#14b07f]/10 border-[#14b07f]/30'
-              : 'text-[#FF4949] bg-[#FF4949]/10 border-[#FF4949]/30'
+              ? 'text-[#b5b5b5] bg-[#b5b5b5]/10 border-[#b5b5b5]/30'
+              : 'text-[#ff4949] bg-[#ff4949]/10 border-[#ff4949]/30'
           }`}
         >
           <span>{isPositive ? '▲' : '▼'}</span>
@@ -139,7 +139,7 @@ export function MarketTrendChart({
                 cx={pt.x}
                 cy={pt.y}
                 r={hoverIndex === idx ? '4' : '2'}
-                fill={hoverIndex === idx ? strokeColor : '#030814'}
+                fill={hoverIndex === idx ? strokeColor : '#000000'}
                 stroke={strokeColor}
                 strokeWidth="1.5"
                 className="transition-all duration-150"
@@ -161,7 +161,7 @@ export function MarketTrendChart({
         {/* Hover Tooltip display */}
         {hoverIndex !== null && (
           <div
-            className="absolute top-1 font-mono text-[9px] bg-[#030814] border border-white/20 px-2 py-0.5 rounded text-white shadow-lg pointer-events-none transform -translate-x-1/2 z-10"
+            className="absolute top-1 font-mono text-[9px] bg-[#000000] border border-white/20 px-2 py-0.5 rounded text-white shadow-lg pointer-events-none transform -translate-x-1/2 z-10"
             style={{
               left: `${(coords[hoverIndex].x / width) * 100}%`,
             }}

@@ -155,11 +155,11 @@ export function PonsGraduationToast({ queue, onDismissAll }: PonsGraduationToast
                   alignItems: "center",
                   gap: "12px",
                   padding: "14px 16px",
-                  background: "#0b1429",
-                  border: isActive ? "1px solid rgba(46,230,166, 0.5)" : "1px solid #1a2a4d",
+                  background: "#101010",
+                  border: isActive ? "1px solid rgba(229,229,229, 0.5)" : "1px solid #262626",
                   borderRadius: "8px",
                   boxShadow: isActive
-                    ? "0 8px 32px rgba(46,230,166, 0.1), 0 4px 12px rgba(0,0,0,0.5)"
+                    ? "0 8px 32px rgba(229,229,229, 0.1), 0 4px 12px rgba(0,0,0,0.5)"
                     : "0 4px 16px rgba(0,0,0,0.3)",
                 }}
               >
@@ -183,7 +183,7 @@ export function PonsGraduationToast({ queue, onDismissAll }: PonsGraduationToast
                     >
                       {item.name}
                     </span>
-                    <span style={{ color: "#8e9bb8", fontSize: "12px", fontWeight: 500, flexShrink: 0 }}>
+                    <span style={{ color: "#8d8d8d", fontSize: "12px", fontWeight: 500, flexShrink: 0 }}>
                       ${item.symbol}
                     </span>
                   </div>
@@ -193,15 +193,15 @@ export function PonsGraduationToast({ queue, onDismissAll }: PonsGraduationToast
                         width: "6px",
                         height: "6px",
                         borderRadius: "50%",
-                        background: "#2ee6a6",
+                        background: "#e5e5e5",
                         display: "inline-block",
                         flexShrink: 0,
-                        boxShadow: "0 0 6px rgba(46,230,166, 0.6)",
+                        boxShadow: "0 0 6px rgba(229,229,229, 0.6)",
                       }}
                     />
                     <span
                       style={{
-                        color: "#2ee6a6",
+                        color: "#e5e5e5",
                         fontSize: "11px",
                         fontWeight: 600,
                         textTransform: "uppercase",
@@ -228,20 +228,20 @@ export function PonsGraduationToast({ queue, onDismissAll }: PonsGraduationToast
                       alignItems: "center",
                       justifyContent: "center",
                       borderRadius: "4px",
-                      border: "1px solid #1a2a4d",
-                      background: "#080f20",
-                      color: "#8e9bb8",
+                      border: "1px solid #262626",
+                      background: "#0a0a0a",
+                      color: "#8d8d8d",
                       cursor: "pointer",
                       padding: 0,
                       transition: "all 0.15s",
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = "#2ee6a6";
+                      e.currentTarget.style.borderColor = "#e5e5e5";
                       e.currentTarget.style.color = "#fff";
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = "#1a2a4d";
-                      e.currentTarget.style.color = "#8e9bb8";
+                      e.currentTarget.style.borderColor = "#262626";
+                      e.currentTarget.style.color = "#8d8d8d";
                     }}
                     aria-label="Dismiss"
                   >
@@ -270,10 +270,10 @@ export function PonsGraduationToast({ queue, onDismissAll }: PonsGraduationToast
           <span
             style={{
               fontSize: "10px",
-              color: "#8e9bb8",
+              color: "#8d8d8d",
               fontWeight: 500,
-              background: "#0b1429",
-              border: "1px solid #1a2a4d",
+              background: "#101010",
+              border: "1px solid #262626",
               padding: "3px 10px",
               borderRadius: "12px",
               fontVariantNumeric: "tabular-nums",

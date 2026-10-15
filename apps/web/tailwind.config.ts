@@ -9,40 +9,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: '#050a18',
+        background: '#000000',
         surface: {
-          DEFAULT: '#0b1429',
-          subtle: '#0e1a33',
-          hover: '#13244a',
-          border: 'rgba(255, 255, 255, 0.12)',
-          'border-light': 'rgba(255, 255, 255, 0.20)',
-          line: '#1a2a4d',
+          DEFAULT: '#101010',
+          subtle: '#151515',
+          hover: '#1c1c1c',
+          border: 'rgba(255,255,255, 0.12)',
+          'border-light': 'rgba(255,255,255, 0.20)',
+          line: '#262626',
         },
         emerald: {
-          DEFAULT: '#2ee6a6',
-          bright: '#7df2c8',
-          dark: '#14b07f',
-          deep: '#0a7a58',
-          muted: 'rgba(46, 230, 166, 0.15)',
+          DEFAULT: '#e5e5e5',
+          bright: '#ffffff',
+          dark: '#b5b5b5',
+          deep: '#6d6d6d',
+          muted: 'rgba(229,229,229, 0.15)',
         },
         brand: {
-          DEFAULT: '#2ee6a6',
-          hover: '#7df2c8',
-          dark: '#14b07f',
-          muted: 'rgba(46, 230, 166, 0.15)',
+          DEFAULT: '#e5e5e5',
+          hover: '#ffffff',
+          dark: '#b5b5b5',
+          muted: 'rgba(229,229,229, 0.15)',
         },
         // Silver tones follow the brushed-metal N mark (public/brand/nash-mark.png).
         silver: {
-          DEFAULT: '#b8c2d4',
-          light: '#dce3f0',
+          DEFAULT: '#c4c4c4',
+          light: '#e5e5e5',
         },
         muted: {
-          DEFAULT: '#8e9bb8',
-          dark: '#5f6d8e',
+          DEFAULT: '#8d8d8d',
+          dark: '#6d6d6d',
         },
         danger: {
           DEFAULT: '#d6153c',
-          muted: 'rgba(214, 21, 60, 0.15)',
+          muted: 'rgba(214,21,60, 0.15)',
         },
       },
       fontFamily: {

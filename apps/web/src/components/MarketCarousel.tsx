@@ -105,8 +105,8 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
               }}
               className={`px-4 py-2 rounded-xs text-[11px] font-bold uppercase tracking-widest transition-all ${
                 activeCategory === cat
-                  ? 'bg-[#14b07f] text-white'
-                  : 'bg-[#050a18] text-[#7f8cab] hover:text-white border border-white/10'
+                  ? 'bg-[#b5b5b5] text-white'
+                  : 'bg-[#000000] text-[#8c8c8c] hover:text-white border border-white/10'
               }`}
             >
               [{cat}]
@@ -116,25 +116,25 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
 
         {/* Drag Hint & Navigation Controls */}
         <div className="flex items-center gap-4">
-          <div className="hidden sm:flex items-center gap-1.5 text-[10px] text-[#7f8cab] uppercase tracking-wider">
-            <Grab className="w-3.5 h-3.5 text-[#14b07f]" />
+          <div className="hidden sm:flex items-center gap-1.5 text-[10px] text-[#8c8c8c] uppercase tracking-wider">
+            <Grab className="w-3.5 h-3.5 text-[#b5b5b5]" />
             <span>DRAG / SWIPE TO EXPLORE</span>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => scrollByCard('left')}
-              className="w-10 h-10 bg-[#050a18] hover:bg-[#0b1429] text-white border border-white/10 hover:border-[#14b07f]/50 rounded-xs flex items-center justify-center transition-all disabled:opacity-30"
+              className="w-10 h-10 bg-[#000000] hover:bg-[#101010] text-white border border-white/10 hover:border-[#b5b5b5]/50 rounded-xs flex items-center justify-center transition-all disabled:opacity-30"
               aria-label="Previous markets"
             >
-              <ChevronLeft className="w-5 h-5 text-[#7f8cab] hover:text-white" />
+              <ChevronLeft className="w-5 h-5 text-[#8c8c8c] hover:text-white" />
             </button>
             <button
               onClick={() => scrollByCard('right')}
-              className="w-10 h-10 bg-[#050a18] hover:bg-[#0b1429] text-white border border-white/10 hover:border-[#14b07f]/50 rounded-xs flex items-center justify-center transition-all disabled:opacity-30"
+              className="w-10 h-10 bg-[#000000] hover:bg-[#101010] text-white border border-white/10 hover:border-[#b5b5b5]/50 rounded-xs flex items-center justify-center transition-all disabled:opacity-30"
               aria-label="Next markets"
             >
-              <ChevronRight className="w-5 h-5 text-[#7f8cab] hover:text-white" />
+              <ChevronRight className="w-5 h-5 text-[#8c8c8c] hover:text-white" />
             </button>
           </div>
         </div>
@@ -157,7 +157,7 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
           [1, 2, 3].map((i) => (
             <div
               key={i}
-              className="w-[340px] sm:w-[370px] shrink-0 snap-start bg-[#050a18] border border-white/10 rounded-sm p-6 flex flex-col justify-between space-y-6 animate-pulse"
+              className="w-[340px] sm:w-[370px] shrink-0 snap-start bg-[#000000] border border-white/10 rounded-sm p-6 flex flex-col justify-between space-y-6 animate-pulse"
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
@@ -165,7 +165,7 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
                     <div className="w-6 h-6 rounded-full bg-white/10" />
                     <div className="h-3.5 w-20 bg-white/10 rounded-xs" />
                   </div>
-                  <div className="h-3.5 w-24 bg-[#14b07f]/20 rounded-xs" />
+                  <div className="h-3.5 w-24 bg-[#b5b5b5]/20 rounded-xs" />
                 </div>
                 <div className="space-y-2">
                   <div className="h-6 w-3/4 bg-white/10 rounded-xs" />
@@ -173,13 +173,13 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
                 </div>
               </div>
 
-              <div className="h-28 bg-[#030814] rounded-xs border border-white/5" />
+              <div className="h-28 bg-[#000000] rounded-xs border border-white/5" />
 
               <div className="grid grid-cols-2 gap-3 pt-2 border-t border-white/10">
-                <div className="h-12 bg-[#080f20] rounded-xs" />
-                <div className="h-12 bg-[#080f20] rounded-xs" />
-                <div className="h-12 bg-[#080f20] rounded-xs" />
-                <div className="h-12 bg-[#080f20] rounded-xs" />
+                <div className="h-12 bg-[#0a0a0a] rounded-xs" />
+                <div className="h-12 bg-[#0a0a0a] rounded-xs" />
+                <div className="h-12 bg-[#0a0a0a] rounded-xs" />
+                <div className="h-12 bg-[#0a0a0a] rounded-xs" />
               </div>
 
               <div className="h-11 bg-white/10 rounded-xs" />
@@ -187,15 +187,15 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
           ))
         ) : filteredMarkets.length === 0 ? (
           /* Empty State */
-          <div className="w-full py-16 px-8 bg-[#050a18] border border-dashed border-white/10 rounded-sm text-center font-mono space-y-3">
+          <div className="w-full py-16 px-8 bg-[#000000] border border-dashed border-white/10 rounded-sm text-center font-mono space-y-3">
             <span className="text-white font-bold block text-sm tracking-wider">[NO MARKETS FOUND]</span>
-            <span className="text-xs text-[#394b75] block">
+            <span className="text-xs text-[#4a4a4a] block">
               No tokenized equity or ETF pairs found for category &quot;{activeCategory}&quot;.
             </span>
             {activeCategory !== 'ALL' && (
               <button
                 onClick={() => setActiveCategory('ALL')}
-                className="px-3 py-1.5 text-[10px] bg-[#080f20] border border-white/15 hover:border-[#14b07f] text-white rounded-sm uppercase tracking-wider transition-colors"
+                className="px-3 py-1.5 text-[10px] bg-[#0a0a0a] border border-white/15 hover:border-[#b5b5b5] text-white rounded-sm uppercase tracking-wider transition-colors"
               >
                 VIEW ALL MARKETS
               </button>
@@ -206,28 +206,28 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
           filteredMarkets.map((market) => (
             <div
               key={market.id}
-              className="w-[340px] sm:w-[370px] shrink-0 snap-start bg-[#050a18] border border-white/10 rounded-sm p-6 flex flex-col justify-between space-y-6 group hover:border-[#14b07f]/50 hover:shadow-[0_0_25px_rgba(20,176,127,0.15)] transition-all duration-300 relative"
+              className="w-[340px] sm:w-[370px] shrink-0 snap-start bg-[#000000] border border-white/10 rounded-sm p-6 flex flex-col justify-between space-y-6 group hover:border-[#b5b5b5]/50 hover:shadow-[0_0_25px_rgba(181,181,181,0.15)] transition-all duration-300 relative"
             >
               {/* Card Top Info */}
               <div className="space-y-4">
-                <div className="flex justify-between items-center text-[10px] text-[#7f8cab] uppercase tracking-widest">
+                <div className="flex justify-between items-center text-[10px] text-[#8c8c8c] uppercase tracking-widest">
                   <div className="flex items-center gap-2">
                     <AssetLogo symbol={market.assetSymbol} size="sm" />
                     <span className="font-bold text-white">[{market.assetSymbol}]</span>
-                    <span className="text-[#7f8cab]">[{market.category}]</span>
+                    <span className="text-[#8c8c8c]">[{market.category}]</span>
                   </div>
-                  <span className="text-[#14b07f] font-bold">[ISOLATED PAIR]</span>
+                  <span className="text-[#b5b5b5] font-bold">[ISOLATED PAIR]</span>
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-normal text-white uppercase tracking-tight group-hover:text-[#14b07f] transition-colors font-sans">
+                  <h3 className="text-2xl font-normal text-white uppercase tracking-tight group-hover:text-[#b5b5b5] transition-colors font-sans">
                     {market.name}
                   </h3>
                   <div className="flex items-baseline gap-2 mt-1">
                     <span className="text-3xl font-bold font-mono text-white">
                       ${market.markPrice.toFixed(2)}
                     </span>
-                    <span className="text-[10px] text-[#7f8cab] uppercase tracking-wider">
+                    <span className="text-[10px] text-[#8c8c8c] uppercase tracking-wider">
                       MARK PRICE
                     </span>
                   </div>
@@ -235,35 +235,35 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
               </div>
 
               {/* Sparkline Trend Chart Preview */}
-              <div className="bg-[#030814] border border-white/5 p-3 rounded-xs group-hover:border-white/10 transition-colors">
+              <div className="bg-[#000000] border border-white/5 p-3 rounded-xs group-hover:border-white/10 transition-colors">
                 <MarketTrendChart symbol={market.assetSymbol} />
               </div>
 
               {/* Metrics Breakdown */}
               <div className="grid grid-cols-2 gap-3 pt-2 border-t border-white/10 text-xs">
-                <div className="bg-[#080f20] p-2.5 rounded-xs border border-white/5">
-                  <span className="text-[10px] text-[#7f8cab] block uppercase">BORROW APR</span>
-                  <span className="text-sm font-bold text-[#FFB800]">
+                <div className="bg-[#0a0a0a] p-2.5 rounded-xs border border-white/5">
+                  <span className="text-[10px] text-[#8c8c8c] block uppercase">BORROW APR</span>
+                  <span className="text-sm font-bold text-[#ffb800]">
                     {market.borrowApr.toFixed(2)}%
                   </span>
                 </div>
 
-                <div className="bg-[#080f20] p-2.5 rounded-xs border border-white/5">
-                  <span className="text-[10px] text-[#7f8cab] block uppercase">MAX LTV</span>
+                <div className="bg-[#0a0a0a] p-2.5 rounded-xs border border-white/5">
+                  <span className="text-[10px] text-[#8c8c8c] block uppercase">MAX LTV</span>
                   <span className="text-sm font-bold text-white">
                     {market.maxLtv.toFixed(0)}%
                   </span>
                 </div>
 
-                <div className="bg-[#080f20] p-2.5 rounded-xs border border-white/5">
-                  <span className="text-[10px] text-[#7f8cab] block uppercase">SUPPLY APY</span>
-                  <span className="text-sm font-bold text-[#14b07f]">
+                <div className="bg-[#0a0a0a] p-2.5 rounded-xs border border-white/5">
+                  <span className="text-[10px] text-[#8c8c8c] block uppercase">SUPPLY APY</span>
+                  <span className="text-sm font-bold text-[#b5b5b5]">
                     +{market.supplyApy.toFixed(2)}%
                   </span>
                 </div>
 
-                <div className="bg-[#080f20] p-2.5 rounded-xs border border-white/5">
-                  <span className="text-[10px] text-[#7f8cab] block uppercase">LIQUIDITY</span>
+                <div className="bg-[#0a0a0a] p-2.5 rounded-xs border border-white/5">
+                  <span className="text-[10px] text-[#8c8c8c] block uppercase">LIQUIDITY</span>
                   <span className="text-sm font-bold text-white">
                     ${(market.availableLiquidityUsd / 1000).toFixed(0)}K
                   </span>
@@ -277,7 +277,7 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
                   onClick={(e) => {
                     if (hasDragged) e.preventDefault();
                   }}
-                  className="w-full py-3 px-4 bg-[#14b07f] hover:bg-[#0b8e62] text-white font-mono font-bold text-xs uppercase tracking-widest rounded-xs transition-all flex items-center justify-center gap-2 group-hover:shadow-[0_0_15px_rgba(20,176,127,0.4)]"
+                  className="w-full py-3 px-4 bg-[#b5b5b5] hover:bg-[#8b8b8b] text-white font-mono font-bold text-xs uppercase tracking-widest rounded-xs transition-all flex items-center justify-center gap-2 group-hover:shadow-[0_0_15px_rgba(181,181,181,0.4)]"
                 >
                   <span>TRADE / BORROW {market.assetSymbol}</span>
                   <ArrowUpRight className="w-4 h-4" />
@@ -297,7 +297,7 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
               onClick={() => scrollToIndex(idx)}
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 activeIndex === idx
-                  ? 'w-8 bg-[#14b07f]'
+                  ? 'w-8 bg-[#b5b5b5]'
                   : 'w-2 bg-white/20 hover:bg-white/40'
               }`}
               aria-label={`Go to slide ${idx + 1}`}

@@ -13,25 +13,30 @@
 
 ### Palette
 
+Taken from the brand banner (`nash-X-banner.png`): a black field, brushed-steel ribbons, white type. There is no hue. Colour only appears for status.
+
 | Token | Hex | Use |
 | :--- | :--- | :--- |
-| Abyss navy | `#050a18` | Page background (`--bg`) |
-| Deep panel | `#0b1429` · `#0e1a33` · `#13244a` | Surfaces and hover states |
-| Line | `#1a2a4d` | Hairlines and borders |
-| Navy | `#0b1f4b` · `#1b3a8f` | Gradients, atmosphere |
-| **Emerald** | `#2ee6a6` | The only accent: links, actions, "best response" italics (`--green` / `--emerald`) |
-| Emerald soft / deep | `#7df2c8` · `#0a7a58` | Hover, glow / dark fills |
-| **Silver** | `#b8c2d4` · `#dce3f0` | Secondary text, the logo's metal |
-| **White** | `#eef2fa` | Primary text |
-| Danger | `#d6153c` · `#ff5d73` | Liquidation and shock states only |
+| **Black** | `#000000` | Page background (`--bg`), the banner's field |
+| Graphite | `#0a0a0a` · `#101010` · `#151515` · `#1c1c1c` | Raised sections, panels, hover states (`--bg-raised`, `--panel`, `--panel-subtle`, `--panel-hover`) |
+| Line | `#262626` | Hairlines and borders (`--line`) |
+| **Steel** | `#e5e5e5` | The accent: actions, links, italics, highlights (`--green` / `--emerald`; see the note below) |
+| Steel soft / deep | `#ffffff` · `#6d6d6d` | Hover, glow / dark fills |
+| **Silver** | `#c4c4c4` · `#e5e5e5` | The logo's metal, secondary highlights (`--silver`, `--silver-light`) |
+| **Grey** | `#8d8d8d` | Secondary text (`--muted`), the grey of "Leverage, at" in the banner |
+| **White** | `#f5f5f5` | Primary text (`--text`) |
+| Danger | `#d6153c` · `#ff5d73` | Liquidation, losses and shock states |
+| Warning | `#f5a623` | Stale or at-risk states |
 
-Emerald is used sparingly: if everything glows, nothing does. The variable is still called `--green` because that name predates the rebrand and 142 rules reference it.
+Positive values are white, negative values are red. A button is steel with black type. Nothing else is coloured, and the ribbon is never recoloured.
+
+The accent variables are still called `--green` and `--emerald` (and Tailwind's `emerald-*` and `brand-*`) because those names predate the palette and several hundred rules reference them. They now resolve to steel. `apps/web/src/app/globals.css` holds the single token source; Tailwind mirrors it in `apps/web/tailwind.config.ts`.
 
 ### Logo rules
 
-- Use the mark on navy or black only; the silver reads best against dark.
+- Use the mark on black only; the silver reads best against the banner's field.
 - Clear space equal to one strand width on every side.
-- Wordmark: `NASH` in Montserrat 700, tracking `0.34em`, silver-light, over `PROTOCOL` in Montserrat 500, tracking `0.52em`, emerald.
+- Wordmark: `NASH` in Montserrat 700, tracking `0.34em`, silver-light, over `PROTOCOL` in Montserrat 500, tracking `0.52em`, steel.
 - Never recolour the ribbon, add outlines, or place it on a busy photo.
 
 ## 2. Typography: the Equilibrium Stack
@@ -50,12 +55,12 @@ A fifth voice appears only in the hero's formulas: **Computer Modern** (KaTeX's 
 ### Rules
 
 1. **No single typeface dominates a screen.** Each plays its best response to the others, which is the equilibrium idea applied to layout. A headline may pair serif roman with serif *italic*; a label is sans caps; a figure is mono.
-2. **Italic is the best response.** Set the word the sentence turns on in emerald italic: *Leverage, at **equilibrium.***
+2. **Italic is the best response.** Set the word the sentence turns on in steel italic: *Leverage, at **equilibrium.***
 3. **Sentence case, short, ending in a period.** Headlines are statements ("Isolated by design."), borrowed from the reference site's rhythm.
 4. **Numbered like a paper.** Sections are `§ 01 / THE ARGUMENT`, not `Section 1`.
 5. **Math is real.** The Nash condition is typeset as `∀ i : uᵢ(s*) ≥ uᵢ(sᵢ, s*₋ᵢ)` in serif italic with proper subscripts.
 6. **Tabular figures** (`tabular-nums`) for anything that changes: prices, LTV, counters.
-7. **Hand-written notes are margin notes**: one short line, rotated a few degrees, emerald-soft, `aria-hidden`.
+7. **Hand-written notes are margin notes**: one short line, rotated a few degrees, white, `aria-hidden`.
 
 ### Scale
 
@@ -76,7 +81,7 @@ The figure is carved in code: a signed-distance field blended smoothly, meshed o
 
 (An earlier version had a marble bust of Nash behind Satoshi. It was dropped: the formulas already carry Nash, and one figure reads more clearly.)
 
-**The blackboard.** In the 1970s Nash was "The Phantom of Fine Hall," scribbling arcane equations on blackboards at night. The hero is that blackboard: formulas typeset in **Computer Modern** (via KaTeX, at build time, so the browser receives static HTML), silver for Nash, emerald for Nakamoto. Each carries its source in the tag:
+**The blackboard.** In the 1970s Nash was "The Phantom of Fine Hall," scribbling arcane equations on blackboards at night. The hero is that blackboard: formulas typeset in **Computer Modern** (via KaTeX, at build time, so the browser receives static HTML), silver for Nash, white for Nakamoto. Each carries its source in the tag:
 
 | Formula | Tag | Source |
 | :--- | :--- | :--- |

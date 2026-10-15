@@ -28,20 +28,20 @@ export function LeverageCalculatorSkeleton() {
     <section className="space-y-8 font-mono">
       <div className="border-b border-white/10 pb-4 flex justify-between items-end">
         <div>
-          <span className="text-xs text-[#14b07f] font-bold block uppercase tracking-widest animate-pulse">
+          <span className="text-xs text-[#b5b5b5] font-bold block uppercase tracking-widest animate-pulse">
             [STRATEGY SIMULATOR — SYNCING ORACLE FEEDS]
           </span>
           <h2 className="text-2xl sm:text-4xl font-normal tracking-tight text-white uppercase font-mono mt-1">
             LEVERAGE & BORROW CALCULATOR
           </h2>
         </div>
-        <div className="flex items-center gap-2 text-xs text-[#7f8cab] uppercase hidden sm:flex">
-          <span className="w-2 h-2 rounded-full bg-[#14b07f] animate-pulse" />
+        <div className="flex items-center gap-2 text-xs text-[#8c8c8c] uppercase hidden sm:flex">
+          <span className="w-2 h-2 rounded-full bg-[#b5b5b5] animate-pulse" />
           <span>CONNECTING ROBINHOOD DATA...</span>
         </div>
       </div>
 
-      <div className="bg-[#050a18] border border-white/15 rounded-sm p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="bg-[#000000] border border-white/15 rounded-sm p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column Shimmer */}
         <div className="lg:col-span-7 space-y-6">
           <div className="space-y-3">
@@ -76,7 +76,7 @@ export function LeverageCalculatorSkeleton() {
         </div>
 
         {/* Right Column Shimmer */}
-        <div className="lg:col-span-5 bg-[#030814] border border-white/10 p-6 rounded-sm space-y-5">
+        <div className="lg:col-span-5 bg-[#000000] border border-white/10 p-6 rounded-sm space-y-5">
           <div className="h-4 w-52 bg-white/10 rounded-sm animate-pulse pb-2 border-b border-white/10" />
           <div className="space-y-3">
             {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -86,8 +86,8 @@ export function LeverageCalculatorSkeleton() {
               </div>
             ))}
           </div>
-          <div className="h-14 bg-white/5 rounded-sm animate-pulse border border-[#14b07f]/20" />
-          <div className="h-12 bg-[#14b07f]/20 rounded-sm animate-pulse" />
+          <div className="h-14 bg-white/5 rounded-sm animate-pulse border border-[#b5b5b5]/20" />
+          <div className="h-12 bg-[#b5b5b5]/20 rounded-sm animate-pulse" />
         </div>
       </div>
     </section>
@@ -105,16 +105,16 @@ export function LeverageCalculator({ markets, isLoading }: LeverageCalculatorPro
     return (
       <section className="space-y-8 font-mono">
         <div className="border-b border-white/10 pb-4">
-          <span className="text-xs text-[#14b07f] font-bold block uppercase tracking-widest">
+          <span className="text-xs text-[#b5b5b5] font-bold block uppercase tracking-widest">
             [STRATEGY SIMULATOR]
           </span>
           <h2 className="text-2xl sm:text-4xl font-normal tracking-tight text-white uppercase font-mono mt-1">
             LEVERAGE & BORROW CALCULATOR
           </h2>
         </div>
-        <div className="bg-[#050a18] border border-dashed border-white/10 rounded-sm p-12 text-center space-y-2">
+        <div className="bg-[#000000] border border-dashed border-white/10 rounded-sm p-12 text-center space-y-2">
           <p className="text-white font-bold text-sm tracking-wider">[NO ACTIVE ASSETS TO SIMULATE]</p>
-          <p className="text-xs text-[#394b75]">
+          <p className="text-xs text-[#4a4a4a]">
             Market oracle configuration is currently unavailable. Please verify backend API status.
           </p>
         </div>
@@ -149,24 +149,24 @@ export function LeverageCalculator({ markets, isLoading }: LeverageCalculatorPro
     <section className="space-y-8 font-mono">
       <div className="border-b border-white/10 pb-4 flex justify-between items-end">
         <div>
-          <span className="text-xs text-[#14b07f] font-bold block uppercase tracking-widest">
+          <span className="text-xs text-[#b5b5b5] font-bold block uppercase tracking-widest">
             [STRATEGY SIMULATOR]
           </span>
           <h2 className="text-2xl sm:text-4xl font-normal tracking-tight text-white uppercase font-mono mt-1">
             LEVERAGE & BORROW CALCULATOR
           </h2>
         </div>
-        <span className="text-xs text-[#7f8cab] uppercase hidden sm:block">
+        <span className="text-xs text-[#8c8c8c] uppercase hidden sm:block">
           [ESTIMATE POWER & SAFEGUARDS]
         </span>
       </div>
 
-      <div className="bg-[#050a18] border border-white/15 rounded-sm p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="bg-[#000000] border border-white/15 rounded-sm p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Interactive Inputs */}
         <div className="lg:col-span-7 space-y-6">
           {/* 1. Asset Selection */}
           <div className="space-y-3">
-            <label className="text-xs text-[#7f8cab] block uppercase tracking-wider">
+            <label className="text-xs text-[#8c8c8c] block uppercase tracking-wider">
               1. SELECT TOKENIZED EQUITY COLLATERAL
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -179,14 +179,14 @@ export function LeverageCalculator({ markets, isLoading }: LeverageCalculatorPro
                     onClick={() => setSelectedSymbol(m.symbol)}
                     className={`flex items-center gap-2.5 p-3 border rounded-sm transition-all text-left ${
                       isActive
-                        ? 'bg-[#14b07f]/10 border-[#14b07f] text-white'
-                        : 'bg-[#030814] border-white/10 text-[#7f8cab] hover:border-white/30'
+                        ? 'bg-[#b5b5b5]/10 border-[#b5b5b5] text-white'
+                        : 'bg-[#000000] border-white/10 text-[#8c8c8c] hover:border-white/30'
                     }`}
                   >
                     <AssetLogo symbol={m.symbol} size="sm" />
                     <div>
                       <span className="text-xs font-bold text-white block">{m.symbol}</span>
-                      <span className="text-[10px] text-[#7f8cab] block">${m.price.toFixed(2)}</span>
+                      <span className="text-[10px] text-[#8c8c8c] block">${m.price.toFixed(2)}</span>
                     </div>
                   </button>
                 );
@@ -197,7 +197,7 @@ export function LeverageCalculator({ markets, isLoading }: LeverageCalculatorPro
           {/* 2. Collateral Amount Input & Presets */}
           <div className="space-y-3">
             <div className="flex justify-between items-center text-xs uppercase">
-              <label className="text-[#7f8cab]">2. DEPOSIT COLLATERAL (USD)</label>
+              <label className="text-[#8c8c8c]">2. DEPOSIT COLLATERAL (USD)</label>
               <span className="text-white font-bold text-base tabular-nums">
                 ${collateralUsd.toLocaleString()}
               </span>
@@ -209,7 +209,7 @@ export function LeverageCalculator({ markets, isLoading }: LeverageCalculatorPro
               step={500}
               value={collateralUsd}
               onChange={(e) => setCollateralUsd(Number(e.target.value))}
-              className="w-full h-1.5 bg-[#030814] accent-[#14b07f] cursor-pointer rounded-lg border border-white/10"
+              className="w-full h-1.5 bg-[#000000] accent-[#b5b5b5] cursor-pointer rounded-lg border border-white/10"
             />
             <div className="flex gap-2">
               {[1000, 5000, 10000, 25000, 50000].map((preset) => (
@@ -217,7 +217,7 @@ export function LeverageCalculator({ markets, isLoading }: LeverageCalculatorPro
                   key={preset}
                   type="button"
                   onClick={() => setCollateralUsd(preset)}
-                  className="px-2.5 py-1 text-[10px] bg-[#030814] border border-white/10 hover:border-[#14b07f] text-[#7f8cab] hover:text-white rounded-sm transition-colors"
+                  className="px-2.5 py-1 text-[10px] bg-[#000000] border border-white/10 hover:border-[#b5b5b5] text-[#8c8c8c] hover:text-white rounded-sm transition-colors"
                 >
                   ${(preset / 1000).toFixed(0)}K
                 </button>
@@ -228,8 +228,8 @@ export function LeverageCalculator({ markets, isLoading }: LeverageCalculatorPro
           {/* 3. Leverage Multiplier Slider */}
           <div className="space-y-3">
             <div className="flex justify-between items-center text-xs uppercase">
-              <label className="text-[#7f8cab]">3. TARGET LEVERAGE MULTIPLIER</label>
-              <span className="text-[#14b07f] font-bold text-lg tabular-nums">
+              <label className="text-[#8c8c8c]">3. TARGET LEVERAGE MULTIPLIER</label>
+              <span className="text-[#b5b5b5] font-bold text-lg tabular-nums">
                 {leverageMultiplier.toFixed(1)}X
               </span>
             </div>
@@ -240,9 +240,9 @@ export function LeverageCalculator({ markets, isLoading }: LeverageCalculatorPro
               step={0.1}
               value={leverageMultiplier}
               onChange={(e) => setLeverageMultiplier(Number(e.target.value))}
-              className="w-full h-1.5 bg-[#030814] accent-[#14b07f] cursor-pointer rounded-lg border border-white/10"
+              className="w-full h-1.5 bg-[#000000] accent-[#b5b5b5] cursor-pointer rounded-lg border border-white/10"
             />
-            <div className="flex justify-between text-[10px] text-[#7f8cab]">
+            <div className="flex justify-between text-[10px] text-[#8c8c8c]">
               <span>1.0X (NO LEVERAGE)</span>
               <span>1.5X</span>
               <span>2.0X (RECOMMENDED)</span>
@@ -252,51 +252,51 @@ export function LeverageCalculator({ markets, isLoading }: LeverageCalculatorPro
         </div>
 
         {/* Right Column: Calculated Results & CTA */}
-        <div className="lg:col-span-5 bg-[#030814] border border-white/10 p-6 rounded-sm space-y-6">
-          <div className="flex items-center gap-2 text-xs text-[#14b07f] font-bold uppercase tracking-wider pb-3 border-b border-white/10">
+        <div className="lg:col-span-5 bg-[#000000] border border-white/10 p-6 rounded-sm space-y-6">
+          <div className="flex items-center gap-2 text-xs text-[#b5b5b5] font-bold uppercase tracking-wider pb-3 border-b border-white/10">
             <Calculator className="w-4 h-4" />
             <span>ESTIMATED POSITION BREAKDOWN</span>
           </div>
 
           <div className="space-y-4 text-xs uppercase">
             <div className="flex justify-between items-center">
-              <span className="text-[#7f8cab]">INITIAL COLLATERAL:</span>
+              <span className="text-[#8c8c8c]">INITIAL COLLATERAL:</span>
               <span className="text-white font-bold">${collateralUsd.toLocaleString()}</span>
             </div>
 
             <div className="flex justify-between items-center">
-              <span className="text-[#7f8cab]">STABLECOIN BORROW:</span>
+              <span className="text-[#8c8c8c]">STABLECOIN BORROW:</span>
               <span className="text-white font-bold">${borrowedAmount.toLocaleString()}</span>
             </div>
 
             <div className="flex justify-between items-center">
-              <span className="text-[#7f8cab]">TOTAL EXPOSURE:</span>
-              <span className="text-[#14b07f] text-lg font-bold">
+              <span className="text-[#8c8c8c]">TOTAL EXPOSURE:</span>
+              <span className="text-[#b5b5b5] text-lg font-bold">
                 ${totalPositionSize.toLocaleString()}
               </span>
             </div>
 
             <div className="flex justify-between items-center">
-              <span className="text-[#7f8cab]">EQUITY EXPOSURE SHARES:</span>
+              <span className="text-[#8c8c8c]">EQUITY EXPOSURE SHARES:</span>
               <span className="text-white font-bold">{estimatedShares.toFixed(2)} {currentMarket.symbol}</span>
             </div>
 
             <div className="flex justify-between items-center pt-2 border-t border-white/5">
-              <span className="text-[#7f8cab]">BORROW APR:</span>
+              <span className="text-[#8c8c8c]">BORROW APR:</span>
               <span className="text-white font-bold">{currentMarket.borrowApr}% / YR</span>
             </div>
 
             <div className="flex justify-between items-center">
-              <span className="text-[#7f8cab]">ESTIMATED INT. COST:</span>
+              <span className="text-[#8c8c8c]">ESTIMATED INT. COST:</span>
               <span className="text-white font-bold">${annualInterestFee.toFixed(2)} / YR</span>
             </div>
 
-            <div className="p-3 bg-[#050a18] border border-[#14b07f]/30 rounded-sm space-y-1">
-              <div className="flex items-center gap-1.5 text-[10px] text-[#14b07f] font-bold">
+            <div className="p-3 bg-[#000000] border border-[#b5b5b5]/30 rounded-sm space-y-1">
+              <div className="flex items-center gap-1.5 text-[10px] text-[#b5b5b5] font-bold">
                 <ShieldCheck className="w-3.5 h-3.5" />
                 <span>AUTO-PROTECT SAFEGUARD TRIGGER</span>
               </div>
-              <p className="text-[10px] text-[#7f8cab] normal-case leading-snug">
+              <p className="text-[10px] text-[#8c8c8c] normal-case leading-snug">
                 Positions automatically deleverage if LTV reaches{' '}
                 <strong className="text-white">{autoProtectLtv}%</strong> to protect your principal.
               </p>
@@ -305,7 +305,7 @@ export function LeverageCalculator({ markets, isLoading }: LeverageCalculatorPro
 
           <Link
             href="/trade"
-            className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#14b07f] hover:bg-[#0b8e62] text-white font-mono font-bold text-xs uppercase tracking-widest rounded-sm transition-all shadow-md hover:shadow-[0_0_15px_rgba(20,176,127,0.4)]"
+            className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#b5b5b5] hover:bg-[#8b8b8b] text-white font-mono font-bold text-xs uppercase tracking-widest rounded-sm transition-all shadow-md hover:shadow-[0_0_15px_rgba(181,181,181,0.4)]"
           >
             <Zap className="w-4 h-4 fill-current" />
             <span>TRADE THIS STRATEGY NOW</span>

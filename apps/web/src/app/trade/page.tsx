@@ -202,17 +202,17 @@ function PonsTradeWorkspace() {
             </div>
 
             {/* Quick Market Stats to fill width & eliminate dead empty space */}
-            <div className="hidden sm:flex items-center gap-4 lg:gap-6 border-l border-[#1b2233] pl-3 sm:pl-4 text-xs">
+            <div className="hidden sm:flex items-center gap-4 lg:gap-6 border-l border-[#222222] pl-3 sm:pl-4 text-xs">
               <div>
-                <span className="text-[#707d9c] block text-[10px] uppercase font-mono tracking-wider">24h Vol</span>
+                <span className="text-[#7d7d7d] block text-[10px] uppercase font-mono tracking-wider">24h Vol</span>
                 <span className="font-mono font-medium text-white">${formatCompactNumber(market.volume24h)}</span>
               </div>
               <div>
-                <span className="text-[#707d9c] block text-[10px] uppercase font-mono tracking-wider">Liquidity</span>
+                <span className="text-[#7d7d7d] block text-[10px] uppercase font-mono tracking-wider">Liquidity</span>
                 <span className="font-mono font-medium text-white">${formatCompactNumber(market.liquidity)}</span>
               </div>
               <div>
-                <span className="text-[#707d9c] block text-[10px] uppercase font-mono tracking-wider">Max Lev</span>
+                <span className="text-[#7d7d7d] block text-[10px] uppercase font-mono tracking-wider">Max Lev</span>
                 <span className="font-mono font-semibold text-[var(--green)]">{market.maxLeverage || 10}x</span>
               </div>
             </div>
@@ -313,7 +313,7 @@ const tradeStyles = `
           min-width: 0;
         }
         .chart-wrapper {
-          background: rgba(255, 255, 255, 0.02);
+          background: rgba(255,255,255, 0.02);
           border: 1px solid var(--line);
           border-radius: 12px;
           overflow: hidden;
@@ -353,7 +353,7 @@ const tradeStyles = `
           }
         }
         .order-panel {
-          background: rgba(255, 255, 255, 0.02);
+          background: rgba(255,255,255, 0.02);
           border: 1px solid var(--line);
           border-radius: 12px;
           padding: 16px;
@@ -371,7 +371,7 @@ const tradeStyles = `
         .order-tabs {
           display: flex;
           gap: 8px;
-          background: rgba(0, 0, 0, 0.2);
+          background: rgba(0,0,0, 0.2);
           padding: 4px;
           border-radius: 8px;
         }
@@ -393,10 +393,10 @@ const tradeStyles = `
         }
         .order-tabs .tab.active {
           color: var(--fg);
-          background: rgba(255, 255, 255, 0.1);
+          background: rgba(255,255,255, 0.1);
         }
-        .order-tabs .tab.active.long { background: rgba(46,230,166, 0.15); color: var(--green); }
-        .order-tabs .tab.active.short { background: rgba(255, 107, 107, 0.15); color: #ff6b6b; }
+        .order-tabs .tab.active.long { background: rgba(229,229,229, 0.15); color: var(--green); }
+        .order-tabs .tab.active.short { background: rgba(255,107,107, 0.15); color: #ff6b6b; }
         
         .input-group label {
           display: block;
@@ -412,7 +412,7 @@ const tradeStyles = `
         .input-wrapper input {
           width: 100%;
           min-height: 46px;
-          background: rgba(0, 0, 0, 0.2);
+          background: rgba(0,0,0, 0.2);
           border: 1px solid var(--line);
           border-radius: 8px;
           padding: 12px 16px;
@@ -436,7 +436,7 @@ const tradeStyles = `
           cursor: pointer;
         }
         .order-summary {
-          background: rgba(0, 0, 0, 0.2);
+          background: rgba(0,0,0, 0.2);
           border-radius: 8px;
           padding: 16px;
           display: flex;

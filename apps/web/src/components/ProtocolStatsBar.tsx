@@ -34,20 +34,20 @@ export function ProtocolStatsBar() {
   ];
 
   return (
-    <div className="w-full bg-[#050a18] border border-white/10 rounded-sm p-4 sm:p-6 font-mono uppercase">
+    <div className="w-full bg-[#000000] border border-white/10 rounded-sm p-4 sm:p-6 font-mono uppercase">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 divider-x">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           return (
             <div
               key={index}
-              className="space-y-1.5 p-2 sm:p-3 bg-[#030814]/60 border border-white/5 rounded-sm hover:border-[#14b07f]/40 transition-colors"
+              className="space-y-1.5 p-2 sm:p-3 bg-[#000000]/60 border border-white/5 rounded-sm hover:border-[#b5b5b5]/40 transition-colors"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[10px] sm:text-xs text-[#7f8cab] tracking-wider block">
+                <span className="text-[10px] sm:text-xs text-[#8c8c8c] tracking-wider block">
                   {stat.label}
                 </span>
-                <Icon className={`w-3.5 h-3.5 ${stat.highlight ? 'text-[#14b07f]' : 'text-[#7f8cab]'}`} />
+                <Icon className={`w-3.5 h-3.5 ${stat.highlight ? 'text-[#b5b5b5]' : 'text-[#8c8c8c]'}`} />
               </div>
 
               <div className="text-xl sm:text-2xl font-bold text-white tracking-tight tabular-nums">
@@ -55,8 +55,8 @@ export function ProtocolStatsBar() {
               </div>
 
               <div className="flex items-center gap-1.5 text-[10px]">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#14b07f] animate-pulse" />
-                <span className={stat.highlight ? 'text-[#14b07f] font-bold' : 'text-[#7f8cab]'}>
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#b5b5b5] animate-pulse" />
+                <span className={stat.highlight ? 'text-[#b5b5b5] font-bold' : 'text-[#8c8c8c]'}>
                   {stat.change}
                 </span>
               </div>

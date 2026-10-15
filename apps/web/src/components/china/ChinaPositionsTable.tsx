@@ -111,11 +111,11 @@ export function ChinaPositionsTable({
 
   if (positions.length === 0) {
     return (
-      <div className="bg-[#080f20] border border-[#16254a] p-8 text-center rounded-sm font-sans">
-        <h4 className="text-sm font-bold font-display text-[#eef2fa]">
+      <div className="bg-[#0a0a0a] border border-[#222222] p-8 text-center rounded-sm font-sans">
+        <h4 className="text-sm font-bold font-display text-[#f5f5f5]">
           No Open Chinese Equity Positions
         </h4>
-        <p className="text-xs text-[#8e9bb8] mt-1.5 leading-relaxed">
+        <p className="text-xs text-[#8d8d8d] mt-1.5 leading-relaxed">
           You currently have no active collateral deposits, spot tokens, or leveraged positions in this market.
         </p>
       </div>
@@ -125,26 +125,26 @@ export function ChinaPositionsTable({
   return (
     <div className="flex flex-col gap-4 font-sans">
       {/* POSITION STATUS & HISTORY FILTER TOOLBAR */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#080f20] border border-[#16254a] p-3 rounded-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#0a0a0a] border border-[#222222] p-3 rounded-sm">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-display font-bold uppercase tracking-wider text-[#eef2fa]">
+          <span className="text-xs font-display font-bold uppercase tracking-wider text-[#f5f5f5]">
             Position History &amp; Status
           </span>
-          <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#8791aa]">
-            <span className="text-[#2ee6a6]">{openPositions.length} Open</span>
+          <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#919191]">
+            <span className="text-[#e5e5e5]">{openPositions.length} Open</span>
             <span>·</span>
-            <span className="text-[#98a2ba]">{closedPositions.length} Closed</span>
+            <span className="text-[#a2a2a2]">{closedPositions.length} Closed</span>
           </div>
         </div>
 
         {/* Filter Segmented Pills */}
-        <div className="flex items-center gap-1 bg-[#050a18] p-1 border border-[#111622] rounded font-display text-xs">
+        <div className="flex items-center gap-1 bg-[#000000] p-1 border border-[#161616] rounded font-display text-xs">
           <button
             onClick={() => setStatusFilter("ALL")}
             className={`py-1 px-3 rounded transition-all font-semibold whitespace-nowrap ${
               statusFilter === "ALL"
-                ? "bg-[#2ee6a6] text-[#050a18] shadow-[0_0_8px_rgba(46,230,166,0.2)]"
-                : "text-[#8e9bb8] hover:text-white"
+                ? "bg-[#e5e5e5] text-[#000000] shadow-[0_0_8px_rgba(229,229,229,0.2)]"
+                : "text-[#8d8d8d] hover:text-white"
             }`}
           >
             All ({positions.length})
@@ -153,19 +153,19 @@ export function ChinaPositionsTable({
             onClick={() => setStatusFilter("OPEN")}
             className={`py-1 px-3 rounded transition-all font-semibold whitespace-nowrap flex items-center gap-1.5 ${
               statusFilter === "OPEN"
-                ? "bg-[#2ee6a6] text-[#050a18] shadow-[0_0_8px_rgba(46,230,166,0.2)]"
-                : "text-[#8e9bb8] hover:text-white"
+                ? "bg-[#e5e5e5] text-[#000000] shadow-[0_0_8px_rgba(229,229,229,0.2)]"
+                : "text-[#8d8d8d] hover:text-white"
             }`}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#2ee6a6]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#e5e5e5]" />
             <span>Open ({openPositions.length})</span>
           </button>
           <button
             onClick={() => setStatusFilter("CLOSED")}
             className={`py-1 px-3 rounded transition-all font-semibold whitespace-nowrap ${
               statusFilter === "CLOSED"
-                ? "bg-[#2ee6a6] text-[#050a18] shadow-[0_0_8px_rgba(46,230,166,0.2)]"
-                : "text-[#8e9bb8] hover:text-white"
+                ? "bg-[#e5e5e5] text-[#000000] shadow-[0_0_8px_rgba(229,229,229,0.2)]"
+                : "text-[#8d8d8d] hover:text-white"
             }`}
           >
             Closed ({closedPositions.length})
@@ -175,21 +175,21 @@ export function ChinaPositionsTable({
 
       {/* FILTER EMPTY STATE */}
       {displayPositions.length === 0 ? (
-        <div className="bg-[#080f20] border border-[#16254a] p-8 text-center rounded-sm font-sans">
-          <h4 className="text-sm font-bold font-display text-[#eef2fa]">
+        <div className="bg-[#0a0a0a] border border-[#222222] p-8 text-center rounded-sm font-sans">
+          <h4 className="text-sm font-bold font-display text-[#f5f5f5]">
             {statusFilter === "OPEN" ? "No Active Open Positions" : "No Closed History"}
           </h4>
-          <p className="text-xs text-[#8e9bb8] mt-1.5 leading-relaxed">
+          <p className="text-xs text-[#8d8d8d] mt-1.5 leading-relaxed">
             {statusFilter === "OPEN"
               ? "All your positions in this asset are currently closed. Switch filter to 'Closed' or 'All' to review historical trades."
               : "You have not closed any positions yet in this asset."}
           </p>
         </div>
       ) : (
-        <div className="overflow-x-auto border border-[#16254a] rounded-sm bg-[#080f20]">
+        <div className="overflow-x-auto border border-[#222222] rounded-sm bg-[#0a0a0a]">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-[#16254a] bg-[#0b1429] text-[#8e9bb8] font-display tracking-wider uppercase text-[11px] whitespace-nowrap">
+              <tr className="border-b border-[#222222] bg-[#101010] text-[#8d8d8d] font-display tracking-wider uppercase text-[11px] whitespace-nowrap">
                 <th className="py-3 px-4 whitespace-nowrap">Market &amp; Type</th>
                 <th className="py-3 px-4 whitespace-nowrap">Collateral</th>
                 <th className="py-3 px-4 whitespace-nowrap">USDG Debt</th>
@@ -199,7 +199,7 @@ export function ChinaPositionsTable({
                 <th className="py-3 px-4 text-right whitespace-nowrap">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#101c37] font-mono">
+            <tbody className="divide-y divide-[#161616] font-mono">
               {displayPositions.map((pos, index) => {
                 const isClosed = pos.status === "CLOSED";
                 const isUp = pos.pnlUsd >= 0;
@@ -212,14 +212,14 @@ export function ChinaPositionsTable({
                       openPositions.length > 0 &&
                       index === openPositions.length &&
                       closedPositions.length > 0 && (
-                        <tr className="bg-[#0b0e16] border-y border-[#161d2e]">
+                        <tr className="bg-[#0e0e0e] border-y border-[#1d1d1d]">
                           <td
                             colSpan={7}
-                            className="py-2 px-4 text-[10px] font-display uppercase tracking-wider text-[#8e9bb8] font-semibold"
+                            className="py-2 px-4 text-[10px] font-display uppercase tracking-wider text-[#8d8d8d] font-semibold"
                           >
                             <div className="flex items-center gap-2">
                               <span>↓ Historical Closed Positions ({closedPositions.length})</span>
-                              <span className="text-[#68728a] font-mono font-normal">· Settled on Robinhood Chain</span>
+                              <span className="text-[#727272] font-mono font-normal">· Settled on Robinhood Chain</span>
                             </div>
                           </td>
                         </tr>
@@ -228,8 +228,8 @@ export function ChinaPositionsTable({
                     <tr
                       className={`transition-colors ${
                         isClosed
-                          ? "bg-[#06080d]/70 opacity-80 hover:opacity-100"
-                          : "hover:bg-[#0c1019]"
+                          ? "bg-[#030303]/70 opacity-80 hover:opacity-100"
+                          : "hover:bg-[#101010]"
                       }`}
                     >
                       {/* Market & Type */}
@@ -238,8 +238,8 @@ export function ChinaPositionsTable({
                           <div
                             className={`w-7 h-7 rounded border flex items-center justify-center font-display font-bold text-xs shrink-0 ${
                               isClosed
-                                ? "bg-[#0d172e] border-[#161d2e] text-[#7a859f]"
-                                : "bg-[#101c37] border-[#1a2a4d] text-[#2ee6a6]"
+                                ? "bg-[#0e0e0e] border-[#1d1d1d] text-[#858585]"
+                                : "bg-[#161616] border-[#262626] text-[#e5e5e5]"
                             }`}
                           >
                             {pos.assetSymbol.slice(0, 3)}
@@ -247,7 +247,7 @@ export function ChinaPositionsTable({
                           <div className="flex items-center gap-2 whitespace-nowrap">
                             <span
                               className={`font-bold text-sm font-display shrink-0 ${
-                                isClosed ? "text-[#b9c2d6]" : "text-[#eef2fa]"
+                                isClosed ? "text-[#c2c2c2]" : "text-[#f5f5f5]"
                               }`}
                             >
                               {pos.assetSymbol}
@@ -255,12 +255,12 @@ export function ChinaPositionsTable({
                             <span
                               className={`text-[10px] px-1.5 py-0.5 rounded font-display whitespace-nowrap shrink-0 ${
                                 isClosed
-                                  ? "bg-[#101c37] text-[#8791aa] border border-[#182033]"
+                                  ? "bg-[#161616] text-[#919191] border border-[#202020]"
                                   : pos.positionType === "LONG"
-                                  ? "bg-[rgba(46,230,166,0.1)] text-[#2ee6a6] border border-[rgba(46,230,166,0.25)]"
+                                  ? "bg-[rgba(229,229,229,0.1)] text-[#e5e5e5] border border-[rgba(229,229,229,0.25)]"
                                   : pos.positionType === "SPOT"
-                                  ? "bg-[rgba(46,230,166,0.08)] text-[#2ee6a6] border border-[rgba(46,230,166,0.2)]"
-                                  : "bg-[#101520] text-[#c3cce0] border border-[#1a2a4d]"
+                                  ? "bg-[rgba(229,229,229,0.08)] text-[#e5e5e5] border border-[rgba(229,229,229,0.2)]"
+                                  : "bg-[#151515] text-[#cccccc] border border-[#262626]"
                               }`}
                             >
                               {isClosed
@@ -271,11 +271,11 @@ export function ChinaPositionsTable({
                                 ? "Spot Hold"
                                 : "Isolated"}
                             </span>
-                            <span className="text-[#566079] text-xs shrink-0">·</span>
-                            <span className="text-[11px] text-[#8791aa] font-mono whitespace-nowrap shrink-0">
+                            <span className="text-[#606060] text-xs shrink-0">·</span>
+                            <span className="text-[11px] text-[#919191] font-mono whitespace-nowrap shrink-0">
                               Entry: ${pos.entryPrice.toFixed(2)}
                               {isClosed && pos.closedAt && (
-                                <span className="text-[#68728a] ml-1">
+                                <span className="text-[#727272] ml-1">
                                   · Closed:{" "}
                                   {new Date(pos.closedAt).toLocaleTimeString([], {
                                     hour: "2-digit",
@@ -290,10 +290,10 @@ export function ChinaPositionsTable({
 
                       {/* Collateral */}
                       <td className="py-3.5 px-4 whitespace-nowrap font-mono">
-                        <span className={isClosed ? "text-[#8791aa]" : "text-[#eef2fa] font-semibold"}>
+                        <span className={isClosed ? "text-[#919191]" : "text-[#f5f5f5] font-semibold"}>
                           ${pos.collateralUsd.toFixed(2)}
                         </span>
-                        <span className="text-[11px] text-[#7a859f] ml-1.5">
+                        <span className="text-[11px] text-[#858585] ml-1.5">
                           ({pos.collateralTokens.toFixed(2)} {pos.assetSymbol})
                         </span>
                       </td>
@@ -301,13 +301,13 @@ export function ChinaPositionsTable({
                       {/* Debt */}
                       <td className="py-3.5 px-4 whitespace-nowrap font-mono">
                         {isClosed ? (
-                          <span className="text-[#7a859f] text-xs">$0.00 (Settled)</span>
+                          <span className="text-[#858585] text-xs">$0.00 (Settled)</span>
                         ) : (
                           <>
-                            <span className="text-[#eef2fa] font-semibold">
+                            <span className="text-[#f5f5f5] font-semibold">
                               ${pos.debtUsd.toFixed(2)} USDG
                             </span>
-                            <span className="text-[11px] text-[#8791aa] ml-1.5">
+                            <span className="text-[11px] text-[#919191] ml-1.5">
                               (LTV: {pos.currentLtv.toFixed(1)}%)
                             </span>
                           </>
@@ -317,7 +317,7 @@ export function ChinaPositionsTable({
                       {/* Health Factor */}
                       <td className="py-3.5 px-4 whitespace-nowrap font-mono">
                         {isClosed ? (
-                          <span className="text-[11px] text-[#7a859f] px-2 py-0.5 rounded bg-[#0c101a] border border-[#151c2b]">
+                          <span className="text-[11px] text-[#858585] px-2 py-0.5 rounded bg-[#101010] border border-[#1c1c1c]">
                             Settled
                           </span>
                         ) : (
@@ -328,7 +328,7 @@ export function ChinaPositionsTable({
                                   ? "bg-[rgba(255,107,107,0.2)] text-[#ff6b6b] border border-[#ff6b6b] animate-pulse"
                                   : pos.healthFactor < 1.3
                                   ? "bg-[rgba(245,166,35,0.1)] text-[#f5a623] border border-[rgba(245,166,35,0.25)]"
-                                  : "bg-[rgba(46,230,166,0.1)] text-[#2ee6a6] border border-[rgba(46,230,166,0.25)]"
+                                  : "bg-[rgba(229,229,229,0.1)] text-[#e5e5e5] border border-[rgba(229,229,229,0.25)]"
                               }`}
                             >
                               {pos.healthFactor >= 99 ? "Safe" : pos.healthFactor.toFixed(2)}
@@ -345,9 +345,9 @@ export function ChinaPositionsTable({
                       {/* Est. Liq Price */}
                       <td className="py-3.5 px-4 whitespace-nowrap font-mono">
                         {isClosed ? (
-                          <span className="text-[#68728a]">—</span>
+                          <span className="text-[#727272]">—</span>
                         ) : (
-                          <span className={isLiquidatable ? "text-[#ff6b6b] font-bold" : "text-[#b9c2d6]"}>
+                          <span className={isLiquidatable ? "text-[#ff6b6b] font-bold" : "text-[#c2c2c2]"}>
                             {pos.positionType === "SPOT" || pos.liquidationPrice <= 0
                               ? "None (Safe)"
                               : `$${pos.liquidationPrice.toFixed(2)}`}
@@ -360,9 +360,9 @@ export function ChinaPositionsTable({
                         <span
                           className={`font-bold ${
                             isClosed
-                              ? "text-[#8791aa]"
+                              ? "text-[#919191]"
                               : isUp
-                              ? "text-[#2ee6a6]"
+                              ? "text-[#e5e5e5]"
                               : "text-[#ff6b6b]"
                           }`}
                         >
@@ -371,9 +371,9 @@ export function ChinaPositionsTable({
                         <span
                           className={`text-[11px] ml-1.5 ${
                             isClosed
-                              ? "text-[#68728a]"
+                              ? "text-[#727272]"
                               : isUp
-                              ? "text-[#2ee6a6] opacity-80"
+                              ? "text-[#e5e5e5] opacity-80"
                               : "text-[#ff6b6b] opacity-80"
                           }`}
                         >
@@ -384,7 +384,7 @@ export function ChinaPositionsTable({
                       {/* Actions */}
                       <td className="py-3.5 px-4 text-right font-sans whitespace-nowrap">
                         {isClosed ? (
-                          <span className="text-[11px] text-[#7a859f] font-mono px-2.5 py-1 rounded bg-[#0c1019] border border-[#131928] inline-block">
+                          <span className="text-[11px] text-[#858585] font-mono px-2.5 py-1 rounded bg-[#101010] border border-[#191919] inline-block">
                             Settled on Chain
                           </span>
                         ) : (
@@ -392,14 +392,14 @@ export function ChinaPositionsTable({
                             {pos.debtUsd > 0 && (
                               <button
                                 onClick={() => handleOpenRepayModal(pos)}
-                                className="px-2.5 py-1 rounded bg-[#0f1a33] hover:bg-[#151c2b] text-[#c3cce0] hover:text-white border border-[#1a2a4d] text-xs font-display transition-colors whitespace-nowrap cursor-pointer"
+                                className="px-2.5 py-1 rounded bg-[#141414] hover:bg-[#1c1c1c] text-[#cccccc] hover:text-white border border-[#262626] text-xs font-display transition-colors whitespace-nowrap cursor-pointer"
                               >
                                 Repay
                               </button>
                             )}
                             <button
                               onClick={() => handleOpenCloseModal(pos)}
-                              className="px-2.5 py-1 rounded bg-[#1e1414] hover:bg-[#2c1a1a] text-[#ff8888] hover:text-white border border-[#392020] text-xs font-display transition-colors whitespace-nowrap cursor-pointer"
+                              className="px-2.5 py-1 rounded bg-[#171717] hover:bg-[#1f1f1f] text-[#ff8888] hover:text-white border border-[#272727] text-xs font-display transition-colors whitespace-nowrap cursor-pointer"
                             >
                               {pos.positionType === "SPOT" ? "Sell Spot" : "Close"}
                             </button>
@@ -418,30 +418,30 @@ export function ChinaPositionsTable({
       {/* CLOSE POSITION MODAL */}
       {activeModal === "CLOSE" && selectedPosition && (
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-          <div className="bg-[#080f20] border border-[#16254a] rounded-sm max-w-sm w-full p-5 flex flex-col gap-4 font-sans">
-            <h3 className="text-sm font-bold font-display text-[#eef2fa]">
+          <div className="bg-[#0a0a0a] border border-[#222222] rounded-sm max-w-sm w-full p-5 flex flex-col gap-4 font-sans">
+            <h3 className="text-sm font-bold font-display text-[#f5f5f5]">
               {selectedPosition.positionType === "SPOT" ? "Sell Spot Holdings" : `Close ${selectedPosition.assetSymbol} Position`}
             </h3>
-            <p className="text-xs text-[#8e9bb8] leading-relaxed">
+            <p className="text-xs text-[#8d8d8d] leading-relaxed">
               {selectedPosition.positionType === "SPOT" ? (
                 <>
-                  Confirm selling <strong className="text-[#eef2fa] font-mono">{selectedPosition.collateralTokens.toFixed(4)} {selectedPosition.assetSymbol}</strong> back to USDG at the current reference price.
+                  Confirm selling <strong className="text-[#f5f5f5] font-mono">{selectedPosition.collateralTokens.toFixed(4)} {selectedPosition.assetSymbol}</strong> back to USDG at the current reference price.
                 </>
               ) : (
                 <>
                   Are you sure you want to close this position? Outstanding debt of{" "}
-                  <strong className="text-[#eef2fa] font-mono">
+                  <strong className="text-[#f5f5f5] font-mono">
                     ${selectedPosition.debtUsd.toFixed(2)} USDG
                   </strong>{" "}
                   will be settled and residual collateral returned.
                 </>
               )}
             </p>
-            <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#101c37]">
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#161616]">
               <button
                 disabled={isProcessing}
                 onClick={() => setActiveModal(null)}
-                className="px-3 py-1.5 rounded bg-[#0f1a33] text-[#cdd4e4] border border-[#1a2a4d] text-xs font-display"
+                className="px-3 py-1.5 rounded bg-[#141414] text-[#d4d4d4] border border-[#262626] text-xs font-display"
               >
                 Cancel
               </button>
@@ -460,16 +460,16 @@ export function ChinaPositionsTable({
       {/* REPAY MODAL */}
       {activeModal === "REPAY" && selectedPosition && (
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-          <div className="bg-[#080f20] border border-[#16254a] rounded-sm max-w-sm w-full p-5 flex flex-col gap-4 font-sans">
-            <h3 className="text-sm font-bold font-display text-[#eef2fa]">
+          <div className="bg-[#0a0a0a] border border-[#222222] rounded-sm max-w-sm w-full p-5 flex flex-col gap-4 font-sans">
+            <h3 className="text-sm font-bold font-display text-[#f5f5f5]">
               Repay USDG Debt
             </h3>
-            <p className="text-xs text-[#8e9bb8]">
+            <p className="text-xs text-[#8d8d8d]">
               Enter amount of USDG to repay towards your{" "}
               {selectedPosition.assetSymbol} debt:
             </p>
             <div>
-              <div className="flex items-center justify-between text-[11px] text-[#8791aa] mb-1 font-mono">
+              <div className="flex items-center justify-between text-[11px] text-[#919191] mb-1 font-mono">
                 <span>Current Debt</span>
                 <span>${selectedPosition.debtUsd.toFixed(2)} USDG</span>
               </div>
@@ -477,21 +477,21 @@ export function ChinaPositionsTable({
                 type="number"
                 value={repayAmount}
                 onChange={(e) => setRepayAmount(e.target.value)}
-                className="w-full bg-[#050a18] border border-[#1a2a4d] rounded px-3 py-2 text-sm text-[#eef2fa] font-mono focus:outline-none focus:border-[#2ee6a6]"
+                className="w-full bg-[#000000] border border-[#262626] rounded px-3 py-2 text-sm text-[#f5f5f5] font-mono focus:outline-none focus:border-[#e5e5e5]"
               />
             </div>
-            <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#101c37]">
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#161616]">
               <button
                 disabled={isProcessing}
                 onClick={() => setActiveModal(null)}
-                className="px-3 py-1.5 rounded bg-[#0f1a33] text-[#cdd4e4] border border-[#1a2a4d] text-xs font-display"
+                className="px-3 py-1.5 rounded bg-[#141414] text-[#d4d4d4] border border-[#262626] text-xs font-display"
               >
                 Cancel
               </button>
               <button
                 disabled={isProcessing}
                 onClick={handleConfirmRepay}
-                className="px-3 py-1.5 rounded bg-[#2ee6a6] hover:bg-[#39efb2] text-[#050a18] font-display text-xs font-bold"
+                className="px-3 py-1.5 rounded bg-[#e5e5e5] hover:bg-[#f3f3f3] text-[#000000] font-display text-xs font-bold"
               >
                 {isProcessing ? "Repaying..." : "Confirm Repay"}
               </button>

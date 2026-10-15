@@ -14,7 +14,7 @@ The relaunch keeps the product exactly as it was. What changed is the name, the 
 | Env | `MAINNET_LEVIER_VAULT_ADDRESS`; `PROTOCOL_ADDRESSES` keys `levierRouter`, `levierVault` | `MAINNET_NASH_VAULT_ADDRESS`; `nashRouter`, `nashVault` |
 | Hooks | `useLevierMarkets`, `useLevierVault`, `useLevierPortfolio` | `useNash*` |
 | CLI | `scripts/levier` (`levier testnet ...`) | `scripts/nash` (`pnpm nash testnet ...`) |
-| Visual identity | Acid lime on olive-black; Inter, Tomorrow, Fraunces | Navy, emerald, silver, white; Newsreader, Montserrat, JetBrains Mono, Caveat ([`BRAND.md`](BRAND.md)) |
+| Visual identity | Acid lime on olive-black; Inter, Tomorrow, Fraunces | Black, graphite, silver, white; Newsreader, Montserrat, JetBrains Mono, Caveat ([`BRAND.md`](BRAND.md)) |
 | Landing page | Stock-card hero | 3D hooded figure in a three-ribbon ring; manifesto, Hex isolation board, the 1955 letter, personas, roadmap |
 | Social links | Hard-coded `@LevierTech` | Env-driven (`NEXT_PUBLIC_X_HANDLE`); the link is hidden until set |
 | Hosted URLs in scripts | Hard-coded Levier Railway site and Levier contract addresses | `NASH_TESTNET_SITE`, and addresses read from `.env.testnet` |

@@ -139,17 +139,17 @@ export function VaultCard({ vault }: VaultCardProps) {
           />
           <div
             style={{ width: "30%" }}
-            className="bg-blue-500 h-full"
+            className="bg-silver h-full"
             title="AAPL 30%"
           />
           <div
             style={{ width: "20%" }}
-            className="bg-indigo-500 h-full"
+            className="bg-muted h-full"
             title="SPY 20%"
           />
           <div
             style={{ width: "15%" }}
-            className="bg-amber-500 h-full"
+            className="bg-muted-dark h-full"
             title="TSLA 15%"
           />
         </div>
@@ -209,7 +209,7 @@ export function VaultCard({ vault }: VaultCardProps) {
                 onClick={() => setActiveModalTab("WITHDRAW")}
                 className={`py-2 rounded-sm ${
                   activeModalTab === "WITHDRAW"
-                    ? "bg-white text-[#030814]"
+                    ? "bg-white text-[#000000]"
                     : "text-muted"
                 }`}
               >

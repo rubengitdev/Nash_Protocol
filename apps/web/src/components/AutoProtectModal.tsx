@@ -111,7 +111,7 @@ export function AutoProtectModal({
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span className="text-muted">TRIGGER DELEVERAGE LTV</span>
-                <span className="font-bold text-[#FFB800]">{triggerLtv}%</span>
+                <span className="font-bold text-[#ffb800]">{triggerLtv}%</span>
               </div>
               <input
                 type="range"
@@ -120,7 +120,7 @@ export function AutoProtectModal({
                 value={triggerLtv}
                 onChange={(e) => setTriggerLtv(Number(e.target.value))}
                 disabled={!env.TRADING_ENABLED || isSaving}
-                className="w-full accent-[#14b07f] bg-surface-subtle h-2 rounded-none cursor-pointer border border-white/10"
+                className="w-full accent-[#b5b5b5] bg-surface-subtle h-2 rounded-none cursor-pointer border border-white/10"
               />
               <span className="text-[10px] text-muted block">
                 KEEPER EXECUTES DELEVERAGE WHEN LTV HITS {triggerLtv}%.
@@ -139,7 +139,7 @@ export function AutoProtectModal({
                 value={targetLtv}
                 onChange={(e) => setTargetLtv(Number(e.target.value))}
                 disabled={!env.TRADING_ENABLED || isSaving}
-                className="w-full accent-[#14b07f] bg-surface-subtle h-2 rounded-none cursor-pointer border border-white/10"
+                className="w-full accent-[#b5b5b5] bg-surface-subtle h-2 rounded-none cursor-pointer border border-white/10"
               />
               <span className="text-[10px] text-muted block">
                 TARGET LTV POST-EXECUTION IS RESTORED TO {targetLtv}%.

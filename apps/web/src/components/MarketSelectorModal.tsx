@@ -84,7 +84,7 @@ export function MarketSelectorModal({
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 bg-[#0e121c] border border-[#1d263b] hover:border-[var(--green)] text-white rounded-lg transition-all text-left group shadow-sm max-w-full"
+        className="flex items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 bg-[#121212] border border-[#262626] hover:border-[var(--green)] text-white rounded-lg transition-all text-left group shadow-sm max-w-full"
         aria-label="Select market asset"
       >
         <TokenLogo src={selectedMarket.image} symbol={selectedMarket.symbol} size={28} />
@@ -93,12 +93,12 @@ export function MarketSelectorModal({
             <span className="font-bold text-base sm:text-lg tracking-tight truncate font-display">
               {selectedMarket.symbol}
             </span>
-            <span className="text-[11px] text-[#8e9bb8] hidden sm:inline truncate max-w-[120px]">
+            <span className="text-[11px] text-[#8d8d8d] hidden sm:inline truncate max-w-[120px]">
               {selectedMarket.name}
             </span>
           </div>
         </div>
-        <ChevronDown className="w-4 h-4 text-[#8e9bb8] group-hover:text-[var(--green)] shrink-0 transition-transform ml-1" />
+        <ChevronDown className="w-4 h-4 text-[#8d8d8d] group-hover:text-[var(--green)] shrink-0 transition-transform ml-1" />
       </button>
 
       {/* Modal Dialog */}
@@ -108,26 +108,26 @@ export function MarketSelectorModal({
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="w-full sm:max-w-md bg-[#0a0d15] border border-[#1e2537] sm:rounded-xl rounded-t-2xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden modal-slide-up"
+            className="w-full sm:max-w-md bg-[#070707] border border-[#252525] sm:rounded-xl rounded-t-2xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden modal-slide-up"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
             aria-labelledby="market-modal-title"
           >
             {/* Header */}
-            <div className="p-4 border-b border-[#171d2c] flex items-center justify-between">
+            <div className="p-4 border-b border-[#1d1d1d] flex items-center justify-between">
               <div>
                 <h3 id="market-modal-title" className="text-base font-bold text-white font-display">
                   Select Market Asset
                 </h3>
-                <p className="text-xs text-[#8e9bb8] mt-0.5">
+                <p className="text-xs text-[#8d8d8d] mt-0.5">
                   Search by name, ticker, or contract address
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-lg text-[#8e9bb8] hover:text-white hover:bg-white/5 transition-colors"
+                className="p-1.5 rounded-lg text-[#8d8d8d] hover:text-white hover:bg-white/5 transition-colors"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
@@ -135,22 +135,22 @@ export function MarketSelectorModal({
             </div>
 
             {/* Search Input */}
-            <div className="p-4 border-b border-[#171d2c]">
+            <div className="p-4 border-b border-[#1d1d1d]">
               <div className="relative flex items-center">
-                <Search className="w-4 h-4 text-[#8e9bb8] absolute left-3 pointer-events-none" />
+                <Search className="w-4 h-4 text-[#8d8d8d] absolute left-3 pointer-events-none" />
                 <input
                   ref={inputRef}
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search name, symbol, or 0x..."
-                  className="w-full bg-[#10141e] border border-[#21293d] focus:border-[var(--green)] rounded-lg pl-9 pr-8 py-2.5 text-sm text-white placeholder:text-[#5b6782] outline-none transition-colors"
+                  className="w-full bg-[#141414] border border-[#292929] focus:border-[var(--green)] rounded-lg pl-9 pr-8 py-2.5 text-sm text-white placeholder:text-[#666666] outline-none transition-colors"
                 />
                 {search && (
                   <button
                     type="button"
                     onClick={() => setSearch("")}
-                    className="absolute right-2.5 p-1 text-[#8e9bb8] hover:text-white"
+                    className="absolute right-2.5 p-1 text-[#8d8d8d] hover:text-white"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -159,11 +159,11 @@ export function MarketSelectorModal({
             </div>
 
             {/* Market List */}
-            <div className="flex-1 overflow-y-auto divide-y divide-[#161c29] touch-scroll max-h-[50vh] sm:max-h-[380px]">
+            <div className="flex-1 overflow-y-auto divide-y divide-[#1c1c1c] touch-scroll max-h-[50vh] sm:max-h-[380px]">
               {filteredMarkets.length === 0 ? (
-                <div className="py-12 px-4 text-center text-[#8e9bb8]">
+                <div className="py-12 px-4 text-center text-[#8d8d8d]">
                   <p className="text-sm font-semibold">No assets match your search</p>
-                  <p className="text-xs text-[#5b6782] mt-1">
+                  <p className="text-xs text-[#666666] mt-1">
                     Try searching by contract address or another ticker
                   </p>
                 </div>
@@ -195,10 +195,10 @@ export function MarketSelectorModal({
                               </span>
                             )}
                           </div>
-                          <div className="text-xs text-[#8e9bb8] truncate mt-0.5">
+                          <div className="text-xs text-[#8d8d8d] truncate mt-0.5">
                             {m.name}
                           </div>
-                          <div className="text-[10px] text-[#5b6782] font-mono mt-0.5">
+                          <div className="text-[10px] text-[#666666] font-mono mt-0.5">
                             {truncateAddress(m.address)}
                           </div>
                         </div>

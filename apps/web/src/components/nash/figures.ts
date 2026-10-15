@@ -60,8 +60,8 @@ const mix = (out: RGB, to: RGB, t: number) => {
 };
 const scale = (out: RGB, k: number) => { out[0] *= k; out[1] *= k; out[2] *= k; };
 
-const BG = hex(0x050a18);
-const CLOTH = hex(0x0b1633);
+const BG = hex(0x000000);
+const CLOTH = hex(0x161616);
 
 export interface FigureMesh {
   positions: Float32Array;

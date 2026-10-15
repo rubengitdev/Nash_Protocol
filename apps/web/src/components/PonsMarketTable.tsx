@@ -42,8 +42,8 @@ function PonsMarketCard({
     <div
       className={`relative overflow-hidden rounded-[6px] border p-4 sm:p-5 flex flex-col gap-3 transition-colors ${
         m.eligible
-          ? "border-[#1a2a4d] hover:border-[#2ee6a6] bg-[#0b1429]"
-          : "border-[#16254a] bg-[#080f20] opacity-80"
+          ? "border-[#262626] hover:border-[#e5e5e5] bg-[#101010]"
+          : "border-[#222222] bg-[#0a0a0a] opacity-80"
       } ${m.eligible ? "cursor-pointer" : ""}`}
       style={{ minHeight: "210px" }}
       onClick={() => {
@@ -62,12 +62,12 @@ function PonsMarketCard({
               <h3 className="font-bold text-[14px] sm:text-[15px] text-white m-0 leading-tight truncate font-display tracking-wide">
                 {m.symbol}
               </h3>
-              <p className="text-[#8e9bb8] text-xs m-0 truncate mt-0.5">{m.name}</p>
+              <p className="text-[#8d8d8d] text-xs m-0 truncate mt-0.5">{m.name}</p>
             </div>
           </div>
           <div className="flex flex-col items-end gap-1 shrink-0">
             <div
-              className={m.eligible ? "app-badge text-[10px]" : "app-badge border-[#1a2a4d] !text-[#8e9bb8] text-[10px]"}
+              className={m.eligible ? "app-badge text-[10px]" : "app-badge border-[#262626] !text-[#8d8d8d] text-[10px]"}
             >
               {m.graduated ? "GRADUATED" : "BONDING"}
             </div>
@@ -75,7 +75,7 @@ function PonsMarketCard({
         </div>
 
         {m.description && (
-          <p className="text-[#8e9bb8] text-[12px] line-clamp-2 mt-1 leading-relaxed">
+          <p className="text-[#8d8d8d] text-[12px] line-clamp-2 mt-1 leading-relaxed">
             {m.description}
           </p>
         )}
@@ -138,23 +138,23 @@ function PonsMarketCard({
         <div className="mt-auto pt-3 rounded-lg backdrop-blur-xl bg-black/40 border border-white/10 p-3 shadow-xl">
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <p className="text-[#8e9bb8] text-[11px] m-0 mb-1 uppercase tracking-widest font-bold">Price</p>
+              <p className="text-[#8d8d8d] text-[11px] m-0 mb-1 uppercase tracking-widest font-bold">Price</p>
               <p
                 className={`tabular-nums text-sm m-0 transition-all rounded inline-block ${
                   priceFlash === "up"
-                    ? "text-[#2ee6a6] font-bold drop-shadow-md"
+                    ? "text-[#e5e5e5] font-bold drop-shadow-md"
                     : priceFlash === "down"
                     ? "text-red-400 font-bold drop-shadow-md"
                     : "text-white drop-shadow"
                 }`}
               >
                 ${m.price > 0 ? m.price.toPrecision(4) : "N/A"}
-                {priceFlash === "up" && <span className="ml-1 text-xs text-[#2ee6a6]">↑</span>}
+                {priceFlash === "up" && <span className="ml-1 text-xs text-[#e5e5e5]">↑</span>}
                 {priceFlash === "down" && <span className="ml-1 text-xs text-red-400">↓</span>}
               </p>
             </div>
             <div>
-              <p className="text-[#8e9bb8] text-[11px] m-0 mb-1 uppercase tracking-widest font-bold">Market Cap</p>
+              <p className="text-[#8d8d8d] text-[11px] m-0 mb-1 uppercase tracking-widest font-bold">Market Cap</p>
               <p className="text-white tabular-nums text-sm m-0 drop-shadow">
                 $
                 {m.marketCap > 0
@@ -325,36 +325,36 @@ export function PonsMarketTable({
       {/* Stacked Toast Notifications */}
       <PonsGraduationToast queue={toastQueue} onDismissAll={handleDismissToasts} />
       {/* Real-time Status Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-4 rounded-[6px] bg-[#0b1429] border border-[#1a2a4d] text-xs">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-4 rounded-[6px] bg-[#101010] border border-[#262626] text-xs">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2ee6a6] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2ee6a6]"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e5e5e5] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#e5e5e5]"></span>
             </span>
-            <span className="font-semibold text-[#eef2fa]">Robinhood Chain Live Polling</span>
+            <span className="font-semibold text-[#f5f5f5]">Robinhood Chain Live Polling</span>
           </div>
-          <span className="text-[#8e9bb8] hidden sm:inline">•</span>
-          <span className="text-[#8e9bb8] hidden sm:inline">Every 15s</span>
-          <span className="text-[#8e9bb8] hidden md:inline">•</span>
-          <span className="text-[#8e9bb8] hidden md:inline">
-            Last check: <strong className="text-[#eef2fa] font-sans">{timeAgo}</strong>
+          <span className="text-[#8d8d8d] hidden sm:inline">•</span>
+          <span className="text-[#8d8d8d] hidden sm:inline">Every 15s</span>
+          <span className="text-[#8d8d8d] hidden md:inline">•</span>
+          <span className="text-[#8d8d8d] hidden md:inline">
+            Last check: <strong className="text-[#f5f5f5] font-sans">{timeAgo}</strong>
           </span>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-[#8e9bb8]">
-            Total: <strong className="text-[#2ee6a6] font-sans">{markets.length}</strong> assets
+          <span className="text-[#8d8d8d]">
+            Total: <strong className="text-[#e5e5e5] font-sans">{markets.length}</strong> assets
           </span>
           {onRefresh && (
             <button
               onClick={onRefresh}
               disabled={isRefetching}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] bg-transparent text-[#eef2fa] border border-[#1a2a4d] hover:border-[#2ee6a6] transition-colors disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] bg-transparent text-[#f5f5f5] border border-[#262626] hover:border-[#e5e5e5] transition-colors disabled:opacity-50"
               title="Sync with Robinhood Chain now"
             >
               <svg
-                className={`w-3.5 h-3.5 ${isRefetching ? "animate-spin text-[#2ee6a6]" : ""}`}
+                className={`w-3.5 h-3.5 ${isRefetching ? "animate-spin text-[#e5e5e5]" : ""}`}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -374,24 +374,24 @@ export function PonsMarketTable({
 
 
       {/* Controls */}
-      <div className="pons-controls flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between items-stretch sm:items-center bg-[#0b1429] p-3.5 sm:p-5 rounded-[6px] border border-[#1a2a4d]">
+      <div className="pons-controls flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between items-stretch sm:items-center bg-[#101010] p-3.5 sm:p-5 rounded-[6px] border border-[#262626]">
         <input
           id="pons-search"
-          className="pons-search bg-[#050a18] border border-[#1a2a4d] rounded-[4px] px-3.5 py-2 sm:px-4 sm:py-2.5 text-white text-sm w-full sm:w-64 focus:outline-none focus:border-[#2ee6a6]"
+          className="pons-search bg-[#000000] border border-[#262626] rounded-[4px] px-3.5 py-2 sm:px-4 sm:py-2.5 text-white text-sm w-full sm:w-64 focus:outline-none focus:border-[#e5e5e5]"
           type="text"
           placeholder="Search tokens..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           aria-label="Search Pons markets"
         />
-        <div className="pons-filters flex gap-1 sm:gap-2 border-b border-[#1a2a4d] pb-1 overflow-x-auto no-scrollbar" role="radiogroup" aria-label="Filter markets">
+        <div className="pons-filters flex gap-1 sm:gap-2 border-b border-[#262626] pb-1 overflow-x-auto no-scrollbar" role="radiogroup" aria-label="Filter markets">
           {(["all", "eligible", "graduated"] as FilterMode[]).map((f) => (
             <button
               key={f}
               className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-sm text-[10px] sm:text-[11px] uppercase tracking-widest font-bold whitespace-nowrap transition-all ${
                 filter === f
-                  ? "bg-transparent text-[#2ee6a6] border-b-2 border-[#2ee6a6]"
-                  : "bg-transparent text-[#8e9bb8] hover:text-[#eef2fa]"
+                  ? "bg-transparent text-[#e5e5e5] border-b-2 border-[#e5e5e5]"
+                  : "bg-transparent text-[#8d8d8d] hover:text-[#f5f5f5]"
               }`}
               onClick={() => setFilter(f)}
               role="radio"

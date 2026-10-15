@@ -23,7 +23,7 @@ interface NashHeroSceneProps {
   onFail?: () => void;
 }
 
-const EMERALD = 0x2ee6a6;
+const ACCENT = 0xe5e5e5;
 
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -37,10 +37,10 @@ function makeBackground(size = 1024) {
   canvas.width = canvas.height = size;
   const ctx = canvas.getContext('2d')!;
   const g = ctx.createRadialGradient(size * 0.5, size * 0.44, size * 0.02, size * 0.5, size * 0.5, size * 0.74);
-  g.addColorStop(0, '#12285c');
-  g.addColorStop(0.35, '#0a1737');
-  g.addColorStop(0.75, '#050a18');
-  g.addColorStop(1, '#03060f');
+  g.addColorStop(0, '#272727');
+  g.addColorStop(0.35, '#171717');
+  g.addColorStop(0.75, '#000000');
+  g.addColorStop(1, '#010101');
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, size, size);
   const tex = new THREE.CanvasTexture(canvas);
@@ -53,9 +53,9 @@ function makeGlowSprite() {
   canvas.width = canvas.height = 128;
   const ctx = canvas.getContext('2d')!;
   const g = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
-  g.addColorStop(0, 'rgba(120,255,210,1)');
-  g.addColorStop(0.25, 'rgba(46,230,166,0.55)');
-  g.addColorStop(1, 'rgba(46,230,166,0)');
+  g.addColorStop(0, 'rgba(255,255,255,1)');
+  g.addColorStop(0.25, 'rgba(229,229,229,0.55)');
+  g.addColorStop(1, 'rgba(229,229,229,0)');
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, 128, 128);
   const tex = new THREE.CanvasTexture(canvas);
@@ -111,11 +111,11 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
     const envMap = envRT.texture;
 
     // Lights: back-left emerald, back-right silver-blue, a crown highlight, a soft key.
-    scene.add(new THREE.AmbientLight(0x22356e, 0.2));
-    const rimA = new THREE.DirectionalLight(EMERALD, 3.0); rimA.position.set(-5, 2.2, -3.6); scene.add(rimA);
-    const rimB = new THREE.DirectionalLight(0x9db8ff, 3.0); rimB.position.set(5, 2, -3.2); scene.add(rimB);
+    scene.add(new THREE.AmbientLight(0x363636, 0.2));
+    const rimA = new THREE.DirectionalLight(ACCENT, 3.0); rimA.position.set(-5, 2.2, -3.6); scene.add(rimA);
+    const rimB = new THREE.DirectionalLight(0xb8b8b8, 3.0); rimB.position.set(5, 2, -3.2); scene.add(rimB);
     const crown = new THREE.DirectionalLight(0xffffff, 1.4); crown.position.set(0, 6, -3); scene.add(crown);
-    const key = new THREE.DirectionalLight(0xcfdcff, 0.75); key.position.set(2.6, 3.4, 6); scene.add(key);
+    const key = new THREE.DirectionalLight(0xdcdcdc, 0.75); key.position.set(2.6, 3.4, 6); scene.add(key);
 
     // ---- the two characters
     const stage = new THREE.Group();
@@ -126,7 +126,7 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
       roughness: 0.84,
       metalness: 0,
       sheen: 0.6,
-      sheenColor: new THREE.Color(0x6a86c4),
+      sheenColor: new THREE.Color(0x858585),
       sheenRoughness: 0.45,
       envMap,
       envMapIntensity: 0.06,
@@ -156,7 +156,7 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
     world.add(rings);
 
     const silver = track(new THREE.MeshPhysicalMaterial({
-      color: 0xd5deee,
+      color: 0xdddddd,
       metalness: 1,
       roughness: 0.24,
       envMap,
@@ -165,7 +165,7 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
       clearcoatRoughness: 0.2,
       side: THREE.DoubleSide,
     }));
-    const glowMat = track(new THREE.MeshBasicMaterial({ color: new THREE.Color(EMERALD).multiplyScalar(1.05), toneMapped: false }));
+    const glowMat = track(new THREE.MeshBasicMaterial({ color: new THREE.Color(ACCENT).multiplyScalar(1.05), toneMapped: false }));
 
     // Vertical halo behind both figures.
     const halo = new THREE.Group();
@@ -173,7 +173,7 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
     const haloTube = new THREE.Mesh(track(new THREE.TorusGeometry(3.5 * RING, 0.07, 32, 480)), silver);
     const haloGlow = new THREE.Mesh(track(new THREE.TorusGeometry(3.5 * RING, 0.016, 12, 480)), glowMat);
     haloGlow.position.z = 0.04;
-    const haloOuter = new THREE.Mesh(track(new THREE.TorusGeometry(3.95 * RING, 0.009, 8, 480)), track(new THREE.MeshBasicMaterial({ color: 0x8aa0c8, transparent: true, opacity: 0.5 })));
+    const haloOuter = new THREE.Mesh(track(new THREE.TorusGeometry(3.95 * RING, 0.009, 8, 480)), track(new THREE.MeshBasicMaterial({ color: 0x9e9e9e, transparent: true, opacity: 0.5 })));
     halo.add(haloTube, haloGlow, haloOuter);
     rings.add(halo);
 
@@ -221,7 +221,7 @@ export default function NashHeroScene({ onReady, onFail }: NashHeroSceneProps) {
       dp[i * 3] = r * Math.sin(ph) * Math.cos(th);
       dp[i * 3 + 1] = r * Math.cos(ph) * 0.7;
       dp[i * 3 + 2] = r * Math.sin(ph) * Math.sin(th) - 2;
-      tmp.set(Math.random() < 0.28 ? EMERALD : 0xaebbd6).multiplyScalar(0.5 + Math.random() * 0.8);
+      tmp.set(Math.random() < 0.28 ? ACCENT : 0xbababa).multiplyScalar(0.5 + Math.random() * 0.8);
       dc[i * 3] = tmp.r; dc[i * 3 + 1] = tmp.g; dc[i * 3 + 2] = tmp.b;
     }
     dustGeo.setAttribute('position', new THREE.BufferAttribute(dp, 3));

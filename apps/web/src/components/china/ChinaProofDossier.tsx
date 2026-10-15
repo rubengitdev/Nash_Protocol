@@ -24,11 +24,11 @@ export function ChinaProofDossier({
 
   if (!proof) {
     return (
-      <div className="bg-[#080f20] border border-[#16254a] p-8 text-center rounded-sm font-sans">
-        <h3 className="text-sm font-bold font-display text-[#eef2fa]">
+      <div className="bg-[#0a0a0a] border border-[#222222] p-8 text-center rounded-sm font-sans">
+        <h3 className="text-sm font-bold font-display text-[#f5f5f5]">
           Dossier Verification Pending
         </h3>
-        <p className="text-xs text-[#8e9bb8] mt-2 max-w-md mx-auto leading-relaxed">
+        <p className="text-xs text-[#8d8d8d] mt-2 max-w-md mx-auto leading-relaxed">
           The legal and technical acceptance dossier for {asset.name} is currently in
           the research queue. No markets are active on Robinhood Chain until verified.
         </p>
@@ -43,13 +43,13 @@ export function ChinaProofDossier({
   return (
     <div className="flex flex-col gap-6 font-sans">
       {/* HEADER BANNER */}
-      <div className="bg-[#080f20] border border-[#16254a] p-5 rounded-sm flex flex-col md:flex-row md:items-center justify-between gap-4 whitespace-nowrap">
+      <div className="bg-[#0a0a0a] border border-[#222222] p-5 rounded-sm flex flex-col md:flex-row md:items-center justify-between gap-4 whitespace-nowrap">
         <div>
           <div className="flex items-center gap-2 whitespace-nowrap">
             {isNative && (
               <>
-                <span className="w-2.5 h-2.5 rounded-full bg-[#2ee6a6] shadow-[0_0_8px_rgba(46,230,166,0.6)] shrink-0" />
-                <span className="text-xs uppercase font-display font-bold text-[#2ee6a6] tracking-wider whitespace-nowrap">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#e5e5e5] shadow-[0_0_8px_rgba(229,229,229,0.6)] shrink-0" />
+                <span className="text-xs uppercase font-display font-bold text-[#e5e5e5] tracking-wider whitespace-nowrap">
                   Verified Native Asset · Robinhood Chain 4663
                 </span>
               </>
@@ -64,17 +64,17 @@ export function ChinaProofDossier({
             )}
             {isResearch && (
               <>
-                <span className="w-2.5 h-2.5 rounded-full bg-[#7a859f] shrink-0" />
-                <span className="text-xs uppercase font-display font-bold text-[#98a2ba] tracking-wider whitespace-nowrap">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#858585] shrink-0" />
+                <span className="text-xs uppercase font-display font-bold text-[#a2a2a2] tracking-wider whitespace-nowrap">
                   Research Pipeline Candidate
                 </span>
               </>
             )}
           </div>
-          <h2 className="text-lg font-bold font-display text-[#eef2fa] mt-1.5 whitespace-nowrap">
+          <h2 className="text-lg font-bold font-display text-[#f5f5f5] mt-1.5 whitespace-nowrap">
             {asset.company} ({asset.ticker}) · Acceptance Dossier
           </h2>
-          <span className="text-xs text-[#8e9bb8] block mt-0.5 whitespace-nowrap">
+          <span className="text-xs text-[#8d8d8d] block mt-0.5 whitespace-nowrap">
             Verified by {proof.verifiedBy} · Last reviewed{" "}
             {new Date(proof.lastVerificationDate).toLocaleDateString()}
           </span>
@@ -86,7 +86,7 @@ export function ChinaProofDossier({
               href={proof.documentationUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded bg-[#101520] hover:bg-[#2ee6a6] text-[#c3cce0] hover:text-[#050a18] border border-[#1e283f] hover:border-[#2ee6a6] font-display font-medium text-xs transition-all shrink-0 whitespace-nowrap"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded bg-[#151515] hover:bg-[#e5e5e5] text-[#cccccc] hover:text-[#000000] border border-[#282828] hover:border-[#e5e5e5] font-display font-medium text-xs transition-all shrink-0 whitespace-nowrap"
             >
               <span>Issuer Documentation</span>
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -101,15 +101,15 @@ export function ChinaProofDossier({
       <div
         className={`p-4 rounded-sm border text-xs leading-relaxed ${
           isNative
-            ? "bg-[#0c0f15] border-[#2b6e58] text-[#b9c3d9]"
+            ? "bg-[#0f0f0f] border-[#484848] text-[#c3c3c3]"
             : isExternal
-            ? "bg-[#17140e] border-[#3f3116] text-[#dfcfb0]"
-            : "bg-[#0c0f18] border-[#161d2e] text-[#98a2ba]"
+            ? "bg-[#141414] border-[#3f3116] text-[#dfcfb0]"
+            : "bg-[#0f0f0f] border-[#1d1d1d] text-[#a2a2a2]"
         }`}
       >
         {isNative && (
           <p>
-            <strong className="text-[#2ee6a6]">Robinhood Chain Native Identity:</strong>{" "}
+            <strong className="text-[#e5e5e5]">Robinhood Chain Native Identity:</strong>{" "}
             This asset is issued and deployed natively on Robinhood Chain (Chain ID 4663).
             Collateral deposits, USDG borrows, and leveraged long positions settle directly via
             native isolated credit markets on Robinhood Chain.
@@ -125,7 +125,7 @@ export function ChinaProofDossier({
         )}
         {isResearch && (
           <p>
-            <strong className="text-[#b9c2d6]">Research Pipeline:</strong>{" "}
+            <strong className="text-[#c2c2c2]">Research Pipeline:</strong>{" "}
             Monitored for market liquidity and custodial availability. No live tokenized deployment
             is currently active for this underlying equity.
           </p>
@@ -135,22 +135,22 @@ export function ChinaProofDossier({
       {/* 4 CORE DOSSIER SECTIONS */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Card 1: Issuer Legal Entity & Jurisdiction */}
-        <div className="bg-[#080f20] border border-[#16254a] p-5 rounded-sm flex flex-col justify-between gap-4">
+        <div className="bg-[#0a0a0a] border border-[#222222] p-5 rounded-sm flex flex-col justify-between gap-4">
           <div>
-            <span className="text-[10px] text-[#7a859f] uppercase font-display tracking-wider block whitespace-nowrap">
+            <span className="text-[10px] text-[#858585] uppercase font-display tracking-wider block whitespace-nowrap">
               01 / Legal Issuer &amp; Registration
             </span>
-            <h3 className="text-sm font-bold font-display text-[#eef2fa] mt-1 whitespace-nowrap">
+            <h3 className="text-sm font-bold font-display text-[#f5f5f5] mt-1 whitespace-nowrap">
               {proof.tokenIssuer}
             </h3>
-            <span className="text-xs text-[#2ee6a6] font-mono block mt-0.5 whitespace-nowrap">
+            <span className="text-xs text-[#e5e5e5] font-mono block mt-0.5 whitespace-nowrap">
               {proof.issuerEntityRegistration}
             </span>
-            <p className="text-xs text-[#8e9bb8] mt-3 leading-relaxed">
+            <p className="text-xs text-[#8d8d8d] mt-3 leading-relaxed">
               <strong>Structure:</strong> {proof.issuerLegalStructure}.
             </p>
           </div>
-          <div className="p-3 bg-[#050a18] border border-[#101c37] rounded text-[11px] text-[#8e9bb8]">
+          <div className="p-3 bg-[#000000] border border-[#161616] rounded text-[11px] text-[#8d8d8d]">
             {isNative
               ? "Governed by Jersey law. Bankruptcy-remote SPV designed to insulate tokenholders from operational liabilities."
               : isExternal
@@ -160,93 +160,93 @@ export function ChinaProofDossier({
         </div>
 
         {/* Card 2: Tokenholder Entitlement */}
-        <div className="bg-[#080f20] border border-[#16254a] p-5 rounded-sm flex flex-col justify-between gap-4">
+        <div className="bg-[#0a0a0a] border border-[#222222] p-5 rounded-sm flex flex-col justify-between gap-4">
           <div>
-            <span className="text-[10px] text-[#7a859f] uppercase font-display tracking-wider block whitespace-nowrap">
+            <span className="text-[10px] text-[#858585] uppercase font-display tracking-wider block whitespace-nowrap">
               02 / Tokenholder Entitlement &amp; Rights
             </span>
-            <h3 className="text-sm font-bold font-display text-[#eef2fa] mt-1 whitespace-nowrap">
+            <h3 className="text-sm font-bold font-display text-[#f5f5f5] mt-1 whitespace-nowrap">
               Contractual Economic Exposure
             </h3>
-            <p className="text-xs text-[#8e9bb8] mt-2 leading-relaxed">
+            <p className="text-xs text-[#8d8d8d] mt-2 leading-relaxed">
               {proof.tokenholderEntitlement}
             </p>
           </div>
-          <div className="p-3 bg-[#050a18] border border-[#101c37] rounded text-[11px] text-[#f5a623]">
+          <div className="p-3 bg-[#000000] border border-[#161616] rounded text-[11px] text-[#f5a623]">
             Investor Notice: Tracks economic performance. Does not convey direct company voting rights or direct legal ownership of mainland operating subsidiaries.
           </div>
         </div>
 
         {/* Card 3: Custody & Reserve Backing */}
-        <div className="bg-[#080f20] border border-[#16254a] p-5 rounded-sm flex flex-col justify-between gap-4">
+        <div className="bg-[#0a0a0a] border border-[#222222] p-5 rounded-sm flex flex-col justify-between gap-4">
           <div>
-            <span className="text-[10px] text-[#7a859f] uppercase font-display tracking-wider block whitespace-nowrap">
+            <span className="text-[10px] text-[#858585] uppercase font-display tracking-wider block whitespace-nowrap">
               03 / Custody &amp; Collateral Segregation
             </span>
-            <h3 className="text-sm font-bold font-display text-[#eef2fa] mt-1 whitespace-nowrap">
+            <h3 className="text-sm font-bold font-display text-[#f5f5f5] mt-1 whitespace-nowrap">
               Segregated Institutional Custody
             </h3>
-            <p className="text-xs text-[#8e9bb8] mt-2 leading-relaxed">
+            <p className="text-xs text-[#8d8d8d] mt-2 leading-relaxed">
               {proof.custodyAndBacking}
             </p>
           </div>
-          <div className="p-3 bg-[#050a18] border border-[#101c37] rounded text-[11px] text-[#8e9bb8]">
+          <div className="p-3 bg-[#000000] border border-[#161616] rounded text-[11px] text-[#8d8d8d]">
             Depositary Framework: {asset.depositaryStructure || "Qualified Institutional Custodian"}.
           </div>
         </div>
 
         {/* Card 4: Corporate Actions & Multipliers */}
-        <div className="bg-[#080f20] border border-[#16254a] p-5 rounded-sm flex flex-col justify-between gap-4">
+        <div className="bg-[#0a0a0a] border border-[#222222] p-5 rounded-sm flex flex-col justify-between gap-4">
           <div>
-            <span className="text-[10px] text-[#7a859f] uppercase font-display tracking-wider block whitespace-nowrap">
+            <span className="text-[10px] text-[#858585] uppercase font-display tracking-wider block whitespace-nowrap">
               04 / Corporate Action Accounting
             </span>
-            <h3 className="text-sm font-bold font-display text-[#eef2fa] mt-1 whitespace-nowrap">
+            <h3 className="text-sm font-bold font-display text-[#f5f5f5] mt-1 whitespace-nowrap">
               Total Return Multiplier Scaling
             </h3>
-            <p className="text-xs text-[#8e9bb8] mt-2 leading-relaxed">
+            <p className="text-xs text-[#8d8d8d] mt-2 leading-relaxed">
               {proof.corporateActionPolicy}
             </p>
           </div>
-          <div className="p-3 bg-[#050a18] border border-[#101c37] rounded text-[11px] text-[#8e9bb8]">
+          <div className="p-3 bg-[#000000] border border-[#161616] rounded text-[11px] text-[#8d8d8d]">
             Balances remain stable in token units. Oracle scales economic valuation without rebase friction.
           </div>
         </div>
       </div>
 
       {/* SMART CONTRACT & ORACLE DETAILS */}
-      <div className="bg-[#080f20] border border-[#16254a] p-5 rounded-sm">
-        <h3 className="text-sm font-bold font-display text-[#eef2fa] mb-4 whitespace-nowrap">
+      <div className="bg-[#0a0a0a] border border-[#222222] p-5 rounded-sm">
+        <h3 className="text-sm font-bold font-display text-[#f5f5f5] mb-4 whitespace-nowrap">
           On-Chain Technical Identifiers &amp; Infrastructure
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-xs">
           {/* Token Contract */}
-          <div className="bg-[#050a18] border border-[#101c37] p-3.5 rounded flex flex-col justify-between gap-2">
+          <div className="bg-[#000000] border border-[#161616] p-3.5 rounded flex flex-col justify-between gap-2">
             <div>
-              <span className="text-[10px] text-[#7a859f] uppercase font-display block whitespace-nowrap">
+              <span className="text-[10px] text-[#858585] uppercase font-display block whitespace-nowrap">
                 Token Contract Deployment (Chain ID 4663)
               </span>
               {proof.contractAddress ? (
-                <span className="text-[#2ee6a6] break-all block mt-1">
+                <span className="text-[#e5e5e5] break-all block mt-1">
                   {proof.contractAddress}
                 </span>
               ) : (
-                <span className="text-[#98a2ba] block mt-1 font-sans text-[11px]">
+                <span className="text-[#a2a2a2] block mt-1 font-sans text-[11px]">
                   {isExternal
                     ? "External Issuer Product (Primary Network Deployment)"
                     : "Unassigned (Research Pipeline)"}
                 </span>
               )}
             </div>
-            <div className="flex items-center justify-between pt-2 border-t border-[#101c37] whitespace-nowrap">
+            <div className="flex items-center justify-between pt-2 border-t border-[#161616] whitespace-nowrap">
               {proof.contractAddress ? (
                 <>
                   <a
                     href={`https://robinhoodchain.blockscout.com/address/${proof.contractAddress}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-[11px] text-[#8e9bb8] hover:text-white font-sans inline-flex items-center gap-1 whitespace-nowrap"
+                    className="text-[11px] text-[#8d8d8d] hover:text-white font-sans inline-flex items-center gap-1 whitespace-nowrap"
                   >
                     <span>View on Blockscout</span>
                     <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -255,13 +255,13 @@ export function ChinaProofDossier({
                   </a>
                   <button
                     onClick={() => handleCopy(proof.contractAddress, "token")}
-                    className="text-[11px] px-2 py-0.5 rounded bg-[#0f1a33] text-[#cdd4e4] hover:text-white border border-[#1a2a4d] whitespace-nowrap"
+                    className="text-[11px] px-2 py-0.5 rounded bg-[#141414] text-[#d4d4d4] hover:text-white border border-[#262626] whitespace-nowrap"
                   >
                     {copiedKey === "token" ? "Copied" : "Copy"}
                   </button>
                 </>
               ) : (
-                <span className="text-[10px] text-[#68728a] font-sans whitespace-nowrap">
+                <span className="text-[10px] text-[#727272] font-sans whitespace-nowrap">
                   External custody reference
                 </span>
               )}
@@ -269,29 +269,29 @@ export function ChinaProofDossier({
           </div>
 
           {/* Chainlink Oracle Feed */}
-          <div className="bg-[#050a18] border border-[#101c37] p-3.5 rounded flex flex-col justify-between gap-2">
+          <div className="bg-[#000000] border border-[#161616] p-3.5 rounded flex flex-col justify-between gap-2">
             <div>
-              <span className="text-[10px] text-[#7a859f] uppercase font-display block whitespace-nowrap">
+              <span className="text-[10px] text-[#858585] uppercase font-display block whitespace-nowrap">
                 Chainlink Total Return Reference Feed
               </span>
               {proof.chainlinkFeedAddress ? (
-                <span className="text-[#2ee6a6] break-all block mt-1">
+                <span className="text-[#e5e5e5] break-all block mt-1">
                   {proof.chainlinkFeedAddress}
                 </span>
               ) : (
-                <span className="text-[#98a2ba] block mt-1 font-sans text-[11px] whitespace-nowrap">
+                <span className="text-[#a2a2a2] block mt-1 font-sans text-[11px] whitespace-nowrap">
                   {proof.oracleMethodology}
                 </span>
               )}
             </div>
-            <div className="flex items-center justify-between pt-2 border-t border-[#101c37] whitespace-nowrap">
-              <span className="text-[10px] text-[#8791aa] font-sans whitespace-nowrap">
+            <div className="flex items-center justify-between pt-2 border-t border-[#161616] whitespace-nowrap">
+              <span className="text-[10px] text-[#919191] font-sans whitespace-nowrap">
                 {proof.chainlinkFeedAddress ? "Heartbeat: 86,400s (Daily)" : "Active consolidated pricing"}
               </span>
               {proof.chainlinkFeedAddress && (
                 <button
                   onClick={() => handleCopy(proof.chainlinkFeedAddress, "oracle")}
-                  className="text-[11px] px-2 py-0.5 rounded bg-[#0f1a33] text-[#cdd4e4] hover:text-white border border-[#1a2a4d] whitespace-nowrap"
+                  className="text-[11px] px-2 py-0.5 rounded bg-[#141414] text-[#d4d4d4] hover:text-white border border-[#262626] whitespace-nowrap"
                 >
                   {copiedKey === "oracle" ? "Copied" : "Copy"}
                 </button>
@@ -300,26 +300,26 @@ export function ChinaProofDossier({
           </div>
 
           {/* Bytecode SHA-256 */}
-          <div className="bg-[#050a18] border border-[#101c37] p-3.5 rounded flex flex-col justify-between gap-2">
+          <div className="bg-[#000000] border border-[#161616] p-3.5 rounded flex flex-col justify-between gap-2">
             <div>
-              <span className="text-[10px] text-[#7a859f] uppercase font-display block whitespace-nowrap">
+              <span className="text-[10px] text-[#858585] uppercase font-display block whitespace-nowrap">
                 Verified Contract Bytecode SHA-256
               </span>
               {proof.contractBytecodeSha256 ? (
-                <span className="text-[#cdd5e6] break-all block mt-1">
+                <span className="text-[#d5d5d5] break-all block mt-1">
                   {proof.contractBytecodeSha256}
                 </span>
               ) : (
-                <span className="text-[#8791aa] block mt-1 font-sans text-[11px]">
+                <span className="text-[#919191] block mt-1 font-sans text-[11px]">
                   Verified on-chain via Robinhood Chain verified source registry.
                 </span>
               )}
             </div>
-            <div className="flex items-center justify-end pt-2 border-t border-[#101c37] whitespace-nowrap">
+            <div className="flex items-center justify-end pt-2 border-t border-[#161616] whitespace-nowrap">
               {proof.contractBytecodeSha256 && (
                 <button
                   onClick={() => handleCopy(proof.contractBytecodeSha256, "bytecode")}
-                  className="text-[11px] px-2 py-0.5 rounded bg-[#0f1a33] text-[#cdd4e4] hover:text-white border border-[#1a2a4d] whitespace-nowrap"
+                  className="text-[11px] px-2 py-0.5 rounded bg-[#141414] text-[#d4d4d4] hover:text-white border border-[#262626] whitespace-nowrap"
                 >
                   {copiedKey === "bytecode" ? "Copied" : "Copy"}
                 </button>
@@ -328,26 +328,26 @@ export function ChinaProofDossier({
           </div>
 
           {/* Governance Evidence Hash */}
-          <div className="bg-[#050a18] border border-[#101c37] p-3.5 rounded flex flex-col justify-between gap-2">
+          <div className="bg-[#000000] border border-[#161616] p-3.5 rounded flex flex-col justify-between gap-2">
             <div>
-              <span className="text-[10px] text-[#7a859f] uppercase font-display block whitespace-nowrap">
+              <span className="text-[10px] text-[#858585] uppercase font-display block whitespace-nowrap">
                 Nash Governance Market Identifier
               </span>
               {proof.governanceEvidenceHash ? (
-                <span className="text-[#cdd5e6] break-all block mt-1">
+                <span className="text-[#d5d5d5] break-all block mt-1">
                   {proof.governanceEvidenceHash}
                 </span>
               ) : (
-                <span className="text-[#8791aa] block mt-1 font-sans text-[11px]">
+                <span className="text-[#919191] block mt-1 font-sans text-[11px]">
                   Configured under Nash Isolated Risk Committee Registry.
                 </span>
               )}
             </div>
-            <div className="flex items-center justify-end pt-2 border-t border-[#101c37] whitespace-nowrap">
+            <div className="flex items-center justify-end pt-2 border-t border-[#161616] whitespace-nowrap">
               {proof.governanceEvidenceHash && (
                 <button
                   onClick={() => handleCopy(proof.governanceEvidenceHash, "gov")}
-                  className="text-[11px] px-2 py-0.5 rounded bg-[#0f1a33] text-[#cdd4e4] hover:text-white border border-[#1a2a4d] whitespace-nowrap"
+                  className="text-[11px] px-2 py-0.5 rounded bg-[#141414] text-[#d4d4d4] hover:text-white border border-[#262626] whitespace-nowrap"
                 >
                   {copiedKey === "gov" ? "Copied" : "Copy"}
                 </button>

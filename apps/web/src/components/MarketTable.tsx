@@ -79,7 +79,7 @@ export function MarketTable({ markets, isLoading }: MarketTableProps) {
                       <div className="h-3.5 w-14 bg-brand/20 rounded-xs" />
                     </td>
                     <td className="py-3.5 px-3 sm:px-4 md:px-6">
-                      <div className="h-3.5 w-14 bg-[#FFB800]/20 rounded-xs" />
+                      <div className="h-3.5 w-14 bg-[#ffb800]/20 rounded-xs" />
                     </td>
                     <td className="py-3.5 px-3 sm:px-4 md:px-6">
                       <div className="h-3.5 w-10 bg-white/5 rounded-xs" />
@@ -126,7 +126,7 @@ export function MarketTable({ markets, isLoading }: MarketTableProps) {
                 filteredMarkets.map((market) => (
                   <tr
                     key={market.id}
-                    className="hover:bg-[#0b1429] transition-colors group"
+                    className="hover:bg-[#101010] transition-colors group"
                   >
                     <td className="py-3.5 px-3 sm:px-4 md:px-6 font-sans whitespace-nowrap">
                       <div className="flex items-center gap-3">
@@ -147,7 +147,7 @@ export function MarketTable({ markets, isLoading }: MarketTableProps) {
                     <td className="py-3.5 px-3 sm:px-4 md:px-6 font-sans font-bold text-brand whitespace-nowrap">
                       +{market.supplyApy.toFixed(2)}%
                     </td>
-                    <td className="py-3.5 px-3 sm:px-4 md:px-6 font-sans font-bold text-[#FFB800] whitespace-nowrap">
+                    <td className="py-3.5 px-3 sm:px-4 md:px-6 font-sans font-bold text-[#ffb800] whitespace-nowrap">
                       {market.borrowApr.toFixed(2)}%
                     </td>
                     <td className="py-3.5 px-3 sm:px-4 md:px-6 font-sans text-muted whitespace-nowrap">

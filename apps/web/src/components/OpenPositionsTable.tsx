@@ -89,7 +89,7 @@ export function OpenPositionsTable({
               return (
                 <tr
                   key={pos.id}
-                  className="hover:bg-[#0b1429] transition-colors"
+                  className="hover:bg-[#101010] transition-colors"
                 >
                   <td className="py-3.5 px-3 sm:px-4 md:px-5 font-sans whitespace-nowrap">
                     <div className="flex items-center gap-3">
@@ -102,7 +102,7 @@ export function OpenPositionsTable({
                           className={`text-[9px] font-bold px-1.5 py-0.5 rounded-sm border uppercase ${
                             isLong
                               ? "bg-surface-subtle text-brand border-white/10"
-                              : "bg-surface-subtle text-[#FF4D4D] border-white/10"
+                              : "bg-surface-subtle text-[#ff4d4d] border-white/10"
                           }`}
                         >
                           {pos.positionType}
@@ -127,7 +127,7 @@ export function OpenPositionsTable({
                   <td className="py-3.5 px-3 sm:px-4 md:px-5 text-white font-semibold whitespace-nowrap">
                     ${pos.markPrice.toFixed(2)}
                   </td>
-                  <td className="py-3.5 px-3 sm:px-4 md:px-5 text-[#FF4D4D] font-bold whitespace-nowrap">
+                  <td className="py-3.5 px-3 sm:px-4 md:px-5 text-[#ff4d4d] font-bold whitespace-nowrap">
                     ${pos.liquidationPrice.toFixed(2)}
                   </td>
                   <td className="py-3.5 px-3 sm:px-4 md:px-5 text-brand font-semibold whitespace-nowrap">
@@ -136,7 +136,7 @@ export function OpenPositionsTable({
                   <td className="py-3.5 px-3 sm:px-4 md:px-5 font-semibold whitespace-nowrap">
                     <span
                       className={
-                        pos.pnlUsd >= 0 ? "text-brand" : "text-[#FF4D4D]"
+                        pos.pnlUsd >= 0 ? "text-brand" : "text-[#ff4d4d]"
                       }
                     >
                       {pos.pnlUsd >= 0 ? "+" : ""}${pos.pnlUsd.toFixed(2)} (
@@ -147,7 +147,7 @@ export function OpenPositionsTable({
                   <td className="py-3.5 px-3 sm:px-4 md:px-5 text-right font-sans whitespace-nowrap">
                     <button
                       onClick={() => onClosePosition(pos.id)}
-                      className="px-3 py-1.5 bg-surface-subtle hover:bg-[#FF4D4D] hover:text-white border border-white/10 text-white text-[11px] font-sans font-bold uppercase rounded-sm transition-all"
+                      className="px-3 py-1.5 bg-surface-subtle hover:bg-[#ff4d4d] hover:text-white border border-white/10 text-white text-[11px] font-sans font-bold uppercase rounded-sm transition-all"
                     >
                       CLOSE
                     </button>
