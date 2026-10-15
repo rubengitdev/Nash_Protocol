@@ -12,8 +12,9 @@ Status legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 | Decision | Needed from the owner |
 | :--- | :--- |
 | Audit status | State it. The contracts have **not** been audited. If you launch without one, the mitigations below are mandatory, not optional |
-| Owner of the contracts | A multisig (Safe) with signers separate from the deployer, not the deployer EOA (`PROTOCOL_OWNER_ADDRESS`) |
-| Deployer wallet | A fresh key funded per the budget. Do not reuse the Levier mainnet deployer |
+| Project wallet | **Decided by the owner (2026-10-15): one wallet for everything on mainnet, `0xd09D9c87ECfe008B4D6D3cEbeAd25103c16d9a7C`.** It is the deployer, the contract owner (`PROTOCOL_OWNER_ADDRESS`), the keeper and the signer of every pause or unpause. Fund it per the budget. No other wallet is created for the project |
+| Owner of the contracts | The project wallet above. The multisig recommendation is waived by the owner; see the key-custody note under the mitigations |
+| Deployer wallet | The project wallet above (`DEPLOYER_ADDRESS`). Confirm on Blockscout that it holds no unrelated roles from an older deployment before reusing it |
 | Hosting | Where `web` and `backend` run (the previous setup used Railway services `web` and `backend` in a `mainnet` environment) |
 | Database | A new Supabase project for mainnet. Do **not** reuse the Levier mainnet database. Apply migrations only, never `supabase/seed.sql` |
 | Domain and social handles | Needed for `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_X_HANDLE` |
@@ -21,7 +22,9 @@ Status legend: `[ ]` not started · `[~]` in progress · `[x]` done.
 
 ### Mandatory mitigations
 
-1. Owner is a multisig. 2. Everything deploys **paused** (markets, routers, vault, AutoProtect). 3. Low launch caps sized so a total loss is survivable. 4. One market first, supervised wallet test, then the rest one at a time. 5. Pause runbook rehearsed on a fork before any unpause. 6. `TRADING_ENABLED`, `LENDING_ENABLED`, `MARGIN_TRADING_ENABLED` stay `false` until enablement.
+1. Owner is the single project wallet (multisig waived, see above). 2. Everything deploys **paused** (markets, routers, vault, AutoProtect). 3. Low launch caps sized so a total loss is survivable. 4. One market first, supervised wallet test, then the rest one at a time. 5. Pause runbook rehearsed on a fork before any unpause. 6. `TRADING_ENABLED`, `LENDING_ENABLED`, `MARGIN_TRADING_ENABLED` stay `false` until enablement.
+
+**Key custody (single-wallet decision).** The contracts are upgradeable proxies, so whoever holds the project wallet's key controls upgrades, pauses, risk parameters and market listing. With one wallet there is no second signer to catch a mistake or a compromise. Keep the key out of every hosted environment: sign deployment, pause and unpause from the owner's own terminal. If the keeper must run unattended on a server, its key is the same key, so decide that before Phase 4 rather than during it.
 
 ## 2. Phases
 
@@ -60,7 +63,7 @@ or `pnpm rh:mainnet:full:interactive`, which prompts and requires typing `DEPLOY
 
 - [ ] New Supabase project; apply `supabase/migrations/*` in order; confirm RLS on every table
 - [ ] `web` (`SERVICE=web`) and `backend` (`SERVICE=backend`, runs `scripts/run-all-backend.mjs`: API, indexer, price oracle, keeper) with variables from `apps/web/.env.mainnet.example` and the per-app `.env.example` files. `NETWORK_MODE=MAINNET`, `CHAIN_ID=4663`, `USDG_FAUCET_URL=''`
-- [ ] Indexer migrated and synced; keeper wallet funded and its key entered as a sealed secret
+- [ ] Indexer migrated and synced; the keeper uses the project wallet (see the key-custody note), funded for gas and its key entered as a sealed secret only if you accept running it unattended
 
 ### Phase 5: App live, read-only
 
@@ -78,7 +81,7 @@ Mainnet markets launch capped at 1.5× leverage.
 
 ### Phase 7: Monitoring
 
-Watch logs, HTTP error rate, publisher heartbeat, keeper actions and oracle freshness. Review caps at 24 h and 72 h; raise only by multisig transaction.
+Watch logs, HTTP error rate, publisher heartbeat, keeper actions and oracle freshness. Review caps at 24 h and 72 h; raise only by a transaction from the project wallet.
 
 ## 3. Address registry (fill from verified receipts only)
 
@@ -92,15 +95,14 @@ Watch logs, HTTP error rate, publisher heartbeat, keeper actions and oracle fres
 | Oracle (VerifiedFeedOracle / CompositeSanityOracle) | | |
 | NashPair per market | | |
 | LeverageRouter / MarginRouter | | |
-| Protocol owner (multisig) | | n/a |
-| Deployer | | n/a |
+| Protocol owner, deployer and keeper (one wallet) | `0xd09D9c87ECfe008B4D6D3cEbeAd25103c16d9a7C` | n/a |
 
 ## 4. Emergency runbook
 
 Trigger on any of: stale or wrong oracle, unexpected liquidation, abnormal outflow, an exploit report, keeper or publisher down longer than the oracle staleness window.
 
 1. **Stop the UI path:** set `TRADING_ENABLED`, `LENDING_ENABLED`, `MARGIN_TRADING_ENABLED` to `false` in the hosted `mainnet` environment and redeploy `web`.
-2. **Pause on chain** from the owner multisig: all markets (registry), routers, vault deposits, AutoProtect.
+2. **Pause on chain** from the project wallet: all markets (registry), routers, vault deposits, AutoProtect.
 3. **Preserve exits:** markets in `REDUCE_ONLY` still allow repay and withdraw. Prefer it over a hard pause when users need to unwind.
 4. Collect evidence (transactions, oracle rounds, logs) before changing anything else.
 5. Unpause one market at a time after the cause is understood and a supervised test passes.

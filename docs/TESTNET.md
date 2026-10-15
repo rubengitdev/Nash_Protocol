@@ -40,6 +40,17 @@ The machine-readable record (addresses, implementations, code hashes, every tran
 
 The app reads this deployment: `/api/analytics` reports **2 of 2 markets verified** at the current block. Browser-wallet flows have **not** been exercised.
 
+## Source verification (2026-10-15)
+
+All 22 addresses of the deployment have verified source on the [testnet explorer](https://explorer.testnet.chain.robinhood.com): the 9 proxies, their 9 implementations, both oracles, the Uniswap V2 factory and the TSLA/USDG pool.
+
+```bash
+pnpm testnet:verify            # read-only check with a step-by-step display, ends with every contract and its explorer link
+pnpm testnet:verify:publish    # publishes missing source (forge verify-contract for Nash, standard-JSON for the vendored Uniswap V2); safe to re-run
+```
+
+`testnet:verify:publish` compares each address's creation transaction with the bytecode compiled from this checkout and refuses to publish source that does not match what is deployed. The proxies all share one bytecode: Blockscout verifies the first (`NashRouter`'s) directly and shows the others as its twin, with the source readable on each page. The check script labels those "same code as 0x4760..20cc". Use a terminal at least 120 columns wide when recording, so the explorer URLs do not wrap.
+
 ## What the rehearsal fixed
 
 The testnet pipeline inherited from Levier deployed the registry, router and pairs from compiled bytecode with **constructor arguments** (the old non-upgradeable design). The contracts are now UUPS proxies (`constructor() { _disableInitializers(); }` plus `initialize(...)`), so that path could not work. Changes, all in `scripts/`:
