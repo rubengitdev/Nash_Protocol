@@ -105,9 +105,8 @@ export function Footer() {
             </div>
 
             <p className="nash-disclaimer">
-                Nash Protocol is experimental software on Robinhood Chain. Leverage can lose all of your collateral. Nothing
-                here is financial advice. Nash Protocol is an independent project and is not affiliated with,
-                endorsed by, or sponsored by Robinhood.
+                Nash Protocol is experimental software on Robinhood Chain. Leverage can lose all of your collateral.
+                Nothing here is financial advice.
             </p>
 
             <div className="footer-bottom">

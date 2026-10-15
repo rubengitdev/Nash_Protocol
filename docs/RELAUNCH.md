@@ -41,16 +41,21 @@ node scripts/migrate-levier-env.mjs ../levier/.env.testnet .env.testnet
 
 Only the key and variable above are renamed; addresses, slugs and secrets are copied unchanged. Note that doing this points the app at Levier-era contracts. For a real relaunch, deploy Nash contracts ([`TESTNET.md`](TESTNET.md)).
 
-## Needs your decision
+## Decisions
+
+Resolved on 2026-10-15:
+
+- **Language:** English only, like the original site.
+- **Footer:** the non-affiliation sentence was removed at the owner's request; the footer now carries only the experimental-software, leverage-risk and not-financial-advice notice.
+- **Git:** a private GitHub repository with `main`, `testnet`, `mainnet`.
+- **Testnet:** deploy with the existing testnet deployer, staged, with owner confirmation before each broadcast ([`TESTNET.md`](TESTNET.md)).
+
+Still open:
 
 1. **Social handle and domain.** Set `NEXT_PUBLIC_X_HANDLE` and `NEXT_PUBLIC_SITE_URL`. No handle was invented, so no X link renders yet.
-2. **Git remote.** A local repository with `main`, `testnet`, `mainnet` exists; no remote was added and nothing was pushed.
-3. **Non-affiliation line.** The footer says Nash is independent and not affiliated with, endorsed by, or sponsored by Robinhood. Confirm that is true before publishing.
-4. **Audit statement.** The contracts are unaudited; the site says "experimental software". Decide what you want to claim publicly.
-5. **Pons token.** Launch a Nash token on Pons, or drop the legacy `LEVIER` market from the Pons config.
-6. **Language.** Site copy is English, like the original. An Indonesian version is a copy task, not a code one.
-7. **Testnet deployment.** Needs your deployer key and a go-ahead ([`TESTNET.md`](TESTNET.md)).
-8. **Chinese Equities attribution.** `data/chinese-equities-proofs.json` says "verifiedBy: Nash Chinese Equities Data Audit" after the rename. Confirm you want the audit attributed under the new name.
+2. **Audit statement.** The contracts are unaudited; the site says "experimental software". Decide what you want to claim publicly.
+3. **Pons token.** Launch a Nash token on Pons, or drop the legacy `LEVIER` market from the Pons config.
+4. **Chinese Equities attribution.** `data/chinese-equities-proofs.json` says "verifiedBy: Nash Chinese Equities Data Audit" after the rename. Confirm you want the audit attributed under the new name.
 
 ## Known gaps carried over
 
