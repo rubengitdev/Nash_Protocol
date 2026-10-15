@@ -86,7 +86,7 @@ export function PonsVaultPanel() {
       <div className="flex flex-wrap items-center gap-2">
         <div className="flex rounded-md border border-[var(--line)] overflow-hidden text-xs">
           {(["deposit", "withdraw"] as const).map((a) => (
-            <button key={a} className={`px-3 py-2 ${action === a ? "bg-[var(--green)] text-black font-semibold" : ""}`} onClick={() => setAction(a)}>
+            <button key={a} className={`px-3 py-2 ${action === a ? "bg-[var(--go)] text-black font-semibold" : ""}`} onClick={() => setAction(a)}>
               {a === "deposit" ? "Deposit" : "Withdraw"}
             </button>
           ))}
@@ -100,7 +100,7 @@ export function PonsVaultPanel() {
           onChange={(e) => setInput(e.target.value.trim())}
         />
         <button
-          className="px-4 py-2 rounded-md bg-[var(--green)] text-black text-sm font-semibold disabled:opacity-50"
+          className="px-4 py-2 rounded-md bg-[var(--go)] text-black text-sm font-semibold disabled:opacity-50"
           disabled={busy || (onChain && (!amount || !!issue))}
           onClick={() => (onChain ? submit() : setShowWallet(true))}
         >
@@ -114,7 +114,7 @@ export function PonsVaultPanel() {
           <Link
             key={symbol}
             href={`/trade?asset=${symbol}`}
-            className="px-3 py-1.5 rounded-md border border-[var(--green)] text-[var(--green)] font-semibold hover:bg-[var(--green)] hover:text-black"
+            className="px-3 py-1.5 rounded-md border border-[var(--go)] text-[var(--go)] font-semibold hover:bg-[var(--go)] hover:text-black"
           >
             {symbol}
           </Link>

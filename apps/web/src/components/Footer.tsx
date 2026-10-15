@@ -53,7 +53,7 @@ export function Footer() {
                             alt=""
                             width={44}
                             height={41}
-                            className="h-11 w-auto shrink-0 drop-shadow-[0_0_10px_rgba(46,230,166,0.22)]"
+                            className="h-11 w-auto shrink-0 drop-shadow-[0_0_10px_rgba(229,229,229,0.22)]"
                         />
                         <span className="wordmark-text">
                             <span className="wordmark-name">NASH</span>

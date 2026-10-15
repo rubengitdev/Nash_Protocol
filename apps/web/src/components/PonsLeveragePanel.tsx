@@ -162,7 +162,7 @@ export function PonsLeveragePanel({ token, symbol }: { token: Address; symbol: s
                     {p.preview ? `PnL ${signedUsd(p.preview.pnl)}` : "PnL —"}
                   </span>
                   <button
-                    className="px-3 py-1.5 rounded-md bg-[var(--green)] text-black text-xs font-semibold disabled:opacity-50"
+                    className="px-3 py-1.5 rounded-md bg-[var(--go)] text-black text-xs font-semibold disabled:opacity-50"
                     disabled={busy || locked}
                     title={locked ? "Minimum hold time not reached" : undefined}
                     onClick={() => run("Close position", () => closePonsPosition({ client: client!, wallet: wallet!, account: address!, id: p.id, onSubmitted }))}

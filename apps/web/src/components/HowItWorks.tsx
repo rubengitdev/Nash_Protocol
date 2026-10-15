@@ -1,29 +1,16 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { HowItWorksFlat } from './HowItWorksFlat';
+import { HowItWorksBoard } from './HowItWorksBoard';
 import { useNetworkMode } from '../hooks/useNetworkMode';
-
-// three.js only loads once the section has scrolled into view.
-const HowItWorksScene = dynamic(() => import('./HowItWorksScene'), { ssr: false });
 
 const STEPS = [
   { label: 'Deposit', caption: 'Lock TSLA as collateral' },
   { label: 'Borrow or trade', caption: 'Borrow USDG, or go Long or Short' },
   { label: 'Auto-Protect', caption: 'Auto-Protect trims risk before liquidation' },
 ];
-const STEP_MS = 5000;
-
-function hasWebGL() {
-  try {
-    const canvas = document.createElement('canvas');
-    return Boolean(canvas.getContext('webgl2') || canvas.getContext('webgl'));
-  } catch {
-    return false;
-  }
-}
+const STEP_MS = 9000;
 
 export function HowItWorks() {
   const { isTestnet } = useNetworkMode();
@@ -32,26 +19,10 @@ export function HowItWorks() {
   const [revealed, setRevealed] = useState(false);
   const [paused, setPaused] = useState(false);
   const [touched, setTouched] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
-  const [webgl, setWebgl] = useState<boolean | null>(null);
-  const [sceneFailed, setSceneFailed] = useState(false);
 
   const sectionRef = useRef<HTMLElement>(null);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-
-  useEffect(() => {
-    setWebgl(hasWebGL());
-  }, []);
-
-  // Narrow screens show a crop of the flat drawing centered on the active scene.
-  useEffect(() => {
-    const query = window.matchMedia('(max-width: 760px)');
-    const update = () => setIsMobile(query.matches);
-    update();
-    query.addEventListener('change', update);
-    return () => query.removeEventListener('change', update);
-  }, []);
 
   useEffect(() => {
     const query = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -109,8 +80,6 @@ export function HowItWorks() {
     }
   };
 
-  // 3D by default. Reduced motion, no WebGL, or a lost context falls back to the flat drawing.
-  const flat = reduceMotion || webgl === false || sceneFailed;
   const timed = inView && !paused && !reduceMotion;
 
   return (
@@ -136,19 +105,7 @@ export function HowItWorks() {
         role="tabpanel"
         aria-labelledby={`hiw-tab-${step}`}
       >
-        {flat ? (
-          <HowItWorksFlat step={step} isMobile={isMobile} />
-        ) : (
-          <div
-            className="hiw-visual"
-            role="img"
-            aria-label="A 3D drawing of one position. Shares drop into a vault, USDG comes out to borrow, the position grows to 1.25 times for a Long or Short, and a guard trims it before the liquidation line reaches it."
-          >
-            {revealed && webgl && (
-              <HowItWorksScene step={step} active={inView} onFail={() => setSceneFailed(true)} />
-            )}
-          </div>
-        )}
+        <HowItWorksBoard step={step} active={inView} reduceMotion={reduceMotion} cycleMs={STEP_MS} />
 
         <p className="hiw-caption" key={step}>
           {STEPS[step].caption}

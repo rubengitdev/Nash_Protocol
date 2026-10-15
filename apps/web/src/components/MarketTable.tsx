@@ -33,7 +33,7 @@ export function MarketTable({ markets, isLoading }: MarketTableProps) {
             onClick={() => setActiveCategory(cat)}
             className={`px-3 sm:px-4 py-2 rounded-sm text-[11px] uppercase tracking-widest font-bold whitespace-nowrap transition-all ${
               activeCategory === cat
-                ? "bg-brand text-white"
+                ? "bg-silver-light text-black"
                 : "bg-surface text-muted hover:text-white border border-white/10"
             }`}
           >
@@ -79,7 +79,7 @@ export function MarketTable({ markets, isLoading }: MarketTableProps) {
                       <div className="h-3.5 w-14 bg-brand/20 rounded-xs" />
                     </td>
                     <td className="py-3.5 px-3 sm:px-4 md:px-6">
-                      <div className="h-3.5 w-14 bg-[#FFB800]/20 rounded-xs" />
+                      <div className="h-3.5 w-14 bg-[#ffb800]/20 rounded-xs" />
                     </td>
                     <td className="py-3.5 px-3 sm:px-4 md:px-6">
                       <div className="h-3.5 w-10 bg-white/5 rounded-xs" />
@@ -126,7 +126,7 @@ export function MarketTable({ markets, isLoading }: MarketTableProps) {
                 filteredMarkets.map((market) => (
                   <tr
                     key={market.id}
-                    className="hover:bg-[#0b1429] transition-colors group"
+                    className="hover:bg-[#101010] transition-colors group"
                   >
                     <td className="py-3.5 px-3 sm:px-4 md:px-6 font-sans whitespace-nowrap">
                       <div className="flex items-center gap-3">
@@ -147,7 +147,7 @@ export function MarketTable({ markets, isLoading }: MarketTableProps) {
                     <td className="py-3.5 px-3 sm:px-4 md:px-6 font-sans font-bold text-brand whitespace-nowrap">
                       +{market.supplyApy.toFixed(2)}%
                     </td>
-                    <td className="py-3.5 px-3 sm:px-4 md:px-6 font-sans font-bold text-[#FFB800] whitespace-nowrap">
+                    <td className="py-3.5 px-3 sm:px-4 md:px-6 font-sans font-bold text-[#ffb800] whitespace-nowrap">
                       {market.borrowApr.toFixed(2)}%
                     </td>
                     <td className="py-3.5 px-3 sm:px-4 md:px-6 font-sans text-muted whitespace-nowrap">
@@ -162,7 +162,7 @@ export function MarketTable({ markets, isLoading }: MarketTableProps) {
                     <td className="py-3.5 px-3 sm:px-4 md:px-6 text-right font-sans whitespace-nowrap">
                       <Link
                         href={marketPath(market.assetSymbol)}
-                        className="px-3 sm:px-4 py-2 bg-brand hover:bg-brand-hover text-white text-[11px] font-sans font-bold uppercase tracking-wider rounded-sm transition-all inline-flex items-center gap-1 shadow-sm"
+                        className="px-3 sm:px-4 py-2 bg-go hover:bg-go-hover text-black text-[11px] font-sans font-bold uppercase tracking-wider rounded-sm transition-all inline-flex items-center gap-1 shadow-sm"
                       >
                         <span>View market</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />

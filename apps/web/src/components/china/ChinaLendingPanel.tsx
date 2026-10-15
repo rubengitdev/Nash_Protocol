@@ -164,26 +164,26 @@ export function ChinaLendingPanel({
   };
 
   return (
-    <div className="w-full bg-[#080f20] border border-[#16254a] p-4 sm:p-5 rounded-sm font-sans box-border overflow-hidden">
+    <div className="w-full bg-[#0a0a0a] border border-[#222222] p-4 sm:p-5 rounded-sm font-sans box-border overflow-hidden">
       {/* Header & Market Parameters */}
-      <div className="flex flex-col gap-2 pb-3.5 mb-4 border-b border-[#101c37]">
+      <div className="flex flex-col gap-2 pb-3.5 mb-4 border-b border-[#161616]">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-[10px] text-[#7a859f] uppercase font-display tracking-wider truncate">
+          <span className="text-[10px] text-[#858585] uppercase font-display tracking-wider truncate">
             Isolated Lending · Boundary
           </span>
-          <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#8791aa] shrink-0">
-            <span>APR: <strong className="text-[#2ee6a6]">{market?.borrowApr ?? 7.8}%</strong></span>
-            <span className="text-[#2c3a5c]">·</span>
-            <span>Max LTV: <strong className="text-[#eef2fa]">{openingLtv}%</strong></span>
+          <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#919191] shrink-0">
+            <span>APR: <strong className="text-[#e5e5e5]">{market?.borrowApr ?? 7.8}%</strong></span>
+            <span className="text-[#3a3a3a]">·</span>
+            <span>Max LTV: <strong className="text-[#f5f5f5]">{openingLtv}%</strong></span>
           </div>
         </div>
-        <h3 className="text-base font-bold font-display text-[#eef2fa] truncate">
+        <h3 className="text-base font-bold font-display text-[#f5f5f5] truncate">
           {asset.ticker} Collateral / USDG Credit
         </h3>
       </div>
 
       {/* Mode Switcher Tabs */}
-      <div className="grid grid-cols-4 gap-1 mb-4 bg-[#050a18] p-1 border border-[#101c37] rounded-sm font-display text-[11px]">
+      <div className="grid grid-cols-4 gap-1 mb-4 bg-[#000000] p-1 border border-[#161616] rounded-sm font-display text-[11px]">
         {(["DEPOSIT", "BORROW", "REPAY", "WITHDRAW"] as LendingMode[]).map((m) => (
           <button
             key={m}
@@ -193,8 +193,8 @@ export function ChinaLendingPanel({
             }}
             className={`py-1.5 px-1 rounded text-center transition-all font-medium truncate ${
               mode === m
-                ? "bg-[#2ee6a6] text-[#050a18] font-bold shadow-[0_0_8px_rgba(46,230,166,0.2)]"
-                : "text-[#8e9bb8] hover:text-white hover:bg-[#0d172e]"
+                ? "bg-[#e5e5e5] text-[#000000] font-bold shadow-[0_0_8px_rgba(229,229,229,0.2)]"
+                : "text-[#8d8d8d] hover:text-white hover:bg-[#0e0e0e]"
             }`}
           >
             {m === "DEPOSIT"
@@ -209,9 +209,9 @@ export function ChinaLendingPanel({
       </div>
 
       {/* Input Box */}
-      <div className="bg-[#050a18] border border-[#16254a] p-3 sm:p-3.5 rounded-sm mb-4">
+      <div className="bg-[#000000] border border-[#222222] p-3 sm:p-3.5 rounded-sm mb-4">
         <div className="flex items-center justify-between text-xs mb-2 gap-2">
-          <span className="text-[#8791aa] font-display text-[11px] truncate">
+          <span className="text-[#919191] font-display text-[11px] truncate">
             {mode === "DEPOSIT"
               ? `Deposit ${asset.ticker}`
               : mode === "BORROW"
@@ -220,7 +220,7 @@ export function ChinaLendingPanel({
               ? "Repay USDG"
               : `Withdraw ${asset.ticker}`}
           </span>
-          <span className="text-[#7a859f] font-mono text-[10px] truncate text-right">
+          <span className="text-[#858585] font-mono text-[10px] truncate text-right">
             {mode === "DEPOSIT"
               ? `Wallet: ${walletTokenBalance.toFixed(2)} ${asset.ticker}`
               : mode === "BORROW"
@@ -239,21 +239,21 @@ export function ChinaLendingPanel({
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="0.00"
-            className="w-full min-w-0 bg-transparent font-mono text-xl sm:text-2xl text-[#eef2fa] focus:outline-none placeholder-[#2c3a5c]"
+            className="w-full min-w-0 bg-transparent font-mono text-xl sm:text-2xl text-[#f5f5f5] focus:outline-none placeholder-[#3a3a3a]"
           />
-          <span className="font-display font-bold text-xs px-2.5 py-1 bg-[#0f1a33] text-[#2ee6a6] border border-[#1a2a4d] rounded shrink-0">
+          <span className="font-display font-bold text-xs px-2.5 py-1 bg-[#141414] text-[#e5e5e5] border border-[#262626] rounded shrink-0">
             {mode === "DEPOSIT" || mode === "WITHDRAW" ? asset.ticker : "USDG"}
           </span>
         </div>
       </div>
 
       {/* LTV & Risk Gauge */}
-      <div className="bg-[#090c14] border border-[#16254a] p-3 sm:p-3.5 rounded-sm mb-4 font-sans">
+      <div className="bg-[#060606] border border-[#222222] p-3 sm:p-3.5 rounded-sm mb-4 font-sans">
         <div className="flex items-center justify-between text-xs mb-1.5 gap-2">
-          <span className="text-[#8791aa] font-display text-[11px] truncate">Projected LTV Ratio</span>
+          <span className="text-[#919191] font-display text-[11px] truncate">Projected LTV Ratio</span>
           <div className="flex items-center gap-1.5 font-mono text-xs shrink-0">
-            <span className="text-[#68728a]">{currentLtv.toFixed(1)}%</span>
-            <span className="text-[#7a859f]">→</span>
+            <span className="text-[#727272]">{currentLtv.toFixed(1)}%</span>
+            <span className="text-[#858585]">→</span>
             <span
               className={`font-bold ${
                 projectedLtv > openingLtv
@@ -265,12 +265,12 @@ export function ChinaLendingPanel({
             >
               {projectedLtv.toFixed(1)}%
             </span>
-            <span className="text-[#68728a] text-[10px]">(Max: {openingLtv}%)</span>
+            <span className="text-[#727272] text-[10px]">(Max: {openingLtv}%)</span>
           </div>
         </div>
 
         {/* Multi-tier Progress Bar */}
-        <div className="w-full h-2 bg-[#101c37] rounded-full overflow-hidden flex relative">
+        <div className="w-full h-2 bg-[#161616] rounded-full overflow-hidden flex relative">
           <div
             className={`h-full transition-all duration-300 ${
               projectedLtv > openingLtv
@@ -283,7 +283,7 @@ export function ChinaLendingPanel({
           />
         </div>
 
-        <div className="flex justify-between text-[10px] text-[#68728a] font-mono mt-1.5">
+        <div className="flex justify-between text-[10px] text-[#727272] font-mono mt-1.5">
           <span>0%</span>
           <span>Cap: {openingLtv}%</span>
           <span>Liq: {liquidationThreshold}%</span>
@@ -291,12 +291,12 @@ export function ChinaLendingPanel({
       </div>
 
       {/* Derived Health Factor & Liquidation Breakdown */}
-      <div className="bg-[#050a18] border border-[#101c37] p-3 sm:p-3.5 rounded-sm mb-4 font-mono text-xs divide-y divide-[#0d172e]">
+      <div className="bg-[#000000] border border-[#161616] p-3 sm:p-3.5 rounded-sm mb-4 font-mono text-xs divide-y divide-[#0e0e0e]">
         <div className="flex items-center justify-between pb-2 gap-2">
-          <span className="text-[#7a859f] font-sans truncate">Projected Health Factor</span>
+          <span className="text-[#858585] font-sans truncate">Projected Health Factor</span>
           <div className="flex items-center gap-1.5 shrink-0">
-            <span className="text-[#68728a]">{currentHf.toFixed(2)}</span>
-            <span className="text-[#7a859f]">→</span>
+            <span className="text-[#727272]">{currentHf.toFixed(2)}</span>
+            <span className="text-[#858585]">→</span>
             <span
               className={`font-bold ${
                 projectedHf < 1.0
@@ -312,10 +312,10 @@ export function ChinaLendingPanel({
         </div>
 
         <div className="flex items-center justify-between py-2 gap-2">
-          <span className="text-[#7a859f] font-sans truncate">Estimated Liq Price</span>
+          <span className="text-[#858585] font-sans truncate">Estimated Liq Price</span>
           <div className="flex items-center gap-1.5 shrink-0">
-            <span className="text-[#68728a]">${currentLiqPrice.toFixed(2)}</span>
-            <span className="text-[#7a859f]">→</span>
+            <span className="text-[#727272]">${currentLiqPrice.toFixed(2)}</span>
+            <span className="text-[#858585]">→</span>
             <span className="text-[#f5a623] font-bold">
               ${projectedLiqPrice.toFixed(2)}
             </span>
@@ -323,16 +323,16 @@ export function ChinaLendingPanel({
         </div>
 
         <div className="flex items-center justify-between py-2 gap-2">
-          <span className="text-[#7a859f] font-sans truncate">Total Collateral Value</span>
+          <span className="text-[#858585] font-sans truncate">Total Collateral Value</span>
           <div className="text-right shrink-0">
-            <span className="text-[#eef2fa] font-semibold">${projectedCollateralValueUsd.toFixed(2)}</span>{" "}
-            <span className="text-[#7a859f] text-[10px]">({projectedCollateralTokens.toFixed(2)} {asset.ticker})</span>
+            <span className="text-[#f5f5f5] font-semibold">${projectedCollateralValueUsd.toFixed(2)}</span>{" "}
+            <span className="text-[#858585] text-[10px]">({projectedCollateralTokens.toFixed(2)} {asset.ticker})</span>
           </div>
         </div>
 
         <div className="flex items-center justify-between pt-2 gap-2">
-          <span className="text-[#7a859f] font-sans truncate">Total USDG Debt</span>
-          <span className="text-[#eef2fa] font-bold shrink-0">${projectedDebtUsdg.toFixed(2)} USDG</span>
+          <span className="text-[#858585] font-sans truncate">Total USDG Debt</span>
+          <span className="text-[#f5f5f5] font-bold shrink-0">${projectedDebtUsdg.toFixed(2)} USDG</span>
         </div>
       </div>
 
@@ -340,7 +340,7 @@ export function ChinaLendingPanel({
       {!isMarketOpen ? (
         <button
           disabled
-          className="w-full py-3 px-3 rounded bg-[#0f141f] text-[#ff6b6b] border border-[#2a1a1a] font-display font-bold text-xs uppercase cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full py-3 px-3 rounded bg-[#141414] text-[#ff6b6b] border border-[#1f1f1f] font-display font-bold text-xs uppercase cursor-not-allowed flex items-center justify-center gap-2"
         >
           <span className="truncate">Market Closed (Session Inactive)</span>
           <span className="text-[10px] bg-[#2a1414] px-1.5 py-0.5 rounded font-mono shrink-0">
@@ -367,8 +367,8 @@ export function ChinaLendingPanel({
           disabled={!numInput || numInput <= 0}
           className={`w-full py-3 px-4 rounded font-display font-bold text-xs uppercase transition-all tracking-wider ${
             numInput > 0
-              ? "bg-[#2ee6a6] hover:bg-[#7df2c8] text-[#050a18] shadow-[0_0_14px_rgba(46,230,166,0.25)] cursor-pointer"
-              : "bg-[#111622] text-[#68728a] border border-[#171f31] cursor-not-allowed"
+              ? "bg-[#2ee6a6] hover:bg-[#7df2c8] text-[#000000] shadow-[0_0_14px_rgba(46,230,166,0.3)] cursor-pointer"
+              : "bg-[#161616] text-[#727272] border border-[#1f1f1f] cursor-not-allowed"
           }`}
         >
           <div className="flex items-center justify-center gap-1.5 truncate">
@@ -397,56 +397,56 @@ export function ChinaLendingPanel({
               </svg>
               <span className="text-sm">Lending Transaction Confirmed</span>
             </div>
-            <div className="text-[11px] text-[#8e9bb8] mt-1 break-all font-mono">
+            <div className="text-[11px] text-[#8d8d8d] mt-1 break-all font-mono">
               Tx Hash: {txHash}
             </div>
-            <div className="text-[10px] text-[#8791aa] mt-0.5">
-              Collateral shares updated · Robinhood Chain Block #0b8e62 · Synced to Local Storage
+            <div className="text-[10px] text-[#919191] mt-0.5">
+              Collateral shares updated · Robinhood Chain Block #8b8b8b · Synced to Local Storage
             </div>
           </div>
 
           {/* ACTIVE OPEN POSITION DETAILS CARD */}
           {(executedPosition || activeStoredPosition) && (
-            <div className="bg-[#050a18] border border-[rgba(46,230,166,0.25)] p-3 rounded-sm text-xs text-[#eef2fa] flex flex-col gap-2">
-              <div className="flex items-center justify-between border-b border-[#121825] pb-2">
+            <div className="bg-[#000000] border border-[rgba(229,229,229,0.25)] p-3 rounded-sm text-xs text-[#f5f5f5] flex flex-col gap-2">
+              <div className="flex items-center justify-between border-b border-[#181818] pb-2">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#2ee6a6] animate-pulse shrink-0" />
-                  <span className="font-display font-bold text-xs uppercase tracking-wider text-[#2ee6a6]">
+                  <span className="font-display font-bold text-xs uppercase tracking-wider text-[#e5e5e5]">
                     Active Collateral &amp; Debt Position
                   </span>
                 </div>
-                <span className="text-[10px] px-1.5 py-0.5 rounded bg-[rgba(46,230,166,0.12)] text-[#2ee6a6] font-display font-semibold">
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-[rgba(229,229,229,0.12)] text-[#e5e5e5] font-display font-semibold">
                   Isolated Credit
                 </span>
               </div>
 
               <div className="grid grid-cols-2 gap-2 text-[11px] font-mono">
-                <div className="bg-[#0a1224] p-2 rounded border border-[#13203d]">
-                  <span className="text-[#7a859f] block text-[10px] uppercase font-sans">Collateral Deposited</span>
-                  <span className="text-[#eef2fa] font-bold text-xs">
+                <div className="bg-[#0b0b0b] p-2 rounded border border-[#181818]">
+                  <span className="text-[#858585] block text-[10px] uppercase font-sans">Collateral Deposited</span>
+                  <span className="text-[#f5f5f5] font-bold text-xs">
                     {(executedPosition || activeStoredPosition)?.collateralTokens.toFixed(4)} {asset.ticker}
                   </span>
-                  <span className="text-[#7a859f] text-[10px] block">
+                  <span className="text-[#858585] text-[10px] block">
                     (${(executedPosition || activeStoredPosition)?.collateralUsd.toFixed(2)})
                   </span>
                 </div>
-                <div className="bg-[#0a1224] p-2 rounded border border-[#13203d]">
-                  <span className="text-[#7a859f] block text-[10px] uppercase font-sans">Borrowed Debt</span>
-                  <span className="text-[#2ee6a6] font-bold text-xs">
+                <div className="bg-[#0b0b0b] p-2 rounded border border-[#181818]">
+                  <span className="text-[#858585] block text-[10px] uppercase font-sans">Borrowed Debt</span>
+                  <span className="text-[#e5e5e5] font-bold text-xs">
                     ${(executedPosition || activeStoredPosition)?.debtUsd.toFixed(2)} USDG
                   </span>
-                  <span className="text-[#8791aa] text-[10px] block">
+                  <span className="text-[#919191] text-[10px] block">
                     Equity: ${(executedPosition || activeStoredPosition)?.equityUsd.toFixed(2)}
                   </span>
                 </div>
-                <div className="bg-[#0a1224] p-2 rounded border border-[#13203d]">
-                  <span className="text-[#7a859f] block text-[10px] uppercase font-sans">Health Factor</span>
-                  <span className="text-[#2ee6a6] font-bold">
+                <div className="bg-[#0b0b0b] p-2 rounded border border-[#181818]">
+                  <span className="text-[#858585] block text-[10px] uppercase font-sans">Health Factor</span>
+                  <span className="text-[#e5e5e5] font-bold">
                     {(executedPosition || activeStoredPosition)?.healthFactor.toFixed(2)}
                   </span>
                 </div>
-                <div className="bg-[#0a1224] p-2 rounded border border-[#13203d]">
-                  <span className="text-[#7a859f] block text-[10px] uppercase font-sans">Liq Reference</span>
+                <div className="bg-[#0b0b0b] p-2 rounded border border-[#181818]">
+                  <span className="text-[#858585] block text-[10px] uppercase font-sans">Liq Reference</span>
                   <span className="text-[#f5a623] font-bold">
                     ${(executedPosition || activeStoredPosition)?.liquidationPrice.toFixed(2)}
                   </span>
@@ -455,7 +455,7 @@ export function ChinaLendingPanel({
 
               <a
                 href="#positions-table"
-                className="mt-1 py-1.5 px-2.5 rounded bg-[#0e131e] hover:bg-[#151a27] text-[#2ee6a6] border border-[#1e2537] font-display font-semibold text-[11px] text-center transition-colors flex items-center justify-center gap-1.5"
+                className="mt-1 py-1.5 px-2.5 rounded bg-[#131313] hover:bg-[#1a1a1a] text-[#e5e5e5] border border-[#252525] font-display font-semibold text-[11px] text-center transition-colors flex items-center justify-center gap-1.5"
               >
                 <span>View in Your Active Positions Table</span>
                 <span>↓</span>

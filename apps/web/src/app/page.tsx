@@ -7,7 +7,6 @@ import { useNetworkMode } from "../hooks/useNetworkMode";
 import { useNashMarkets } from "../hooks/useNashMarkets";
 import { useNashVault } from "../hooks/useNashVault";
 import { NashHero } from "../components/nash/NashHero";
-import { StatBand } from "../components/StatBand";
 import { ProductTabs } from "../components/ProductTabs";
 import { HowItWorks } from "../components/HowItWorks";
 import { ComparisonMatrix } from "../components/ComparisonMatrix";
@@ -32,9 +31,6 @@ export default function HomePage() {
     <div className="w-full">
       {/* HERO: hooded figure inside a three-ribbon ring */}
       <NashHero />
-
-      {/* Nash at a glance */}
-      <StatBand />
 
       {/* § 01 The argument */}
       <Manifesto />

@@ -18,7 +18,7 @@ export function ChinaAssetLogo({ symbol, size = "md", className = "" }: ChinaAss
   const cleanSymbol = symbol ? symbol.toUpperCase().slice(0, 4) : "CN";
   return (
     <div
-      className={`rounded bg-[#101c37] border border-[#1a2a4d] flex items-center justify-center font-display font-bold text-[#2ee6a6] shrink-0 ${sizeClasses[size]} ${className}`}
+      className={`rounded bg-[#161616] border border-[#262626] flex items-center justify-center font-display font-bold text-[#e5e5e5] shrink-0 ${sizeClasses[size]} ${className}`}
     >
       {cleanSymbol.slice(0, 3)}
     </div>

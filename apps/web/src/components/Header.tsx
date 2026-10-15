@@ -67,7 +67,7 @@ export function Header() {
                             alt=""
                             width={40}
                             height={37}
-                            className="h-9 w-auto shrink-0 drop-shadow-[0_0_10px_rgba(46,230,166,0.22)]"
+                            className="h-9 w-auto shrink-0 drop-shadow-[0_0_10px_rgba(229,229,229,0.22)]"
                         />
                         <span className="wordmark-text">
                             <span className="wordmark-name">NASH</span>
@@ -80,7 +80,7 @@ export function Header() {
                 <nav className="nav-left" aria-label="Main navigation">
                     {isLanding ? (
                         <>
-                            <a className="nav-link" href="#manifesto">
+                            <a className="nav-link nav-extra" href="#manifesto">
                                 The argument
                             </a>
 
@@ -161,7 +161,7 @@ export function Header() {
                                 </div>
                             </details>
 
-                            <a className="nav-link" href="#roadmap">
+                            <a className="nav-link nav-extra" href="#roadmap">
                                 Roadmap
                             </a>
 
@@ -244,7 +244,7 @@ export function Header() {
                         <div className="flex items-center gap-3 font-sans text-xs">
                             <button
                                 onClick={() => setIsWalletModalOpen(true)}
-                                className="px-4 py-2 bg-[var(--green)] hover:bg-[#7df2c8] text-[#0b1429] font-semibold tracking-wide rounded transition-all text-xs"
+                                className="px-4 py-2 bg-[var(--go)] hover:bg-[var(--go-soft)] text-[#000000] font-semibold tracking-wide rounded transition-all text-xs"
                             >
                                 {isConnected && formattedAddress ? (
                                     <span>{formattedAddress}</span>

@@ -154,4 +154,4 @@ Engineering principles inherited from the Levier codebase and kept: English-only
 
 ## Brand
 
-Deep navy, emerald, silver and white; a type system derived from John Nash's own work and habits (journal serif for the argument, geometric sans for the interface, monospace for the machine, a hand for the margin notes). Full guide with sources: [`docs/BRAND.md`](docs/BRAND.md).
+Black, graphite, brushed silver and white, taken from the brand banner; a type system derived from John Nash's own work and habits (journal serif for the argument, geometric sans for the interface, monospace for the machine, a hand for the margin notes). Full guide with sources: [`docs/BRAND.md`](docs/BRAND.md).

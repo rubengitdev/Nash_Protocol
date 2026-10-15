@@ -35,14 +35,14 @@ export function SecurityGrid() {
     <section className="space-y-8 font-mono">
       <div className="border-b border-white/10 pb-4 flex justify-between items-end">
         <div>
-          <span className="text-xs text-[#14b07f] font-bold block uppercase tracking-widest">
+          <span className="text-xs text-[#b5b5b5] font-bold block uppercase tracking-widest">
             [INSTITUTIONAL GRADE]
           </span>
           <h2 className="text-2xl sm:text-4xl font-normal tracking-tight text-white uppercase font-mono mt-1">
             SECURITY & RISK ARCHITECTURE
           </h2>
         </div>
-        <span className="text-xs text-[#7f8cab] uppercase hidden sm:block">
+        <span className="text-xs text-[#8c8c8c] uppercase hidden sm:block">
           [TRUSTED ONCHAIN INFRASTRUCTURE]
         </span>
       </div>
@@ -53,14 +53,14 @@ export function SecurityGrid() {
           return (
             <div
               key={idx}
-              className="bg-[#050a18] border border-white/15 p-6 rounded-sm space-y-4 hover:border-[#14b07f]/50 transition-all flex flex-col justify-between"
+              className="bg-[#000000] border border-white/15 p-6 rounded-sm space-y-4 hover:border-[#b5b5b5]/50 transition-all flex flex-col justify-between"
             >
               <div className="space-y-3">
-                <div className="p-3 bg-[#030814] border border-white/10 rounded-sm w-fit text-[#14b07f]">
+                <div className="p-3 bg-[#000000] border border-white/10 rounded-sm w-fit text-[#b5b5b5]">
                   <Icon className="w-6 h-6" />
                 </div>
 
-                <span className="text-[10px] text-[#14b07f] font-bold tracking-wider block">
+                <span className="text-[10px] text-[#b5b5b5] font-bold tracking-wider block">
                   {pillar.subtitle}
                 </span>
 
@@ -68,13 +68,13 @@ export function SecurityGrid() {
                   {pillar.title}
                 </h3>
 
-                <p className="text-xs text-[#7f8cab] leading-relaxed uppercase">
+                <p className="text-xs text-[#8c8c8c] leading-relaxed uppercase">
                   {pillar.description}
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-white/5 text-[10px] text-[#14b07f] font-bold flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#14b07f] animate-pulse" />
+              <div className="pt-3 border-t border-white/5 text-[10px] text-[#b5b5b5] font-bold flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#b5b5b5] animate-pulse" />
                 <span>ACTIVE GUARD</span>
               </div>
             </div>
