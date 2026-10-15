@@ -113,3 +113,7 @@ supabase/.temp/
 
 # Local stack data (docker volumes live in Docker, not here)
 .localnet/
+
+# Hosting CLI link state
+.vercel
+.railway
