@@ -80,7 +80,7 @@ export function Header() {
                 <nav className="nav-left" aria-label="Main navigation">
                     {isLanding ? (
                         <>
-                            <a className="nav-link" href="#manifesto">
+                            <a className="nav-link nav-extra" href="#manifesto">
                                 The argument
                             </a>
 
@@ -161,7 +161,7 @@ export function Header() {
                                 </div>
                             </details>
 
-                            <a className="nav-link" href="#roadmap">
+                            <a className="nav-link nav-extra" href="#roadmap">
                                 Roadmap
                             </a>
 

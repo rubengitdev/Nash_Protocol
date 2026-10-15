@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { CABadge } from '../CABadge';
 import { env } from '../../env.mjs';
 import { useNetworkMode } from '../../hooks/useNetworkMode';
+import { HeroFormulas } from './HeroFormulas';
 
 // three.js is only needed here, and only in the browser.
 const NashHeroScene = dynamic(() => import('./NashHeroScene'), { ssr: false });
@@ -16,12 +17,33 @@ export function NashHero() {
   const onReady = useCallback(() => setReady(true), []);
   const onFail = useCallback(() => setFailed(true), []);
   const tokenCA = env.TOKEN_CA ?? '';
+  const hero = useRef<HTMLElement>(null);
   const { isTestnet } = useNetworkMode();
   // Mainnet markets launch capped at 1.5x; testnet runs the full 2.5x range.
   const maxLeverage = isTestnet ? '2.5×' : '1.5×';
 
+  // Pointer parallax for the formula layer: two CSS variables, updated at most once per frame.
+  useEffect(() => {
+    const el = hero.current;
+    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.matchMedia('(pointer: coarse)').matches) return;
+    let frame = 0;
+    const onMove = (e: PointerEvent) => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        el.style.setProperty('--px', String((e.clientX / window.innerWidth) * 2 - 1));
+        el.style.setProperty('--py', String((e.clientY / window.innerHeight) * 2 - 1));
+      });
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
-    <section className="nash-hero" data-ready={ready || failed ? 'true' : 'false'} aria-labelledby="hero-title">
+    <section ref={hero} className="nash-hero" data-ready={ready || failed ? 'true' : 'false'} aria-labelledby="hero-title">
       <div className="nash-hero-grid" aria-hidden="true" />
       {failed ? (
         <div className="nash-hero-fallback" aria-hidden="true">
@@ -31,6 +53,7 @@ export function NashHero() {
         <NashHeroScene onReady={onReady} onFail={onFail} />
       )}
       <div className="nash-hero-scrim" aria-hidden="true" />
+      <HeroFormulas />
 
       <div className="nash-hero-inner">
         <div className="nash-hero-top">
@@ -41,17 +64,6 @@ export function NashHero() {
           {tokenCA ? <CABadge address={tokenCA} truncate={false} /> : null}
           <span className="nash-eyebrow nash-eyebrow-right">Credit &amp; leverage for tokenized assets</span>
         </div>
-
-        <figure className="nash-note nash-note-left" aria-hidden="true">
-          <span className="nash-equation">
-            ∀&thinsp;<i>i</i> : u<sub><i>i</i></sub>(<i>s</i>*) ≥ u<sub><i>i</i></sub>(<i>s<sub>i</sub></i>, <i>s</i>*<sub>−<i>i</i></sub>)
-          </span>
-          <figcaption className="nash-hand">the whole idea, in one line.</figcaption>
-        </figure>
-
-        <figure className="nash-note nash-note-right" aria-hidden="true">
-          <span className="nash-hand nash-hand-big">the math doesn&rsquo;t need a face.</span>
-        </figure>
 
         <div className="nash-hero-copy">
           <h1 id="hero-title">

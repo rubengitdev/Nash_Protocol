@@ -9,7 +9,7 @@
 | Name | **Nash Protocol** (short form: **Nash**) |
 | Tagline | *Leverage, at equilibrium.* |
 | Mark | The brushed-silver ribbon **N**: three parallel strands in dynamic balance. Source file: `Nash-Protocol-Logo.png` (transparent PNG). Derived assets live in `apps/web/public/brand/` |
-| Image language | Futuristic, high quality, calm. The hero is a faceless hooded figure inside a ring of three silver ribbons: the same three strands as the mark |
+| Image language | Futuristic, high quality, calm. The hero is two characters inside a ring of three silver ribbons (the same three strands as the mark): in front, Satoshi Nakamoto as a faceless hooded figure; behind and above, John Nash as a marble statue. See section 3 |
 
 ### Palette
 
@@ -45,7 +45,7 @@ The brief asked for a clean modern sans (Montserrat or Roboto) and, separately, 
 | **The Machine**: numbers, addresses, data, the letter | **JetBrains Mono** | Cryptography and exact figures. Nash's 1955 NSA correspondence is about ciphers; the agency's replies were typed |
 | **The Hand**: margin notes only | **Caveat** | Nash's NSA letters were handwritten, and in the 1970s he was "The Phantom of Fine Hall," scribbling arcane equations on blackboards at night. Used for short annotations, never body copy |
 
-All four are SIL Open Font License, self-hosted from `apps/web/public/fonts/` (no third-party request at runtime).
+A fifth voice appears only in the hero's formulas: **Computer Modern** (KaTeX's fonts), the typeface of mathematics journals, so the equations look like the page of a paper. The first four are SIL Open Font License, self-hosted from `apps/web/public/fonts/` (no third-party request at runtime); KaTeX's fonts are bundled by the build and load only when the formulas render.
 
 ### Rules
 
@@ -68,7 +68,33 @@ All four are SIL Open Font License, self-hosted from `apps/web/public/fonts/` (n
 | Label | Montserrat 600, 11 to 12 px, uppercase, tracking `0.1em` to `0.2em` |
 | Data | JetBrains Mono 500, 10.5 to 12 px, tracking `0.06em` to `0.14em` |
 
-## 3. Narrative
+## 3. The hero: two characters and a blackboard
+
+**Satoshi in front, no face.** A hooded figure whose face is a deep void under a thick, rolled hood. Nakamoto is a pseudonym: the idea has no face.
+
+**Nash behind, a statue.** A marble bust in the classical manner, with a face, so the person behind the idea is present. It is a stylised sculpture, not a portrait or a likeness study. The lower bust dissolves into the dark, so the statue looms rather than competes. Satoshi is dark and matte; Nash is pale and veined: the two figures differ in value so each reads at a glance.
+
+Both are carved in code: signed-distance fields blended smoothly, meshed once in a Web Worker (`figures.ts`, `sculpt.ts`), with ambient occlusion baked into vertex colour. There is no model or texture file. On phones the grid is coarser. The figures fade in when their mesh is ready, so the ring and the page never wait for them.
+
+**The blackboard.** In the 1970s Nash was "The Phantom of Fine Hall," scribbling arcane equations on blackboards at night. The hero is that blackboard: formulas typeset in **Computer Modern** (via KaTeX, at build time, so the browser receives static HTML), silver for Nash, emerald for Nakamoto and the protocol. Each carries its source in the tag:
+
+| Formula | Tag | Source |
+| :--- | :--- | :--- |
+| `∀i: uᵢ(sᵢ*, s*₋ᵢ) ≥ uᵢ(sᵢ, s*₋ᵢ)` | Nash equilibrium · 1950 | Nash, *Equilibrium points in n-person games*, PNAS 1950 |
+| `σ* ∈ BR(σ*)` | a fixed point · 1950 | the same paper: an equilibrium is a fixed point of the best-response correspondence |
+| `max (u₁(x)−d₁)(u₂(x)−d₂)` | the bargaining problem · 1950 | Nash, *The Bargaining Problem*, Econometrica 1950 |
+| `T_attack(n): nᶜ ≪ eⁿ` | the attacker's effort · NSA, 1955 | Nash's letters contrast "a relatively small power of" the key length with exponential effort. They state nothing about the legitimate user's effort, so none is claimed |
+| `SHA256²(h) < 2^(256−k)` | proof-of-work · 2008 | Nakamoto §4: a hash that "begins with a number of zero bits"; work is exponential in that number |
+| `q_z = 1 if p ≤ q; (q/p)^z if p > q` | honest majority · §11 | Nakamoto §11, the attacker's catch-up probability (verified against the whitepaper text) |
+| `x · y = k` | constant product · margin pool | the margin pool is a Uniswap V2 pair |
+| `LTV = D/C ≤ LLTV`, `HF = C·LLTV/D > 1` | loan-to-value, health factor | this protocol |
+| Payoff matrix (3,3 / 0,5 / 5,0 / 1,1) | prisoner's dilemma | the textbook example; the equilibrium cell (1,1) glows. "Change the rules, change the equilibrium" is the design brief |
+
+The matrix is chosen on purpose: the equilibrium of the prisoner's dilemma is stable but not best. A protocol's job is to design the game so the stable outcome is also a good one.
+
+To add or edit a formula, change the list in `scripts/render-formulas.mjs`, run it, and commit `formulas.generated.ts`.
+
+## 4. Narrative
 
 The site argues one idea at a time, in this order:
 
@@ -86,20 +112,23 @@ The site argues one idea at a time, in this order:
 
 Every historical claim on the site was checked against a source (below). Anything that could not be confirmed was cut or softened, for example: Hex is described as a game Princeton students called "Nash," not as Nash's invention (Piet Hein created it in 1942 and Nash said he found it independently). Roadmap phases are labelled honestly (In progress / Planned); "Live" is reserved for a phase that is actually deployed, and nothing is deployed under the Nash name yet. Governance and staking are Phase IV, not live.
 
-## 4. Sources
+## 5. Sources
 
 - John Forbes Nash Jr.: birth and death, Duffin's "He is a mathematical genius," the 28-page thesis, PNAS pp. 48 to 49, Nobel 1994, Abel 2015, "The Phantom of Fine Hall." <https://en.wikipedia.org/wiki/John_Forbes_Nash_Jr.>
 - The 1955 NSA letters (handwritten by Nash; NSA replies typed; the quoted sentence "It means that it is quite feasible to design ciphers that are effectively unbreakable."). <https://gwern.net/doc/cs/cryptography/nash/1955-nash>
 - Hex: Piet Hein 1942; Nash's independent claim; players called the game "Nash"; no draws. <https://en.wikipedia.org/wiki/Hex_(board_game)>
 - *Ideal Money*, Southern Economic Journal 69(1), 4 to 11 (2002): money as a technology. <https://ideas.repec.org/a/wly/soecon/v69y2002i1p4-11.html>
+- Satoshi Nakamoto, *Bitcoin: A Peer-to-Peer Electronic Cash System* (2008), sections 4, 6 and 11: <https://bitcoin.org/bitcoin.pdf>
 - Layout and type reference: <https://www.newt.foundation/> (GT Sectra serif plus sans, short sentence-case headings).
 
-## 5. Where it lives in code
+## 6. Where it lives in code
 
 | Concern | File |
 | :--- | :--- |
 | Tokens and `@font-face` | `apps/web/src/app/globals.css` (head), `apps/web/tailwind.config.ts` |
 | Landing styles | `apps/web/src/app/nash.css` |
-| Hero 3D scene | `apps/web/src/components/nash/NashHeroScene.tsx` (procedural, no model files) |
+| Hero 3D scene | `apps/web/src/components/nash/NashHeroScene.tsx` |
+| The two characters | `figures.ts` (the fields), `sculpt.ts` (mesher), `figures.worker.ts` and `loadFigure.ts` (off the main thread) |
+| Formulas | `HeroFormulas.tsx`, `formulas.generated.ts`, generated by `scripts/render-formulas.mjs` |
 | Sections | `apps/web/src/components/nash/*` |
 | Metadata and OG image | `apps/web/src/app/layout.tsx`, `apps/web/public/og.png` |
