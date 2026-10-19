@@ -71,19 +71,19 @@ export function MarketTrendChart({
 
   const areaD = `${pathD} L ${width} ${height} L 0 ${height} Z`;
 
-  const strokeColor = isPositive ? '#2ee6a6' : '#ff4949';
+  const strokeColor = isPositive ? 'var(--go)' : 'var(--neg-strong)';
   const gradientId = `trend-gradient-${symbol}-${Math.random().toString(36).substring(2, 7)}`;
 
   return (
     <div className={`relative w-full ${className}`}>
       {/* 24h Change Badge Header */}
       <div className="flex justify-between items-center text-[11px] font-mono mb-2">
-        <span className="text-[#8c8c8c] uppercase tracking-wider text-[10px]">7D PRICE TREND</span>
+        <span className="text-muted uppercase tracking-wider text-[10px]">7D PRICE TREND</span>
         <div
           className={`flex items-center gap-1 font-bold px-2 py-0.5 rounded-xs border text-[10px] ${
             isPositive
-              ? 'text-[#b5b5b5] bg-[#b5b5b5]/10 border-[#b5b5b5]/30'
-              : 'text-[#ff4949] bg-[#ff4949]/10 border-[#ff4949]/30'
+              ? 'text-fg-3 bg-fg-3/10 border-fg-3/30'
+              : 'text-neg-strong bg-neg-strong/10 border-neg-strong/30'
           }`}
         >
           <span>{isPositive ? '▲' : '▼'}</span>
@@ -115,8 +115,8 @@ export function MarketTrendChart({
           </defs>
 
           {/* Grid horizontal lines */}
-          <line x1="0" y1={height * 0.3} x2={width} y2={height * 0.3} stroke="#ffffff" strokeOpacity="0.04" strokeDasharray="3 3" />
-          <line x1="0" y1={height * 0.7} x2={width} y2={height * 0.7} stroke="#ffffff" strokeOpacity="0.04" strokeDasharray="3 3" />
+          <line x1="0" y1={height * 0.3} x2={width} y2={height * 0.3} stroke="var(--ink)" strokeOpacity="0.04" strokeDasharray="3 3" />
+          <line x1="0" y1={height * 0.7} x2={width} y2={height * 0.7} stroke="var(--ink)" strokeOpacity="0.04" strokeDasharray="3 3" />
 
           {/* Gradient Area */}
           <path d={areaD} fill={`url(#${gradientId})`} />
@@ -139,7 +139,7 @@ export function MarketTrendChart({
                 cx={pt.x}
                 cy={pt.y}
                 r={hoverIndex === idx ? '4' : '2'}
-                fill={hoverIndex === idx ? strokeColor : '#000000'}
+                fill={hoverIndex === idx ? strokeColor : 'var(--on-accent)'}
                 stroke={strokeColor}
                 strokeWidth="1.5"
                 className="transition-all duration-150"
@@ -161,7 +161,7 @@ export function MarketTrendChart({
         {/* Hover Tooltip display */}
         {hoverIndex !== null && (
           <div
-            className="absolute top-1 font-mono text-[9px] bg-[#000000] border border-white/20 px-2 py-0.5 rounded text-white shadow-lg pointer-events-none transform -translate-x-1/2 z-10"
+            className="absolute top-1 font-mono text-[9px] bg-page border border-ink/20 px-2 py-0.5 rounded text-ink shadow-lg pointer-events-none transform -translate-x-1/2 z-10"
             style={{
               left: `${(coords[hoverIndex].x / width) * 100}%`,
             }}

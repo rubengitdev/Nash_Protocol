@@ -72,7 +72,7 @@ export function PonsVaultPanel() {
   }
 
   return (
-    <section className="rounded-xl border border-[var(--line)] bg-white/5 p-4 sm:p-5 mb-6">
+    <section className="rounded-xl border border-[var(--line)] bg-ink/5 p-4 sm:p-5 mb-6">
       <div className="flex flex-wrap items-baseline justify-between gap-2 mb-3">
         <h2 className="text-lg font-bold">Pons LP vault</h2>
         <span className="text-[11px] text-[var(--muted)]">Experimental, unaudited. LPs take the other side of Pons leverage trades.</span>
@@ -86,13 +86,13 @@ export function PonsVaultPanel() {
       <div className="flex flex-wrap items-center gap-2">
         <div className="flex rounded-md border border-[var(--line)] overflow-hidden text-xs">
           {(["deposit", "withdraw"] as const).map((a) => (
-            <button key={a} className={`px-3 py-2 ${action === a ? "bg-[var(--go)] text-black font-semibold" : ""}`} onClick={() => setAction(a)}>
+            <button key={a} className={`px-3 py-2 ${action === a ? "bg-accent text-on-accent font-semibold" : ""}`} onClick={() => setAction(a)}>
               {a === "deposit" ? "Deposit" : "Withdraw"}
             </button>
           ))}
         </div>
         <input
-          className="flex-1 min-w-0 px-3 py-2 rounded-md bg-black/30 border border-[var(--line)] font-mono text-sm"
+          className="flex-1 min-w-0 px-3 py-2 rounded-md bg-page/30 border border-[var(--line)] font-mono text-sm"
           type="number"
           inputMode="decimal"
           placeholder="0.00 USDG"
@@ -100,21 +100,21 @@ export function PonsVaultPanel() {
           onChange={(e) => setInput(e.target.value.trim())}
         />
         <button
-          className="px-4 py-2 rounded-md bg-[var(--go)] text-black text-sm font-semibold disabled:opacity-50"
+          className="px-4 py-2 rounded-md btn-silver text-sm font-semibold disabled:opacity-50"
           disabled={busy || (onChain && (!amount || !!issue))}
           onClick={() => (onChain ? submit() : setShowWallet(true))}
         >
           {!onChain ? "Connect wallet" : busy ? "Working…" : action === "deposit" ? "Deposit" : "Withdraw"}
         </button>
       </div>
-      {issue && <p className="text-xs text-[#ff6b6b] mt-2" role="status">{issue}</p>}
+      {issue && <p className="text-xs text-neg mt-2" role="status">{issue}</p>}
       <div className="flex flex-wrap items-center gap-2 mt-4 text-sm">
         <span className="text-[var(--muted)]">Trade with up to 2x:</span>
         {Object.keys(ponsDeployment.markets).map((symbol) => (
           <Link
             key={symbol}
             href={`/trade?asset=${symbol}`}
-            className="px-3 py-1.5 rounded-md border border-[var(--go)] text-[var(--go)] font-semibold hover:bg-[var(--go)] hover:text-black"
+            className="px-3 py-1.5 rounded-md border border-line-strong text-ink font-semibold hover:bg-action hover:text-on-action"
           >
             {symbol}
           </Link>

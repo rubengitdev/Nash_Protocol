@@ -9,6 +9,7 @@ import { TradingViewChart } from "@/components/TradingViewChart";
 import { TokenLogo } from "@/components/TokenLogo";
 import { MarketSelectorModal } from "@/components/MarketSelectorModal";
 import { AppPage } from "@/components/AppPage";
+import { PageRibbon } from "@/components/PageRibbon";
 import { MarginTradePanel } from "@/components/MarginTradePanel";
 import { marketDeployments } from "@/lib/market-deployments";
 import { PonsLeveragePanel } from "@/components/PonsLeveragePanel";
@@ -24,6 +25,7 @@ export default function TradePage() {
   if (configured)
     return (
       <AppPage
+        banner="opposing"
         eyebrow={`${configured.symbol} / USDG`}
         title="Trade with USDG margin."
         description="Open or close a Long or Short position. Quotes include swap fees and price impact; stale prices or paused markets block new exposure."
@@ -155,9 +157,9 @@ function PonsTradeWorkspace() {
   if (!market) {
     return (
       <div className="trade-page flex flex-col items-center justify-center min-h-[40vh] text-center">
-        <p className="text-white text-base font-bold mb-2">Market not found</p>
+        <p className="text-ink text-base font-bold mb-2">Market not found</p>
         <p className="text-[var(--muted)] text-sm mb-4">No active market found for {assetQuery || "requested asset"}.</p>
-        <a href="/trade" className="px-4 py-2 bg-[var(--go)] text-black rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity">
+        <a href="/trade" className="px-4 py-2 btn-silver rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity">
           Return to Trade
         </a>
       </div>
@@ -176,6 +178,7 @@ function PonsTradeWorkspace() {
 
   return (
     <div className="trade-page">
+      <PageRibbon shape="opposing" compact />
       <div className="trade-header">
         <div className="market-info flex items-center justify-between gap-3 sm:gap-4 flex-wrap">
           <div className="flex items-center gap-3 sm:gap-4 flex-wrap min-w-0">
@@ -202,17 +205,17 @@ function PonsTradeWorkspace() {
             </div>
 
             {/* Quick Market Stats to fill width & eliminate dead empty space */}
-            <div className="hidden sm:flex items-center gap-4 lg:gap-6 border-l border-[#222222] pl-3 sm:pl-4 text-xs">
+            <div className="hidden sm:flex items-center gap-4 lg:gap-6 border-l border-line pl-3 sm:pl-4 text-xs">
               <div>
-                <span className="text-[#7d7d7d] block text-[10px] uppercase font-mono tracking-wider">24h Vol</span>
-                <span className="font-mono font-medium text-white">${formatCompactNumber(market.volume24h)}</span>
+                <span className="text-muted block text-[10px] uppercase font-mono tracking-wider">24h Vol</span>
+                <span className="font-mono font-medium text-ink">${formatCompactNumber(market.volume24h)}</span>
               </div>
               <div>
-                <span className="text-[#7d7d7d] block text-[10px] uppercase font-mono tracking-wider">Liquidity</span>
-                <span className="font-mono font-medium text-white">${formatCompactNumber(market.liquidity)}</span>
+                <span className="text-muted block text-[10px] uppercase font-mono tracking-wider">Liquidity</span>
+                <span className="font-mono font-medium text-ink">${formatCompactNumber(market.liquidity)}</span>
               </div>
               <div>
-                <span className="text-[#7d7d7d] block text-[10px] uppercase font-mono tracking-wider">Max Lev</span>
+                <span className="text-muted block text-[10px] uppercase font-mono tracking-wider">Max Lev</span>
                 <span className="font-mono font-semibold text-[var(--green)]">{market.maxLeverage || 10}x</span>
               </div>
             </div>
@@ -313,7 +316,7 @@ const tradeStyles = `
           min-width: 0;
         }
         .chart-wrapper {
-          background: rgba(255,255,255, 0.02);
+          background: color-mix(in srgb, var(--ink) 2%, transparent);
           border: 1px solid var(--line);
           border-radius: 12px;
           overflow: hidden;
@@ -353,7 +356,7 @@ const tradeStyles = `
           }
         }
         .order-panel {
-          background: rgba(255,255,255, 0.02);
+          background: color-mix(in srgb, var(--ink) 2%, transparent);
           border: 1px solid var(--line);
           border-radius: 12px;
           padding: 16px;
@@ -371,7 +374,7 @@ const tradeStyles = `
         .order-tabs {
           display: flex;
           gap: 8px;
-          background: rgba(0,0,0, 0.2);
+          background: color-mix(in srgb, var(--bg) 20%, transparent);
           padding: 4px;
           border-radius: 8px;
         }
@@ -393,10 +396,10 @@ const tradeStyles = `
         }
         .order-tabs .tab.active {
           color: var(--fg);
-          background: rgba(255,255,255, 0.1);
+          background: color-mix(in srgb, var(--ink) 10%, transparent);
         }
-        .order-tabs .tab.active.long { background: rgba(46,230,166, 0.15); color: var(--go); }
-        .order-tabs .tab.active.short { background: rgba(255,107,107, 0.15); color: #ff6b6b; }
+        .order-tabs .tab.active.long { background: color-mix(in srgb, var(--go) 15%, transparent); color: var(--go); }
+        .order-tabs .tab.active.short { background: color-mix(in srgb, var(--neg) 15%, transparent); color: var(--neg); }
         
         .input-group label {
           display: block;
@@ -412,7 +415,7 @@ const tradeStyles = `
         .input-wrapper input {
           width: 100%;
           min-height: 46px;
-          background: rgba(0,0,0, 0.2);
+          background: color-mix(in srgb, var(--bg) 20%, transparent);
           border: 1px solid var(--line);
           border-radius: 8px;
           padding: 12px 16px;
@@ -436,7 +439,7 @@ const tradeStyles = `
           cursor: pointer;
         }
         .order-summary {
-          background: rgba(0,0,0, 0.2);
+          background: color-mix(in srgb, var(--bg) 20%, transparent);
           border-radius: 8px;
           padding: 16px;
           display: flex;
@@ -481,7 +484,7 @@ const tradeStyles = `
           color: black;
         }
         .submit-btn.short {
-          background: #ff6b6b;
+          background: var(--neg);
           color: white;
         }
         .mt-4 { margin-top: 24px; }

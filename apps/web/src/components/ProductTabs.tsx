@@ -380,8 +380,8 @@ export function ProductTabs({
                   onClick={() => setSelectedLeverage(1.0)}
                   className={`px-3 py-2 rounded text-xs border transition-colors ${
                     selectedLeverage === 1.0
-                      ? "border-[var(--green)] text-[var(--green)] bg-[#212121]"
-                      : "border-[#323232] bg-[#212121] text-white hover:border-[#434343]"
+                      ? "border-[var(--green)] text-[var(--green)] bg-panel-hover"
+                      : "border-line-strong bg-panel-hover text-ink hover:border-line-strong"
                   }`}
                 >
                   1×
@@ -391,8 +391,8 @@ export function ProductTabs({
                   onClick={() => setSelectedLeverage(2.0)}
                   className={`px-3 py-2 rounded text-xs border transition-colors ${
                     selectedLeverage === 2.0
-                      ? "border-[var(--green)] text-[var(--green)] bg-[#212121]"
-                      : "border-[#323232] bg-[#212121] text-white hover:border-[#434343]"
+                      ? "border-[var(--green)] text-[var(--green)] bg-panel-hover"
+                      : "border-line-strong bg-panel-hover text-ink hover:border-line-strong"
                   }`}
                 >
                   2×
@@ -402,8 +402,8 @@ export function ProductTabs({
                   onClick={() => setSelectedLeverage(2.5)}
                   className={`px-3 py-2 rounded text-xs border transition-colors ${
                     selectedLeverage === 2.5
-                      ? "border-[var(--green)] text-[var(--green)] bg-[#212121]"
-                      : "border-[#323232] bg-[#212121] text-white hover:border-[#434343]"
+                      ? "border-[var(--green)] text-[var(--green)] bg-panel-hover"
+                      : "border-line-strong bg-panel-hover text-ink hover:border-line-strong"
                   }`}
                 >
                   2.5×

@@ -126,10 +126,10 @@ export function PonsLeveragePanel({ token, symbol }: { token: Address; symbol: s
           <div className="summary-row"><span>Position size</span><span>${preview ? usd(preview.size) : "0.00"}</span></div>
           <div className="summary-row"><span>Opening fee</span><span>${preview ? usd(preview.fee) : "0.00"}</span></div>
           <div className="summary-row"><span>Entry price</span><span>{entry ? `$${price(entry)}` : "—"}</span></div>
-          <div className="summary-row"><span>Liq. price (est.)</span><span style={{ color: "#ff6b6b" }}>{liqPrice ? `$${liqPrice < 0.0001 ? liqPrice.toPrecision(4) : liqPrice.toFixed(6)}` : "—"}</span></div>
+          <div className="summary-row"><span>Liq. price (est.)</span><span style={{ color: "var(--neg)" }}>{liqPrice ? `$${liqPrice < 0.0001 ? liqPrice.toPrecision(4) : liqPrice.toFixed(6)}` : "—"}</span></div>
           {s && <div className="summary-row"><span>Free LP liquidity</span><span>${usd(s.freeAssets)}</span></div>}
         </div>
-        {issue && <p className="text-xs text-[#ff6b6b] mb-2" role="status">{issue}</p>}
+        {issue && <p className="text-xs text-neg mb-2" role="status">{issue}</p>}
         <button
           className={`submit-btn ${isLong ? "long" : "short"}`}
           disabled={busy || (onChain && (!amount || !!issue))}
@@ -153,7 +153,7 @@ export function PonsLeveragePanel({ token, symbol }: { token: Address; symbol: s
               const unlock = Number(p.openedAt) + s.minHoldTime;
               const locked = Date.now() / 1000 < unlock;
               return (
-                <div key={String(p.id)} className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-lg border border-[var(--line)] bg-white/5 text-sm">
+                <div key={String(p.id)} className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-lg border border-[var(--line)] bg-ink/5 text-sm">
                   <span className={p.isLong ? "pons-positive font-semibold" : "pons-negative font-semibold"}>{p.isLong ? "LONG" : "SHORT"}</span>
                   <span className="font-mono">Size ${usd(p.size)}</span>
                   <span className="font-mono">Collateral ${usd(p.collateral)}</span>
@@ -162,7 +162,7 @@ export function PonsLeveragePanel({ token, symbol }: { token: Address; symbol: s
                     {p.preview ? `PnL ${signedUsd(p.preview.pnl)}` : "PnL —"}
                   </span>
                   <button
-                    className="px-3 py-1.5 rounded-md bg-[var(--go)] text-black text-xs font-semibold disabled:opacity-50"
+                    className="px-3 py-1.5 rounded-md btn-silver text-xs font-semibold disabled:opacity-50"
                     disabled={busy || locked}
                     title={locked ? "Minimum hold time not reached" : undefined}
                     onClick={() => run("Close position", () => closePonsPosition({ client: client!, wallet: wallet!, account: address!, id: p.id, onSubmitted }))}

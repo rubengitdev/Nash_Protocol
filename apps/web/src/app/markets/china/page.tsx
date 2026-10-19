@@ -8,60 +8,61 @@ import { ChinaMarketTable } from "../../../components/china/ChinaMarketTable";
 export default function ChinaMarketsPage() {
   return (
     <AppPage
+      banner="bands"
       back
       eyebrow="Chinese Equities · Robinhood Chain"
       title="Tokenized Chinese Equities"
       description="Access verified tokenized Chinese company exposure through US-listed ADRs on Robinhood Chain, featuring isolated USDG credit, spot swaps, and spot-backed leverage."
     >
       {/* SECTION: PROTOCOL STATS BAR */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-3 bg-[#0a0a0a] border border-[#222222] p-4 rounded-sm mb-8 font-sans whitespace-nowrap">
-        <div className="border-r border-[#161616] pr-3 last:border-0 whitespace-nowrap">
-          <span className="text-[11px] text-[#8d8d8d] uppercase tracking-wider font-display block whitespace-nowrap">
+      <section className="grid grid-cols-2 md:grid-cols-4 gap-3 bg-raised border border-line p-4 rounded-sm mb-8 font-sans lg:whitespace-nowrap">
+        <div className="border-r border-line-soft pr-3 last:border-0 lg:whitespace-nowrap">
+          <span className="text-[11px] text-muted uppercase tracking-wider font-display block lg:whitespace-nowrap">
             Total Equity Collateral
           </span>
-          <span className="text-lg md:text-xl font-bold font-mono text-[#f5f5f5] block mt-1 whitespace-nowrap">
+          <span className="text-lg md:text-xl font-bold font-mono text-fg block mt-1 lg:whitespace-nowrap">
             $8,750
           </span>
-          <span className="text-[10px] text-[#e5e5e5] font-mono mt-0.5 block whitespace-nowrap">
+          <span className="text-[10px] text-fg-2 font-mono mt-0.5 block lg:whitespace-nowrap">
             Across 20 Active Retail Wallets
           </span>
         </div>
 
-        <div className="border-r border-[#161616] pr-3 last:border-0 pl-0 md:pl-2 whitespace-nowrap">
-          <span className="text-[11px] text-[#8d8d8d] uppercase tracking-wider font-display block whitespace-nowrap">
+        <div className="border-r border-line-soft pr-3 last:border-0 pl-0 md:pl-2 lg:whitespace-nowrap">
+          <span className="text-[11px] text-muted uppercase tracking-wider font-display block lg:whitespace-nowrap">
             24h Tokenized Volume
           </span>
-          <span className="text-lg md:text-xl font-bold font-mono text-[#f5f5f5] block mt-1 whitespace-nowrap">
+          <span className="text-lg md:text-xl font-bold font-mono text-fg block mt-1 lg:whitespace-nowrap">
             $2,340
           </span>
-          <span className="text-[10px] text-[#8d8d8d] font-mono mt-0.5 block whitespace-nowrap">
+          <span className="text-[10px] text-muted font-mono mt-0.5 block lg:whitespace-nowrap">
             AMM &amp; RFQ Retail Flow
           </span>
         </div>
 
-        <div className="border-r border-[#161616] pr-3 last:border-0 mt-3 md:mt-0 whitespace-nowrap">
-          <span className="text-[11px] text-[#8d8d8d] uppercase tracking-wider font-display block whitespace-nowrap">
+        <div className="border-r border-line-soft pr-3 last:border-0 mt-3 md:mt-0 lg:whitespace-nowrap">
+          <span className="text-[11px] text-muted uppercase tracking-wider font-display block lg:whitespace-nowrap">
             Available USDG Liquidity
           </span>
-          <span className="text-lg md:text-xl font-bold font-mono text-[#e5e5e5] block mt-1 whitespace-nowrap">
+          <span className="text-lg md:text-xl font-bold font-mono text-fg-2 block mt-1 lg:whitespace-nowrap">
             $16,200
           </span>
-          <span className="text-[10px] text-[#8d8d8d] font-mono mt-0.5 block whitespace-nowrap">
+          <span className="text-[10px] text-muted font-mono mt-0.5 block lg:whitespace-nowrap">
             18.6% Pool Utilization
           </span>
         </div>
 
-        <div className="pl-0 md:pl-2 mt-3 md:mt-0 whitespace-nowrap">
-          <span className="text-[11px] text-[#8d8d8d] uppercase tracking-wider font-display block whitespace-nowrap">
+        <div className="pl-0 md:pl-2 mt-3 md:mt-0 lg:whitespace-nowrap">
+          <span className="text-[11px] text-muted uppercase tracking-wider font-display block lg:whitespace-nowrap">
             Market Session
           </span>
-          <div className="flex items-center gap-1.5 mt-1 whitespace-nowrap">
-            <span className="w-2 h-2 rounded-full bg-[#2ee6a6] animate-pulse shrink-0" />
-            <span className="text-sm font-bold font-display text-[#f5f5f5] whitespace-nowrap">
+          <div className="flex items-center gap-1.5 mt-1 lg:whitespace-nowrap">
+            <span className="w-2 h-2 rounded-full bg-go animate-pulse shrink-0" />
+            <span className="text-sm font-bold font-display text-fg lg:whitespace-nowrap">
               US Regular Hours
             </span>
           </div>
-          <span className="text-[10px] text-[#8d8d8d] block mt-0.5 font-mono whitespace-nowrap">
+          <span className="text-[10px] text-muted block mt-0.5 font-mono lg:whitespace-nowrap">
             Closes in 3h 48m · 09:30-16:00 ET
           </span>
         </div>
@@ -82,16 +83,16 @@ export default function ChinaMarketsPage() {
       </div>
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="app-panel border border-[#222222] bg-[#0a0a0a] p-5 rounded-sm">
+        <div className="app-panel border border-line bg-raised p-5 rounded-sm">
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-[#e5e5e5] font-display font-bold text-sm">
+            <span className="text-fg-2 font-display font-bold text-sm">
               01
             </span>
-            <h3 className="text-sm font-bold font-display text-[#f5f5f5]">
+            <h3 className="text-sm font-bold font-display text-fg">
               Exact Tokenholder Entitlement
             </h3>
           </div>
-          <p className="text-xs text-[#8d8d8d] leading-relaxed">
+          <p className="text-xs text-muted leading-relaxed">
             Robinhood Stock Tokens are issued by Robinhood Assets (Jersey) Limited as
             contractual security-linked debt securities tracking economic total return.
             Holding a token does not convey direct equity ownership, shareholder voting
@@ -99,16 +100,16 @@ export default function ChinaMarketsPage() {
           </p>
         </div>
 
-        <div className="app-panel border border-[#222222] bg-[#0a0a0a] p-5 rounded-sm">
+        <div className="app-panel border border-line bg-raised p-5 rounded-sm">
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-[#e5e5e5] font-display font-bold text-sm">
+            <span className="text-fg-2 font-display font-bold text-sm">
               02
             </span>
-            <h3 className="text-sm font-bold font-display text-[#f5f5f5]">
+            <h3 className="text-sm font-bold font-display text-fg">
               Isolated Credit &amp; Debt Boundary
             </h3>
           </div>
-          <p className="text-xs text-[#8d8d8d] leading-relaxed">
+          <p className="text-xs text-muted leading-relaxed">
             Each Chinese equity market operates under an isolated risk and liquidity pool.
             Collateral deposits in BABA, BIDU, or NIO back isolated debt in USDG; losses
             or liquidations within Chinese equities do not cross-subsidize or impair
@@ -116,16 +117,16 @@ export default function ChinaMarketsPage() {
           </p>
         </div>
 
-        <div className="app-panel border border-[#222222] bg-[#0a0a0a] p-5 rounded-sm">
+        <div className="app-panel border border-line bg-raised p-5 rounded-sm">
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-[#e5e5e5] font-display font-bold text-sm">
+            <span className="text-fg-2 font-display font-bold text-sm">
               03
             </span>
-            <h3 className="text-sm font-bold font-display text-[#f5f5f5]">
+            <h3 className="text-sm font-bold font-display text-fg">
               Corporate Action &amp; Pricing Multiplier
             </h3>
           </div>
-          <p className="text-xs text-[#8d8d8d] leading-relaxed">
+          <p className="text-xs text-muted leading-relaxed">
             Chainlink Tokenized Equity feeds normalize cash dividends and stock splits
             via on-chain multipliers. Raw token units remain immutable in custody, while
             valuations round down for collateral credit and round up for debt obligations
@@ -133,18 +134,18 @@ export default function ChinaMarketsPage() {
           </p>
         </div>
 
-        <div className="app-panel border border-[#222222] bg-[#0a0a0a] p-5 rounded-sm">
+        <div className="app-panel border border-line bg-raised p-5 rounded-sm">
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-[#e5e5e5] font-display font-bold text-sm">
+            <span className="text-fg-2 font-display font-bold text-sm">
               04
             </span>
-            <h3 className="text-sm font-bold font-display text-[#f5f5f5]">
+            <h3 className="text-sm font-bold font-display text-fg">
               Short Selling Status: Disabled
             </h3>
           </div>
-          <p className="text-xs text-[#8d8d8d] leading-relaxed">
+          <p className="text-xs text-muted leading-relaxed">
             Short positions remain strictly disabled under reason code{" "}
-            <code className="bg-[#161616] text-[#e5e5e5] px-1 py-0.5 rounded text-[11px] font-mono">
+            <code className="bg-panel-subtle text-fg-2 px-1 py-0.5 rounded text-[11px] font-mono">
               SHORT_INVENTORY_UNAVAILABLE
             </code>
             . True spot shorting requires separate verified stock borrow inventory and

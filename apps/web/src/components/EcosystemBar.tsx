@@ -28,12 +28,12 @@ export function EcosystemBar() {
   ];
 
   return (
-    <section className="bg-[#000000] border border-white/10 p-6 sm:p-8 rounded-sm space-y-6 font-mono">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-white/10 pb-4 gap-2">
-        <span className="text-xs text-[#b5b5b5] font-bold uppercase tracking-widest">
+    <section className="bg-page border border-ink/10 p-6 sm:p-8 rounded-sm space-y-6 font-mono">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-ink/10 pb-4 gap-2">
+        <span className="text-xs text-fg-3 font-bold uppercase tracking-widest">
           [ECOSYSTEM & INTEGRATIONS]
         </span>
-        <span className="text-[10px] text-[#8c8c8c] uppercase">
+        <span className="text-[10px] text-muted uppercase">
           POWERING ROBINHOOD CHAIN CREDIT MARKETS
         </span>
       </div>
@@ -44,16 +44,16 @@ export function EcosystemBar() {
           return (
             <div
               key={idx}
-              className="bg-[#000000] border border-white/5 p-4 rounded-sm hover:border-[#b5b5b5]/40 transition-colors flex items-center gap-3"
+              className="bg-page border border-ink/5 p-4 rounded-sm hover:border-fg-3/40 transition-colors flex items-center gap-3"
             >
-              <div className="p-2 bg-[#000000] border border-white/10 text-[#b5b5b5] rounded-sm shrink-0">
+              <div className="p-2 bg-page border border-ink/10 text-fg-3 rounded-sm shrink-0">
                 <Icon className="w-4 h-4" />
               </div>
               <div className="space-y-0.5 overflow-hidden">
-                <div className="text-xs font-bold text-white uppercase tracking-wider truncate">
+                <div className="text-xs font-bold text-ink uppercase tracking-wider truncate">
                   {partner.name}
                 </div>
-                <div className="text-[9px] text-[#8c8c8c] uppercase truncate">
+                <div className="text-[9px] text-muted uppercase truncate">
                   {partner.role}
                 </div>
               </div>

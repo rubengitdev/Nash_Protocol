@@ -59,18 +59,18 @@ export function CABadge({ address, className = '', truncate = false }: CABadgePr
         onClick={handleCopy}
         title={copied ? 'Copied to clipboard!' : `Copy Contract Address: ${cleanAddress}`}
         aria-label={copied ? 'CA copied to clipboard' : `Copy Contract Address: ${cleanAddress}`}
-        className={`inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 rounded-full bg-[#101010]/95 border border-[#282828] hover:border-[var(--green)] hover:bg-[#171717] text-[10px] sm:text-[11px] font-mono transition-all cursor-pointer select-none group shadow-[0_2px_8px_rgba(0,0,0,0.5)] max-w-full text-left ${className}`}
+        className={`inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 rounded-full bg-panel/95 border border-line hover:border-[var(--green)] hover:bg-panel-subtle text-[10px] sm:text-[11px] font-mono transition-all cursor-pointer select-none group shadow-[0_2px_8px_color-mix(in_srgb,var(--bg)_50%,transparent)] max-w-full text-left ${className}`}
       >
         <span className="relative flex h-2 w-2 shrink-0 items-center justify-center">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--go)] opacity-60"></span>
           <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--go)]"></span>
         </span>
 
-        <span className="text-[#8a8a8a] font-semibold text-[9px] sm:text-[10px] tracking-wider uppercase shrink-0">
+        <span className="text-muted font-semibold text-[9px] sm:text-[10px] tracking-wider uppercase shrink-0">
           CA:
         </span>
 
-        <span className="text-[#d2d2d2] group-hover:text-white font-medium transition-colors break-all">
+        <span className="text-fg-2 group-hover:text-ink font-medium transition-colors break-all">
           {formattedAddress}
         </span>
 
@@ -89,7 +89,7 @@ export function CABadge({ address, className = '', truncate = false }: CABadgePr
             </span>
           ) : (
             <svg
-              className="w-3 h-3 text-[#7d7d7d] group-hover:text-[var(--green)] transition-colors"
+              className="w-3 h-3 text-muted group-hover:text-[var(--green)] transition-colors"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -121,7 +121,7 @@ export function CABadge({ address, className = '', truncate = false }: CABadgePr
         rel="noopener noreferrer"
         title="View token on explorer"
         aria-label="View token on explorer"
-        className="inline-flex items-center justify-center shrink-0 h-[26px] w-[26px] rounded-full bg-[#101010]/95 border border-[#282828] text-[#7d7d7d] hover:border-[var(--green)] hover:text-[var(--green)] transition-colors"
+        className="inline-flex items-center justify-center shrink-0 h-[26px] w-[26px] rounded-full bg-panel/95 border border-line text-muted hover:border-[var(--green)] hover:text-[var(--green)] transition-colors"
       >
         <span aria-hidden="true" className="text-[11px] leading-none">↗</span>
       </a>

@@ -3,19 +3,30 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useAccount } from 'wagmi';
 import { WalletModal } from './WalletModal';
 import { MobileNavigation } from './MobileNavigation';
-import { useAccount } from 'wagmi';
-import { useNetworkMode } from '../hooks/useNetworkMode';
+import { ThemeToggle } from './ThemeToggle';
+import { APP_NAV_LINKS, BrandMark } from './navigation';
+import { NetworkBadge } from './NetworkBadge';
+import { CaChip } from './CaChip';
 
-import { X_URL, X_LABEL, X_TITLE, HAS_X } from '../lib/social';
 export function Header() {
     const pathname = usePathname();
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
     const { address, isConnected } = useAccount();
-    const { isTestnet } = useNetworkMode();
-    const productsMenuRef = useRef<HTMLDetailsElement>(null);
+    // While a header item is hovered or keyboard-focused, the rest of the page and the other items blur (see .nav-veil).
+    // The focused item is marked with data-hovered straight on the element, so each item needs no state of its own.
+    const headerRef = useRef<HTMLElement>(null);
+    const [navFocus, setNavFocus] = useState(false);
+    const focusItem = (target: EventTarget | null) => {
+        const item = target instanceof Element ? target.closest('[data-nav-item]') : null;
+        headerRef.current?.querySelectorAll('[data-hovered]').forEach((node) => node.removeAttribute('data-hovered'));
+        item?.setAttribute('data-hovered', 'true');
+        setNavFocus(Boolean(item));
+    };
 
     const formattedAddress = address
         ? `${address.slice(0, 6)}...${address.slice(-4)}`
@@ -23,30 +34,25 @@ export function Header() {
 
     const isLanding = pathname === '/';
 
-    const innerNavLinks = [
-        { name: 'Markets', href: '/markets' },
-        { name: 'China Equities', href: '/markets/china' },
-        { name: 'Pons', href: '/markets/pons' },
-        { name: 'Lending', href: '/lending' },
-        { name: 'Trade', href: '/trade' },
-        { name: 'Earn', href: '/earn' },
-        { name: 'Portfolio', href: '/portfolio' },
-        { name: 'Analytics', href: '/analytics' },
-    ];
-
-    // Close products dropdown when clicking outside
+    // A hairline appears under the header once the page has moved.
     useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (
-                productsMenuRef.current &&
-                !productsMenuRef.current.contains(event.target as Node)
-            ) {
-                productsMenuRef.current.removeAttribute('open');
-            }
-        }
-        document.addEventListener('click', handleClickOutside);
-        return () => document.removeEventListener('click', handleClickOutside);
+        const onScroll = () => setScrolled(window.scrollY > 8);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
     }, []);
+
+    // The focus veil blurs whatever is behind it, so the glyph fields hold still while it is up.
+    useEffect(() => {
+        document.documentElement.toggleAttribute('data-glyph-pause', navFocus);
+        return () => document.documentElement.removeAttribute('data-glyph-pause');
+    }, [navFocus]);
+
+    // Close the drawer when the route changes.
+    useEffect(() => {
+        setIsMobileNavOpen(false);
+        focusItem(null);
+    }, [pathname]);
 
     return (
         <>
@@ -54,244 +60,89 @@ export function Header() {
                 Skip to content
             </a>
 
-            <header className="header-container border-b border-[var(--line)] bg-[var(--bg)] fixed w-full top-0 left-0 right-0 z-50">
-                {/* WORDMARK (far left) */}
-                <div className="flex items-center justify-start">
-                    <Link
-                        href="/"
-                        className="wordmark flex items-center gap-2.5"
-                        aria-label="Nash Protocol home"
-                    >
-                        <img
-                            src="/brand/nash-mark-160.png"
-                            alt=""
-                            width={40}
-                            height={37}
-                            className="h-9 w-auto shrink-0 drop-shadow-[0_0_10px_rgba(229,229,229,0.22)]"
-                        />
-                        <span className="wordmark-text">
-                            <span className="wordmark-name">NASH</span>
-                            <span className="wordmark-sub">PROTOCOL</span>
-                        </span>
+            <div className="nav-veil" data-on={navFocus ? 'true' : 'false'} aria-hidden="true" />
+
+            <header
+                ref={headerRef}
+                className="site-header"
+                data-variant={isLanding ? 'landing' : 'app'}
+                data-scrolled={scrolled || !isLanding ? 'true' : 'false'}
+                data-nav-focus={navFocus ? 'true' : 'false'}
+                onMouseOver={(e) => focusItem(e.target)}
+                onMouseLeave={() => focusItem(null)}
+                onFocus={(e) => {
+                    if (e.target instanceof Element && e.target.matches(':focus-visible')) focusItem(e.target);
+                }}
+                onBlur={() => focusItem(null)}
+            >
+                <div className="site-header-inner">
+                    <Link href="/" className="brand" aria-label="Nash Protocol home" data-nav-item="">
+                        <BrandMark />
+                        <span className="brand-name">Nash Protocol</span>
                     </Link>
-                </div>
 
-                {/* MAIN NAVIGATION */}
-                <nav className="nav-left" aria-label="Main navigation">
                     {isLanding ? (
-                        <>
-                            <a className="nav-link nav-extra" href="#manifesto">
-                                The argument
-                            </a>
-
-                            <Link href="/markets" className="nav-link">
-                                Markets <span>↗</span>
-                            </Link>
-
-                            <Link href="/lending" className="nav-link">
-                                Lending <span>↗</span>
-                            </Link>
-
-                            <details
-                                className="products-menu"
-                                ref={productsMenuRef}
-                            >
-                                <summary className="flex items-center">
-                                    Products <span>+</span>
-                                </summary>
-                                <div className="dropdown">
-                                    <a
-                                        href="#products"
-                                        onClick={() => {
-                                            productsMenuRef.current?.removeAttribute(
-                                                'open',
-                                            );
-                                            window.dispatchEvent(
-                                                new CustomEvent(
-                                                    'select-product-tab',
-                                                    {
-                                                        detail: {
-                                                            tab: 'borrow',
-                                                        },
-                                                    },
-                                                ),
-                                            );
-                                        }}
-                                    >
-                                        Borrow
-                                    </a>
-                                    <a
-                                        href="#products"
-                                        onClick={() => {
-                                            productsMenuRef.current?.removeAttribute(
-                                                'open',
-                                            );
-                                            window.dispatchEvent(
-                                                new CustomEvent(
-                                                    'select-product-tab',
-                                                    {
-                                                        detail: { tab: 'earn' },
-                                                    },
-                                                ),
-                                            );
-                                        }}
-                                    >
-                                        Earn
-                                    </a>
-                                    <a
-                                        href="#products"
-                                        onClick={() => {
-                                            productsMenuRef.current?.removeAttribute(
-                                                'open',
-                                            );
-                                            window.dispatchEvent(
-                                                new CustomEvent(
-                                                    'select-product-tab',
-                                                    {
-                                                        detail: {
-                                                            tab: 'leverage',
-                                                        },
-                                                    },
-                                                ),
-                                            );
-                                        }}
-                                    >
-                                        Leverage
-                                    </a>
-                                </div>
-                            </details>
-
-                            <a className="nav-link nav-extra" href="#roadmap">
-                                Roadmap
-                            </a>
-
-                            <a className="nav-link faq-nav" href="#faq">
-                                FAQ
-                            </a>
-                        </>
+                        <CaChip className="site-ca" />
                     ) : (
-                        <div className="flex items-center gap-6">
-                            {innerNavLinks.map((link) => {
+                        <nav className="site-nav" aria-label="Main navigation">
+                            {APP_NAV_LINKS.map((link) => {
                                 const isActive =
                                     pathname === link.href ||
-                                    pathname.startsWith(`${link.href}/`);
+                                    (link.href !== '/markets' && pathname.startsWith(`${link.href}/`)) ||
+                                    (link.href === '/markets' &&
+                                        pathname.startsWith('/markets/') &&
+                                        !pathname.startsWith('/markets/china') &&
+                                        !pathname.startsWith('/markets/pons'));
                                 return (
                                     <Link
                                         key={link.name}
                                         href={link.href}
-                                        aria-current={
-                                            isActive ? 'page' : undefined
-                                        }
-                                        className={`nav-link transition-colors ${
-                                            isActive
-                                                ? 'text-[var(--green)] font-semibold'
-                                                : 'text-muted hover:text-white'
-                                        }`}
+                                        aria-current={isActive ? 'page' : undefined}
+                                        data-nav-item=""
+                                        className="nav-link"
                                     >
                                         {link.name}
                                     </Link>
                                 );
                             })}
-                        </div>
+                        </nav>
                     )}
-                </nav>
 
-                {/* RIGHT NAVIGATION */}
-                <div className="nav-right">
-                    <span className="chain-label">
-                        <span className="live-dot" aria-hidden="true" />
-                        Robinhood Chain {isTestnet ? 'Testnet' : 'Mainnet'}
-                    </span>
+                    <div className="site-actions">
+                        <NetworkBadge className="site-net" />
 
-                    {isLanding ? (
-                        <div className="flex items-center gap-3">
-                            <Link href="/markets" className="launch">
-                                Explore app <span aria-hidden="true">↗</span>
+                        {isLanding && (
+                            <Link href="/markets" className="btn-action btn-action-sm" data-nav-item="">
+                                Open App
                             </Link>
-                            <button
-                                onClick={() => setIsWalletModalOpen(true)}
-                                className="px-3 py-2 border border-[var(--line)] text-xs font-sans rounded text-[var(--muted)] hover:border-[var(--green)] hover:text-white transition-colors"
-                            >
-                                {isConnected && formattedAddress
-                                    ? formattedAddress
-                                    : 'Connect'}
-                            </button>
-                            {HAS_X && (
+                        )}
 
-                            <a
-                                href={X_URL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label={X_LABEL}
-                                title={X_TITLE}
-                                className="p-2 border border-[var(--line)] text-[var(--muted)] hover:text-[var(--green)] hover:border-[var(--green)] rounded transition-colors flex items-center justify-center shrink-0"
-                            >
-                                <svg
-                                    width="15"
-                                    height="15"
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                    className="w-3.5 h-3.5"
-                                    aria-hidden="true"
-                                >
-                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                                </svg>
-                            </a>
+                        <button
+                            type="button"
+                            onClick={() => setIsWalletModalOpen(true)}
+                            className="btn-action btn-action-sm"
+                            data-nav-item=""
+                        >
+                            {isConnected && formattedAddress ? formattedAddress : 'Connect wallet'}
+                        </button>
 
-                            )}
-                        </div>
-                    ) : (
-                        <div className="flex items-center gap-3 font-sans text-xs">
-                            <button
-                                onClick={() => setIsWalletModalOpen(true)}
-                                className="px-4 py-2 bg-[var(--go)] hover:bg-[var(--go-soft)] text-[#000000] font-semibold tracking-wide rounded transition-all text-xs"
-                            >
-                                {isConnected && formattedAddress ? (
-                                    <span>{formattedAddress}</span>
-                                ) : (
-                                    'Connect wallet'
-                                )}
-                            </button>
-                            {HAS_X && (
+                        <ThemeToggle />
 
-                            <a
-                                href={X_URL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label={X_LABEL}
-                                title={X_TITLE}
-                                className="p-2 border border-[var(--line)] text-[var(--muted)] hover:text-[var(--green)] hover:border-[var(--green)] rounded transition-colors flex items-center justify-center shrink-0"
-                            >
-                                <svg
-                                    width="15"
-                                    height="15"
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                    className="w-3.5 h-3.5"
-                                    aria-hidden="true"
-                                >
-                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                                </svg>
-                            </a>
-
-                            )}
-                        </div>
-                    )}
+                        <button
+                            type="button"
+                            className="mobile-menu"
+                            data-nav-item=""
+                            aria-label="Open navigation"
+                            aria-expanded={isMobileNavOpen}
+                            aria-controls="mobile-nav"
+                            onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
+                        >
+                            Menu <span>{isMobileNavOpen ? '−' : '+'}</span>
+                        </button>
+                    </div>
                 </div>
-
-                {/* MOBILE HAMBURGER BUTTON */}
-                <button
-                    className="mobile-menu"
-                    aria-label="Open navigation"
-                    aria-expanded={isMobileNavOpen}
-                    aria-controls="mobile-nav"
-                    onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
-                >
-                    Menu <span>{isMobileNavOpen ? '−' : '+'}</span>
-                </button>
             </header>
 
-            {/* MOBILE DRAWER */}
             <MobileNavigation
                 isOpen={isMobileNavOpen}
                 onClose={() => setIsMobileNavOpen(false)}
@@ -300,7 +151,6 @@ export function Header() {
                 formattedAddress={formattedAddress}
             />
 
-            {/* WALLET MODAL */}
             <WalletModal
                 isOpen={isWalletModalOpen}
                 onClose={() => setIsWalletModalOpen(false)}

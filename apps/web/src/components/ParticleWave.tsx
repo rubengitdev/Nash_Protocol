@@ -69,9 +69,9 @@ export function ParticleWave() {
   }, []);
 
   return (
-    <div className="w-full relative overflow-hidden my-4 border-y border-white/10">
+    <div className="w-full relative overflow-hidden my-4 border-y border-ink/10">
       <canvas ref={canvasRef} className="w-full block h-[360px]" />
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#000000] via-transparent to-[#000000] opacity-60" />
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-page via-transparent to-page opacity-60" />
     </div>
   );
 }

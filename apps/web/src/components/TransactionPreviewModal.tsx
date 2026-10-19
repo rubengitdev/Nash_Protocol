@@ -64,22 +64,22 @@ export function TransactionPreviewModal({
   const explorerUrl = txHash ? `${env.EXPLORER_URL}/tx/${txHash}` : undefined;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 font-sans">
-      <div className="bg-surface w-full max-w-md rounded-sm p-6 border border-white/15 space-y-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-page/85 backdrop-blur-sm p-4 font-sans">
+      <div className="bg-surface w-full max-w-md rounded-sm p-6 border border-ink/15 space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-white/10">
+        <div className="flex items-center justify-between pb-3 border-b border-ink/10">
           <div>
             <span className="text-[10px] text-muted uppercase tracking-widest block">
               [TRANSACTION PREVIEW — ROBINHOOD CHAIN]
             </span>
-            <h3 className="text-base font-bold text-white font-sans uppercase">
+            <h3 className="text-base font-bold text-ink font-sans uppercase">
               CONFIRM {positionType} ({leverage.toFixed(1)}X)
             </h3>
           </div>
           <button
             onClick={onClose}
             disabled={isExecuting}
-            className="text-muted hover:text-white transition-colors disabled:opacity-50"
+            className="text-muted hover:text-ink transition-colors disabled:opacity-50"
           >
             <X className="w-4 h-4" />
           </button>
@@ -90,7 +90,7 @@ export function TransactionPreviewModal({
           <div className="bg-brand/10 border border-brand/30 p-4 rounded-sm flex items-center gap-3 text-xs">
             <Loader2 className="w-5 h-5 text-brand animate-spin shrink-0" />
             <div className="space-y-0.5">
-              <div className="font-bold text-white">
+              <div className="font-bold text-ink">
                 {step === "APPROVING" && "STEP 1/2: APPROVING COLLATERAL..."}
                 {step === "EXECUTING" && "STEP 2/2: EXECUTING ROUTER ORDER..."}
                 {step === "CONFIRMING" && "WAITING FOR BLOCK CONFIRMATION..."}
@@ -126,12 +126,12 @@ export function TransactionPreviewModal({
         )}
 
         {isError && (
-          <div className="bg-[#ff4d4d]/10 border border-[#ff4d4d]/30 p-4 rounded-sm space-y-1 text-xs">
-            <div className="flex items-center gap-2 text-[#ff4d4d] font-bold">
+          <div className="bg-neg-strong/10 border border-neg-strong/30 p-4 rounded-sm space-y-1 text-xs">
+            <div className="flex items-center gap-2 text-neg-strong font-bold">
               <AlertTriangle className="w-5 h-5" />
               <span>TRANSACTION REVERTED</span>
             </div>
-            <p className="text-[10px] text-gray-400 break-all">
+            <p className="text-[10px] text-muted break-all">
               {errorMessage ||
                 "Execution was rejected or exceeded slippage limit."}
             </p>
@@ -139,20 +139,20 @@ export function TransactionPreviewModal({
         )}
 
         {/* Economics Overview Grid */}
-        <div className="bg-surface-subtle rounded-sm p-4 border border-white/10 space-y-3 font-sans text-xs uppercase tabular-nums">
+        <div className="bg-surface-subtle rounded-sm p-4 border border-ink/10 space-y-3 font-sans text-xs uppercase tabular-nums">
           <div className="flex justify-between items-center text-muted">
             <span>COLLATERAL DEPOSIT</span>
-            <span className="font-bold text-white">
+            <span className="font-bold text-ink">
               ${collateralUsd.toFixed(2)} {debtToken}
             </span>
           </div>
           <div className="flex justify-between items-center text-muted">
             <span>BORROWED DEBT</span>
-            <span className="font-bold text-[#ffb800]">
+            <span className="font-bold text-warn-strong">
               ${borrowedAmount.toFixed(2)} {debtToken}
             </span>
           </div>
-          <div className="flex justify-between items-center pt-2 border-t border-white/10 text-white font-bold">
+          <div className="flex justify-between items-center pt-2 border-t border-ink/10 text-ink font-bold">
             <span>TOTAL EXPOSURE</span>
             <span className="text-brand">
               ${totalExposure.toFixed(2)} {assetSymbol}
@@ -162,34 +162,34 @@ export function TransactionPreviewModal({
 
         {/* Risk & Fees Breakdown */}
         <div className="space-y-2 text-xs font-sans uppercase tabular-nums">
-          <div className="flex justify-between items-center py-1 border-b border-white/10">
+          <div className="flex justify-between items-center py-1 border-b border-ink/10">
             <span className="text-muted">ORACLE MARK PRICE</span>
-            <span className="font-bold text-white">
+            <span className="font-bold text-ink">
               ${markPrice.toFixed(2)}
             </span>
           </div>
-          <div className="flex justify-between items-center py-1 border-b border-white/10">
+          <div className="flex justify-between items-center py-1 border-b border-ink/10">
             <span className="text-muted">EST. LIQUIDATION PRICE</span>
-            <span className="font-bold text-[#ff4d4d]">
+            <span className="font-bold text-neg-strong">
               ${estimatedLiquidationPrice.toFixed(2)}
             </span>
           </div>
-          <div className="flex justify-between items-center py-1 border-b border-white/10">
+          <div className="flex justify-between items-center py-1 border-b border-ink/10">
             <span className="text-muted">BORROW APR</span>
-            <span className="font-bold text-[#ffb800]">
+            <span className="font-bold text-warn-strong">
               {borrowApr.toFixed(2)}%
             </span>
           </div>
           <div className="flex justify-between items-center py-1">
             <span className="text-muted">EST. PROTOCOL & GAS FEES</span>
-            <span className="font-bold text-white">
+            <span className="font-bold text-ink">
               ${(tradingFeeUsd + protocolFeeUsd).toFixed(2)}
             </span>
           </div>
         </div>
 
         {/* Warning Badge */}
-        <div className="bg-surface-subtle border border-white/10 p-3 rounded-sm text-[10px] text-muted font-sans uppercase leading-relaxed">
+        <div className="bg-surface-subtle border border-ink/10 p-3 rounded-sm text-[10px] text-muted font-sans uppercase leading-relaxed">
           [RISK WARNING] MARGIN POSITIONS ARE SUBJECT TO AUTOMATED DELEVERAGING
           AND LIQUIDATION IF LTV EXCEEDS MAXIMUM THRESHOLD.
         </div>
@@ -199,7 +199,7 @@ export function TransactionPreviewModal({
           <button
             onClick={onClose}
             disabled={isExecuting}
-            className="w-1/3 py-3 bg-surface-subtle hover:bg-[#101010] text-muted hover:text-white font-bold rounded-sm border border-white/10 transition-all uppercase disabled:opacity-50"
+            className="w-1/3 py-3 btn-silver font-bold uppercase"
           >
             {isSuccess ? "CLOSE" : "CANCEL"}
           </button>
@@ -207,7 +207,7 @@ export function TransactionPreviewModal({
             <button
               onClick={onConfirm}
               disabled={isExecuting}
-              className="w-2/3 py-3 bg-go hover:bg-go-hover disabled:bg-gray-700 text-black font-extrabold rounded-sm transition-all uppercase tracking-widest inline-flex items-center justify-center gap-2"
+              className="w-2/3 py-3 btn-silver font-extrabold rounded-sm transition-all uppercase tracking-widest inline-flex items-center justify-center gap-2"
             >
               {isExecuting ? (
                 <>

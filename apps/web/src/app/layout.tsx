@@ -4,7 +4,9 @@ import "./globals.css";
 import "./nash.css";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import { ButtonFx } from "../components/ButtonFx";
 import { Web3Provider } from "../providers/Web3Provider";
+import { ThemeProvider, THEME_INIT_SCRIPT } from "../providers/ThemeProvider";
 
 // Absolute URL for social previews. Left unset, Next derives it on Vercel and relative paths are used elsewhere.
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -35,9 +37,10 @@ export const metadata: Metadata = {
   },
 };
 
+// Light is the default theme; ThemeProvider keeps this tag in step when the visitor switches.
 export const viewport: Viewport = {
-  themeColor: "#000000",
-  colorScheme: "dark",
+  themeColor: "#fefdf9",
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
@@ -46,19 +49,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" data-theme="light" suppressHydrationWarning>
       <head>
-        <link rel="preload" href="/fonts/newsreader-roman.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="/fonts/montserrat.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/space-mono-700.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/space-mono-400.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       </head>
-      <body className="bg-[#000000] text-[#f5f5f5] min-h-screen flex flex-col font-sans selection:bg-[#e5e5e5] selection:text-[#000000] antialiased">
-        <Web3Provider>
-          <Header />
-          <main id="main" className="flex-1 w-full mx-auto pt-[79px] min-[901px]:pt-[86px] min-[1051px]:pt-[100px]">
-            {children}
-          </main>
-          <Footer />
-        </Web3Provider>
+      <body className="bg-page text-fg min-h-screen flex flex-col font-sans selection:bg-accent selection:text-on-accent antialiased">
+        <ThemeProvider>
+          <Web3Provider>
+            <ButtonFx />
+            <Header />
+            <main id="main" className="flex-1 w-full mx-auto pt-[var(--header-h)]">
+              {children}
+            </main>
+            <Footer />
+          </Web3Provider>
+        </ThemeProvider>
       </body>
     </html>
   );
