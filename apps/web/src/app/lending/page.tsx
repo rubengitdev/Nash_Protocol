@@ -236,6 +236,7 @@ function LendingWorkspace({
   } catch {}
   return (
     <AppPage
+      banner="blocks"
       back
       eyebrow="Collateral lending"
       title="Borrow against your assets"

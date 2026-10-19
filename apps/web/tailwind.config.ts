@@ -1,6 +1,14 @@
 import type { Config } from 'tailwindcss';
 
+/**
+ * Every colour is a CSS variable (see apps/web/src/app/globals.css, the single token source), so one class
+ * works in both themes: `data-theme="light"` (default) and `data-theme="dark"`.
+ * `c('go')` builds a colour that also accepts Tailwind's opacity modifier, e.g. `bg-go/15`.
+ */
+const c = (name: string) => `color-mix(in srgb, var(--${name}) calc(<alpha-value> * 100%), transparent)`;
+
 const config: Config = {
+  darkMode: ['selector', '[data-theme="dark"]'],
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -9,62 +17,94 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: '#000000',
+        // Surfaces, from the page down to hover fills.
+        page: c('bg'),
+        background: c('bg'),
+        raised: c('bg-raised'),
+        panel: c('panel'),
+        'panel-subtle': c('panel-subtle'),
+        'panel-hover': c('panel-hover'),
+        // Legacy surface names, still referenced across the app.
         surface: {
-          DEFAULT: '#101010',
-          subtle: '#151515',
-          hover: '#1c1c1c',
-          border: 'rgba(255,255,255, 0.12)',
-          'border-light': 'rgba(255,255,255, 0.20)',
-          line: '#262626',
+          DEFAULT: c('panel'),
+          subtle: c('panel-subtle'),
+          hover: c('panel-hover'),
+          border: c('line'),
+          'border-light': c('line-strong'),
+          line: c('line'),
         },
+        // Hairlines.
+        'line-soft': c('line-soft'),
+        line: c('line'),
+        'line-strong': c('line-strong'),
+        // Text, strongest to faintest.
+        ink: c('ink'),
+        fg: c('text'),
+        'fg-2': c('text-2'),
+        'fg-3': c('text-3'),
+        muted: {
+          DEFAULT: c('muted'),
+          dark: c('dim'),
+        },
+        dim: c('dim'),
+        // Accent (links, selected states) and the primary action (the reference's black button).
+        accent: c('accent'),
+        'accent-soft': c('accent-soft'),
+        'on-accent': c('on-accent'),
         emerald: {
-          DEFAULT: '#e5e5e5',
-          bright: '#ffffff',
-          dark: '#b5b5b5',
-          deep: '#6d6d6d',
-          muted: 'rgba(229,229,229, 0.15)',
-        },
-        // Green: actions that commit funds, and states that are good (live, safe, confirmed, a gain).
-        go: {
-          DEFAULT: '#2ee6a6',
-          hover: '#7df2c8',
-          dark: '#14b07f',
-          muted: 'rgba(46,230,166, 0.15)',
+          DEFAULT: c('accent'),
+          bright: c('accent-soft'),
+          dark: c('text-3'),
+          deep: c('dim'),
+          muted: c('accent-muted'),
         },
         brand: {
-          DEFAULT: '#e5e5e5',
-          hover: '#ffffff',
-          dark: '#b5b5b5',
-          muted: 'rgba(229,229,229, 0.15)',
+          DEFAULT: c('accent'),
+          hover: c('accent-soft'),
+          dark: c('text-3'),
+          muted: c('accent-muted'),
         },
-        // Silver tones follow the brushed-metal N mark (public/brand/nash-mark.png).
-        silver: {
-          DEFAULT: '#c4c4c4',
-          light: '#e5e5e5',
+        action: c('action'),
+        'action-hover': c('action-hover'),
+        'on-action': c('on-action'),
+        // Semantic colours. Green means good or "go", red loss or short, amber caution.
+        go: {
+          DEFAULT: c('go'),
+          hover: c('go-soft'),
+          dark: c('go-deep'),
+          muted: c('go-bg'),
         },
-        muted: {
-          DEFAULT: '#8d8d8d',
-          dark: '#6d6d6d',
-        },
+        'on-go': c('on-go'),
+        'go-bg': c('go-bg'),
+        neg: c('neg'),
+        'neg-strong': c('neg-strong'),
+        'neg-bg': c('neg-bg'),
+        'on-neg': c('on-neg'),
+        warn: c('warn'),
+        'warn-strong': c('warn-strong'),
+        'warn-bg': c('warn-bg'),
         danger: {
-          DEFAULT: '#d6153c',
-          muted: 'rgba(214,21,60, 0.15)',
+          DEFAULT: c('danger'),
+          muted: c('neg-bg'),
+        },
+        silver: {
+          DEFAULT: c('silver'),
+          light: c('silver-light'),
         },
       },
       fontFamily: {
-        sans: ['Montserrat', 'Segoe UI', 'system-ui', 'sans-serif'],
-        display: ['Newsreader', 'Iowan Old Style', 'Georgia', 'serif'],
-        heroDisplay: ['Montserrat', 'Segoe UI', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'Segoe UI', 'sans-serif'],
+        display: ['"Space Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        heroDisplay: ['"Space Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
         hand: ['Caveat', '"Bradley Hand"', 'cursive'],
       },
       borderRadius: {
-        DEFAULT: '4px',
+        DEFAULT: '2px',
         sm: '2px',
-        md: '4px',
-        lg: '6px',
-        xl: '8px',
+        md: '2px',
+        lg: '4px',
+        xl: '6px',
         full: '9999px',
       },
       letterSpacing: {
@@ -78,4 +118,3 @@ const config: Config = {
 };
 
 export default config;
-

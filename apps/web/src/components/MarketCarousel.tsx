@@ -92,7 +92,7 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
   return (
     <div className="space-y-6 font-mono select-none">
       {/* Header controls: Filter Tabs & Navigation Buttons */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-ink/10 pb-4">
         {/* Category Filters */}
         <div className="flex items-center gap-2">
           {categories.map((cat) => (
@@ -105,8 +105,8 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
               }}
               className={`px-4 py-2 rounded-xs text-[11px] font-bold uppercase tracking-widest transition-all ${
                 activeCategory === cat
-                  ? 'bg-[#b5b5b5] text-white'
-                  : 'bg-[#000000] text-[#8c8c8c] hover:text-white border border-white/10'
+                  ? 'bg-fg-3 text-on-accent'
+                  : 'bg-page text-muted hover:text-ink border border-ink/10'
               }`}
             >
               [{cat}]
@@ -116,25 +116,25 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
 
         {/* Drag Hint & Navigation Controls */}
         <div className="flex items-center gap-4">
-          <div className="hidden sm:flex items-center gap-1.5 text-[10px] text-[#8c8c8c] uppercase tracking-wider">
-            <Grab className="w-3.5 h-3.5 text-[#b5b5b5]" />
+          <div className="hidden sm:flex items-center gap-1.5 text-[10px] text-muted uppercase tracking-wider">
+            <Grab className="w-3.5 h-3.5 text-fg-3" />
             <span>DRAG / SWIPE TO EXPLORE</span>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => scrollByCard('left')}
-              className="w-10 h-10 bg-[#000000] hover:bg-[#101010] text-white border border-white/10 hover:border-[#b5b5b5]/50 rounded-xs flex items-center justify-center transition-all disabled:opacity-30"
+              className="w-10 h-10 bg-page hover:bg-panel text-ink border border-ink/10 hover:border-fg-3/50 rounded-xs flex items-center justify-center transition-all disabled:opacity-30"
               aria-label="Previous markets"
             >
-              <ChevronLeft className="w-5 h-5 text-[#8c8c8c] hover:text-white" />
+              <ChevronLeft className="w-5 h-5 text-muted hover:text-ink" />
             </button>
             <button
               onClick={() => scrollByCard('right')}
-              className="w-10 h-10 bg-[#000000] hover:bg-[#101010] text-white border border-white/10 hover:border-[#b5b5b5]/50 rounded-xs flex items-center justify-center transition-all disabled:opacity-30"
+              className="w-10 h-10 bg-page hover:bg-panel text-ink border border-ink/10 hover:border-fg-3/50 rounded-xs flex items-center justify-center transition-all disabled:opacity-30"
               aria-label="Next markets"
             >
-              <ChevronRight className="w-5 h-5 text-[#8c8c8c] hover:text-white" />
+              <ChevronRight className="w-5 h-5 text-muted hover:text-ink" />
             </button>
           </div>
         </div>
@@ -157,45 +157,45 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
           [1, 2, 3].map((i) => (
             <div
               key={i}
-              className="w-[340px] sm:w-[370px] shrink-0 snap-start bg-[#000000] border border-white/10 rounded-sm p-6 flex flex-col justify-between space-y-6 animate-pulse"
+              className="w-[340px] sm:w-[370px] shrink-0 snap-start bg-page border border-ink/10 rounded-sm p-6 flex flex-col justify-between space-y-6 animate-pulse"
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-full bg-white/10" />
-                    <div className="h-3.5 w-20 bg-white/10 rounded-xs" />
+                    <div className="w-6 h-6 rounded-full bg-ink/10" />
+                    <div className="h-3.5 w-20 bg-ink/10 rounded-xs" />
                   </div>
-                  <div className="h-3.5 w-24 bg-[#b5b5b5]/20 rounded-xs" />
+                  <div className="h-3.5 w-24 bg-fg-3/20 rounded-xs" />
                 </div>
                 <div className="space-y-2">
-                  <div className="h-6 w-3/4 bg-white/10 rounded-xs" />
-                  <div className="h-8 w-1/2 bg-white/15 rounded-xs" />
+                  <div className="h-6 w-3/4 bg-ink/10 rounded-xs" />
+                  <div className="h-8 w-1/2 bg-ink/15 rounded-xs" />
                 </div>
               </div>
 
-              <div className="h-28 bg-[#000000] rounded-xs border border-white/5" />
+              <div className="h-28 bg-page rounded-xs border border-ink/5" />
 
-              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-white/10">
-                <div className="h-12 bg-[#0a0a0a] rounded-xs" />
-                <div className="h-12 bg-[#0a0a0a] rounded-xs" />
-                <div className="h-12 bg-[#0a0a0a] rounded-xs" />
-                <div className="h-12 bg-[#0a0a0a] rounded-xs" />
+              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-ink/10">
+                <div className="h-12 bg-raised rounded-xs" />
+                <div className="h-12 bg-raised rounded-xs" />
+                <div className="h-12 bg-raised rounded-xs" />
+                <div className="h-12 bg-raised rounded-xs" />
               </div>
 
-              <div className="h-11 bg-white/10 rounded-xs" />
+              <div className="h-11 bg-ink/10 rounded-xs" />
             </div>
           ))
         ) : filteredMarkets.length === 0 ? (
           /* Empty State */
-          <div className="w-full py-16 px-8 bg-[#000000] border border-dashed border-white/10 rounded-sm text-center font-mono space-y-3">
-            <span className="text-white font-bold block text-sm tracking-wider">[NO MARKETS FOUND]</span>
-            <span className="text-xs text-[#4a4a4a] block">
+          <div className="w-full py-16 px-8 bg-page border border-dashed border-ink/10 rounded-sm text-center font-mono space-y-3">
+            <span className="text-ink font-bold block text-sm tracking-wider">[NO MARKETS FOUND]</span>
+            <span className="text-xs text-dim block">
               No tokenized equity or ETF pairs found for category &quot;{activeCategory}&quot;.
             </span>
             {activeCategory !== 'ALL' && (
               <button
                 onClick={() => setActiveCategory('ALL')}
-                className="px-3 py-1.5 text-[10px] bg-[#0a0a0a] border border-white/15 hover:border-[#b5b5b5] text-white rounded-sm uppercase tracking-wider transition-colors"
+                className="px-3 py-1.5 text-[10px] bg-raised border border-ink/15 hover:border-fg-3 text-ink rounded-sm uppercase tracking-wider transition-colors"
               >
                 VIEW ALL MARKETS
               </button>
@@ -206,28 +206,28 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
           filteredMarkets.map((market) => (
             <div
               key={market.id}
-              className="w-[340px] sm:w-[370px] shrink-0 snap-start bg-[#000000] border border-white/10 rounded-sm p-6 flex flex-col justify-between space-y-6 group hover:border-[#b5b5b5]/50 hover:shadow-[0_0_25px_rgba(181,181,181,0.15)] transition-all duration-300 relative"
+              className="fx-card w-[340px] sm:w-[370px] shrink-0 snap-start bg-page border border-ink/10 rounded-sm p-6 flex flex-col justify-between space-y-6 group hover:border-fg-3/50 hover:shadow-[0_0_25px_color-mix(in_srgb,var(--text-3)_15%,transparent)] transition-all duration-300 relative"
             >
               {/* Card Top Info */}
               <div className="space-y-4">
-                <div className="flex justify-between items-center text-[10px] text-[#8c8c8c] uppercase tracking-widest">
+                <div className="flex justify-between items-center text-[10px] text-muted uppercase tracking-widest">
                   <div className="flex items-center gap-2">
                     <AssetLogo symbol={market.assetSymbol} size="sm" />
-                    <span className="font-bold text-white">[{market.assetSymbol}]</span>
-                    <span className="text-[#8c8c8c]">[{market.category}]</span>
+                    <span className="font-bold text-ink">[{market.assetSymbol}]</span>
+                    <span className="text-muted">[{market.category}]</span>
                   </div>
-                  <span className="text-[#b5b5b5] font-bold">[ISOLATED PAIR]</span>
+                  <span className="text-fg-3 font-bold">[ISOLATED PAIR]</span>
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-normal text-white uppercase tracking-tight group-hover:text-[#b5b5b5] transition-colors font-sans">
+                  <h3 className="text-2xl font-normal text-ink uppercase tracking-tight group-hover:text-fg-3 transition-colors font-sans">
                     {market.name}
                   </h3>
                   <div className="flex items-baseline gap-2 mt-1">
-                    <span className="text-3xl font-bold font-mono text-white">
+                    <span className="text-3xl font-bold font-mono text-ink">
                       ${market.markPrice.toFixed(2)}
                     </span>
-                    <span className="text-[10px] text-[#8c8c8c] uppercase tracking-wider">
+                    <span className="text-[10px] text-muted uppercase tracking-wider">
                       MARK PRICE
                     </span>
                   </div>
@@ -235,36 +235,36 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
               </div>
 
               {/* Sparkline Trend Chart Preview */}
-              <div className="bg-[#000000] border border-white/5 p-3 rounded-xs group-hover:border-white/10 transition-colors">
+              <div className="bg-page border border-ink/5 p-3 rounded-xs group-hover:border-ink/10 transition-colors">
                 <MarketTrendChart symbol={market.assetSymbol} />
               </div>
 
               {/* Metrics Breakdown */}
-              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-white/10 text-xs">
-                <div className="bg-[#0a0a0a] p-2.5 rounded-xs border border-white/5">
-                  <span className="text-[10px] text-[#8c8c8c] block uppercase">BORROW APR</span>
-                  <span className="text-sm font-bold text-[#ffb800]">
+              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-ink/10 text-xs">
+                <div className="bg-raised p-2.5 rounded-xs border border-ink/5">
+                  <span className="text-[10px] text-muted block uppercase">BORROW APR</span>
+                  <span className="text-sm font-bold text-warn-strong">
                     {market.borrowApr.toFixed(2)}%
                   </span>
                 </div>
 
-                <div className="bg-[#0a0a0a] p-2.5 rounded-xs border border-white/5">
-                  <span className="text-[10px] text-[#8c8c8c] block uppercase">MAX LTV</span>
-                  <span className="text-sm font-bold text-white">
+                <div className="bg-raised p-2.5 rounded-xs border border-ink/5">
+                  <span className="text-[10px] text-muted block uppercase">MAX LTV</span>
+                  <span className="text-sm font-bold text-ink">
                     {market.maxLtv.toFixed(0)}%
                   </span>
                 </div>
 
-                <div className="bg-[#0a0a0a] p-2.5 rounded-xs border border-white/5">
-                  <span className="text-[10px] text-[#8c8c8c] block uppercase">SUPPLY APY</span>
-                  <span className="text-sm font-bold text-[#b5b5b5]">
+                <div className="bg-raised p-2.5 rounded-xs border border-ink/5">
+                  <span className="text-[10px] text-muted block uppercase">SUPPLY APY</span>
+                  <span className="text-sm font-bold text-fg-3">
                     +{market.supplyApy.toFixed(2)}%
                   </span>
                 </div>
 
-                <div className="bg-[#0a0a0a] p-2.5 rounded-xs border border-white/5">
-                  <span className="text-[10px] text-[#8c8c8c] block uppercase">LIQUIDITY</span>
-                  <span className="text-sm font-bold text-white">
+                <div className="bg-raised p-2.5 rounded-xs border border-ink/5">
+                  <span className="text-[10px] text-muted block uppercase">LIQUIDITY</span>
+                  <span className="text-sm font-bold text-ink">
                     ${(market.availableLiquidityUsd / 1000).toFixed(0)}K
                   </span>
                 </div>
@@ -277,7 +277,7 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
                   onClick={(e) => {
                     if (hasDragged) e.preventDefault();
                   }}
-                  className="w-full py-3 px-4 bg-[#b5b5b5] hover:bg-[#8b8b8b] text-white font-mono font-bold text-xs uppercase tracking-widest rounded-xs transition-all flex items-center justify-center gap-2 group-hover:shadow-[0_0_15px_rgba(181,181,181,0.4)]"
+                  className="w-full py-3 px-4 bg-fg-3 hover:bg-muted text-on-accent font-mono font-bold text-xs uppercase tracking-widest rounded-xs transition-all flex items-center justify-center gap-2 group-hover:shadow-[0_0_15px_color-mix(in_srgb,var(--text-3)_40%,transparent)]"
                 >
                   <span>TRADE / BORROW {market.assetSymbol}</span>
                   <ArrowUpRight className="w-4 h-4" />
@@ -297,8 +297,8 @@ export function MarketCarousel({ markets, isLoading }: MarketCarouselProps) {
               onClick={() => scrollToIndex(idx)}
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 activeIndex === idx
-                  ? 'w-8 bg-[#b5b5b5]'
-                  : 'w-2 bg-white/20 hover:bg-white/40'
+                  ? 'w-8 bg-fg-3'
+                  : 'w-2 bg-ink/20 hover:bg-ink/40'
               }`}
               aria-label={`Go to slide ${idx + 1}`}
             />

@@ -155,12 +155,12 @@ export function PonsGraduationToast({ queue, onDismissAll }: PonsGraduationToast
                   alignItems: "center",
                   gap: "12px",
                   padding: "14px 16px",
-                  background: "#101010",
-                  border: isActive ? "1px solid rgba(229,229,229, 0.5)" : "1px solid #262626",
+                  background: "var(--panel)",
+                  border: isActive ? "1px solid color-mix(in srgb, var(--accent) 50%, transparent)" : "1px solid var(--line)",
                   borderRadius: "8px",
                   boxShadow: isActive
-                    ? "0 8px 32px rgba(229,229,229, 0.1), 0 4px 12px rgba(0,0,0,0.5)"
-                    : "0 4px 16px rgba(0,0,0,0.3)",
+                    ? "0 8px 32px color-mix(in srgb, var(--accent) 10%, transparent), 0 4px 12px color-mix(in srgb, var(--bg) 50%, transparent)"
+                    : "0 4px 16px color-mix(in srgb, var(--bg) 30%, transparent)",
                 }}
               >
                 {/* Token Logo */}
@@ -173,7 +173,7 @@ export function PonsGraduationToast({ queue, onDismissAll }: PonsGraduationToast
                   <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                     <span
                       style={{
-                        color: "#fff",
+                        color: "var(--ink)",
                         fontWeight: 700,
                         fontSize: "14px",
                         overflow: "hidden",
@@ -183,7 +183,7 @@ export function PonsGraduationToast({ queue, onDismissAll }: PonsGraduationToast
                     >
                       {item.name}
                     </span>
-                    <span style={{ color: "#8d8d8d", fontSize: "12px", fontWeight: 500, flexShrink: 0 }}>
+                    <span style={{ color: "var(--muted)", fontSize: "12px", fontWeight: 500, flexShrink: 0 }}>
                       ${item.symbol}
                     </span>
                   </div>
@@ -193,15 +193,15 @@ export function PonsGraduationToast({ queue, onDismissAll }: PonsGraduationToast
                         width: "6px",
                         height: "6px",
                         borderRadius: "50%",
-                        background: "#e5e5e5",
+                        background: "var(--accent)",
                         display: "inline-block",
                         flexShrink: 0,
-                        boxShadow: "0 0 6px rgba(229,229,229, 0.6)",
+                        boxShadow: "0 0 6px color-mix(in srgb, var(--accent) 60%, transparent)",
                       }}
                     />
                     <span
                       style={{
-                        color: "#e5e5e5",
+                        color: "var(--text-2)",
                         fontSize: "11px",
                         fontWeight: 600,
                         textTransform: "uppercase",
@@ -228,20 +228,20 @@ export function PonsGraduationToast({ queue, onDismissAll }: PonsGraduationToast
                       alignItems: "center",
                       justifyContent: "center",
                       borderRadius: "4px",
-                      border: "1px solid #262626",
-                      background: "#0a0a0a",
-                      color: "#8d8d8d",
+                      border: "1px solid var(--line)",
+                      background: "var(--bg-raised)",
+                      color: "var(--muted)",
                       cursor: "pointer",
                       padding: 0,
                       transition: "all 0.15s",
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = "#e5e5e5";
-                      e.currentTarget.style.color = "#fff";
+                      e.currentTarget.style.borderColor = "var(--accent)";
+                      e.currentTarget.style.color = "var(--ink)";
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = "#262626";
-                      e.currentTarget.style.color = "#8d8d8d";
+                      e.currentTarget.style.borderColor = "var(--line)";
+                      e.currentTarget.style.color = "var(--muted)";
                     }}
                     aria-label="Dismiss"
                   >
@@ -270,10 +270,10 @@ export function PonsGraduationToast({ queue, onDismissAll }: PonsGraduationToast
           <span
             style={{
               fontSize: "10px",
-              color: "#8d8d8d",
+              color: "var(--muted)",
               fontWeight: 500,
-              background: "#101010",
-              border: "1px solid #262626",
+              background: "var(--panel)",
+              border: "1px solid var(--line)",
               padding: "3px 10px",
               borderRadius: "12px",
               fontVariantNumeric: "tabular-nums",
