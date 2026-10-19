@@ -54,15 +54,15 @@ export function ChinaMarketTable() {
   return (
     <div className="flex flex-col gap-6">
       {/* FILTER & SEARCH TOOLBAR */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#060606] border border-[#222222] p-4 rounded-sm">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-raised border border-line p-4 rounded-sm">
         {/* Track Filter Tabs */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 font-display text-xs">
           <button
             onClick={() => setSelectedTrack("ALL")}
             className={`px-3 py-1.5 rounded transition-all whitespace-nowrap ${
               selectedTrack === "ALL"
-                ? "bg-[#e5e5e5] text-[#000000] font-bold shadow-[0_0_10px_rgba(229,229,229,0.2)]"
-                : "text-[#8d8d8d] hover:text-white bg-[#141414] border border-[#262626]"
+                ? "bg-accent text-on-accent font-bold"
+                : "text-muted hover:text-ink bg-panel border border-line"
             }`}
           >
             All Candidates ({trackCounts.all})
@@ -71,8 +71,8 @@ export function ChinaMarketTable() {
             onClick={() => setSelectedTrack("US_LISTED_ADR")}
             className={`px-3 py-1.5 rounded transition-all whitespace-nowrap ${
               selectedTrack === "US_LISTED_ADR"
-                ? "bg-[#e5e5e5] text-[#000000] font-bold shadow-[0_0_10px_rgba(229,229,229,0.2)]"
-                : "text-[#8d8d8d] hover:text-white bg-[#141414] border border-[#262626]"
+                ? "bg-accent text-on-accent font-bold"
+                : "text-muted hover:text-ink bg-panel border border-line"
             }`}
           >
             US ADRs ({trackCounts.adr})
@@ -81,8 +81,8 @@ export function ChinaMarketTable() {
             onClick={() => setSelectedTrack("HONG_KONG_CANDIDATE")}
             className={`px-3 py-1.5 rounded transition-all whitespace-nowrap ${
               selectedTrack === "HONG_KONG_CANDIDATE"
-                ? "bg-[#e5e5e5] text-[#000000] font-bold shadow-[0_0_10px_rgba(229,229,229,0.2)]"
-                : "text-[#8d8d8d] hover:text-white bg-[#141414] border border-[#262626]"
+                ? "bg-accent text-on-accent font-bold"
+                : "text-muted hover:text-ink bg-panel border border-line"
             }`}
           >
             Hong Kong xStocks ({trackCounts.hk})
@@ -91,8 +91,8 @@ export function ChinaMarketTable() {
             onClick={() => setSelectedTrack("MAINLAND_A_SHARE")}
             className={`px-3 py-1.5 rounded transition-all whitespace-nowrap ${
               selectedTrack === "MAINLAND_A_SHARE"
-                ? "bg-[#e5e5e5] text-[#000000] font-bold shadow-[0_0_10px_rgba(229,229,229,0.2)]"
-                : "text-[#8d8d8d] hover:text-white bg-[#141414] border border-[#262626]"
+                ? "bg-accent text-on-accent font-bold"
+                : "text-muted hover:text-ink bg-panel border border-line"
             }`}
           >
             Mainland A-Shares ({trackCounts.ashare})
@@ -107,12 +107,12 @@ export function ChinaMarketTable() {
               placeholder="Search ticker, company..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#000000] border border-[#262626] rounded px-3 py-1.5 text-xs text-[#f5f5f5] placeholder-[#727272] focus:outline-none focus:border-[#e5e5e5] transition-colors font-sans"
+              className="w-full bg-page border border-line rounded px-3 py-1.5 text-xs text-fg placeholder-muted focus:outline-none focus:border-accent transition-colors font-sans"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-2.5 top-2 text-[#858585] hover:text-white"
+                className="absolute right-2.5 top-2 text-muted hover:text-ink"
                 aria-label="Clear search"
               >
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -124,7 +124,7 @@ export function ChinaMarketTable() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
-            className="bg-[#000000] border border-[#262626] rounded px-2.5 py-1.5 text-xs text-[#8d8d8d] focus:outline-none focus:border-[#e5e5e5] font-display"
+            className="bg-page border border-line rounded px-2.5 py-1.5 text-xs text-muted focus:outline-none focus:border-accent font-display"
           >
             <option value="ALL">All Categories</option>
             <option value="VERIFIED_NATIVE_IDENTITY">Robinhood Chain Native</option>
@@ -135,10 +135,10 @@ export function ChinaMarketTable() {
       </div>
 
       {/* DESKTOP TABLE VIEW */}
-      <div className="hidden lg:block overflow-x-auto border border-[#222222] rounded-sm bg-[#0a0a0a]">
+      <div className="hidden lg:block overflow-x-auto border border-line rounded-sm bg-raised">
         <table className="w-full text-left border-collapse font-sans text-xs">
           <thead>
-            <tr className="border-b border-[#222222] bg-[#101010] text-[#8d8d8d] font-display tracking-wider uppercase text-[11px] whitespace-nowrap">
+            <tr className="border-b border-line bg-panel text-muted font-display tracking-wider uppercase text-[11px] whitespace-nowrap">
               <th className="py-3 px-4 whitespace-nowrap">Instrument &amp; Structure</th>
               <th className="py-3 px-4 whitespace-nowrap">Underlying Ref</th>
               <th className="py-3 px-4 whitespace-nowrap">Token Ref Price</th>
@@ -148,10 +148,10 @@ export function ChinaMarketTable() {
               <th className="py-3 px-4 text-right whitespace-nowrap">Action</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#161616]">
+          <tbody className="divide-y divide-line-soft">
             {filteredItems.length === 0 ? (
               <tr>
-                <td colSpan={7} className="py-12 text-center text-[#8d8d8d] whitespace-nowrap">
+                <td colSpan={7} className="py-12 text-center text-muted whitespace-nowrap">
                   No Chinese equity candidates matching current filters.
                 </td>
               </tr>
@@ -172,7 +172,7 @@ export function ChinaMarketTable() {
       {/* MOBILE / TABLET CARD VIEW */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-4">
         {filteredItems.length === 0 ? (
-          <div className="col-span-full py-12 text-center text-[#8d8d8d] bg-[#0a0a0a] border border-[#222222] rounded p-6">
+          <div className="col-span-full py-12 text-center text-muted bg-raised border border-line rounded p-6">
             No Chinese equity candidates matching current filters.
           </div>
         ) : (
@@ -204,38 +204,38 @@ function MarketTableRow({
   const isUp = (market?.priceChange24hPercent ?? 0) >= 0;
 
   return (
-    <tr className="hover:bg-[#101010] transition-colors group">
+    <tr className="hover:bg-panel transition-colors group">
       {/* Instrument & Structure */}
       <td className="py-3.5 px-4 whitespace-nowrap">
         <div className="flex items-center gap-3 whitespace-nowrap">
-          <div className="w-8 h-8 rounded bg-[#161616] border border-[#262626] flex items-center justify-center font-display font-bold text-[#e5e5e5] text-xs shrink-0">
+          <div className="w-8 h-8 rounded bg-panel-subtle border border-line flex items-center justify-center font-display font-bold text-fg-2 text-xs shrink-0">
             {asset.ticker.slice(0, 3)}
           </div>
           <div className="flex items-center gap-2 whitespace-nowrap">
-            <span className="font-bold text-[#f5f5f5] text-sm group-hover:text-[#e5e5e5] transition-colors font-display tracking-wide shrink-0">
+            <span className="font-bold text-fg text-sm group-hover:text-fg-2 transition-colors font-display tracking-wide shrink-0">
               {asset.ticker}
             </span>
-            <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-[#171717] border border-[#242424] text-[#cccccc] font-display shrink-0">
+            <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-panel-subtle border border-line text-fg-2 font-display shrink-0">
               {asset.instrumentType}
             </span>
             {isNative ? (
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[rgba(229,229,229,0.1)] text-[#e5e5e5] border border-[rgba(229,229,229,0.25)] font-display font-medium shrink-0">
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] text-fg-2 border border-[color-mix(in_srgb,var(--accent)_25%,transparent)] font-display font-medium shrink-0">
                 Native 4663
               </span>
             ) : isExternal ? (
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[rgba(245,166,35,0.12)] text-[#f5a623] border border-[rgba(245,166,35,0.25)] font-display shrink-0">
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[color-mix(in_srgb,var(--warn)_12%,transparent)] text-warn border border-[color-mix(in_srgb,var(--warn)_25%,transparent)] font-display shrink-0">
                 External
               </span>
             ) : (
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#1d1d1d] text-[#919191] border border-[#2c2c2c] font-display shrink-0">
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-panel-hover text-muted border border-line font-display shrink-0">
                 Research
               </span>
             )}
-            <span className="text-[#606060] text-xs shrink-0">·</span>
-            <span className="text-xs text-[#8d8d8d] font-normal shrink-0">
+            <span className="text-dim text-xs shrink-0">·</span>
+            <span className="text-xs text-muted font-normal shrink-0">
               {asset.name}
             </span>
-            <span className="text-[11px] text-[#727272] shrink-0">
+            <span className="text-[11px] text-muted shrink-0">
               ({asset.underlyingExchange})
             </span>
           </div>
@@ -243,18 +243,18 @@ function MarketTableRow({
       </td>
 
       {/* Underlying Reference */}
-      <td className="py-3.5 px-4 font-mono text-[#d5d5d5] whitespace-nowrap">
+      <td className="py-3.5 px-4 font-mono text-fg-2 whitespace-nowrap">
         {market && market.underlyingReferencePrice > 0 ? (
           <div className="flex items-center gap-1.5 whitespace-nowrap">
-            <span className="font-semibold text-white">
+            <span className="font-semibold text-ink">
               {formatUnderlyingPrice(market.underlyingReferencePrice, market.underlyingCurrency)}
             </span>
-            <span className="text-[11px] text-[#858585]">
+            <span className="text-[11px] text-muted">
               ({asset.underlyingExchange} Tape)
             </span>
           </div>
         ) : (
-          <span className="text-[#727272] font-mono">—</span>
+          <span className="text-muted font-mono">—</span>
         )}
       </td>
 
@@ -262,15 +262,15 @@ function MarketTableRow({
       <td className="py-3.5 px-4 font-mono whitespace-nowrap">
         {market && market.tokenReferencePriceUsd > 0 ? (
           <div className="flex items-center gap-1.5 whitespace-nowrap">
-            <span className="text-[#f5f5f5] font-semibold">
+            <span className="text-fg font-semibold">
               ${market.tokenReferencePriceUsd.toFixed(2)}
             </span>
-            <span className="text-[11px] text-[#8d8d8d]">
+            <span className="text-[11px] text-muted">
               USDG
             </span>
           </div>
         ) : (
-          <span className="text-[#727272] font-mono">—</span>
+          <span className="text-muted font-mono">—</span>
         )}
       </td>
 
@@ -280,14 +280,14 @@ function MarketTableRow({
           <span
             className={`inline-block px-1.5 py-0.5 rounded text-[11px] font-medium whitespace-nowrap ${
               isUp
-                ? "text-[#e5e5e5] bg-[rgba(229,229,229,0.08)]"
-                : "text-[#ff6b6b] bg-[rgba(255,107,107,0.08)]"
+                ? "text-fg-2 bg-[color-mix(in_srgb,var(--accent)_8%,transparent)]"
+                : "text-neg bg-[color-mix(in_srgb,var(--neg)_8%,transparent)]"
             }`}
           >
             {formatPercent(market.priceChange24hPercent, true)}
           </span>
         ) : (
-          <span className="text-[#727272] font-mono">—</span>
+          <span className="text-muted font-mono">—</span>
         )}
       </td>
 
@@ -295,17 +295,17 @@ function MarketTableRow({
       <td className="py-3.5 px-4 whitespace-nowrap">
         {market?.status === "NORMAL" ? (
           <div className="flex items-center gap-1.5 whitespace-nowrap">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#2ee6a6] animate-pulse shrink-0" />
-            <span className="text-xs font-display font-medium text-[#2ee6a6]">Active</span>
-            <span className="text-[#606060] text-xs">·</span>
-            <span className="text-[11px] text-[#8d8d8d] font-mono">Regular Hours</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-go animate-pulse shrink-0" />
+            <span className="text-xs font-display font-medium text-go">Active</span>
+            <span className="text-dim text-xs">·</span>
+            <span className="text-[11px] text-muted font-mono">Regular Hours</span>
           </div>
         ) : (
           <div className="flex items-center gap-1.5 whitespace-nowrap">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#858585] shrink-0" />
-            <span className="text-xs font-display text-[#a2a2a2]">Research</span>
-            <span className="text-[#606060] text-xs">·</span>
-            <span className="text-[11px] text-[#727272] font-mono">Pipeline</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-muted shrink-0" />
+            <span className="text-xs font-display text-fg-3">Research</span>
+            <span className="text-dim text-xs">·</span>
+            <span className="text-[11px] text-muted font-mono">Pipeline</span>
           </div>
         )}
       </td>
@@ -314,23 +314,23 @@ function MarketTableRow({
       <td className="py-3.5 px-4 whitespace-nowrap">
         <div className="flex items-center gap-1.5 font-mono text-[10px] whitespace-nowrap">
           {market?.capabilities.spot ? (
-            <span className="px-1.5 py-0.5 rounded bg-[#181818] text-[#e5e5e5] border border-[#484848] shrink-0">
+            <span className="px-1.5 py-0.5 rounded bg-panel-subtle text-fg-2 border border-dim shrink-0">
               Spot
             </span>
           ) : null}
           {market?.capabilities.borrow ? (
-            <span className="px-1.5 py-0.5 rounded bg-[#181818] text-[#e5e5e5] border border-[#484848] shrink-0">
+            <span className="px-1.5 py-0.5 rounded bg-panel-subtle text-fg-2 border border-dim shrink-0">
               Borrow
             </span>
           ) : null}
           {market?.capabilities.long ? (
-            <span className="px-1.5 py-0.5 rounded bg-[#181818] text-[#e5e5e5] border border-[#484848] shrink-0">
+            <span className="px-1.5 py-0.5 rounded bg-panel-subtle text-fg-2 border border-dim shrink-0">
               Long {market.maxLeverage}x
             </span>
           ) : null}
           <span
             title="Short inventory unavailable"
-            className="px-1.5 py-0.5 rounded bg-[#141414] text-[#858585] border border-[#1f1f1f] shrink-0"
+            className="px-1.5 py-0.5 rounded bg-panel text-muted border border-line-soft shrink-0"
           >
             Short Off
           </span>
@@ -341,7 +341,7 @@ function MarketTableRow({
       <td className="py-3.5 px-4 text-right whitespace-nowrap">
         <Link
           href={chinaMarketPath(asset.ticker)}
-          className="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-[#161616] hover:bg-[#e5e5e5] text-[#cccccc] hover:text-[#000000] border border-[#282828] hover:border-[#e5e5e5] font-display font-medium text-xs transition-all whitespace-nowrap"
+          className="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-panel-subtle hover:bg-accent text-fg-2 hover:text-on-accent border border-line hover:border-accent font-display font-medium text-xs transition-all whitespace-nowrap"
         >
           <span>{market?.capabilities.spot ? "Trade / Borrow" : "Inspect"}</span>
           <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -369,57 +369,57 @@ function MarketCardView({
   const isUp = (market?.priceChange24hPercent ?? 0) >= 0;
 
   return (
-    <div className="bg-[#0a0a0a] border border-[#222222] hover:border-[#313131] p-4 rounded-sm flex flex-col justify-between gap-4 transition-colors">
+    <div className="bg-raised border border-line hover:border-line-strong p-4 rounded-sm flex flex-col justify-between gap-4 transition-colors">
       <div>
         <div className="flex items-start justify-between gap-2">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded bg-[#161616] border border-[#262626] flex items-center justify-center font-display font-bold text-[#e5e5e5] text-sm shrink-0">
+            <div className="w-9 h-9 rounded bg-panel-subtle border border-line flex items-center justify-center font-display font-bold text-fg-2 text-sm shrink-0">
               {asset.ticker.slice(0, 3)}
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-bold text-[#f5f5f5] text-base font-display">
+                <span className="font-bold text-fg text-base font-display">
                   {asset.ticker}
                 </span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#171717] border border-[#242424] text-[#a4a4a4] font-display">
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-panel-subtle border border-line text-fg-3 font-display">
                   {asset.instrumentType}
                 </span>
               </div>
-              <span className="text-xs text-[#8d8d8d] block mt-0.5">{asset.name}</span>
+              <span className="text-xs text-muted block mt-0.5">{asset.name}</span>
             </div>
           </div>
           {isNative ? (
-            <span className="text-[10px] px-2 py-0.5 rounded bg-[rgba(229,229,229,0.1)] text-[#e5e5e5] border border-[rgba(229,229,229,0.25)] font-display font-medium">
+            <span className="text-[10px] px-2 py-0.5 rounded bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] text-fg-2 border border-[color-mix(in_srgb,var(--accent)_25%,transparent)] font-display font-medium">
               Native 4663
             </span>
           ) : isExternal ? (
-            <span className="text-[10px] px-2 py-0.5 rounded bg-[rgba(245,166,35,0.12)] text-[#f5a623] border border-[rgba(245,166,35,0.25)] font-display">
+            <span className="text-[10px] px-2 py-0.5 rounded bg-[color-mix(in_srgb,var(--warn)_12%,transparent)] text-warn border border-[color-mix(in_srgb,var(--warn)_25%,transparent)] font-display">
               External
             </span>
           ) : (
-            <span className="text-[10px] px-2 py-0.5 rounded bg-[#1d1d1d] text-[#919191] border border-[#2c2c2c] font-display">
+            <span className="text-[10px] px-2 py-0.5 rounded bg-panel-hover text-muted border border-line font-display">
               Research
             </span>
           )}
         </div>
 
         {/* Pricing Rows */}
-        <div className="grid grid-cols-2 gap-3 mt-4 pt-3 border-t border-[#161616] font-mono text-xs">
+        <div className="grid grid-cols-2 gap-3 mt-4 pt-3 border-t border-line-soft font-mono text-xs">
           <div>
-            <span className="text-[10px] text-[#858585] block uppercase font-sans whitespace-nowrap">
+            <span className="text-[10px] text-muted block uppercase font-sans whitespace-nowrap">
               Token Price (Chainlink)
             </span>
-            <span className="text-sm font-bold text-[#f5f5f5] whitespace-nowrap">
+            <span className="text-sm font-bold text-fg whitespace-nowrap">
               {market && market.tokenReferencePriceUsd > 0
                 ? `$${market.tokenReferencePriceUsd.toFixed(2)}`
                 : "—"}
             </span>
           </div>
           <div>
-            <span className="text-[10px] text-[#858585] block uppercase font-sans whitespace-nowrap">
+            <span className="text-[10px] text-muted block uppercase font-sans whitespace-nowrap">
               Underlying Reference
             </span>
-            <span className="text-sm text-[#c2c2c2] whitespace-nowrap">
+            <span className="text-sm text-fg-2 whitespace-nowrap">
               {market && market.underlyingReferencePrice > 0
                 ? formatUnderlyingPrice(market.underlyingReferencePrice, market.underlyingCurrency)
                 : "—"}
@@ -430,22 +430,22 @@ function MarketCardView({
         {/* 24h Change & Status */}
         <div className="flex items-center justify-between mt-3 text-xs whitespace-nowrap">
           <div className="whitespace-nowrap">
-            <span className="text-[10px] text-[#858585] block whitespace-nowrap">24h Change</span>
+            <span className="text-[10px] text-muted block whitespace-nowrap">24h Change</span>
             {market && market.priceChange24hPercent !== 0 ? (
               <span
                 className={`font-mono text-xs font-semibold whitespace-nowrap ${
-                  isUp ? "text-[#2ee6a6]" : "text-[#ff6b6b]"
+                  isUp ? "text-go" : "text-neg"
                 }`}
               >
                 {formatPercent(market.priceChange24hPercent, true)}
               </span>
             ) : (
-              <span className="text-[#727272] font-mono whitespace-nowrap">—</span>
+              <span className="text-muted font-mono whitespace-nowrap">—</span>
             )}
           </div>
           <div className="text-right whitespace-nowrap">
-            <span className="text-[10px] text-[#858585] block whitespace-nowrap">Status</span>
-            <span className="font-mono text-[11px] text-[#e5e5e5] whitespace-nowrap">
+            <span className="text-[10px] text-muted block whitespace-nowrap">Status</span>
+            <span className="font-mono text-[11px] text-fg-2 whitespace-nowrap">
               {market?.status === "NORMAL" ? "Active" : "Research Pipeline"}
             </span>
           </div>
@@ -454,7 +454,7 @@ function MarketCardView({
 
       <Link
         href={chinaMarketPath(asset.ticker)}
-        className="w-full flex items-center justify-center gap-1 py-2 rounded bg-[#151515] hover:bg-[#e5e5e5] text-[#cccccc] hover:text-[#000000] border border-[#282828] hover:border-[#e5e5e5] font-display font-medium text-xs transition-all whitespace-nowrap"
+        className="w-full flex items-center justify-center gap-1 py-2 rounded bg-panel-subtle hover:bg-accent text-fg-2 hover:text-on-accent border border-line hover:border-accent font-display font-medium text-xs transition-all whitespace-nowrap"
       >
         <span>Open Market Workspace</span>
         <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

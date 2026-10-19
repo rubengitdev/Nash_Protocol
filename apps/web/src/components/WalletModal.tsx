@@ -22,23 +22,23 @@ export function WalletModal({ isOpen, onClose }: WalletModalProps) {
       role="dialog"
       aria-modal="true"
       aria-label="Connect wallet"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 font-sans"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-page/85 backdrop-blur-sm p-4 font-sans"
     >
-      <div className="bg-surface w-full max-w-md rounded-sm p-6 border border-white/15 space-y-6">
+      <div className="bg-surface w-full max-w-md rounded-sm p-6 border border-ink/15 space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-white/10">
+        <div className="flex items-center justify-between pb-3 border-b border-ink/10">
           <div>
             <span className="text-[10px] text-muted uppercase tracking-widest block">
               [WEB3 PROVIDER]
             </span>
-            <h3 className="text-base font-bold text-white font-sans uppercase">
+            <h3 className="text-base font-bold text-ink font-sans uppercase">
               {isConnected ? "WALLET CONNECTED" : "CONNECT WALLET"}
             </h3>
           </div>
           <button
             aria-label="Close wallet dialog"
             onClick={onClose}
-            className="text-muted hover:text-white transition-colors"
+            className="text-muted hover:text-ink transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -46,7 +46,7 @@ export function WalletModal({ isOpen, onClose }: WalletModalProps) {
 
         {isConnected ? (
           <div className="py-2 space-y-4 font-sans text-xs uppercase">
-            <div className="bg-surface-subtle rounded-sm p-4 border border-white/10 space-y-1">
+            <div className="bg-surface-subtle rounded-sm p-4 border border-ink/10 space-y-1">
               <span className="text-[10px] text-muted block">
                 ACTIVE ADDRESS
               </span>
@@ -59,7 +59,7 @@ export function WalletModal({ isOpen, onClose }: WalletModalProps) {
                 disconnect();
                 onClose();
               }}
-              className="w-full py-3 bg-[#ff4d4d]/10 hover:bg-[#ff4d4d] text-[#ff4d4d] hover:text-white border border-[#ff4d4d]/30 font-bold text-xs rounded-sm transition-all uppercase tracking-widest"
+              className="w-full py-3 bg-neg-strong/10 hover:bg-neg-strong text-neg-strong hover:text-ink border border-neg-strong/30 font-bold text-xs rounded-sm transition-all uppercase tracking-widest"
             >
               DISCONNECT WALLET
             </button>
@@ -97,20 +97,20 @@ export function WalletModal({ isOpen, onClose }: WalletModalProps) {
                     }
                   }}
                   disabled={isPending}
-                  className="w-full text-left p-3.5 bg-surface-subtle hover:bg-[#101010] border border-white/10 hover:border-brand rounded-sm transition-all group flex justify-between items-center"
+                  className="w-full text-left p-3.5 btn-silver group flex justify-between items-center"
                 >
                   <div>
-                    <span className="font-bold text-white font-sans text-xs group-hover:text-brand transition-colors block">
+                    <span className="font-bold font-sans text-xs block">
                       {connector.name.toUpperCase()}
                     </span>
-                    <span className="text-[10px] text-muted block">
+                    <span className="text-[10px] block opacity-70">
                       CONNECT VIA {connector.name}
                     </span>
                   </div>
                   {isPending ? (
-                    <Loader2 className="w-4 h-4 text-brand animate-spin" />
+                    <Loader2 className="w-4 h-4 animate-spin" />
                   ) : (
-                    <ArrowUpRight className="w-4 h-4 text-brand" />
+                    <ArrowUpRight className="w-4 h-4" />
                   )}
                 </button>
               ))}

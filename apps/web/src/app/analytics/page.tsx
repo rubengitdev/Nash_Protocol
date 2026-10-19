@@ -38,6 +38,7 @@ export default function AnalyticsPage() {
   );
   return (
     <AppPage
+      banner="wave"
       eyebrow="Onchain analytics"
       title="A clearer view of your markets."
       description="Verified collateral, debt and liquidity from the configured lending markets. Every snapshot is tied to a confirmed block."

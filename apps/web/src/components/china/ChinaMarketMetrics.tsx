@@ -26,144 +26,144 @@ export function ChinaMarketMetrics({
 
       {/* 02. 8-GRID FINANCIAL METRIC CARDS */}
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 font-sans">
-        <div className="bg-[#0a0a0a] border border-[#222222] p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
-          <span className="text-[10px] text-[#858585] uppercase tracking-wider font-display block whitespace-nowrap truncate">
+        <div className="bg-raised border border-line p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
+          <span className="text-[10px] text-muted uppercase tracking-wider font-display block whitespace-nowrap truncate">
             Token Valuation (USDG)
           </span>
-          <span className="text-xl font-bold font-mono text-[#f5f5f5] block mt-1 whitespace-nowrap">
+          <span className="text-xl font-bold font-mono text-fg block mt-1 whitespace-nowrap">
             {market && market.tokenReferencePriceUsd > 0
               ? formatCurrency(market.tokenReferencePriceUsd)
               : "—"}
           </span>
-          <span className="text-[10px] text-[#8d8d8d] mt-0.5 block font-mono whitespace-nowrap truncate">
+          <span className="text-[10px] text-muted mt-0.5 block font-mono whitespace-nowrap truncate">
             Chainlink Total Return Feed
           </span>
         </div>
 
-        <div className="bg-[#0a0a0a] border border-[#222222] p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
-          <span className="text-[10px] text-[#858585] uppercase tracking-wider font-display block whitespace-nowrap truncate">
+        <div className="bg-raised border border-line p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
+          <span className="text-[10px] text-muted uppercase tracking-wider font-display block whitespace-nowrap truncate">
             Underlying Tape Price
           </span>
-          <span className="text-xl font-bold font-mono text-[#d5d5d5] block mt-1 whitespace-nowrap">
+          <span className="text-xl font-bold font-mono text-fg-2 block mt-1 whitespace-nowrap">
             {market && market.underlyingReferencePrice > 0
               ? formatUnderlyingPrice(market.underlyingReferencePrice, market.underlyingCurrency)
               : "—"}
           </span>
-          <span className="text-[10px] text-[#8d8d8d] mt-0.5 block font-mono whitespace-nowrap truncate">
+          <span className="text-[10px] text-muted mt-0.5 block font-mono whitespace-nowrap truncate">
             {asset.underlyingExchange} Consolidated Tape
           </span>
         </div>
 
-        <div className="bg-[#0a0a0a] border border-[#222222] p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
-          <span className="text-[10px] text-[#858585] uppercase tracking-wider font-display block whitespace-nowrap truncate">
+        <div className="bg-raised border border-line p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
+          <span className="text-[10px] text-muted uppercase tracking-wider font-display block whitespace-nowrap truncate">
             24h Spread &amp; Change
           </span>
           <div className="flex items-baseline gap-2 mt-1 whitespace-nowrap">
             <span
               className={`text-xl font-bold font-mono whitespace-nowrap ${
-                isUp ? "text-[#2ee6a6]" : "text-[#ff6b6b]"
+                isUp ? "text-go" : "text-neg"
               }`}
             >
               {market ? formatPercent(market.priceChange24hPercent, true) : "—"}
             </span>
-            <span className="text-[11px] text-[#919191] font-mono whitespace-nowrap">
+            <span className="text-[11px] text-muted font-mono whitespace-nowrap">
               {market ? `${market.spreadBps} bps` : ""}
             </span>
           </div>
-          <span className="text-[10px] text-[#8d8d8d] mt-0.5 block font-mono truncate whitespace-nowrap">
+          <span className="text-[10px] text-muted mt-0.5 block font-mono truncate whitespace-nowrap">
             Bid/Ask: ${market?.executableBidPrice ?? "—"} / ${market?.executableAskPrice ?? "—"}
           </span>
         </div>
 
-        <div className="bg-[#0a0a0a] border border-[#222222] p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
-          <span className="text-[10px] text-[#858585] uppercase tracking-wider font-display block whitespace-nowrap truncate">
+        <div className="bg-raised border border-line p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
+          <span className="text-[10px] text-muted uppercase tracking-wider font-display block whitespace-nowrap truncate">
             24h Tokenized Volume
           </span>
-          <span className="text-xl font-bold font-mono text-[#f5f5f5] block mt-1 whitespace-nowrap">
+          <span className="text-xl font-bold font-mono text-fg block mt-1 whitespace-nowrap">
             {market && market.volume24hUsd > 0
               ? formatCurrency(market.volume24hUsd, 0)
               : "—"}
           </span>
-          <span className="text-[10px] text-[#8d8d8d] mt-0.5 block font-mono whitespace-nowrap truncate">
+          <span className="text-[10px] text-muted mt-0.5 block font-mono whitespace-nowrap truncate">
             Robinhood Chain Liquidity
           </span>
         </div>
 
-        <div className="bg-[#0a0a0a] border border-[#222222] p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
-          <span className="text-[10px] text-[#858585] uppercase tracking-wider font-display block whitespace-nowrap truncate">
+        <div className="bg-raised border border-line p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
+          <span className="text-[10px] text-muted uppercase tracking-wider font-display block whitespace-nowrap truncate">
             Max Opening LTV
           </span>
-          <span className="text-xl font-bold font-mono text-[#e5e5e5] block mt-1 whitespace-nowrap">
+          <span className="text-xl font-bold font-mono text-fg-2 block mt-1 whitespace-nowrap">
             {market && market.openingLtv > 0 ? `${market.openingLtv.toFixed(1)}%` : "—"}
           </span>
-          <span className="text-[10px] text-[#8d8d8d] mt-0.5 block font-mono whitespace-nowrap truncate">
+          <span className="text-[10px] text-muted mt-0.5 block font-mono whitespace-nowrap truncate">
             Isolated Risk Ceiling
           </span>
         </div>
 
-        <div className="bg-[#0a0a0a] border border-[#222222] p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
-          <span className="text-[10px] text-[#858585] uppercase tracking-wider font-display block whitespace-nowrap truncate">
+        <div className="bg-raised border border-line p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
+          <span className="text-[10px] text-muted uppercase tracking-wider font-display block whitespace-nowrap truncate">
             Liquidation Threshold
           </span>
-          <span className="text-xl font-bold font-mono text-[#f5a623] block mt-1 whitespace-nowrap">
+          <span className="text-xl font-bold font-mono text-warn block mt-1 whitespace-nowrap">
             {market && market.liquidationThreshold > 0
               ? `${market.liquidationThreshold.toFixed(1)}%`
               : "—"}
           </span>
-          <span className="text-[10px] text-[#8d8d8d] mt-0.5 block font-mono whitespace-nowrap truncate">
+          <span className="text-[10px] text-muted mt-0.5 block font-mono whitespace-nowrap truncate">
             Bonus: {market?.liquidationPenaltyPercent ?? 5}% penalty
           </span>
         </div>
 
-        <div className="bg-[#0a0a0a] border border-[#222222] p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
-          <span className="text-[10px] text-[#858585] uppercase tracking-wider font-display block whitespace-nowrap truncate">
+        <div className="bg-raised border border-line p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
+          <span className="text-[10px] text-muted uppercase tracking-wider font-display block whitespace-nowrap truncate">
             Borrow APR / Supply APY
           </span>
           <div className="flex items-baseline gap-2 mt-1 whitespace-nowrap">
-            <span className="text-xl font-bold font-mono text-[#f5f5f5] whitespace-nowrap">
+            <span className="text-xl font-bold font-mono text-fg whitespace-nowrap">
               {market && market.borrowApr > 0 ? `${market.borrowApr.toFixed(2)}%` : "—"}
             </span>
-            <span className="text-[11px] text-[#e5e5e5] font-mono whitespace-nowrap">
+            <span className="text-[11px] text-fg-2 font-mono whitespace-nowrap">
               {market && market.supplyApy > 0 ? `(${market.supplyApy.toFixed(2)}% APY)` : ""}
             </span>
           </div>
-          <span className="text-[10px] text-[#8d8d8d] mt-0.5 block font-mono whitespace-nowrap truncate">
+          <span className="text-[10px] text-muted mt-0.5 block font-mono whitespace-nowrap truncate">
             Interest Accrues in USDG
           </span>
         </div>
 
-        <div className="bg-[#0a0a0a] border border-[#222222] p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
-          <span className="text-[10px] text-[#858585] uppercase tracking-wider font-display block whitespace-nowrap truncate">
+        <div className="bg-raised border border-line p-3.5 rounded-sm whitespace-nowrap overflow-hidden">
+          <span className="text-[10px] text-muted uppercase tracking-wider font-display block whitespace-nowrap truncate">
             Available USDG Liquidity
           </span>
-          <span className="text-xl font-bold font-mono text-[#e5e5e5] block mt-1 whitespace-nowrap">
+          <span className="text-xl font-bold font-mono text-fg-2 block mt-1 whitespace-nowrap">
             {market && market.availableLiquidityUsd > 0
               ? formatCurrency(market.availableLiquidityUsd, 0)
               : "—"}
           </span>
-          <span className="text-[10px] text-[#8d8d8d] mt-0.5 block font-mono whitespace-nowrap truncate">
+          <span className="text-[10px] text-muted mt-0.5 block font-mono whitespace-nowrap truncate">
             Debt Cap: {market ? formatCurrency(market.debtCapUsd, 0) : "—"}
           </span>
         </div>
       </div>
 
       {/* 03. CORPORATE ACTION & PRICE SEPARATION AUDIT PANEL */}
-      <div className="bg-[#0a0a0a] border border-[#222222] p-5 rounded-sm">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#161616] pb-4 whitespace-nowrap">
+      <div className="bg-raised border border-line p-5 rounded-sm">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-line-soft pb-4 md:whitespace-nowrap">
           <div>
-            <span className="text-[11px] uppercase tracking-wider text-[#e5e5e5] font-display font-bold block whitespace-nowrap">
+            <span className="text-[11px] uppercase tracking-wider text-fg-2 font-display font-bold block md:whitespace-nowrap">
               Oracle Multiplier &amp; Corporate Action State
             </span>
-            <h3 className="text-sm font-bold text-[#f5f5f5] font-display mt-0.5 whitespace-nowrap">
+            <h3 className="text-sm font-bold text-fg font-display mt-0.5">
               Active Economic Adjustment Multiplier:{" "}
-              <span className="font-mono text-[#e5e5e5] whitespace-nowrap">
+              <span className="font-mono text-fg-2 whitespace-nowrap">
                 {market ? market.corporateActionMultiplier.toFixed(4) : "1.0000"}x
               </span>
             </h3>
           </div>
           <div className="flex items-center gap-2 whitespace-nowrap">
-            <span className="text-xs text-[#8d8d8d] whitespace-nowrap">Status:</span>
-            <span className="px-2 py-0.5 rounded bg-[rgba(229,229,229,0.1)] text-[#e5e5e5] border border-[rgba(229,229,229,0.25)] text-xs font-display font-medium whitespace-nowrap">
+            <span className="text-xs text-muted whitespace-nowrap">Status:</span>
+            <span className="px-2 py-0.5 rounded bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] text-fg-2 border border-[color-mix(in_srgb,var(--accent)_25%,transparent)] text-xs font-display font-medium whitespace-nowrap">
               {market?.multiplierStatus || "NORMAL"} · NO PENDING SPLIT
             </span>
           </div>
@@ -171,28 +171,28 @@ export function ChinaMarketMetrics({
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 text-xs">
           <div>
-            <span className="text-[#858585] block font-display uppercase text-[10px]">
+            <span className="text-muted block font-display uppercase text-[10px]">
               01 / Valuation Invariant
             </span>
-            <p className="text-[#8d8d8d] mt-1 leading-relaxed">
+            <p className="text-muted mt-1 leading-relaxed">
               Chainlink published feed already incorporates the cumulative corporate action
               multiplier. Nash applies zero secondary multiplier to prevent artificial inflation.
             </p>
           </div>
           <div>
-            <span className="text-[#858585] block font-display uppercase text-[10px]">
+            <span className="text-muted block font-display uppercase text-[10px]">
               02 / Depositary Backing Ratio
             </span>
-            <p className="text-[#8d8d8d] mt-1 leading-relaxed">
-              Instrument structure: <strong className="text-[#f5f5f5]">{asset.depositaryStructure}</strong>.
-              Conversion ratio is <strong className="text-[#f5f5f5]">{asset.depositaryRatio}</strong>.
+            <p className="text-muted mt-1 leading-relaxed">
+              Instrument structure: <strong className="text-fg">{asset.depositaryStructure}</strong>.
+              Conversion ratio is <strong className="text-fg">{asset.depositaryRatio}</strong>.
             </p>
           </div>
           <div>
-            <span className="text-[#858585] block font-display uppercase text-[10px]">
+            <span className="text-muted block font-display uppercase text-[10px]">
               03 / Outage &amp; Halt Guard
             </span>
-            <p className="text-[#8d8d8d] mt-1 leading-relaxed">
+            <p className="text-muted mt-1 leading-relaxed">
               If underlying stock halts or Chainlink heartbeat exceeds 3600s, borrowing and
               long leverage are automatically paused while debt repayment remains enabled.
             </p>
@@ -272,33 +272,33 @@ function ChinaInteractiveChart({
   };
 
   return (
-    <div className="bg-[#0a0a0a] border border-[#222222] p-5 rounded-sm flex flex-col gap-4 font-sans">
+    <div className="bg-raised border border-line p-5 rounded-sm flex flex-col gap-4 font-sans">
       {/* HEADER & TIMEFRAME SELECTOR */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#161616] pb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-line-soft pb-3">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] text-[#858585] uppercase font-display tracking-wider">
+            <span className="text-[10px] text-muted uppercase font-display tracking-wider">
               Market Depth &amp; Verified Price History
             </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#2ee6a6] animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-go animate-pulse" />
           </div>
           <div className="flex items-baseline gap-3 mt-1">
-            <h4 className="text-xl font-bold font-mono text-[#f5f5f5]">
+            <h4 className="text-xl font-bold font-mono text-fg">
               ${activeVal.toFixed(2)}
             </h4>
             <span
               className={`text-xs font-mono font-semibold ${
-                isPointUp ? "text-[#2ee6a6]" : "text-[#ff6b6b]"
+                isPointUp ? "text-go" : "text-neg"
               }`}
             >
               {formatPercent(activeChange, true)}
             </span>
             {isHovered ? (
-              <span className="text-[11px] text-[#919191] font-mono">
+              <span className="text-[11px] text-muted font-mono">
                 (Session {activeIdx + 1} of {points.length})
               </span>
             ) : (
-              <span className="text-[11px] text-[#919191] font-mono">
+              <span className="text-[11px] text-muted font-mono">
                 (Latest Mark)
               </span>
             )}
@@ -307,7 +307,7 @@ function ChinaInteractiveChart({
 
         {/* Timeframe selector + 52w info */}
         <div className="flex items-center gap-2">
-          <div className="flex items-center bg-[#0e0e0e] border border-[#292929] p-0.5 rounded font-display text-[11px]">
+          <div className="flex items-center bg-panel border border-line p-0.5 rounded font-display text-[11px]">
             {(["7D", "14D", "1M"] as const).map((tf) => (
               <button
                 key={tf}
@@ -317,8 +317,8 @@ function ChinaInteractiveChart({
                 }}
                 className={`px-2.5 py-1 rounded transition-all font-medium ${
                   timeframe === tf
-                    ? "bg-[#e5e5e5] text-[#000000] font-bold shadow-[0_0_8px_rgba(229,229,229,0.2)]"
-                    : "text-[#919191] hover:text-white"
+                    ? "bg-accent text-on-accent font-bold"
+                    : "text-muted hover:text-ink"
                 }`}
               >
                 {tf}
@@ -329,11 +329,11 @@ function ChinaInteractiveChart({
       </div>
 
       {/* DYNAMIC SVG CHART WITH HOVER CROSSHAIR */}
-      <div className="relative h-56 w-full bg-[#000000] border border-[#161616] rounded-sm flex flex-col justify-end p-4 overflow-hidden select-none">
+      <div className="relative h-56 w-full bg-page border border-line-soft rounded-sm flex flex-col justify-end p-4 overflow-hidden select-none">
         {/* Floating HUD Tooltip on Hover */}
         {isHovered && (
           <div
-            className="pointer-events-none absolute z-20 flex flex-col gap-1 rounded bg-[#0e0e0e]/95 border border-[#292929] px-3 py-2 shadow-[0_6px_24px_rgba(0,0,0,0.85)] backdrop-blur-md transition-all duration-75 min-w-[140px]"
+            className="pointer-events-none absolute z-20 flex flex-col gap-1 rounded bg-panel/95 border border-line px-3 py-2 shadow-[0_6px_24px_color-mix(in_srgb,var(--bg)_85%,transparent)] backdrop-blur-md transition-all duration-75 min-w-[140px]"
             style={{
               left: `${Math.max(16, Math.min(84, (activePoint.x / 600) * 100))}%`,
               top: "14px",
@@ -341,22 +341,22 @@ function ChinaInteractiveChart({
             }}
           >
             <div className="flex items-center justify-between gap-2">
-              <span className="font-mono text-sm font-bold text-[#f5f5f5]">
+              <span className="font-mono text-sm font-bold text-fg">
                 ${activePoint.val.toFixed(2)}
               </span>
               <span
                 className={`font-mono text-[10px] font-semibold px-1 py-0.5 rounded ${
                   isPointUp
-                    ? "bg-[rgba(229,229,229,0.12)] text-[#e5e5e5]"
-                    : "bg-[rgba(255,107,107,0.12)] text-[#ff6b6b]"
+                    ? "bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] text-fg-2"
+                    : "bg-[color-mix(in_srgb,var(--neg)_12%,transparent)] text-neg"
                 }`}
               >
                 {formatPercent(activeChange, true)}
               </span>
             </div>
-            <div className="flex items-center justify-between text-[10px] text-[#858585] font-mono pt-1 border-t border-[#1d1d1d]">
+            <div className="flex items-center justify-between text-[10px] text-muted font-mono pt-1 border-t border-line-soft">
               <span>Session #{activeIdx + 1}</span>
-              <span className="text-[#e5e5e5] font-medium">Chainlink Oracle</span>
+              <span className="text-fg-2 font-medium">Chainlink Oracle</span>
             </div>
           </div>
         )}
@@ -380,8 +380,8 @@ function ChinaInteractiveChart({
         >
           <defs>
             <linearGradient id="realChartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#e5e5e5" stopOpacity="0.22" />
-              <stop offset="100%" stopColor="#e5e5e5" stopOpacity="0.0" />
+              <stop offset="0%" stopColor="var(--text-2)" stopOpacity="0.22" />
+              <stop offset="100%" stopColor="var(--text-2)" stopOpacity="0.0" />
             </linearGradient>
           </defs>
 
@@ -392,15 +392,15 @@ function ChinaInteractiveChart({
           <path
             d={pathD}
             fill="none"
-            stroke="#e5e5e5"
+            stroke="var(--accent)"
             strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
 
           {/* Horizontal Grid Guidelines */}
-          <line x1="0" y1="30" x2="600" y2="30" stroke="#222222" strokeWidth="0.8" strokeDasharray="3 3" />
-          <line x1="0" y1="70" x2="600" y2="70" stroke="#222222" strokeWidth="0.8" strokeDasharray="3 3" />
+          <line x1="0" y1="30" x2="600" y2="30" stroke="var(--line)" strokeWidth="0.8" strokeDasharray="3 3" />
+          <line x1="0" y1="70" x2="600" y2="70" stroke="var(--line)" strokeWidth="0.8" strokeDasharray="3 3" />
 
           {/* Hover Crosshairs & Indicators */}
           {isHovered && (
@@ -411,7 +411,7 @@ function ChinaInteractiveChart({
                 y1="0"
                 x2={activePoint.x}
                 y2="120"
-                stroke="#e5e5e5"
+                stroke="var(--accent)"
                 strokeWidth="1.2"
                 strokeDasharray="3 3"
                 opacity="0.65"
@@ -423,7 +423,7 @@ function ChinaInteractiveChart({
                 y1={activePoint.y}
                 x2="600"
                 y2={activePoint.y}
-                stroke="#919191"
+                stroke="var(--muted)"
                 strokeWidth="0.8"
                 strokeDasharray="2 2"
                 opacity="0.3"
@@ -434,7 +434,7 @@ function ChinaInteractiveChart({
                 cx={activePoint.x}
                 cy={activePoint.y}
                 r="7"
-                fill="rgba(229,229,229,0.25)"
+                fill="color-mix(in srgb, var(--accent) 25%, transparent)"
               />
 
               {/* Core Dot on Point */}
@@ -442,8 +442,8 @@ function ChinaInteractiveChart({
                 cx={activePoint.x}
                 cy={activePoint.y}
                 r="3.5"
-                fill="#e5e5e5"
-                stroke="#000000"
+                fill="var(--text-2)"
+                stroke="var(--bg)"
                 strokeWidth="1.5"
               />
             </g>
@@ -454,22 +454,22 @@ function ChinaInteractiveChart({
         </svg>
 
         {/* BOTTOM METADATA BAR */}
-        <div className="flex items-center justify-between text-[10px] text-[#858585] font-mono pt-2 border-t border-[#161616] mt-2">
+        <div className="flex items-center justify-between text-[10px] text-muted font-mono pt-2 border-t border-line-soft mt-2">
           <span>
-            Start: <strong className="text-[#c2c2c2]">${firstPrice.toFixed(2)}</strong>
+            Start: <strong className="text-fg-2">${firstPrice.toFixed(2)}</strong>
           </span>
           <span>
             Low / High:{" "}
-            <strong className="text-[#c2c2c2]">
+            <strong className="text-fg-2">
               ${minP.toFixed(2)} - ${maxP.toFixed(2)}
             </strong>
           </span>
           <span>
             {isHovered ? (
-              <span className="text-[#e5e5e5]">Hover Active</span>
+              <span className="text-fg-2">Hover Active</span>
             ) : (
               <span>
-                Latest: <strong className="text-[#e5e5e5]">${latestPrice.toFixed(2)}</strong>
+                Latest: <strong className="text-fg-2">${latestPrice.toFixed(2)}</strong>
               </span>
             )}
           </span>

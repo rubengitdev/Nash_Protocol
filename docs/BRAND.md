@@ -2,7 +2,99 @@
 
 > Tone: intelligent, insightful, authoritative, never impenetrable. Use real-world analogies to explain hard ideas. Be inclusive: this protocol is for everyone at the table, not only insiders.
 
-## 1. Identity
+## 0. Current design system: light by default
+
+The site follows <https://www.newt.foundation/>: a bone ground, coal ink, hairline borders, a monospace display face and a 3D glyph ribbon. It ships two themes on one set of tokens. **Light is the default**; the OS colour scheme is deliberately not consulted. A toggle in the header switches to dark and remembers the choice (`localStorage` key `nash-theme`; a script in `<head>` applies it before first paint, so there is no flash).
+
+### Tokens
+
+One source: `apps/web/src/app/globals.css` (CSS variables on `:root` for light and `:root[data-theme="dark"]`), mirrored by `apps/web/tailwind.config.ts`, where every colour is a CSS variable with opacity support (`bg-go/15`, `border-ink/10`).
+
+| Role | Light | Dark | Class / variable |
+| :--- | :--- | :--- | :--- |
+| Page | `#fefdf9` (bone) | `#010101` (coal) | `bg-page`, `--bg` |
+| Panels | `#f9f8f4` `#f4f3ef` `#ebeae6` | `#101010` `#151515` `#1c1c1c` | `bg-panel`, `bg-panel-subtle`, `bg-panel-hover` |
+| Hairlines | `#e5e4e0` (10% ink) | `#262626` | `border-line`, `border-line-soft`, `border-line-strong` |
+| Text | `#010101` | `#fefdf9` | `text-fg`, `text-ink` (strongest), `text-fg-2`, `text-fg-3` |
+| Secondary text | `#656462` (60% ink) | `#8d8d8d` | `text-muted`, `text-dim` (faintest, 3.9:1: never for anything that must be read) |
+| Every button | black, bone label, 1px black border | bone, black label, 1px bone border | `--btn-bg`, `--btn-fg`, `--btn-border` (see Interaction) |
+| Accent (selected, links) | `#010101` | `#e5e5e5` | `--accent` (also `--green`, `--emerald`: legacy names) |
+| Good / go / long | `#087a50` | `#2ee6a6` | `text-go`, `bg-go/15` |
+| Loss / short / danger | `#c8102e` | `#ff6b6b` | `text-neg`, `bg-neg-strong` |
+| Caution | `#9a5b00` | `#f5a623` | `text-warn` |
+| Sand (shader speckle) | `#d6b376` | `#d6b376` | `--sand` |
+
+**Colour is meaning.** Green is good or long, red is loss or short, amber is caution. Every button wears one skin: the opposite of its surface, so black on the light theme and bone on the dark theme, with a 1px border in its own colour (Open App and Connect Wallet included). Long and Short submit buttons keep their green and red because they carry direction. Selected tabs use the accent (`bg-accent text-on-accent`). Do not hard-code hex in components: use a token, or the role is lost in one theme. Canvas libraries cannot read CSS variables, so they carry a per-theme palette (`TradingViewChart.tsx`).
+
+### Type
+
+| Role | Family |
+| :--- | :--- |
+| Headings, wordmark, numbers in display | **Space Mono** 400/700, italic included (`font-display`, `--display`) |
+| Interface and body | **Inter** variable (`font-sans`, `--body`) |
+| Data, addresses | JetBrains Mono (`font-mono`) |
+
+All three are SIL OFL and self-hosted in `apps/web/public/fonts/`. Hero H1 is 64px bold, section H2 40px regular, body 14px with 0.28px tracking, as on the reference.
+
+### Layout and chrome
+
+- 1440px container, 24px gutter, 80px fixed header (hairline appears on scroll), 2px radius everywhere.
+- **Logo**: the silver N mark on a black tile (`BrandMark` in `components/navigation.tsx`) beside the wordmark in Space Mono. The mark is only ever placed on black.
+- **Footer** is always the inverse theme (`.theme-inverse` re-declares the tokens): black on light, bone on dark.
+- **Header.** Landing: logo, CA chip ("Coming soon" until `NEXT_PUBLIC_TOKEN_CA` is set), network badge, Open App, Connect Wallet, theme toggle; no page links. App: logo, the eight page links, network badge, Connect Wallet, theme toggle. The badge is a status label: the network is fixed per deployment (`NETWORK_MODE`), so it does not switch.
+- **Landing page:** hero (infinity ribbon, headline, two buttons; no captions), Features (a ribbon stage above six clickable cards), How it works (four figures), closing banner (three silver ribbons on a black panel, Open App). `/docs` holds the user-facing documentation and `/faq` the FAQ. The footer carries the CA and a Docs link.
+
+### The 3D glyph field
+
+The reference's "3D" is not a mesh. It stacks text rows; each row places a few block characters (light shade to solid) at sine offsets, and a silhouette profile sets the width. The result reads as a twisting ribbon. The pointer widens the rows near it, the hero grows in over about 2.2s, and with `prefers-reduced-motion` every field renders one still frame.
+
+**How it is drawn (and why it is cheap).** `layoutCells()` in `glyphEngine.ts` works out where each cell sits on the CPU (a few thousand cells, well under a millisecond) and uploads one `(x, y, shade)` per cell. One shared WebGL2 context then draws every cell as an instanced quad, so the GPU work follows the number of cells, not the number of pixels times columns (an earlier per-pixel shader looped over every column for every pixel and made the hero lag on integrated GPUs). Around that:
+
+- fields are capped at about 1.5M pixels and drawn at 30 fps;
+- while the page scrolls, and while the header focus veil is up, the fields hold their last frame (a field that has never been painted still gets its first);
+- the loop sleeps when nothing is animating, and off-screen or hidden fields are not drawn;
+- if frames arrive late the fields step down in resolution, then frame rate, and climb back after a calm spell;
+- pointer widening only uses the room each row has left inside the canvas (a smooth limit in `layoutCells`), so a ribbon that already spans the full width swells where it can and is never cut off at the edge; the rest shape is unchanged;
+- the header carries no `backdrop-filter`, because it would re-blur the animated hero on every frame.
+
+Measure changes with Chrome on a real GPU (`--use-angle=gl --enable-gpu`); software GL (swiftshader) exaggerates compositing cost and says little about real machines.
+
+Shapes (`GlyphShape`): `diamond`, `hourglass`, `cone`, `infinity` (a horizontal lemniscate; four strands per row, one on each branch of the curve), `strands`, `bands`, `spiral`, `blocks`, `opposing`, `wave`. Where they are used:
+
+| Place | Figure |
+| :--- | :--- |
+| Landing hero | `infinity`, exactly as wide as the header content (the canvas is `.landing-hero-field`, inset to the page container, so its edges line up with the logo and the right-hand controls at every width; `mag` is set so the outer strand reaches about 1% short of each edge). On phones it sits under the copy via the preset's `compact` override |
+| Landing Features stage | `cone` Earn, `blocks` Lending, `opposing` Trade, `bands` China Equities, `spiral` Pons, `diamond` Auto-Protect. Changing card calls `morphKey`: the figure collapses to a stub and regrows |
+| Landing How it works | `cone`, `opposing`, `diamond`, `hourglass`, solid (no sand speckle) |
+| App pages (`AppPage` `banner` prop: a frameless ribbon beside the page title; `PageRibbon compact` is the thin strip on the Pons trade workspace) | Markets `strands`, China `bands`, Pons `spiral`, Lending `blocks`, Trade `opposing` (compact strip on the workspace), Earn `cone`, Portfolio `diamond`, Analytics `wave` |
+
+| Piece | File |
+| :--- | :--- |
+| Presets (hero, banners, heading ribbons, stage, steps, emblems) | `apps/web/src/components/glyph/glyphPresets.ts` |
+| Shared renderer: one WebGL2 context drawn into every canvas | `.../glyph/glyphEngine.ts` |
+| React wrapper (`morphKey`, `interactive`) | `.../glyph/GlyphField.tsx` |
+| Landing sections | `apps/web/src/components/landing/` |
+| Ribbon on feature pages, card emblems | `apps/web/src/components/PageRibbon.tsx`, `Emblem.tsx` |
+
+Tune a preset with its comments: `cols`, `mag`, `freqX`, `freqY`, `density`, `height`, `lean`, `centerY`, `compact`.
+
+### Interaction
+
+All of it is CSS under "Round 2" in `globals.css`, plus `ButtonFx.tsx` (the click ripple).
+
+- **Buttons.** One skin for `.btn-action`, `.btn-silver`, `.btn-ghost`, `.landing-btn`, `.app-button`, `.launch` (class names are historical): black on a light surface or bone on a dark surface (the opposite of the surface it sits on, so the black closing banner always carries the bone button) with a 1px border in its own colour and a 2px radius. Outline variants (`.app-button.secondary`, `.btn-ghost`, `.landing-btn-outline`) differ only in a softer border. Hover shows a faint tint, a glass flare sweeping across and a firmer border; press shows a ripple from the click point (`ButtonFx.tsx`). **Nothing moves**: no translate, scale or rolling label on hover or press. Tokens: `--btn-bg`, `--btn-bg-hover`, `--btn-fg`, `--btn-border`, `--btn-border-soft`, `--btn-flare`, `--btn-ripple`. Do not add a new button style; use one of these classes.
+- **Fields.** Inputs, selects and textareas inside `.app-page` keep the colour of the surface (white on light, black on dark; `--field-*` tokens, not the button tokens), with a soft border that firms on focus and a custom chevron on selects.
+- **Cards** (`.fx-card`): on hover or focus an ASCII border (░▒▓█ tiles on a 4px ring, drawn with a mask, no extra DOM) marches around the edge and the flare sweeps across. Add the class to a card; do not use it on an element that already uses `::before` or `::after`.
+- **Nav focus.** Hovering or keyboard-focusing a header link blurs the page behind a veil (`.nav-veil`, an overlay, so fixed dialogs keep their position) and softens the other header items. Off on touch screens.
+- **Smooth scroll.** Lenis, on the landing page only (`LandingScroll`); app pages keep native scroll because their tables, charts and dialogs scroll on their own.
+- **Signature elements** (what makes the pages Nash and not a template):
+  - *Heading ribbon*: every feature page's heading is two columns, title left and a frameless ribbon right (fading at top and bottom), under a rule made of the ASCII dither that fades out to the right. Page content shares the header's 24px gutter, so everything aligns to the logo edge.
+  - *Emblems* (`Emblem.tsx`): a small ribbon in a hairline frame signs a card with its feature's shape (landing Features cards use them instead of stock icons; empty and error states use an hourglass). It is a still frame and drifts only while the card is hovered or focused, so it costs nothing at rest. Put it inside an `.fx-card` or any `[data-glyph-host]`.
+- **Reduced motion.** No flare, ripple, march, veil blur, Lenis or shader animation; hover colour changes stay.
+
+> Sections 1 to 4 below document the previous black-field design (hooded figure, Newsreader, Montserrat, silver on black). The landing no longer uses it. The components are kept in `apps/web/src/components/nash/` and are unused, as are the old hero scene and its `three` / `katex` / `ogl` dependencies, which can be deleted when no longer wanted (`lenis` is used again by the landing page).
+
+## 1. Identity (legacy palette and hero; name, tagline and mark are current)
 
 | | |
 | :--- | :--- |
@@ -46,7 +138,7 @@ The accent variables are still called `--green` and `--emerald` (and Tailwind's 
 
 ### Logo rules
 
-- Use the mark on black only; the silver reads best against the banner's field.
+- Use the mark on black only; the silver reads best against the banner's field. On the light site it sits on a black tile.
 - Clear space equal to one strand width on every side.
 - Wordmark: `NASH` in Montserrat 700, tracking `0.34em`, silver-light, over `PROTOCOL` in Montserrat 500, tracking `0.52em`, steel.
 - Never recolour the ribbon, add outlines, or place it on a busy photo.
@@ -151,8 +243,14 @@ Every historical claim on the site was checked against a source (below). Anythin
 | Concern | File |
 | :--- | :--- |
 | Tokens and `@font-face` | `apps/web/src/app/globals.css` (head), `apps/web/tailwind.config.ts` |
-| Landing styles | `apps/web/src/app/nash.css` |
-| Hero 3D scene | `apps/web/src/components/nash/NashHeroScene.tsx` |
+| Landing sections | `apps/web/src/components/landing/` (current); `apps/web/src/app/nash.css` styles the legacy sections |
+| 3D glyph field | `apps/web/src/components/glyph/` |
+| Theme provider, toggle | `apps/web/src/providers/ThemeProvider.tsx`, `apps/web/src/components/ThemeToggle.tsx` |
+| Header, footer, mobile drawer | `apps/web/src/components/Header.tsx`, `Footer.tsx`, `MobileNavigation.tsx`, `navigation.tsx` |
+| Network badge, CA chip | `apps/web/src/components/NetworkBadge.tsx`, `CaChip.tsx` |
+| Click ripple, smooth scroll | `apps/web/src/components/ButtonFx.tsx`, `landing/LandingScroll.tsx` |
+| Docs page | `apps/web/src/app/docs/page.tsx` (copy restates text already on the site; add nothing the product does not say) |
+| Legacy hero 3D scene (unused) | `apps/web/src/components/nash/NashHeroScene.tsx` |
 | The figure | `figures.ts` (the field), `sculpt.ts` (mesher), `figures.worker.ts` and `loadFigure.ts` (off the main thread) |
 | Formulas | `HeroFormulas.tsx`, `formulas.generated.ts`, generated by `scripts/render-formulas.mjs` |
 | Sections | `apps/web/src/components/nash/*` |

@@ -177,6 +177,7 @@ export default function PortfolioPage() {
 
   return (
     <AppPage
+      banner="diamond"
       eyebrow="Your portfolio"
       title="Your positions, together."
       description="Review collateral, debt and equity across your configured markets and tokenized Chinese equities."
