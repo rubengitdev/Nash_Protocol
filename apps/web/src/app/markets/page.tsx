@@ -8,6 +8,7 @@ import { marketDeployments } from "../../lib/market-deployments";
 export default function MarketsPage() {
   return (
     <AppPage
+      banner="strands"
       eyebrow="Market directory"
       title="Find your next market."
       description="Explore tokenized equities, compare market parameters, and choose where to put your assets to work."
@@ -63,7 +64,7 @@ export default function MarketsPage() {
           ))}
         </div>
       </section>
-      <section className="app-panel pons-crosslink" style={{ marginTop: 32 }}>
+      <section className="app-panel fx-card pons-crosslink" style={{ marginTop: 32 }}>
         <div className="app-section-label">
           <span>02 / Pons graduated assets</span>
         </div>
@@ -76,7 +77,7 @@ export default function MarketsPage() {
           Explore Pons markets ↗
         </Link>
       </section>
-      <section className="app-panel china-crosslink" style={{ marginTop: 24 }}>
+      <section className="app-panel fx-card china-crosslink" style={{ marginTop: 24 }}>
         <div className="app-section-label">
           <span>03 / Chinese Equities · Robinhood Chain</span>
         </div>

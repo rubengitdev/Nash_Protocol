@@ -22,53 +22,53 @@ interface TradePanelProps {
 
 export function TradePanelSkeleton() {
   return (
-    <div className="bg-surface border border-white/10 rounded-sm p-6 sm:p-8 font-sans animate-pulse">
+    <div className="bg-surface border border-ink/10 rounded-sm p-6 sm:p-8 font-sans animate-pulse">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         {/* Left Col Shimmer */}
         <div className="lg:col-span-7 space-y-6">
           <div className="grid grid-cols-3 gap-2">
-            <div className="h-10 bg-white/10 rounded-sm" />
-            <div className="h-10 bg-white/5 rounded-sm" />
-            <div className="h-10 bg-white/5 rounded-sm" />
+            <div className="h-10 bg-ink/10 rounded-sm" />
+            <div className="h-10 bg-ink/5 rounded-sm" />
+            <div className="h-10 bg-ink/5 rounded-sm" />
           </div>
 
           <div className="space-y-3 pt-2">
             <div className="flex justify-between items-center">
-              <div className="h-3 w-36 bg-white/10 rounded-xs" />
-              <div className="h-3 w-28 bg-white/10 rounded-xs" />
+              <div className="h-3 w-36 bg-ink/10 rounded-xs" />
+              <div className="h-3 w-28 bg-ink/10 rounded-xs" />
             </div>
-            <div className="h-14 bg-white/5 border border-white/10 rounded-sm" />
+            <div className="h-14 bg-ink/5 border border-ink/10 rounded-sm" />
           </div>
 
           <div className="space-y-3 pt-2">
             <div className="flex justify-between items-center">
-              <div className="h-3 w-40 bg-white/10 rounded-xs" />
-              <div className="h-3 w-24 bg-white/10 rounded-xs" />
+              <div className="h-3 w-40 bg-ink/10 rounded-xs" />
+              <div className="h-3 w-24 bg-ink/10 rounded-xs" />
             </div>
-            <div className="h-14 bg-white/5 border border-white/10 rounded-sm" />
+            <div className="h-14 bg-ink/5 border border-ink/10 rounded-sm" />
           </div>
 
           <div className="space-y-3 pt-2">
             <div className="flex justify-between items-center">
-              <div className="h-3 w-32 bg-white/10 rounded-xs" />
+              <div className="h-3 w-32 bg-ink/10 rounded-xs" />
               <div className="h-5 w-16 bg-brand/20 rounded-xs" />
             </div>
-            <div className="h-2 w-full bg-white/5 rounded-sm" />
+            <div className="h-2 w-full bg-ink/5 rounded-sm" />
           </div>
         </div>
 
         {/* Right Col Shimmer */}
-        <div className="lg:col-span-5 bg-background border border-white/10 p-6 rounded-sm space-y-5">
-          <div className="h-4 w-44 bg-white/10 rounded-xs pb-2 border-b border-white/10" />
+        <div className="lg:col-span-5 bg-background border border-ink/10 p-6 rounded-sm space-y-5">
+          <div className="h-4 w-44 bg-ink/10 rounded-xs pb-2 border-b border-ink/10" />
           <div className="space-y-3">
             {[1, 2, 3, 4, 5].map((i) => (
               <div key={i} className="flex justify-between items-center">
-                <div className="h-3 w-32 bg-white/5 rounded-xs" />
-                <div className="h-3 w-20 bg-white/10 rounded-xs" />
+                <div className="h-3 w-32 bg-ink/5 rounded-xs" />
+                <div className="h-3 w-20 bg-ink/10 rounded-xs" />
               </div>
             ))}
           </div>
-          <div className="h-14 bg-white/5 rounded-sm border border-white/10" />
+          <div className="h-14 bg-ink/5 rounded-sm border border-ink/10" />
           <div className="h-12 bg-brand/20 rounded-sm" />
         </div>
       </div>
@@ -106,8 +106,8 @@ export function TradePanel({
   // 2. Empty state
   if (markets.length === 0) {
     return (
-      <div className="bg-surface border border-dashed border-white/10 rounded-sm p-16 text-center font-sans space-y-3">
-        <span className="text-white font-bold block text-sm uppercase tracking-wider">
+      <div className="bg-surface border border-dashed border-ink/10 rounded-sm p-16 text-center font-sans space-y-3">
+        <span className="text-ink font-bold block text-sm uppercase tracking-wider">
           [NO TRADING MARKETS AVAILABLE]
         </span>
         <p className="text-xs text-muted-dark max-w-md mx-auto">
@@ -184,15 +184,15 @@ export function TradePanel({
     <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch font-sans">
       {/* Left Column: Market Context & Risk Parameters */}
       <div className="lg:col-span-7 flex flex-col gap-6">
-        <div className="bg-surface border border-white/10 p-6 rounded-sm space-y-6 flex-1">
-          <div className="flex flex-wrap gap-4 items-center justify-between border-b border-white/10 pb-4">
+        <div className="bg-surface border border-ink/10 p-6 rounded-sm space-y-6 flex-1">
+          <div className="flex flex-wrap gap-4 items-center justify-between border-b border-ink/10 pb-4">
             <div className="flex items-center gap-4">
               <AssetLogo
                 symbol={activeMarket?.assetSymbol || "NVDA"}
                 size="lg"
               />
               <div>
-                <h2 className="text-xl font-bold font-sans text-white uppercase flex items-center gap-3">
+                <h2 className="text-xl font-bold font-sans text-ink uppercase flex items-center gap-3">
                   {activeMarket?.name}
                 </h2>
                 <span className="text-xs text-muted uppercase">
@@ -205,7 +205,7 @@ export function TradePanel({
               <span className="text-xs text-muted uppercase block">
                 MARKET SNAPSHOT
               </span>
-              <span className="text-2xl font-bold text-white font-sans">
+              <span className="text-2xl font-bold text-ink font-sans">
                 ${activeMarket?.markPrice.toFixed(2)}
               </span>
             </div>
@@ -213,29 +213,29 @@ export function TradePanel({
 
           {/* Risk Metrics Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs tabular-nums uppercase">
-            <div className="bg-surface-subtle p-4 rounded-sm border border-white/10 space-y-1">
+            <div className="bg-surface-subtle p-4 rounded-sm border border-ink/10 space-y-1">
               <span className="text-[10px] text-muted block">MAX LTV</span>
-              <span className="font-bold text-white font-sans text-sm">
+              <span className="font-bold text-ink font-sans text-sm">
                 {activeMarket?.maxLtv}%
               </span>
             </div>
-            <div className="bg-surface-subtle p-4 rounded-sm border border-white/10 space-y-1">
+            <div className="bg-surface-subtle p-4 rounded-sm border border-ink/10 space-y-1">
               <span className="text-[10px] text-muted block">
                 LIQUIDATION LTV
               </span>
-              <span className="font-bold text-white font-sans text-sm">
+              <span className="font-bold text-ink font-sans text-sm">
                 {activeMarket?.liquidationLtv}%
               </span>
             </div>
-            <div className="bg-surface-subtle p-4 rounded-sm border border-white/10 space-y-1">
+            <div className="bg-surface-subtle p-4 rounded-sm border border-ink/10 space-y-1">
               <span className="text-[10px] text-muted block">BORROW APR</span>
-              <span className="font-bold text-[#ffb800] font-sans text-sm">
+              <span className="font-bold text-warn-strong font-sans text-sm">
                 {activeMarket?.borrowApr}%
               </span>
             </div>
-            <div className="bg-surface-subtle p-4 rounded-sm border border-white/10 space-y-1">
+            <div className="bg-surface-subtle p-4 rounded-sm border border-ink/10 space-y-1">
               <span className="text-[10px] text-muted block">LIQUIDITY</span>
-              <span className="font-bold text-white font-sans text-sm">
+              <span className="font-bold text-ink font-sans text-sm">
                 $
                 {((activeMarket?.availableLiquidityUsd || 0) / 1000).toFixed(0)}
                 K
@@ -251,7 +251,7 @@ export function TradePanel({
           View market details <span>↗</span>
         </Link>
         {/* Market Asset Switcher */}
-        <div className="bg-surface border border-white/10 p-6 rounded-sm space-y-4">
+        <div className="bg-surface border border-ink/10 p-6 rounded-sm space-y-4">
           <span className="text-xs font-bold text-muted uppercase tracking-wider block font-sans">
             SELECT ASSET MARKET
           </span>
@@ -266,13 +266,13 @@ export function TradePanel({
                 }}
                 className={`p-3 rounded-sm border text-left transition-all flex items-center gap-3 ${
                   currentSymbol === m.assetSymbol
-                    ? "bg-surface-subtle border-brand text-white"
-                    : "bg-surface border-white/10 text-muted hover:text-white hover:border-gray-500"
+                    ? "bg-surface-subtle border-brand text-ink"
+                    : "bg-surface border-ink/10 text-muted hover:text-ink hover:border-fg-3"
                 }`}
               >
                 <AssetLogo symbol={m.assetSymbol} size="sm" />
                 <div>
-                  <div className="font-bold text-xs text-white font-sans">
+                  <div className="font-bold text-xs text-ink font-sans">
                     {m.assetSymbol}
                   </div>
                   <div className="text-[10px] font-sans text-muted">
@@ -286,13 +286,13 @@ export function TradePanel({
       </div>
 
       {/* Right Column: Execution Order Form */}
-      <div className="lg:col-span-5 bg-surface border border-white/10 p-6 rounded-sm space-y-6">
+      <div className="lg:col-span-5 bg-surface border border-ink/10 p-6 rounded-sm space-y-6">
         {/* Order Direction Tabs */}
-        <div className="grid grid-cols-3 gap-2 bg-surface-subtle p-1.5 rounded-sm border border-white/10 text-xs font-bold uppercase tracking-wider">
+        <div className="grid grid-cols-3 gap-2 bg-surface-subtle p-1.5 rounded-sm border border-ink/10 text-xs font-bold uppercase tracking-wider">
           <button
             onClick={() => setPositionType("LONG")}
             className={`py-3 rounded-sm transition-all ${
-              isLong ? "bg-go text-black" : "text-muted hover:text-white"
+              isLong ? "bg-go text-on-go" : "text-muted hover:text-ink"
             }`}
           >
             LONG
@@ -301,8 +301,8 @@ export function TradePanel({
             onClick={() => setPositionType("SHORT")}
             className={`py-3 rounded-sm transition-all ${
               isShort
-                ? "bg-[#ff4d4d] text-white"
-                : "text-muted hover:text-white"
+                ? "bg-neg-strong text-ink"
+                : "text-muted hover:text-ink"
             }`}
           >
             SHORT
@@ -311,8 +311,8 @@ export function TradePanel({
             onClick={() => setPositionType("MULTIPLY")}
             className={`py-3 rounded-sm transition-all ${
               isMultiply
-                ? "bg-white text-[#000000]"
-                : "text-muted hover:text-white"
+                ? "bg-accent text-on-accent"
+                : "text-muted hover:text-ink"
             }`}
           >
             MULTIPLY
@@ -328,7 +328,7 @@ export function TradePanel({
             <div className="flex items-center gap-2">
               <span className="text-muted font-sans">
                 BAL:{" "}
-                <strong className="text-white">
+                <strong className="text-ink">
                   {balanceAvailable
                     ? `$${usdgBalance.toLocaleString("en-US", {
                         minimumFractionDigits: 2,
@@ -358,7 +358,7 @@ export function TradePanel({
               value={collateralAmount}
               onChange={(e) => setCollateralAmount(e.target.value)}
               placeholder="0.00"
-              className="w-full bg-surface-subtle border border-white/15 focus:border-brand rounded-sm py-3 px-4 font-sans font-bold text-lg text-white outline-none tabular-nums"
+              className="w-full bg-surface-subtle border border-ink/15 focus:border-brand rounded-sm py-3 px-4 font-sans font-bold text-lg text-ink outline-none tabular-nums"
             />
             <button
               disabled={!balanceAvailable}
@@ -385,8 +385,8 @@ export function TradePanel({
                 onClick={() => setLeverage(stepVal)}
                 className={`py-2 rounded-sm text-xs font-sans font-bold transition-all ${
                   leverage === stepVal
-                    ? "bg-silver-light text-black"
-                    : "bg-surface-subtle border border-white/10 text-muted hover:text-white"
+                    ? "bg-silver-light text-on-accent"
+                    : "bg-surface-subtle border border-ink/10 text-muted hover:text-ink"
                 }`}
               >
                 {stepVal.toFixed(2)}X
@@ -396,22 +396,22 @@ export function TradePanel({
         </div>
 
         {/* Summary Table */}
-        <div className="bg-surface-subtle rounded-sm p-4 border border-white/10 space-y-2 text-xs font-sans tabular-nums uppercase">
+        <div className="bg-surface-subtle rounded-sm p-4 border border-ink/10 space-y-2 text-xs font-sans tabular-nums uppercase">
           <div className="flex justify-between text-muted">
             <span>TOTAL EXPOSURE</span>
-            <span className="font-bold text-white">
+            <span className="font-bold text-ink">
               ${totalExposureUsd.toFixed(2)}
             </span>
           </div>
           <div className="flex justify-between text-muted">
             <span>BORROWED DEBT</span>
-            <span className="font-bold text-[#ffb800]">
+            <span className="font-bold text-warn-strong">
               ${borrowedDebtUsd.toFixed(2)}
             </span>
           </div>
-          <div className="flex justify-between text-muted border-t border-white/10 pt-2">
+          <div className="flex justify-between text-muted border-t border-ink/10 pt-2">
             <span>EST. LIQUIDATION PRICE</span>
-            <span className="font-bold text-[#ff4d4d]">
+            <span className="font-bold text-neg-strong">
               {numericCollateral > 0 ? `$${liquidationPrice.toFixed(2)}` : "—"}
             </span>
           </div>
@@ -427,12 +427,12 @@ export function TradePanel({
 
         {/* Market Status Alert Banners */}
         {activeMarket?.status === "REDUCE_ONLY" && (
-          <div className="bg-[#ff8800]/10 border border-[#ff8800]/30 p-3 rounded-sm text-xs font-sans text-[#ff8800] space-y-1">
+          <div className="bg-warn-strong/10 border border-warn-strong/30 p-3 rounded-sm text-xs font-sans text-warn-strong space-y-1">
             <div className="font-bold uppercase flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#ff8800] animate-pulse inline-block" />
+              <span className="w-2 h-2 rounded-full bg-warn-strong animate-pulse inline-block" />
               REDUCE-ONLY MODE ACTIVE
             </div>
-            <p className="text-[11px] text-[#ff8800]/80">
+            <p className="text-[11px] text-warn-strong/80">
               US Equity market is currently closed. New leverage orders are
               paused until next session.
             </p>
@@ -440,12 +440,12 @@ export function TradePanel({
         )}
 
         {activeMarket?.status === "PAUSED" && (
-          <div className="bg-[#ff4d4d]/10 border border-[#ff4d4d]/30 p-3 rounded-sm text-xs font-sans text-[#ff4d4d] space-y-1">
+          <div className="bg-neg-strong/10 border border-neg-strong/30 p-3 rounded-sm text-xs font-sans text-neg-strong space-y-1">
             <div className="font-bold uppercase flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#ff4d4d] animate-pulse inline-block" />
+              <span className="w-2 h-2 rounded-full bg-neg-strong animate-pulse inline-block" />
               CIRCUIT BREAKER ACTIVE (PAUSED)
             </div>
-            <p className="text-[11px] text-[#ff4d4d]/80">
+            <p className="text-[11px] text-neg-strong/80">
               Trading is suspended due to extreme volatility or oracle
               protection.
             </p>
@@ -478,12 +478,12 @@ export function TradePanel({
           className={`w-full py-4 rounded-sm font-sans font-extrabold text-xs uppercase tracking-widest transition-all inline-flex items-center justify-center gap-2 ${
             activeMarket?.status === "REDUCE_ONLY" ||
             activeMarket?.status === "PAUSED"
-              ? "bg-white/10 text-white/40 cursor-not-allowed border border-white/10"
+              ? "bg-ink/10 text-ink/40 cursor-not-allowed border border-ink/10"
               : isShort
-                ? "bg-[#ff4d4d] text-white hover:bg-red-600"
+                ? "bg-neg-strong text-on-neg hover:bg-neg"
                 : isMultiply
-                  ? "bg-white text-[#000000] hover:bg-gray-200"
-                  : "bg-go text-black hover:bg-go-hover"
+                  ? "bg-accent text-on-accent hover:bg-accent-soft"
+                  : "bg-go text-on-go hover:bg-go-hover"
           }`}
         >
           {!env.TRADING_ENABLED ? (

@@ -21,11 +21,11 @@ export function PortfolioSummary({
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className="bg-surface border border-white/10 p-5 rounded-sm space-y-3 animate-pulse"
+            className="bg-surface border border-ink/10 p-5 rounded-sm space-y-3 animate-pulse"
           >
-            <div className="h-3 w-32 bg-white/10 rounded-xs" />
-            <div className="h-7 w-28 bg-white/15 rounded-xs" />
-            <div className="h-3 w-20 bg-white/5 rounded-xs" />
+            <div className="h-3 w-32 bg-ink/10 rounded-xs" />
+            <div className="h-7 w-28 bg-ink/15 rounded-xs" />
+            <div className="h-3 w-20 bg-ink/5 rounded-xs" />
           </div>
         ))}
       </div>
@@ -36,17 +36,17 @@ export function PortfolioSummary({
     if (health >= 1.5) {
       return {
         label: "HEALTHY",
-        color: "bg-surface-subtle text-brand border-white/10",
+        color: "bg-surface-subtle text-brand border-ink/10",
       };
     } else if (health >= 1.2) {
       return {
         label: "CAUTION",
-        color: "bg-surface-subtle text-[#ffb800] border-white/10",
+        color: "bg-surface-subtle text-warn-strong border-ink/10",
       };
     } else {
       return {
         label: "AT RISK",
-        color: "bg-surface-subtle text-[#ff4d4d] border-white/10",
+        color: "bg-surface-subtle text-neg-strong border-ink/10",
       };
     }
   };
@@ -56,9 +56,9 @@ export function PortfolioSummary({
   return (
     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-sans tabular-nums uppercase">
       {/* Net Equity Card */}
-      <div className="bg-surface border border-white/10 p-5 rounded-sm space-y-2">
+      <div className="fx-card bg-surface border border-ink/10 p-5 rounded-sm space-y-2">
         <span className="text-xs text-muted block">NET ACCOUNT EQUITY</span>
-        <div className="text-2xl font-bold text-white font-sans">
+        <div className="metric-figure text-2xl text-ink">
           $
           {summary.netEquityUsd.toLocaleString("en-US", {
             minimumFractionDigits: 2,
@@ -70,9 +70,9 @@ export function PortfolioSummary({
       </div>
 
       {/* Borrowing Power */}
-      <div className="bg-surface border border-white/10 p-5 rounded-sm space-y-2">
+      <div className="fx-card bg-surface border border-ink/10 p-5 rounded-sm space-y-2">
         <span className="text-xs text-muted block">BORROWING POWER</span>
-        <div className="text-2xl font-bold text-white font-sans">
+        <div className="metric-figure text-2xl text-ink">
           $
           {summary.borrowingPowerUsd.toLocaleString("en-US", {
             minimumFractionDigits: 2,
@@ -84,7 +84,7 @@ export function PortfolioSummary({
       </div>
 
       {/* Account Health Factor Gauge */}
-      <div className="bg-surface border border-white/10 p-5 rounded-sm space-y-2">
+      <div className="fx-card bg-surface border border-ink/10 p-5 rounded-sm space-y-2">
         <div className="flex items-center justify-between">
           <span className="text-xs text-muted">ACCOUNT HEALTH</span>
           <span
@@ -102,16 +102,16 @@ export function PortfolioSummary({
       </div>
 
       {/* Auto-Protect Status */}
-      <div className="bg-surface border border-white/10 p-5 rounded-sm flex flex-col justify-between space-y-2">
+      <div className="fx-card bg-surface border border-ink/10 p-5 rounded-sm flex flex-col justify-between space-y-2">
         <div>
           <span className="text-xs text-muted block">AUTO-PROTECT GUARD</span>
-          <span className="text-xs font-bold text-white block mt-0.5">
+          <span className="text-xs font-bold text-ink block mt-0.5">
             ACTIVE KEEPER MONITOR
           </span>
         </div>
         <button
           onClick={onOpenAutoProtect}
-          className="w-full py-2 bg-surface-subtle hover:bg-silver-light hover:text-black text-white border border-white/10 rounded-sm text-xs font-bold uppercase transition-all inline-flex items-center justify-center gap-1.5"
+          className="w-full py-2 btn-silver text-xs font-bold uppercase inline-flex items-center justify-center gap-1.5"
         >
           <span>CONFIGURE RULES</span>
           <ArrowUpRight className="w-3.5 h-3.5" />

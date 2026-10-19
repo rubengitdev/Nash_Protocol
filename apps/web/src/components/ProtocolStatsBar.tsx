@@ -34,29 +34,29 @@ export function ProtocolStatsBar() {
   ];
 
   return (
-    <div className="w-full bg-[#000000] border border-white/10 rounded-sm p-4 sm:p-6 font-mono uppercase">
+    <div className="w-full bg-page border border-ink/10 rounded-sm p-4 sm:p-6 font-mono uppercase">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 divider-x">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           return (
             <div
               key={index}
-              className="space-y-1.5 p-2 sm:p-3 bg-[#000000]/60 border border-white/5 rounded-sm hover:border-[#b5b5b5]/40 transition-colors"
+              className="fx-card space-y-1.5 p-2 sm:p-3 bg-page/60 border border-ink/5 rounded-sm hover:border-fg-3/40 transition-colors"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[10px] sm:text-xs text-[#8c8c8c] tracking-wider block">
+                <span className="text-[10px] sm:text-xs text-muted tracking-wider block">
                   {stat.label}
                 </span>
-                <Icon className={`w-3.5 h-3.5 ${stat.highlight ? 'text-[#b5b5b5]' : 'text-[#8c8c8c]'}`} />
+                <Icon className={`w-3.5 h-3.5 ${stat.highlight ? 'text-fg-3' : 'text-muted'}`} />
               </div>
 
-              <div className="text-xl sm:text-2xl font-bold text-white tracking-tight tabular-nums">
+              <div className="text-xl sm:text-2xl font-bold text-ink tracking-tight tabular-nums">
                 {stat.value}
               </div>
 
               <div className="flex items-center gap-1.5 text-[10px]">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#b5b5b5] animate-pulse" />
-                <span className={stat.highlight ? 'text-[#b5b5b5] font-bold' : 'text-[#8c8c8c]'}>
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-fg-3 animate-pulse" />
+                <span className={stat.highlight ? 'text-fg-3 font-bold' : 'text-muted'}>
                   {stat.change}
                 </span>
               </div>

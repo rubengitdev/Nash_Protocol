@@ -2,6 +2,27 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { createChart, ColorType, IChartApi, ISeriesApi, AreaSeries } from "lightweight-charts";
+import { useTheme } from "../providers/ThemeProvider";
+
+// The chart draws to a canvas, which cannot read CSS variables, so each theme carries its own palette.
+const CHART_PALETTE = {
+  light: {
+    lineColor: "#010101",
+    textColor: "#656462",
+    gridColor: "rgba(1,1,1, 0.06)",
+    crosshairColor: "rgba(1,1,1, 0.35)",
+    areaTopColor: "rgba(1,1,1, 0.12)",
+    areaBottomColor: "rgba(1,1,1, 0.0)",
+  },
+  dark: {
+    lineColor: "#e5e5e5",
+    textColor: "#7d7d7d",
+    gridColor: "rgba(255,255,255, 0.03)",
+    crosshairColor: "rgba(229,229,229, 0.3)",
+    areaTopColor: "rgba(229,229,229, 0.16)",
+    areaBottomColor: "rgba(229,229,229, 0.0)",
+  },
+} as const;
 
 export interface ChartProps {
   data: any[];
@@ -14,16 +35,17 @@ export interface ChartProps {
   };
 }
 
-export function TradingViewChart({
-  data,
-  colors: {
+export function TradingViewChart({ data, colors = {} }: ChartProps) {
+  const { theme } = useTheme();
+  const palette = CHART_PALETTE[theme];
+  const {
     backgroundColor = "transparent",
-    lineColor = "#e5e5e5", // steel
-    textColor = "#7d7d7d", // Nash muted text
-    areaTopColor = "rgba(229,229,229, 0.16)",
-    areaBottomColor = "rgba(229,229,229, 0.0)",
-  } = {},
-}: ChartProps) {
+    lineColor = palette.lineColor,
+    textColor = palette.textColor,
+    areaTopColor = palette.areaTopColor,
+    areaBottomColor = palette.areaBottomColor,
+  } = colors;
+  const { gridColor, crosshairColor } = palette;
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const [, setSeries] = useState<ISeriesApi<"Area"> | null>(null);
@@ -42,17 +64,17 @@ export function TradingViewChart({
         fontFamily: "'Inter', sans-serif",
       },
       grid: {
-        vertLines: { color: "rgba(255,255,255, 0.03)" },
-        horzLines: { color: "rgba(255,255,255, 0.03)" },
+        vertLines: { color: gridColor },
+        horzLines: { color: gridColor },
       },
       crosshair: {
         vertLine: {
-          color: "rgba(229,229,229, 0.3)",
+          color: crosshairColor,
           width: 1,
           style: 3,
         },
         horzLine: {
-          color: "rgba(229,229,229, 0.3)",
+          color: crosshairColor,
           width: 1,
           style: 3,
         },
@@ -114,7 +136,7 @@ export function TradingViewChart({
       newChart.remove();
       chartRef.current = null;
     };
-  }, [data, backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor]);
+  }, [data, backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor, gridColor, crosshairColor]);
 
   return (
     <div

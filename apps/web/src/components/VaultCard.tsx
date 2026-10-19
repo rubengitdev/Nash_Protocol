@@ -14,34 +14,34 @@ interface VaultCardProps {
 
 export function VaultCardSkeleton() {
   return (
-    <div className="bg-surface border border-white/10 p-6 rounded-sm space-y-6 w-full font-sans animate-pulse">
+    <div className="bg-surface border border-ink/10 p-6 rounded-sm space-y-6 w-full font-sans animate-pulse">
       {/* Header Shimmer */}
-      <div className="flex items-center justify-between border-b border-white/10 pb-4">
+      <div className="flex items-center justify-between border-b border-ink/10 pb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-white/10" />
+          <div className="w-10 h-10 rounded-full bg-ink/10" />
           <div className="space-y-1.5">
-            <div className="h-4 w-32 bg-white/10 rounded-xs" />
-            <div className="h-3 w-24 bg-white/5 rounded-xs" />
+            <div className="h-4 w-32 bg-ink/10 rounded-xs" />
+            <div className="h-3 w-24 bg-ink/5 rounded-xs" />
           </div>
         </div>
-        <div className="h-5 w-20 bg-white/10 rounded-xs" />
+        <div className="h-5 w-20 bg-ink/10 rounded-xs" />
       </div>
 
       {/* APY Box */}
-      <div className="bg-surface-subtle p-4 rounded-xs border border-white/5 flex justify-between items-end">
+      <div className="bg-surface-subtle p-4 rounded-xs border border-ink/5 flex justify-between items-end">
         <div className="space-y-2">
-          <div className="h-3 w-24 bg-white/5 rounded-xs" />
+          <div className="h-3 w-24 bg-ink/5 rounded-xs" />
           <div className="h-8 w-28 bg-brand/20 rounded-xs" />
         </div>
-        <div className="h-3 w-20 bg-white/5 rounded-xs" />
+        <div className="h-3 w-20 bg-ink/5 rounded-xs" />
       </div>
 
       {/* Metrics */}
-      <div className="space-y-3 border-b border-white/10 pb-4">
+      <div className="space-y-3 border-b border-ink/10 pb-4">
         {[1, 2, 3].map((i) => (
           <div key={i} className="flex justify-between">
-            <div className="h-3 w-28 bg-white/5 rounded-xs" />
-            <div className="h-3 w-20 bg-white/10 rounded-xs" />
+            <div className="h-3 w-28 bg-ink/5 rounded-xs" />
+            <div className="h-3 w-20 bg-ink/10 rounded-xs" />
           </div>
         ))}
       </div>
@@ -86,13 +86,13 @@ export function VaultCard({ vault }: VaultCardProps) {
   };
 
   return (
-    <div className="bg-surface border border-white/10 p-6 rounded-sm space-y-6 w-full font-sans">
+    <div className="fx-card bg-surface border border-ink/10 p-6 rounded-sm space-y-6 w-full font-sans">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-white/10 pb-4">
+      <div className="flex items-center justify-between border-b border-ink/10 pb-4">
         <div className="flex items-center gap-3">
           <AssetLogo symbol={assetName} size="md" />
           <div>
-            <h3 className="text-base font-bold text-white font-sans uppercase">
+            <h3 className="text-base font-bold text-ink font-sans uppercase">
               {vault.name}
             </h3>
             <span className="text-xs text-muted">
@@ -100,24 +100,24 @@ export function VaultCard({ vault }: VaultCardProps) {
             </span>
           </div>
         </div>
-        <span className="px-2.5 py-0.5 rounded-sm text-[10px] font-bold bg-surface-subtle text-brand border border-white/10 uppercase">
+        <span className="px-2.5 py-0.5 rounded-sm text-[10px] font-bold bg-surface-subtle text-brand border border-ink/10 uppercase">
           {vault.riskTier} RISK
         </span>
       </div>
 
       {/* Primary APY Stats */}
-      <div className="bg-surface-subtle rounded-sm p-4 border border-white/10 flex justify-between items-center tabular-nums">
+      <div className="bg-surface-subtle rounded-sm p-4 border border-ink/10 flex justify-between items-center tabular-nums">
         <div>
           <span className="text-xs text-muted uppercase block">
             NET LENDING APY
           </span>
-          <span className="text-3xl font-bold text-brand font-sans">
+          <span className="metric-figure text-3xl text-brand">
             +{Number(vault.apy || 0).toFixed(2)}%
           </span>
         </div>
         <div className="text-right">
           <span className="text-xs text-muted uppercase block">VAULT TVL</span>
-          <span className="text-lg font-bold text-white font-sans">
+          <span className="metric-figure text-lg text-ink">
             ${((vault.tvlUsd || 0) / 1000000).toFixed(2)}M
           </span>
         </div>
@@ -131,7 +131,7 @@ export function VaultCard({ vault }: VaultCardProps) {
         </div>
 
         {/* Progress Bar */}
-        <div className="h-1.5 w-full bg-surface-subtle rounded-none overflow-hidden flex border border-white/10">
+        <div className="h-1.5 w-full bg-surface-subtle rounded-none overflow-hidden flex border border-ink/10">
           <div
             style={{ width: "35%" }}
             className="bg-brand h-full"
@@ -164,7 +164,7 @@ export function VaultCard({ vault }: VaultCardProps) {
       <button
         disabled={!env.TRADING_ENABLED}
         onClick={() => setIsModalOpen(true)}
-        className="w-full py-3 bg-go hover:bg-go-hover text-black font-bold text-xs uppercase tracking-widest rounded-sm transition-all inline-flex items-center justify-center gap-2"
+        className="w-full py-3 btn-silver font-bold text-xs uppercase tracking-widest rounded-sm transition-all inline-flex items-center justify-center gap-2"
       >
         <span>DEPOSIT CAPITAL</span>
         <ArrowUpRight className="w-4 h-4" />
@@ -179,27 +179,27 @@ export function VaultCard({ vault }: VaultCardProps) {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="bg-surface border border-white/15 w-full max-w-md rounded-sm p-6 space-y-4 font-sans">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <h4 className="text-sm font-bold text-white uppercase font-sans">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-page/80 backdrop-blur-sm p-4">
+          <div className="bg-surface border border-ink/15 w-full max-w-md rounded-sm p-6 space-y-4 font-sans">
+            <div className="flex items-center justify-between pb-3 border-b border-ink/10">
+              <h4 className="text-sm font-bold text-ink uppercase font-sans">
                 VAULT LIQUIDITY ({vault.name})
               </h4>
               <button
                 onClick={() => setIsModalOpen(false)}
                 disabled={isProcessing}
-                className="text-muted hover:text-white transition-colors disabled:opacity-50"
+                className="text-muted hover:text-ink transition-colors disabled:opacity-50"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 bg-surface-subtle p-1 border border-white/10 text-xs font-bold uppercase">
+            <div className="grid grid-cols-2 gap-2 bg-surface-subtle p-1 border border-ink/10 text-xs font-bold uppercase">
               <button
                 onClick={() => setActiveModalTab("DEPOSIT")}
                 className={`py-2 rounded-sm ${
                   activeModalTab === "DEPOSIT"
-                    ? "bg-go text-black"
+                    ? "bg-accent text-on-accent"
                     : "text-muted"
                 }`}
               >
@@ -209,7 +209,7 @@ export function VaultCard({ vault }: VaultCardProps) {
                 onClick={() => setActiveModalTab("WITHDRAW")}
                 className={`py-2 rounded-sm ${
                   activeModalTab === "WITHDRAW"
-                    ? "bg-white text-[#000000]"
+                    ? "bg-accent text-on-accent"
                     : "text-muted"
                 }`}
               >
@@ -227,7 +227,7 @@ export function VaultCard({ vault }: VaultCardProps) {
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="0.00"
                 disabled={isProcessing}
-                className="w-full bg-surface-subtle border border-white/15 rounded-sm p-3 text-white font-sans text-sm outline-none"
+                className="w-full bg-surface-subtle border border-ink/15 rounded-sm p-3 text-ink font-sans text-sm outline-none"
               />
             </div>
 
@@ -246,7 +246,7 @@ export function VaultCard({ vault }: VaultCardProps) {
                 !amount ||
                 parseFloat(amount) <= 0
               }
-              className="w-full py-3 bg-go hover:bg-go-hover disabled:bg-gray-700 text-black font-bold text-xs uppercase tracking-widest rounded-sm transition-all inline-flex items-center justify-center gap-2"
+              className="w-full py-3 btn-silver font-bold text-xs uppercase tracking-widest rounded-sm transition-all inline-flex items-center justify-center gap-2"
             >
               {isProcessing ? (
                 <>

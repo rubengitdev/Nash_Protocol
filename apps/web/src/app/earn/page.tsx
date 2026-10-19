@@ -12,6 +12,7 @@ export default function EarnPage() {
 
   return (
     <AppPage
+      banner="cone"
       eyebrow="Earn"
       title="Put your assets to work."
       description="Explore lending vaults and review their allocation, utilization, and withdrawal conditions."
@@ -30,8 +31,8 @@ export default function EarnPage() {
           </>
         ) : vaults.length === 0 ? (
           /* Empty State */
-          <div className="col-span-full py-16 px-8 bg-surface border border-dashed border-white/10 rounded-sm text-center font-sans space-y-3">
-            <span className="text-white font-bold block text-sm uppercase tracking-wider">
+          <div className="col-span-full py-16 px-8 bg-surface border border-dashed border-ink/10 rounded-sm text-center font-sans space-y-3">
+            <span className="text-ink font-bold block text-sm uppercase tracking-wider">
               [NO YIELD VAULTS ACTIVE]
             </span>
             <p className="text-xs text-muted-dark max-w-md mx-auto">

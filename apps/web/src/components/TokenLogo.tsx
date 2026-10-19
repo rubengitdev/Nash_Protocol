@@ -8,8 +8,8 @@ import React, { useState, useEffect, useMemo } from "react";
 export function getSymbolTheme(symbol: string) {
   // Nash uses a sleek minimal palette, avoiding random rainbow hues.
   return {
-    bg: "#0e0e0e",
-    border: "#262626",
+    bg: "var(--bg-raised)",
+    border: "var(--line)",
     text: "var(--text)",
     glow: "transparent",
   };
@@ -88,8 +88,8 @@ export function TokenLogo({
         width: ponsBadgeSize,
         height: ponsBadgeSize,
         borderRadius: "50%",
-        border: "2px solid #101010",
-        background: "#101010",
+        border: "2px solid var(--line-soft)",
+        background: "var(--panel)",
         objectFit: "cover",
       }}
     />
@@ -127,7 +127,7 @@ export function TokenLogo({
         onError={handleError}
         referrerPolicy="no-referrer"
         loading="lazy"
-        className={`rounded-full object-cover shrink-0 bg-[#0a0a0a] ring-1 ring-white/10 ${className}`}
+        className={`rounded-full object-cover shrink-0 bg-raised ring-1 ring-ink/10 ${className}`}
         style={{ width: size, height: size }}
       />
       {ponsBadge}
@@ -190,7 +190,7 @@ export function TokenBackgroundOverlay({
         />
       )}
       {/* Dark gradient overlay to ensure foreground content remains perfectly readable */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#101010]/80 to-[#101010]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-panel/80 to-panel" />
     </div>
   );
 }
