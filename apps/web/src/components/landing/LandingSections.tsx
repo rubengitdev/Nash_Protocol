@@ -23,7 +23,7 @@ export function LandingHero() {
         <div className="landing-stack">
           <div className="landing-scrim" aria-hidden="true" />
           <h1 id="hero-title" className="landing-h1 rise" style={{ ['--rise-delay' as string]: '0.1s' }}>
-            Nash Protocol
+            Equilibrium for Onchain Equities
           </h1>
           <p className="landing-lede rise" style={{ ['--rise-delay' as string]: '0.25s' }}>
             The credit and leverage layer for tokenized stocks and ETFs on Robinhood Chain. Isolated markets,
