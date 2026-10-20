@@ -573,12 +573,6 @@
   padding-top: 24px;
   border-top: 1px solid var(--line);
 }
-.site-footer-note {
-  max-width: 78ch;
-  font-size: 12px;
-  line-height: 1.6;
-  color: var(--muted);
-}
 .site-footer-legal {
   display: flex;
   gap: 24px;
