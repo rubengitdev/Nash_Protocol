@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./nash.css";
+import "./typography.css";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { ButtonFx } from "../components/ButtonFx";
