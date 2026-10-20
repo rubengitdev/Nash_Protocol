@@ -97,6 +97,8 @@ const config: Config = {
         display: ['"Space Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
         heroDisplay: ['"Space Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        heading: ['Arial', '"Helvetica Neue"', 'Helvetica', '"Liberation Sans"', 'sans-serif'],
+        ui: ['Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"DejaVu Sans Mono"', 'monospace'],
         hand: ['Caveat', '"Bradley Hand"', 'cursive'],
       },
       borderRadius: {
