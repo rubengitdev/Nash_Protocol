@@ -90,10 +90,6 @@ export function Footer() {
                 </div>
 
                 <div className="site-footer-bottom">
-                    <p className="site-footer-note">
-                        Nash Protocol is experimental software on Robinhood Chain. Leverage can lose all of your
-                        collateral. Nothing here is financial advice.
-                    </p>
                     <div className="site-footer-legal">
                         <span>© 2026 Nash Protocol</span>
                         <a href="#main" onClick={scrollToTop}>
