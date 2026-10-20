@@ -3729,6 +3729,40 @@ button.ca-chip:hover {
   text-overflow: ellipsis;
 }
 
+/* Footer: centered on tablet and mobile so no empty column is left on the right. */
+@media (max-width: 1023px) {
+  .site-footer-top {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .site-footer-brand {
+    align-items: center;
+  }
+  .site-footer-ca {
+    align-self: center;
+  }
+  .site-footer-links {
+    justify-content: center;
+    text-align: center;
+  }
+  .site-footer-group {
+    align-items: center;
+  }
+  .site-footer-group nav {
+    align-items: center;
+  }
+  .site-footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .site-footer-legal {
+    justify-content: center;
+  }
+}
+
 /* Lenis (landing only): it drives the scroll, so native smooth scrolling must stand aside. */
 html.lenis,
 html.lenis body {
