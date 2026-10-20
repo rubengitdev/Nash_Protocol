@@ -1,0 +1,51 @@
+/* Typography overrides, loaded last: Arial for h1/h2, Menlo for nav items and button labels.
+   !important on headings because Tailwind utilities (font-mono, font-bold, uppercase) and component rules set their own family and weight. */
+h1,
+h2 {
+  font-family: var(--font-heading) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0 !important;
+}
+h1 {
+  font-weight: 800 !important;
+}
+h2 {
+  font-weight: 600 !important;
+}
+h1 em,
+h2 em {
+  font-family: inherit;
+  font-weight: inherit;
+}
+
+.nav-link,
+.mobile-nav > a,
+.mobile-menu,
+.btn-action,
+.btn-ghost,
+.landing-btn,
+.app-button,
+.launch,
+.cta-band-button,
+.btn-silver,
+.nash-link,
+.nash-hex-controls button {
+  font-family: var(--font-ui);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.nav-link,
+.mobile-nav > a,
+.mobile-menu {
+  font-size: 13px;
+}
+.btn-action,
+.btn-ghost {
+  font-size: 13px;
+}
+.btn-action-sm {
+  font-size: 12px;
+}
+.landing-btn {
+  font-size: 11px;
+}
