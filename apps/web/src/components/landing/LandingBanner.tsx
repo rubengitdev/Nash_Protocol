@@ -1,12 +1,47 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useRef } from 'react';
 import { LandingButton } from './LandingButton';
 
 const OFFSETS = [0, 34, 68];
+const RIBBON = 'M-30 340 C 150 340, 200 90, 400 90 S 640 320, 740 120';
+const HIGHLIGHT = 'M-30 334 C 150 334, 200 84, 400 84 S 640 314, 740 114';
 
-/** Three brushed-silver ribbons, drawn after the three bands of the Nash mark. */
+/**
+ * Three brushed-silver ribbons, drawn after the three bands of the Nash mark. They draw themselves in from the left the
+ * first time the banner scrolls into view, then keep a slow drift with a glint running along each band. The motion
+ * runs only while the banner is on screen, and not at all with reduced motion (the ribbons are then simply shown).
+ * Before the script runs they are shown whole, so the banner never depends on it.
+ */
 function Ribbons() {
+  const ref = useRef<SVGSVGElement>(null);
+
+  useEffect(() => {
+    const svg = ref.current;
+    if (!svg || typeof IntersectionObserver !== 'function') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Armed: hidden at the start of the draw, waiting to be seen. Playing: on screen, so the animations run.
+    svg.setAttribute('data-armed', '');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries[0]?.isIntersecting ?? false;
+        svg.setAttribute('data-playing', visible ? 'true' : 'false');
+        if (visible) svg.setAttribute('data-drawn', '');
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(svg);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <svg className="landing-banner-ribbons" viewBox="0 0 700 420" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+    <svg
+      ref={ref}
+      className="landing-banner-ribbons"
+      viewBox="0 0 700 420"
+      preserveAspectRatio="xMaxYMid slice"
+      aria-hidden="true"
+    >
       <defs>
         <linearGradient id="nash-silver" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#f6f6f4" />
@@ -16,23 +51,38 @@ function Ribbons() {
           <stop offset="1" stopColor="#dedfdf" />
         </linearGradient>
       </defs>
-      {OFFSETS.map((dy) => (
+      {OFFSETS.map((dy, i) => (
         <g key={dy} transform={`translate(0 ${dy})`}>
-          <path
-            d="M-30 340 C 150 340, 200 90, 400 90 S 640 320, 740 120"
-            fill="none"
-            stroke="url(#nash-silver)"
-            strokeWidth="15"
-            strokeLinecap="round"
-          />
-          <path
-            d="M-30 334 C 150 334, 200 84, 400 84 S 640 314, 740 114"
-            fill="none"
-            stroke="#ffffff"
-            strokeOpacity="0.55"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-          />
+          <g className="ribbon" style={{ ['--ribbon-i' as string]: i }}>
+            <path
+              className="ribbon-band"
+              d={RIBBON}
+              pathLength={1}
+              fill="none"
+              stroke="url(#nash-silver)"
+              strokeWidth="15"
+              strokeLinecap="round"
+            />
+            <path
+              className="ribbon-band"
+              d={HIGHLIGHT}
+              pathLength={1}
+              fill="none"
+              stroke="#ffffff"
+              strokeOpacity="0.55"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            <path
+              className="ribbon-glint"
+              d={RIBBON}
+              pathLength={1}
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="9"
+              strokeLinecap="round"
+            />
+          </g>
         </g>
       ))}
     </svg>

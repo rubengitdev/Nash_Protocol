@@ -6,8 +6,8 @@ import { HERO_MORPH_FROM_HEIGHT, HERO_PRESET } from '../glyph/glyphPresets';
 import { LandingButton } from './LandingButton';
 
 /**
- * Hero: the infinity ribbon fills the first screen; the copy sits on a soft scrim so it stays readable over the
- * glyphs. Two caption badges sit in opposite corners and state the protocol's idea in technical terms.
+ * Hero: the infinity ribbon fills the first screen below the header and scales to fit it whole; the copy sits on a soft
+ * scrim so it stays readable over the glyphs. On phones the copy comes first and the ribbon sits beneath it.
  */
 export function LandingHero() {
   return (
@@ -16,8 +16,6 @@ export function LandingHero() {
       <div className="landing-hero-field">
         <GlyphField preset={HERO_PRESET} morphFromHeight={HERO_MORPH_FROM_HEIGHT} />
       </div>
-      <div className="surface-edge-fade surface-edge-fade-top" aria-hidden="true" />
-      <div className="surface-edge-fade surface-edge-fade-bottom" aria-hidden="true" />
 
       <div className="landing-hero-copy">
         <div className="landing-stack">
