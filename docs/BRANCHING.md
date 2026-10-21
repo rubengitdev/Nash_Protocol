@@ -34,13 +34,13 @@ git switch mainnet && git pull --ff-only && git merge --no-ff testnet && git pus
 
 ## Hosting
 
-The website runs on Vercel, one project per network. Both projects use root `apps/web` and build their Production deployment from **`main`**, so a push to `main` redeploys both sites with each project's own environment variables. The `testnet` and `mainnet` branches record what was released; they do not trigger a deployment.
+The website runs on Vercel, one project per network. Both projects use root `apps/web`, Node.js 24.x, and build their Production deployment from **`main`**, so a push to `main` redeploys both sites with each project's own environment variables. The `testnet` and `mainnet` branches record what was released; `apps/web/vercel.json` turns deployments off for them (`git.deploymentEnabled`), because their Preview builds have no environment variables and could only fail.
 
 | Network | Vercel project | Domain |
 | :--- | :--- | :--- |
 | Testnet | `nash-protocol-testnet` | <https://testnet.nashprotocol.live> |
 | Mainnet | `nash-protocol-mainnet` | <https://www.nashprotocol.live> |
 
-If a push to `main` does not produce a new Production deployment (check `vercel ls <project>`), deploy by hand from a clean checkout of `main`: `vercel link --yes --project <project>` (delete the `.env.local` it writes), then `vercel deploy --prod --yes`.
+GitHub can take up to about 10 minutes to hand a push to Vercel. Only if no new Production deployment has appeared after that (check `vercel ls <project>`), deploy by hand from a clean checkout of `main`: `vercel link --yes --project <project>` (delete the `.env.local` it writes), then `vercel deploy --prod --yes`.
 
 The web build reads public configuration at build time and secrets at runtime (see the `Dockerfile` header), so the same code serves either network with different variables.
