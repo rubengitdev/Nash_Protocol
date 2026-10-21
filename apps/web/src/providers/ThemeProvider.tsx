@@ -8,8 +8,8 @@ export const THEME_STORAGE_KEY = 'nash-theme';
 const THEME_COLOR: Record<Theme, string> = { light: '#fefdf9', dark: '#010101' };
 
 /**
- * Runs in <head> before first paint, so a returning visitor who chose dark never sees a flash of the light page.
- * Light is the default; the OS colour scheme is deliberately not consulted.
+ * Runs in <head> before first paint, so a returning visitor who chose light never sees a flash of the dark page.
+ * Dark is the default; the OS colour scheme is deliberately not consulted.
  */
 export const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem('${THEME_STORAGE_KEY}');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`;
 
@@ -20,13 +20,13 @@ interface ThemeContextValue {
 }
 
 const ThemeContext = createContext<ThemeContextValue>({
-  theme: 'light',
+  theme: 'dark',
   setTheme: () => {},
   toggleTheme: () => {},
 });
 
 function currentTheme(): Theme {
-  return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
 }
 
 function paint(theme: Theme) {
@@ -35,8 +35,8 @@ function paint(theme: Theme) {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Server and first client render both say "light"; the effect then adopts whatever the head script applied.
-  const [theme, setThemeState] = useState<Theme>('light');
+  // Server and first client render both say "dark"; the effect then adopts whatever the head script applied.
+  const [theme, setThemeState] = useState<Theme>('dark');
 
   useEffect(() => {
     setThemeState(currentTheme());
@@ -44,7 +44,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     // Keep several open tabs in step.
     const onStorage = (event: StorageEvent) => {
       if (event.key !== THEME_STORAGE_KEY) return;
-      const next: Theme = event.newValue === 'dark' ? 'dark' : 'light';
+      const next: Theme = event.newValue === 'light' ? 'light' : 'dark';
       setThemeState(next);
       paint(next);
     };

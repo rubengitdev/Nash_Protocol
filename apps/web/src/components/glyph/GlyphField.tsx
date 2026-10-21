@@ -43,7 +43,7 @@ export function GlyphField({ preset, morphFromHeight, interactive = true, morphK
       canvas,
       getPreset: () => presetRef.current,
       // Read the theme from the page itself: the head script sets it before first paint, ahead of React state.
-      getColors: () => GLYPH_COLORS[document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'],
+      getColors: () => GLYPH_COLORS[document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark'],
       morphFromHeight,
       interactive,
       live: !liveOnHover,

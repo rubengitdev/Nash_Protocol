@@ -274,11 +274,61 @@ function profile(shape: GlyphShape, ny: number, a: number): number {
     case 'blocks': return 1; // the gaps between rooms are cut out by the caller
     case 'opposing': return 1 - 0.3 * a;
     case 'wave': return 0.45; // narrow: it travels sideways
+    case 'logo': return 1; // laid out from its own strips
     default: return 0.45; // infinity is laid out from its own curve
   }
 }
 
+/**
+ * The Nash N (the logo): a left stem, three parallel bands that arc over from the top left and run down to the bottom
+ * right, and a right stem rising from there. Measured from Nash-Protocol-Logo.png with the N 1 tall and 2 wide in u
+ * (-1 is the left stem's centre, 1 the right one's). Band k starts at height LOGO_TOP[k] on the left and ends at
+ * LOGO_BOTTOM[k] on the right; between them its centre line follows a half cosine, so it leaves and meets the stems
+ * level, as the logo's bends do.
+ */
+const LOGO_STRIPS = 5; // left stem, right stem, three bands
+const LOGO_ASPECT = 0.92; // width over height of the N
+const LOGO_TOP = [0.97, 0.88, 0.79];
+const LOGO_BOTTOM = [0.17, 0.085, 0];
+const LOGO_BAND = 0.05; // band thickness, as a share of the N's height
+const LOGO_STEM = 0.08; // stem half-width in u
+const LOGO_SPAN: [number, number] = [0, 0];
+
+/** u along band k where its centre line sits at height y (clamped to the band's ends). */
+function logoBandU(k: number, y: number): number {
+  const s = clamp01((LOGO_TOP[k] - y) / (LOGO_TOP[k] - LOGO_BOTTOM[k]));
+  return (2 * Math.acos(1 - 2 * s)) / Math.PI - 1;
+}
+
+/** Where strip `strip` crosses the row at height ny, written to span as [from, to] in u; false if it does not. */
+function logoSpan(strip: number, ny: number, span: [number, number]): boolean {
+  if (strip === 0) {
+    // Left stem: from the foot up to where the lowest band leaves it.
+    if (ny > LOGO_TOP[2]) return false;
+    span[0] = -1 - LOGO_STEM;
+    span[1] = -1 + LOGO_STEM;
+    return true;
+  }
+  if (strip === 1) {
+    // Right stem: from where the highest band arrives up to the top.
+    if (ny < LOGO_BOTTOM[0]) return false;
+    span[0] = 1 - LOGO_STEM;
+    span[1] = 1 + LOGO_STEM;
+    return true;
+  }
+  const k = strip - 2;
+  const lo = ny - LOGO_BAND * 0.5;
+  const hi = ny + LOGO_BAND * 0.5;
+  if (lo > LOGO_TOP[k] || hi < LOGO_BOTTOM[k]) return false;
+  // The band's height falls from left to right, so the row's upper edge meets it further left.
+  span[0] = logoBandU(k, hi);
+  span[1] = logoBandU(k, lo);
+  return true;
+}
+
 const CELL_ASPECT = 0.62; // a monospace cell is about 0.62 as wide as it is tall
+// Share of the canvas height the infinity may fill at most, so its top and bottom curves always stay in view.
+const INFINITY_FIT = 0.92;
 const BASE_ROWS = 44;
 
 /**
@@ -296,8 +346,11 @@ export function layoutCells(r: Renderer, p: GlyphPreset, aspect: number, time: n
   const cellH = aspect / rows;
   const shape = p.shape;
   const centerY = p.centerY ?? 0.5;
-  // The infinity keeps its natural 2:1 proportion (mag is its half-width in canvas widths) and height only stretches it.
-  const bandH = shape === 'infinity' ? Math.min(1, p.mag / aspect) * height : height;
+  // The infinity keeps its natural 2:1 proportion (its height is mag canvas widths). When the canvas is too short for
+  // that, the whole figure scales down (mag shrinks) instead of being squashed or cut at the top and bottom. The fit
+  // uses the preset height, not the animated one, so the width holds still while the hero grows in.
+  const mag = shape === 'infinity' ? Math.min(p.mag, (INFINITY_FIT * aspect) / Math.max(p.height, 0.001)) : p.mag;
+  const bandH = shape === 'infinity' ? (mag / aspect) * height : height;
   const h0 = centerY - bandH * 0.5;
   const h1 = centerY + bandH * 0.5;
   const phaseTime = time * 90;
@@ -310,8 +363,28 @@ export function layoutCells(r: Renderer, p: GlyphPreset, aspect: number, time: n
     if (nyL < h0 || nyL > h1) continue;
     const ny = clamp01((nyL - h0) / Math.max(bandH, 0.001));
     const a = Math.abs(ny * 2 - 1);
-    let magnitude = p.mag * profile(shape, ny, a);
+    let magnitude = mag * profile(shape, ny, a);
     const lean = (ny - 0.5) * p.lean;
+
+    // Logo: the Nash N, drawn as its five strips (see logoSpan). Each row hands its cells out to the strips the row
+    // crosses; inside a strip the sine sweeps the cells from edge to edge, so the strip turns like a ribbon. The N keeps
+    // its proportion (about 0.92 wide for 1 tall) and does not widen under the pointer.
+    if (shape === 'logo') {
+      const half = Math.min(mag, LOGO_ASPECT * 0.5 * p.height * aspect);
+      const perStrip = Math.ceil(cols / LOGO_STRIPS);
+      for (let i = 0; i < cols; i++) {
+        const strip = i % LOGO_STRIPS;
+        if (!logoSpan(strip, ny, LOGO_SPAN)) continue;
+        const j = Math.floor(i / LOGO_STRIPS);
+        const sine = Math.sin(((j * (360 / perStrip) + row * p.freqY + strip * 47 + phaseTime) * Math.PI) / 180);
+        const u = (LOGO_SPAN[0] + LOGO_SPAN[1]) * 0.5 + (LOGO_SPAN[1] - LOGO_SPAN[0]) * 0.5 * sine;
+        out[n * 3] = 0.5 + lean + half * u;
+        out[n * 3 + 1] = posY;
+        out[n * 3 + 2] = Math.floor((cols > 1 ? i / (cols - 1) : 0) * 3.999) + 1;
+        n++;
+      }
+      continue;
+    }
 
     // Blocks: four sealed rooms; the rows between them stay empty.
     if (shape === 'blocks') {
@@ -319,7 +392,7 @@ export function layoutCells(r: Renderer, p: GlyphPreset, aspect: number, time: n
       magnitude *= 0.72 + 0.28 * hash21(Math.floor(ny * 4), 3);
     }
     // Wave: the whole strand slides sideways along a sine.
-    const offsetX = shape === 'wave' ? p.mag * 1.1 * Math.sin(ny * 7.85398 + time * 60 * 0.0174533) : 0;
+    const offsetX = shape === 'wave' ? mag * 1.1 * Math.sin(ny * 7.85398 + time * 60 * 0.0174533) : 0;
     // Infinity: a lemniscate, x^2 (1 - x^2) = y^2. Per row the right lobe runs from the inner edge to the outer one,
     // and the left lobe mirrors it; both meet at the crossing on the middle row.
     let lobeOuter = 0;
@@ -327,8 +400,8 @@ export function layoutCells(r: Renderer, p: GlyphPreset, aspect: number, time: n
     if (shape === 'infinity') {
       const v = ny * 2 - 1;
       const s = Math.sqrt(Math.max(0, 1 - v * v));
-      lobeOuter = p.mag * Math.sqrt((1 + s) * 0.5);
-      lobeInner = p.mag * Math.sqrt((1 - s) * 0.5);
+      lobeOuter = mag * Math.sqrt((1 + s) * 0.5);
+      lobeInner = mag * Math.sqrt((1 - s) * 0.5);
     }
     // Rows near the pointer widen, with an exponential falloff.
     const prox = mouseOn * Math.exp(-Math.abs(posY - mouseY) / Math.max(p.reach, 0.01));
@@ -336,7 +409,7 @@ export function layoutCells(r: Renderer, p: GlyphPreset, aspect: number, time: n
     // The widening only uses the room this row has left inside the canvas, so a silhouette that already spans the
     // width (the hero) swells where it can and is never cut off at the edge. The rest shape (widen = 1) is untouched.
     if (widen > 1) {
-      const restExtent = shape === 'infinity' ? lobeOuter + p.mag * 0.1 : magnitude;
+      const restExtent = shape === 'infinity' ? lobeOuter + mag * 0.1 : magnitude;
       const room = edge - Math.abs(lean) - Math.abs(offsetX) - restExtent;
       const extra = restExtent * (widen - 1);
       widen = restExtent > 0 ? 1 + (room > 0 ? room * (1 - Math.exp(-extra / room)) : 0) / restExtent : 1;
@@ -355,7 +428,7 @@ export function layoutCells(r: Renderer, p: GlyphPreset, aspect: number, time: n
         const quad = i % 4;
         const side = quad < 2 ? 1 : -1;
         const base = quad % 2 === 0 ? lobeOuter : lobeInner;
-        x = 0.5 + lean + side * (base + p.mag * 0.1 * widen * sine);
+        x = 0.5 + lean + side * (base + mag * 0.1 * widen * sine);
       } else {
         x = 0.5 + lean + offsetX + magnitude * sine;
       }

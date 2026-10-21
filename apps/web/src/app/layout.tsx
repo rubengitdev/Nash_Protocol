@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   },
 };
 
-// Light is the default theme; ThemeProvider keeps this tag in step when the visitor switches.
+// Dark is the default theme; ThemeProvider keeps this tag in step when the visitor switches.
 export const viewport: Viewport = {
-  themeColor: "#fefdf9",
+  themeColor: "#010101",
   colorScheme: "light dark",
 };
 
@@ -50,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme="light" suppressHydrationWarning>
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
