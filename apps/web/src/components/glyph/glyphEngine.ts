@@ -135,7 +135,8 @@ const QUALITY = [
   { scale: 0.55, ms: 1000 / 24 },
   { scale: 0.4, ms: 1000 / 20 },
 ] as const;
-// While the page is scrolling (and a moment after) the fields stay as they are, so the compositor has the thread to itself.
+// While the page is scrolling (and a moment after) the fields stay as they are, so the compositor has the thread to
+// itself, unless setHoldOnScroll(false) is in effect.
 const SCROLL_HOLD_MS = 140;
 const MORPH_DELAY = 0.25;
 const MORPH_SECONDS = 2.2;
@@ -151,6 +152,7 @@ let rafId = 0;
 let running = false;
 let lastTime = 0;
 let scrollHoldUntil = 0;
+let holdOnScroll = true;
 // Adaptive quality: smoothed gap between animation frames, and when the level last changed.
 let level = 0;
 let cadence = 16.7;
@@ -327,9 +329,87 @@ function logoSpan(strip: number, ny: number, span: [number, number]): boolean {
 }
 
 const CELL_ASPECT = 0.62; // a monospace cell is about 0.62 as wide as it is tall
-// Share of the canvas height the infinity may fill at most, so its top and bottom curves always stay in view.
-const INFINITY_FIT = 0.92;
 const BASE_ROWS = 44;
+
+/**
+ * Pointer widening limited to the room left inside the canvas, so a silhouette that already spans the width (the hero)
+ * swells where it can and is never cut off at the edge. The rest shape (widen = 1) is untouched.
+ */
+function fitWiden(widen: number, restExtent: number, room: number): number {
+  if (widen <= 1) return widen;
+  if (restExtent <= 0) return 1;
+  const extra = restExtent * (widen - 1);
+  return 1 + (room > 0 ? room * (1 - Math.exp(-extra / room)) : 0) / restExtent;
+}
+
+/**
+ * The infinity: a lemniscate, x = cos t, y = sin 2t / 2 (2 wide and 1 tall in units of mag), drawn as a ribbon of
+ * half-width INFINITY_RIBBON around it. The cells walk the closed curve at an even pace, one text row of arc length
+ * per step, and the sine twists them across the ribbon at right angles to the curve. So the ribbon keeps the same
+ * width and the same twist where the curve runs level (the top and bottom of each lobe) as where it climbs, and flows
+ * round the whole figure without a seam. Each cell then sits on its text row.
+ */
+const INFINITY_RIBBON = 0.1;
+// Height of the infinity, ribbon included, in units of mag.
+const INFINITY_TALL = 1 + 2 * INFINITY_RIBBON;
+// Share of the canvas height the infinity (ribbon included) may fill at most, leaving a sliver above and below it.
+const INFINITY_FIT = 0.96;
+// Arc length of the centre line from t = 0, sampled finely so a walk at an even pace can look t up.
+const INFINITY_SAMPLES = 1024;
+const INFINITY_ARC = new Float64Array(INFINITY_SAMPLES + 1);
+for (let k = 1; k <= INFINITY_SAMPLES; k++) {
+  const t = (2 * Math.PI * (k - 0.5)) / INFINITY_SAMPLES;
+  INFINITY_ARC[k] = INFINITY_ARC[k - 1] + (Math.hypot(Math.sin(t), Math.cos(2 * t)) * 2 * Math.PI) / INFINITY_SAMPLES;
+}
+const INFINITY_LENGTH = INFINITY_ARC[INFINITY_SAMPLES];
+
+function layoutInfinity(r: Renderer, p: GlyphPreset, aspect: number, time: number, height: number, mouseY: number, mouseOn: number): number {
+  const cols = Math.min(64, Math.max(1, Math.floor(p.cols)));
+  const cellH = aspect / (BASE_ROWS * p.density);
+  // The infinity keeps its natural proportion. When the canvas is too short for it, the whole figure scales down (mag
+  // shrinks) instead of being squashed or cut at the top and bottom. The fit uses the preset height, not the animated
+  // one, so the width holds still while the hero grows in.
+  const mag = Math.min(p.mag, (INFINITY_FIT * aspect) / (INFINITY_TALL * Math.max(p.height, 0.001)));
+  // The cols are shared out over the four branches a row used to cross, so each step along the curve carries a quarter.
+  const perStep = Math.ceil(cols / 4);
+  const steps = Math.max(8, Math.round((INFINITY_LENGTH * mag) / cellH));
+  if (r.cells.length < steps * perStep * 3) r.cells = new Float32Array(steps * perStep * 3);
+  const out = r.cells;
+  // The twist advances freqY per step, rounded so it closes on itself where the walk comes back to its start.
+  const freqY = (Math.max(1, Math.round((steps * p.freqY) / 360)) * 360) / steps;
+  const phaseTime = time * 90;
+  const midY = (p.centerY ?? 0.5) * aspect;
+  const edge = 0.5 - cellH * CELL_ASPECT * 0.5;
+  let n = 0;
+  let seg = 0;
+  for (let k = 0; k < steps; k++) {
+    const s = (k / steps) * INFINITY_LENGTH;
+    while (seg < INFINITY_SAMPLES - 1 && INFINITY_ARC[seg + 1] < s) seg++;
+    const t = ((seg + (s - INFINITY_ARC[seg]) / (INFINITY_ARC[seg + 1] - INFINITY_ARC[seg])) * 2 * Math.PI) / INFINITY_SAMPLES;
+    const cx = Math.cos(t);
+    const cy = Math.sin(2 * t) / 2;
+    // Unit normal: the tangent (-sin t, cos 2t) turned a quarter. It is never zero, so the normal never flips.
+    const tx = -Math.sin(t);
+    const ty = Math.cos(2 * t);
+    const tl = Math.hypot(tx, ty);
+    const nx = -ty / tl;
+    const ny = tx / tl;
+    const lean = (cy / INFINITY_TALL) * p.lean;
+    // Steps near the pointer widen, with an exponential falloff.
+    const prox = mouseOn * Math.exp(-Math.abs(midY + cy * mag * height - mouseY) / Math.max(p.reach, 0.01));
+    const restExtent = mag * (Math.abs(cx) + INFINITY_RIBBON);
+    const widen = fitWiden(1 + p.widen * prox * p.pull, restExtent, edge - Math.abs(lean) - restExtent);
+    for (let j = 0; j < perStep; j++) {
+      const sine = Math.sin(((j * 4 * p.freqX + k * freqY + phaseTime) * Math.PI) / 180);
+      const posY = midY + (cy + ny * INFINITY_RIBBON * sine) * mag * height;
+      out[n * 3] = 0.5 + lean + (cx + nx * INFINITY_RIBBON * sine) * mag * widen;
+      out[n * 3 + 1] = (Math.floor(posY / cellH) + 0.5) * cellH;
+      out[n * 3 + 2] = Math.floor((perStep > 1 ? j / (perStep - 1) : 0) * 3.999) + 1; // the shade ramps up across the ribbon
+      n++;
+    }
+  }
+  return n;
+}
 
 /**
  * Where every glyph cell sits, as (x, y, shade) triples written into r.cells; returns how many cells there are.
@@ -338,6 +418,7 @@ const BASE_ROWS = 44;
  */
 /** Exported so a numeric test can check that the pointer widening stays inside the canvas. */
 export function layoutCells(r: Renderer, p: GlyphPreset, aspect: number, time: number, height: number, mouseY: number, mouseOn: number): number {
+  if (p.shape === 'infinity') return layoutInfinity(r, p, aspect, time, height, mouseY, mouseOn);
   const cols = Math.min(64, Math.max(1, Math.floor(p.cols)));
   const rows = BASE_ROWS * p.density;
   const rowCount = Math.ceil(rows) + 1;
@@ -346,13 +427,9 @@ export function layoutCells(r: Renderer, p: GlyphPreset, aspect: number, time: n
   const cellH = aspect / rows;
   const shape = p.shape;
   const centerY = p.centerY ?? 0.5;
-  // The infinity keeps its natural 2:1 proportion (its height is mag canvas widths). When the canvas is too short for
-  // that, the whole figure scales down (mag shrinks) instead of being squashed or cut at the top and bottom. The fit
-  // uses the preset height, not the animated one, so the width holds still while the hero grows in.
-  const mag = shape === 'infinity' ? Math.min(p.mag, (INFINITY_FIT * aspect) / Math.max(p.height, 0.001)) : p.mag;
-  const bandH = shape === 'infinity' ? (mag / aspect) * height : height;
-  const h0 = centerY - bandH * 0.5;
-  const h1 = centerY + bandH * 0.5;
+  const mag = p.mag;
+  const h0 = centerY - height * 0.5;
+  const h1 = centerY + height * 0.5;
   const phaseTime = time * 90;
   // How far from the centre a cell centre may sit: the canvas edge less half a cell, so the glyph is not cut off.
   const edge = 0.5 - cellH * CELL_ASPECT * 0.5;
@@ -361,7 +438,7 @@ export function layoutCells(r: Renderer, p: GlyphPreset, aspect: number, time: n
     const posY = (row + 0.5) * cellH;
     const nyL = posY / aspect;
     if (nyL < h0 || nyL > h1) continue;
-    const ny = clamp01((nyL - h0) / Math.max(bandH, 0.001));
+    const ny = clamp01((nyL - h0) / Math.max(height, 0.001));
     const a = Math.abs(ny * 2 - 1);
     let magnitude = mag * profile(shape, ny, a);
     const lean = (ny - 0.5) * p.lean;
@@ -393,46 +470,15 @@ export function layoutCells(r: Renderer, p: GlyphPreset, aspect: number, time: n
     }
     // Wave: the whole strand slides sideways along a sine.
     const offsetX = shape === 'wave' ? mag * 1.1 * Math.sin(ny * 7.85398 + time * 60 * 0.0174533) : 0;
-    // Infinity: a lemniscate, x^2 (1 - x^2) = y^2. Per row the right lobe runs from the inner edge to the outer one,
-    // and the left lobe mirrors it; both meet at the crossing on the middle row.
-    let lobeOuter = 0;
-    let lobeInner = 0;
-    if (shape === 'infinity') {
-      const v = ny * 2 - 1;
-      const s = Math.sqrt(Math.max(0, 1 - v * v));
-      lobeOuter = mag * Math.sqrt((1 + s) * 0.5);
-      lobeInner = mag * Math.sqrt((1 - s) * 0.5);
-    }
-    // Rows near the pointer widen, with an exponential falloff.
+    // Rows near the pointer widen, with an exponential falloff, within the room the row has left (see fitWiden).
     const prox = mouseOn * Math.exp(-Math.abs(posY - mouseY) / Math.max(p.reach, 0.01));
-    let widen = 1 + p.widen * prox * p.pull;
-    // The widening only uses the room this row has left inside the canvas, so a silhouette that already spans the
-    // width (the hero) swells where it can and is never cut off at the edge. The rest shape (widen = 1) is untouched.
-    if (widen > 1) {
-      const restExtent = shape === 'infinity' ? lobeOuter + mag * 0.1 : magnitude;
-      const room = edge - Math.abs(lean) - Math.abs(offsetX) - restExtent;
-      const extra = restExtent * (widen - 1);
-      widen = restExtent > 0 ? 1 + (room > 0 ? room * (1 - Math.exp(-extra / room)) : 0) / restExtent : 1;
-    }
-    magnitude *= widen;
-    lobeOuter *= widen;
-    lobeInner *= widen;
+    magnitude *= fitWiden(1 + p.widen * prox * p.pull, magnitude, edge - Math.abs(lean) - Math.abs(offsetX) - magnitude);
 
     for (let i = 0; i < cols; i++) {
       const even = i % 2 === 0 ? 1 : -1;
       const rowPhase = row * p.freqY * (shape === 'opposing' ? even : 1);
       const sine = Math.sin(((i * p.freqX + rowPhase + phaseTime) * Math.PI) / 180);
-      let x: number;
-      if (shape === 'infinity') {
-        // Four strands per row, one on each branch of the curve; the sine twists each across a ribbon of width mag * 0.1.
-        const quad = i % 4;
-        const side = quad < 2 ? 1 : -1;
-        const base = quad % 2 === 0 ? lobeOuter : lobeInner;
-        x = 0.5 + lean + side * (base + mag * 0.1 * widen * sine);
-      } else {
-        x = 0.5 + lean + offsetX + magnitude * sine;
-      }
-      out[n * 3] = x;
+      out[n * 3] = 0.5 + lean + offsetX + magnitude * sine;
       out[n * 3 + 1] = posY;
       out[n * 3 + 2] = Math.floor((cols > 1 ? i / (cols - 1) : 0) * 3.999) + 1; // the shade ramps up with the column
       n++;
@@ -593,7 +639,16 @@ function onPointerMove(event: PointerEvent) {
 }
 
 function onScroll() {
-  scrollHoldUntil = performance.now() + SCROLL_HOLD_MS;
+  if (holdOnScroll) scrollHoldUntil = performance.now() + SCROLL_HOLD_MS;
+}
+
+/**
+ * Whether the fields freeze while the page scrolls (the default). The landing page turns it off: its smooth scroll
+ * glides for a while after every wheel step, and the ribbons should keep moving through it.
+ */
+export function setHoldOnScroll(hold: boolean) {
+  holdOnScroll = hold;
+  if (!hold) scrollHoldUntil = 0;
 }
 
 function onVisibility() {
