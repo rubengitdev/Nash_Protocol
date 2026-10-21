@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "chainId": 4663,
+  "note": "Recovered from Robinhood Chain mainnet on 2026-10-15 by replaying the creation nonces of the previous deployer (0xd09D9c87ECfe008B4D6D3cEbeAd25103c16d9a7C) and reading factory.allPairs(). Not a deployment made by this repo.",
+  "addresses": {
+    "v2Factory": "0xF3e3F49BCF467FC2b710ab9997AF53aA0f1cED02",
+    "pool-tsla": "0xCDE681a62493b655A9d8d34Fafc0C49045bE7BcC",
+    "pool-amzn": "0xCd444ab279E52961aCfA76c115921E3987F4F7b1",
+    "pool-pltr": "0x405269F79DB2297a2E6729Aa54958925524751dD",
+    "pool-amd": "0x7Aa3dFe416Af637BA4caBFD3aF84888c91b88c11",
+    "pool-nvda": "0x5dFf9696f7Db9ED0a1A382ebF6A82F2C89560F30"
+  }
+}
