@@ -1,38 +1,46 @@
 # Branching
 
-Three long-lived branches, one per environment.
+Three branches, one per environment, and no others. There are no feature branches and no pull requests.
 
-| Branch | Meaning | Deploys to |
-| :--- | :--- | :--- |
-| `main` | Integration. Everything lands here first | Preview / localhost |
-| `testnet` | Exactly what is deployed on Robinhood testnet (46630): code, testnet config template, deployment records | Testnet environment |
-| `mainnet` | Exactly what is deployed on Robinhood mainnet (4663). Protected | Production |
+| Branch | Meaning |
+| :--- | :--- |
+| `main` | Integration. Every change is committed here first |
+| `testnet` | What is released on Robinhood testnet (46630): code, testnet config template, deployment records |
+| `mainnet` | What is released on Robinhood mainnet (4663) |
 
 ```
-feature/*  ──PR──▶  main  ──merge──▶  testnet  ──merge (after acceptance)──▶  mainnet
+main  ──merge──▶  testnet  ──merge (after acceptance)──▶  mainnet
 ```
 
 ## Rules
 
-- Work on `feature/*`, `fix/*` or `chore/*` branches and open a PR into `main`.
-- Promote by merging **forward only**: `main → testnet → mainnet`. Never commit directly to `testnet` or `mainnet` except deployment records and environment templates (see below).
-- Deployment records (`packages/contracts/deployments/*.json`) are committed on the branch of the network they describe: `testnet-46630.json` on `testnet`, `mainnet-4663.json` on `mainnet`.
-- A merge into `mainnet` requires: green CI, the Phase 0 checklist in [`MAINNET.md`](MAINNET.md), and an owner sign-off.
+- Commit directly to `main`. Do not create `feature/*`, `fix/*` or `chore/*` branches; if one is made by accident, merge it into `main` and delete it the same day.
+- Promote by merging **forward only**: `main → testnet → mainnet`, with `--no-ff` so each release is one merge commit.
+- No pull requests are needed, including between the three branches. After a push to `testnet` or `mainnet`, GitHub shows a "Compare & pull request" banner: ignore it. Never merge `testnet` or `mainnet` back into `main`.
+- Deployment records (`packages/contracts/deployments/*.json`) are written on the branch of the network they describe. Since 2026-10-21 `main` also carries copies of them; the web build reads none of these files, so they do not change the site.
+- A merge into `mainnet` requires the Phase 0 checklist in [`MAINNET.md`](MAINNET.md) and an owner sign-off.
 - Secrets are never committed on any branch. `.env*` is ignored except `*.example`.
 
 ## Commands
 
 ```bash
-git switch main && git pull
-git switch testnet && git merge --no-ff main     # promote to testnet
-git switch mainnet && git merge --no-ff testnet  # promote to mainnet, after acceptance
+git switch main && git pull --ff-only
+# ...commit the change on main...
+git push origin main
+
+git switch testnet && git pull --ff-only && git merge --no-ff main && git push origin testnet     # promote to testnet
+git switch mainnet && git pull --ff-only && git merge --no-ff testnet && git push origin mainnet  # promote to mainnet, after acceptance
 ```
 
-## Mapping to hosting (recommended)
+## Hosting
 
-| Platform | Setting |
-| :--- | :--- |
-| Vercel | Project root `apps/web`; Production Branch `mainnet`; `testnet` gets a stable preview with testnet env vars; `main` previews |
-| Railway | Environment `testnet` deploys from branch `testnet`; environment `mainnet` from branch `mainnet`; services `web` (`SERVICE=web`) and `backend` (`SERVICE=backend`) |
+The website runs on Vercel, one project per network. Both projects use root `apps/web` and build their Production deployment from **`main`**, so a push to `main` redeploys both sites with each project's own environment variables. The `testnet` and `mainnet` branches record what was released; they do not trigger a deployment.
 
-The web build reads public configuration at build time and secrets at runtime (see the `Dockerfile` header), so the same image can serve either network with different variables.
+| Network | Vercel project | Domain |
+| :--- | :--- | :--- |
+| Testnet | `nash-protocol-testnet` | <https://testnet.nashprotocol.live> |
+| Mainnet | `nash-protocol-mainnet` | <https://www.nashprotocol.live> |
+
+If a push to `main` does not produce a new Production deployment (check `vercel ls <project>`), deploy by hand from a clean checkout of `main`: `vercel link --yes --project <project>` (delete the `.env.local` it writes), then `vercel deploy --prod --yes`.
+
+The web build reads public configuration at build time and secrets at runtime (see the `Dockerfile` header), so the same code serves either network with different variables.
