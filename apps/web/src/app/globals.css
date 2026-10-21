@@ -4166,13 +4166,9 @@ a.ca-chip:hover {
   }
 }
 /* Ribbon motion (LandingBanner.tsx): the script arms the ribbons (hidden at the start of their draw) and marks them drawn
-   once the banner is seen; data-playing pauses everything while the banner is off screen. Without the script, or with
-   reduced motion, none of these apply and the ribbons are simply shown. */
-.landing-banner-ribbons .ribbon-glint {
-  opacity: 0;
-  stroke-dasharray: 0.07 2;
-  stroke-dashoffset: 0.07;
-}
+   once the banner is seen; the wave and the sheen are then driven by the script, only while the banner is on screen.
+   data-playing pauses the draw while the banner is off screen. Without the script, or with reduced motion, none of
+   these apply and the ribbons are simply shown. */
 .landing-banner-ribbons[data-armed] .ribbon-band {
   stroke-dasharray: 1 1;
   stroke-dashoffset: 1;
@@ -4180,15 +4176,7 @@ a.ca-chip:hover {
 .landing-banner-ribbons[data-drawn] .ribbon-band {
   animation: ribbon-draw 1.8s var(--ease-newton) calc(var(--ribbon-i) * 0.16s) both;
 }
-.landing-banner-ribbons[data-drawn] .ribbon {
-  animation: ribbon-drift 6s ease-in-out calc(var(--ribbon-i) * -1.2s) infinite alternate;
-}
-.landing-banner-ribbons[data-drawn] .ribbon-glint {
-  animation: ribbon-glint 5.6s linear calc(1.6s + var(--ribbon-i) * 0.45s) infinite;
-}
-.landing-banner-ribbons[data-playing="false"] .ribbon,
-.landing-banner-ribbons[data-playing="false"] .ribbon-band,
-.landing-banner-ribbons[data-playing="false"] .ribbon-glint {
+.landing-banner-ribbons[data-playing="false"] .ribbon-band {
   animation-play-state: paused;
 }
 @keyframes ribbon-draw {
@@ -4199,35 +4187,8 @@ a.ca-chip:hover {
     stroke-dashoffset: 0;
   }
 }
-@keyframes ribbon-drift {
-  from {
-    transform: translateY(-5px);
-  }
-  to {
-    transform: translateY(5px);
-  }
-}
-@keyframes ribbon-glint {
-  0% {
-    stroke-dashoffset: 0.07;
-    opacity: 0;
-  }
-  12% {
-    opacity: 0.7;
-  }
-  70% {
-    opacity: 0.7;
-  }
-  82%,
-  100% {
-    stroke-dashoffset: -1;
-    opacity: 0;
-  }
-}
 @media (prefers-reduced-motion: reduce) {
-  .landing-banner-ribbons .ribbon,
-  .landing-banner-ribbons .ribbon-band,
-  .landing-banner-ribbons .ribbon-glint {
+  .landing-banner-ribbons .ribbon-band {
     animation: none !important;
   }
 }
