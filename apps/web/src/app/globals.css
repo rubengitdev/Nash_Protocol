@@ -77,7 +77,7 @@
 }
 
 /* Single token source: mirrors apps/web/tailwind.config.ts theme.extend.colors.
-   Two themes, switched by `data-theme` on <html>: light (the default) and dark. Light is the newt.foundation palette:
+   Two themes, switched by `data-theme` on <html>: dark (the default, set on <html> by layout.tsx) and light. Light is the newt.foundation palette:
    bone #fefdf9 ground, coal #010101 ink, hairlines at 10% ink, secondary text at 60% ink.
    Colour is reserved for meaning: green for go and good, red for loss or short, amber for caution. The primary
    action is the inverse of the surface (black on light, bone on dark). Names such as --green and --emerald predate
@@ -372,11 +372,12 @@
   object-fit: contain;
   padding: 13%;
 }
+/* The wordmark shares the heading face (Arial, see typography.css) so the brand reads as one with the headlines. */
 .brand-name {
-  font-family: var(--display);
+  font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 15px;
-  letter-spacing: -0.02em;
+  font-size: 16px;
+  letter-spacing: -0.01em;
   white-space: nowrap;
 }
 .site-nav {
@@ -3102,9 +3103,15 @@ button:hover .arrow-chip {
   background-image: linear-gradient(to bottom, transparent 0%, var(--bg) 100%);
 }
 
+/* The ribbon and the copy share one box: below the header, above a small bottom margin. The ribbon scales to fit that
+   box (glyphEngine.ts, INFINITY_FIT), so it is never cut by the header or the viewport edge. 100svh, not dvh, so the
+   hero does not resize (and the ribbon does not jump) when a phone's address bar slides in and out. */
 .landing-hero {
+  --hero-top: calc(var(--header-h) + 16px);
+  --hero-bottom: 24px;
   position: relative;
-  height: 100dvh;
+  height: 100vh;
+  height: 100svh;
   min-height: 640px;
   margin-top: calc(var(--header-h) * -1);
   overflow: hidden;
@@ -3112,20 +3119,58 @@ button:hover .arrow-chip {
 }
 .landing-hero-field {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: var(--hero-top);
+  bottom: var(--hero-bottom);
   z-index: 0;
   left: max(var(--gutter), calc((100% - var(--page-max)) / 2 + var(--gutter)));
   right: max(var(--gutter), calc((100% - var(--page-max)) / 2 + var(--gutter)));
 }
 .landing-hero-copy {
   position: absolute;
-  inset: 0;
+  top: var(--hero-top);
+  bottom: var(--hero-bottom);
+  left: 0;
+  right: 0;
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 48px var(--gutter);
+  padding: 32px var(--gutter);
+}
+/* Phones: the copy comes first and the ribbon takes the rest of the screen beneath it, so neither covers the other. */
+@media (max-width: 767px) {
+  .landing-hero {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+  .landing-hero-copy {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    padding: calc(var(--header-h) + 40px) var(--gutter) 8px;
+  }
+  .landing-hero-field {
+    position: relative;
+    order: 1;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    flex: 1 1 auto;
+    min-height: 220px;
+    margin: 16px var(--gutter) var(--hero-bottom);
+  }
+  /* A flex item has no definite height for the canvas to fill with h-full, so the canvas wrapper is pinned to it. */
+  .landing-hero-field > * {
+    position: absolute;
+    inset: 0;
+  }
+  .landing-hero .landing-scrim {
+    display: none;
+  }
 }
 /* The scrim is sized from the text block, so it follows the copy on every screen. */
 .landing-stack {
@@ -3957,6 +4002,129 @@ html.lenis body {
   }
 }
 
+/* ── Landing: smart contracts ──────────────────────────────────────────────────────────────────────── */
+.contracts-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 24px;
+}
+.contracts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 32px;
+}
+@media (min-width: 768px) {
+  .contracts-grid {
+    margin-top: 48px;
+  }
+}
+@media (min-width: 1024px) {
+  .contracts-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  /* The core group is the longest and is shared by every market: it spans the row, its list in two columns. */
+  .contract-group:first-child,
+  .contract-group:nth-child(even):last-child {
+    grid-column: 1 / -1;
+  }
+  /* A group left alone on the last row does the same, so the grid never ends on an empty half. */
+  .contract-group:first-child .contract-list,
+  .contract-group:nth-child(even):last-child .contract-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+  }
+}
+.contract-group {
+  min-width: 0;
+  padding: 20px 16px 8px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--bg);
+}
+@media (min-width: 768px) {
+  .contract-group {
+    padding: 24px 24px 8px;
+  }
+}
+.contract-group-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.contract-group-title {
+  font-family: var(--display);
+  font-size: 20px;
+  line-height: 1.2;
+}
+.contract-group-count {
+  font-family: var(--display);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.contract-group-note {
+  margin-top: 6px;
+}
+.contract-list {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.contract-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+.contract-id {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.contract-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+.contract-address {
+  font-family: var(--display);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.contract-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
+}
+a.ca-chip {
+  transition: border-color 0.3s var(--ease-newton);
+}
+a.ca-chip:hover {
+  border-color: var(--text);
+}
+.contract-copy {
+  padding: 7px 9px;
+}
+/* Phones: the Blockscout chip keeps only its icon, so the full address keeps its room. */
+@media (max-width: 479px) {
+  .contract-row .contract-link {
+    padding: 7px 9px;
+    font-size: 0;
+    gap: 0;
+  }
+}
+
 /* ── Landing: closing banner ───────────────────────────────────────────────────────────────────────── */
 .landing-banner-wrap {
   max-width: var(--page-max);
@@ -3995,6 +4163,72 @@ html.lenis body {
     top: 0;
     height: 100%;
     width: 66%;
+  }
+}
+/* Ribbon motion (LandingBanner.tsx): the script arms the ribbons (hidden at the start of their draw) and marks them drawn
+   once the banner is seen; data-playing pauses everything while the banner is off screen. Without the script, or with
+   reduced motion, none of these apply and the ribbons are simply shown. */
+.landing-banner-ribbons .ribbon-glint {
+  opacity: 0;
+  stroke-dasharray: 0.07 2;
+  stroke-dashoffset: 0.07;
+}
+.landing-banner-ribbons[data-armed] .ribbon-band {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+}
+.landing-banner-ribbons[data-drawn] .ribbon-band {
+  animation: ribbon-draw 1.8s var(--ease-newton) calc(var(--ribbon-i) * 0.16s) both;
+}
+.landing-banner-ribbons[data-drawn] .ribbon {
+  animation: ribbon-drift 6s ease-in-out calc(var(--ribbon-i) * -1.2s) infinite alternate;
+}
+.landing-banner-ribbons[data-drawn] .ribbon-glint {
+  animation: ribbon-glint 5.6s linear calc(1.6s + var(--ribbon-i) * 0.45s) infinite;
+}
+.landing-banner-ribbons[data-playing="false"] .ribbon,
+.landing-banner-ribbons[data-playing="false"] .ribbon-band,
+.landing-banner-ribbons[data-playing="false"] .ribbon-glint {
+  animation-play-state: paused;
+}
+@keyframes ribbon-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes ribbon-drift {
+  from {
+    transform: translateY(-5px);
+  }
+  to {
+    transform: translateY(5px);
+  }
+}
+@keyframes ribbon-glint {
+  0% {
+    stroke-dashoffset: 0.07;
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.7;
+  }
+  70% {
+    opacity: 0.7;
+  }
+  82%,
+  100% {
+    stroke-dashoffset: -1;
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .landing-banner-ribbons .ribbon,
+  .landing-banner-ribbons .ribbon-band,
+  .landing-banner-ribbons .ribbon-glint {
+    animation: none !important;
   }
 }
 .landing-banner-copy {

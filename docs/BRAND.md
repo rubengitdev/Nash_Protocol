@@ -2,9 +2,9 @@
 
 > Tone: intelligent, insightful, authoritative, never impenetrable. Use real-world analogies to explain hard ideas. Be inclusive: this protocol is for everyone at the table, not only insiders.
 
-## 0. Current design system: light by default
+## 0. Current design system: dark by default
 
-The site follows <https://www.newt.foundation/>: a bone ground, coal ink, hairline borders, a monospace display face and a 3D glyph ribbon. It ships two themes on one set of tokens. **Light is the default**; the OS colour scheme is deliberately not consulted. A toggle in the header switches to dark and remembers the choice (`localStorage` key `nash-theme`; a script in `<head>` applies it before first paint, so there is no flash).
+The site follows <https://www.newt.foundation/>: a bone ground, coal ink, hairline borders, a monospace display face and a 3D glyph ribbon. It ships two themes on one set of tokens. **Dark is the default** (since October 2026; `data-theme="dark"` is rendered on `<html>`); the OS colour scheme is deliberately not consulted. A toggle in the header switches to light and remembers the choice (`localStorage` key `nash-theme`; a script in `<head>` applies it before first paint, so there is no flash).
 
 ### Tokens
 
@@ -30,7 +30,9 @@ One source: `apps/web/src/app/globals.css` (CSS variables on `:root` for light a
 
 | Role | Family |
 | :--- | :--- |
-| Headings, wordmark, numbers in display | **Space Mono** 400/700, italic included (`font-display`, `--display`) |
+| Section titles, card titles, numbers in display | **Space Mono** 400/700, italic included (`font-display`, `--display`) |
+| H1/H2 and the header/footer wordmark | Arial bold, H1/H2 uppercase (`--font-heading`, `typography.css`) |
+| Nav links and button labels | Menlo, uppercase (`--font-ui`) |
 | Interface and body | **Inter** variable (`font-sans`, `--body`) |
 | Data, addresses | JetBrains Mono (`font-mono`) |
 
@@ -39,10 +41,12 @@ All three are SIL OFL and self-hosted in `apps/web/public/fonts/`. Hero H1 is 64
 ### Layout and chrome
 
 - 1440px container, 24px gutter, 80px fixed header (hairline appears on scroll), 2px radius everywhere.
-- **Logo**: the silver N mark on a black tile (`BrandMark` in `components/navigation.tsx`) beside the wordmark in Space Mono. The mark is only ever placed on black.
+- **Logo**: the silver N mark on a black tile (`BrandMark` in `components/navigation.tsx`) beside the wordmark "Nash Protocol" in Arial bold, the same face as the H1/H2 headlines (`.brand-name`). The mark is only ever placed on black.
 - **Footer** is always the inverse theme (`.theme-inverse` re-declares the tokens): black on light, bone on dark.
 - **Header.** Landing: logo, CA chip ("Coming soon" until `NEXT_PUBLIC_TOKEN_CA` is set), network badge, Open App, Connect Wallet, theme toggle; no page links. App: logo, the eight page links, network badge, Connect Wallet, theme toggle. The badge is a status label: the network is fixed per deployment (`NETWORK_MODE`), so it does not switch.
-- **Landing page:** hero (infinity ribbon, headline, two buttons; no captions), Features (a ribbon stage above six clickable cards), How it works (four figures), closing banner (three silver ribbons on a black panel, Open App). `/docs` holds the user-facing documentation and `/faq` the FAQ. The footer carries the CA and a Docs link.
+- **Landing page:** hero (infinity ribbon, headline, two buttons; no captions), Features (a ribbon stage above six clickable cards), How it works (four figures), Smart contracts (`#contracts`), closing banner (three silver ribbons on a black panel, Open App). `/docs` holds the user-facing documentation and `/faq` the FAQ. The footer carries the CA, a Docs link and a Smart contracts link.
+- **Smart contracts section** (`LandingContracts.tsx`, data from `lib/contract-directory.ts`): every contract the app uses on the build's network, grouped as Core protocol, one group per stock market and Pons, each row with the full address, a copy button and a Blockscout link (`EXPLORER_URL/address/...`). It is built from the same env the app runs on (`PROTOCOL_ADDRESSES`, `MARKET_DEPLOYMENTS_JSON`, `PONS_DEPLOYMENT_JSON`), so testnet and mainnet each list their own contracts and the list cannot drift from what the app calls. An address is listed once.
+- **Closing banner motion** (`LandingBanner.tsx`): the three ribbons draw in from the left the first time the banner is seen, then drift slowly with a glint running along each band; paused off screen, static with reduced motion or without JavaScript.
 
 ### The 3D glyph field
 
@@ -59,12 +63,12 @@ The reference's "3D" is not a mesh. It stacks text rows; each row places a few b
 
 Measure changes with Chrome on a real GPU (`--use-angle=gl --enable-gpu`); software GL (swiftshader) exaggerates compositing cost and says little about real machines.
 
-Shapes (`GlyphShape`): `diamond`, `hourglass`, `cone`, `infinity` (a horizontal lemniscate; four strands per row, one on each branch of the curve), `strands`, `bands`, `spiral`, `blocks`, `opposing`, `wave`. Where they are used:
+Shapes (`GlyphShape`): `diamond`, `hourglass`, `cone`, `infinity` (a horizontal lemniscate; four strands per row, one on each branch of the curve), `strands`, `bands`, `spiral`, `blocks`, `opposing`, `wave`, `logo` (the Nash N: two stems and three bands at the logo's proportion, see `logoSpan` in `glyphEngine.ts`). Where they are used:
 
 | Place | Figure |
 | :--- | :--- |
-| Landing hero | `infinity`, exactly as wide as the header content (the canvas is `.landing-hero-field`, inset to the page container, so its edges line up with the logo and the right-hand controls at every width; `mag` is set so the outer strand reaches about 1% short of each edge). On phones it sits under the copy via the preset's `compact` override |
-| Landing Features stage | `cone` Earn, `blocks` Lending, `opposing` Trade, `bands` China Equities, `spiral` Pons, `diamond` Auto-Protect. Changing card calls `morphKey`: the figure collapses to a stub and regrows |
+| Landing hero | `infinity`, as wide as the header content (the canvas is `.landing-hero-field`, inset to the page container, so its edges line up with the logo and the right-hand controls at every width; `mag` is set so the outer strand reaches about 1% short of each edge). The canvas starts below the header, and when it is too short for the 2:1 figure the engine scales the whole figure down (`INFINITY_FIT`, 92% of the height), so it is never cut by the header or the screen edge. The hero is `100svh`, so a phone's address bar does not resize it. On phones the copy comes first and the ribbon fills the space beneath it |
+| Landing Features stage | `logo` Earn (card emblem too), `blocks` Lending, `opposing` Trade, `bands` China Equities, `spiral` Pons, `diamond` Auto-Protect. Changing card calls `morphKey`: the figure collapses to a stub and regrows |
 | Landing How it works | `cone`, `opposing`, `diamond`, `hourglass`, solid (no sand speckle) |
 | App pages (`AppPage` `banner` prop: a frameless ribbon beside the page title; `PageRibbon compact` is the thin strip on the Pons trade workspace) | Markets `strands`, China `bands`, Pons `spiral`, Lending `blocks`, Trade `opposing` (compact strip on the workspace), Earn `cone`, Portfolio `diamond`, Analytics `wave` |
 

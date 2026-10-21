@@ -10,7 +10,8 @@
  *   height    share of the canvas the silhouette occupies; above 1 it runs off both edges. The infinity keeps its own
  *             2:1 proportion (mag is its half-width) and height only stretches it
  *   shape     diamond, hourglass, cone (one tapering band); infinity (two lobes that cross); strands, bands, spiral,
- *             blocks, opposing, wave (the figures used on the app pages and the Features stage)
+ *             blocks, opposing, wave (the figures used on the app pages and the Features stage); logo (the Nash N:
+ *             two stems and three bands, keeping the logo's proportion)
  *   lean      horizontal shear from bottom to top
  */
 export type GlyphShape =
@@ -23,7 +24,8 @@ export type GlyphShape =
   | 'spiral'
   | 'blocks'
   | 'opposing'
-  | 'wave';
+  | 'wave'
+  | 'logo';
 
 export interface GlyphPreset {
   shape: GlyphShape;
@@ -64,7 +66,8 @@ const BASE: Omit<GlyphPreset, 'shape' | 'density' | 'cols' | 'mag' | 'freqX' | '
 /**
  * The hero ribbon: a horizontal infinity as wide as the header content (the canvas is that wide; see .landing-hero-field).
  * mag is its half-width in canvas widths: the outer strand reaches 1.1 x mag, so 0.449 leaves about 1% at each edge.
- * It starts as a flat stub and grows to full height.
+ * On a short canvas the engine shrinks mag so the whole figure fits the height. It starts as a flat stub and grows to
+ * full height.
  */
 export const HERO_PRESET: GlyphPreset = {
   ...BASE,
@@ -76,8 +79,9 @@ export const HERO_PRESET: GlyphPreset = {
   freqY: 5.5,
   height: 1,
   lean: 0,
-  // On a phone the infinity spans the width and sits under the copy, so the headline stays clear of it.
-  compact: { cols: 44, centerY: 0.22 },
+  // On a phone the canvas sits under the copy (see .landing-hero-field), so it is much shorter than the screen: coarser
+  // rows keep the glyphs the same size as on a large screen.
+  compact: { cols: 44, density: 2 },
 };
 export const HERO_MORPH_FROM_HEIGHT = 0.15;
 
@@ -121,6 +125,7 @@ export const BANNER_PRESETS: Record<GlyphShape, GlyphPreset> = {
   blocks: { ...BANNER, shape: 'blocks', mag: 0.19, freqX: 2.4, freqY: 18 },
   opposing: { ...BANNER, shape: 'opposing', mag: 0.19, freqX: 3, freqY: 17 },
   wave: { ...BANNER, shape: 'wave', mag: 0.14, freqX: 2.6, freqY: 24 },
+  logo: { ...BANNER, shape: 'logo', mag: 0.3, freqX: 0, freqY: 9 },
 };
 
 /**
@@ -130,7 +135,11 @@ export const BANNER_PRESETS: Record<GlyphShape, GlyphPreset> = {
 export const STAGE_PRESETS: Record<GlyphShape, GlyphPreset> = Object.fromEntries(
   (Object.entries(BANNER_PRESETS) as Array<[GlyphShape, GlyphPreset]>).map(([shape, preset]) => [
     shape,
-    { ...preset, density: 1.0, cols: 56, height: 0.96 },
+    shape === 'logo'
+      ? // The N is solid strips rather than a loose winding: finer cells keep its three bands apart, and it stands a
+        // little higher so the stage's label bar does not cover its feet.
+        { ...preset, density: 2, cols: 60, height: 0.82, centerY: 0.55 }
+      : { ...preset, density: 1.0, cols: 56, height: 0.96 },
   ]),
 ) as Record<GlyphShape, GlyphPreset>;
 
@@ -181,7 +190,9 @@ const EMBLEM_WINDING: Partial<Record<GlyphShape, [number, number]>> = {
 export const EMBLEM_PRESETS: Record<GlyphShape, GlyphPreset> = Object.fromEntries(
   (Object.entries(BANNER_PRESETS) as Array<[GlyphShape, GlyphPreset]>).map(([shape, preset]) => {
     const [freqX, freqY] = EMBLEM_WINDING[shape] ?? [preset.freqX * (64 / 26), preset.freqY * (46 / 22)];
-    return [shape, { ...EMBLEM, shape, mag: shape === 'infinity' ? 0.4 : shape === 'wave' ? 0.2 : 0.3, freqX, freqY }];
+    const mag = shape === 'infinity' ? 0.4 : shape === 'wave' ? 0.2 : 0.3;
+    // The N is upright and solid, so it is drawn a little shorter than the frame to leave the frame's edge visible.
+    return [shape, { ...EMBLEM, shape, mag, freqX, freqY, ...(shape === 'logo' ? { height: 0.8, density: 0.6 } : {}) }];
   }),
 ) as Record<GlyphShape, GlyphPreset>;
 
