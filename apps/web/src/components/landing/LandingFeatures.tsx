@@ -22,7 +22,8 @@ const FEATURES: Feature[] = [
   {
     id: 'earn',
     title: 'Earn',
-    shape: 'cone',
+    // Earn opens the stage, so the first figure a visitor sees there is the Nash N itself.
+    shape: 'logo',
     href: '/earn',
     body: 'Supply stablecoins to ERC-4626 vaults and earn from borrowers across isolated markets. Risk you can size, one market at a time.',
   },
