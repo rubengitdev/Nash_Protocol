@@ -12,7 +12,7 @@ export default function EarnPage() {
 
   return (
     <AppPage
-      banner="cone"
+      banner="logo"
       eyebrow="Earn"
       title="Put your assets to work."
       description="Explore lending vaults and review their allocation, utilization, and withdrawal conditions."

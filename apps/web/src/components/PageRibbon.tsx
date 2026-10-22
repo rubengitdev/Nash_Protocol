@@ -2,9 +2,10 @@ import { GlyphField } from "./glyph/GlyphField";
 import { BANNER_PRESETS, HEADING_PRESETS, type GlyphShape } from "./glyph/glyphPresets";
 
 /**
- * The slim glyph ribbon at the top of a feature page. Each page has its own figure (strands for the market directory,
- * bands for China equities, a spiral for Pons, sealed blocks for lending, opposing strands for trade, a rising cone
- * for earn, layered diamonds for the portfolio, a wave for analytics). It follows the pointer and is decorative.
+ * The slim glyph ribbon at the top of a feature page. Each page has its own figure, the same one its card shows in the
+ * landing Features section (the Nash N for earn, a padlock for lending, long and short arrows for trade, a pagoda for
+ * China equities, the bonding curve for Pons), plus price candles for the markets, an allocation ring for the portfolio
+ * and a bar chart for analytics. It follows the pointer and is decorative.
  * `heading` places it beside the page title (AppPage); `compact` is the thin strip the trade workspace uses.
  */
 export function PageRibbon({ shape, compact = false, heading = false }: { shape: GlyphShape; compact?: boolean; heading?: boolean }) {

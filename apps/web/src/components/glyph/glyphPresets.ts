@@ -1,3 +1,5 @@
+import { FIGURES, type FigureShape } from './glyphFigures';
+
 /**
  * Presets for the glyph ribbon (see GlyphField.tsx). Each field is a stack of text rows; every row places a few
  * block characters (light shade to solid) at sine offsets, so the stack reads as a twisting 3D ribbon.
@@ -10,8 +12,9 @@
  *   height    share of the canvas the silhouette occupies; above 1 it runs off both edges. The infinity keeps its own
  *             2:1 proportion (mag is its half-width) and height only stretches it
  *   shape     diamond, hourglass, cone (one tapering band); infinity (two lobes that cross); strands, bands, spiral,
- *             blocks, opposing, wave (the figures used on the app pages and the Features stage); logo (the Nash N:
- *             two stems and three bands, keeping the logo's proportion)
+ *             blocks, opposing, wave (older windings); logo (the Nash N: two stems and three bands, keeping the logo's
+ *             proportion); lock, arrows, pagoda, curve, shield, candles, ring, bars (silhouettes, one per feature, see
+ *             glyphFigures.ts)
  *   lean      horizontal shear from bottom to top
  */
 export type GlyphShape =
@@ -25,7 +28,8 @@ export type GlyphShape =
   | 'blocks'
   | 'opposing'
   | 'wave'
-  | 'logo';
+  | 'logo'
+  | FigureShape;
 
 export interface GlyphPreset {
   shape: GlyphShape;
@@ -126,7 +130,12 @@ export const BANNER_PRESETS: Record<GlyphShape, GlyphPreset> = {
   opposing: { ...BANNER, shape: 'opposing', mag: 0.19, freqX: 3, freqY: 17 },
   wave: { ...BANNER, shape: 'wave', mag: 0.14, freqX: 2.6, freqY: 24 },
   logo: { ...BANNER, shape: 'logo', mag: 0.3, freqX: 0, freqY: 9 },
+  // The silhouettes keep their own proportion and fit the height; mag only caps how wide one may grow.
+  ...(Object.fromEntries(
+    (Object.keys(FIGURES) as FigureShape[]).map((shape) => [shape, { ...BANNER, shape, mag: 0.42, freqX: 0, freqY: 9, height: 0.9 }]),
+  ) as Record<FigureShape, GlyphPreset>),
 };
+
 
 /**
  * The Features stage: one wide ribbon above the cards, taller than a banner. It reuses the banner winding with a
@@ -139,7 +148,11 @@ export const STAGE_PRESETS: Record<GlyphShape, GlyphPreset> = Object.fromEntries
       ? // The N is solid strips rather than a loose winding: finer cells keep its three bands apart, and it stands a
         // little higher so the stage's label bar does not cover its feet.
         { ...preset, density: 2, cols: 60, height: 0.82, centerY: 0.55 }
-      : { ...preset, density: 1.0, cols: 56, height: 0.96 },
+      : shape in FIGURES
+        ? // The other silhouettes the same way, with cells a little coarser than the N's. On a phone the label bar can
+          // wrap to two lines, so they stand higher still.
+          { ...preset, density: 1.7, height: 0.8, centerY: 0.56, compact: { height: 0.72, centerY: 0.61 } }
+        : { ...preset, density: 1.0, cols: 56, height: 0.96 },
   ]),
 ) as Record<GlyphShape, GlyphPreset>;
 
@@ -190,9 +203,12 @@ const EMBLEM_WINDING: Partial<Record<GlyphShape, [number, number]>> = {
 export const EMBLEM_PRESETS: Record<GlyphShape, GlyphPreset> = Object.fromEntries(
   (Object.entries(BANNER_PRESETS) as Array<[GlyphShape, GlyphPreset]>).map(([shape, preset]) => {
     const [freqX, freqY] = EMBLEM_WINDING[shape] ?? [preset.freqX * (64 / 26), preset.freqY * (46 / 22)];
-    const mag = shape === 'infinity' ? 0.4 : shape === 'wave' ? 0.2 : 0.3;
-    // The N is upright and solid, so it is drawn a little shorter than the frame to leave the frame's edge visible.
-    return [shape, { ...EMBLEM, shape, mag, freqX, freqY, ...(shape === 'logo' ? { height: 0.8, density: 0.6 } : {}) }];
+    const mag = shape === 'infinity' ? 0.4 : shape === 'wave' ? 0.2 : shape in FIGURES ? 0.42 : 0.3;
+    // The N and the other silhouettes are upright and solid, so they are drawn a little shorter than the frame to leave
+    // the frame's edge visible.
+    // The other silhouettes have smaller details (a keyhole, candle wicks), so their cells are a little finer.
+    const silhouette = shape === 'logo' ? { height: 0.8, density: 0.6 } : shape in FIGURES ? { height: 0.82, density: 0.8 } : {};
+    return [shape, { ...EMBLEM, shape, mag, freqX, freqY, ...silhouette }];
   }),
 ) as Record<GlyphShape, GlyphPreset>;
 
@@ -203,6 +219,8 @@ export const EMBLEM_PRESETS: Record<GlyphShape, GlyphPreset> = Object.fromEntrie
 export const HEADING_PRESETS: Record<GlyphShape, GlyphPreset> = Object.fromEntries(
   (Object.entries(BANNER_PRESETS) as Array<[GlyphShape, GlyphPreset]>).map(([shape, preset]) => [
     shape,
-    { ...preset, mag: Math.min(preset.mag * 1.5, 0.34), density: 0.9, cols: 52, height: 0.94 },
+    shape in FIGURES
+      ? { ...preset, density: 1.3, height: 0.86 }
+      : { ...preset, mag: Math.min(preset.mag * 1.5, 0.34), density: 0.9, cols: 52, height: 0.94 },
   ]),
 ) as Record<GlyphShape, GlyphPreset>;

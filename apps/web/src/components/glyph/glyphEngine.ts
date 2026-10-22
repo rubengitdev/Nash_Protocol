@@ -1,4 +1,5 @@
 import type { GlyphPreset, GlyphShape } from './glyphPresets';
+import { FIGURES, figureSpans, isFigure, type Figure } from './glyphFigures';
 
 /**
  * Shared renderer for every glyph field on the page.
@@ -411,6 +412,73 @@ function layoutInfinity(r: Renderer, p: GlyphPreset, aspect: number, time: numbe
   return n;
 }
 
+// Cells per crossing of a figure part, relative to the number that would sit edge to edge across it. The sweep is a
+// full turn, so every place is passed twice (once per face of the ribbon), and the sine bunches cells toward the
+// edges: a little under three keeps the middle covered too.
+const FIGURE_FILL = 2.8;
+const FIGURE_MAX_CELLS = 192;
+const figureSpanBuffer: number[] = [];
+
+/**
+ * A figure (see glyphFigures.ts): the silhouette keeps its own proportion and fits the preset height, or the width mag
+ * allows, whichever is smaller. Each row asks every part where the row crosses it and sweeps that crossing's cells from
+ * edge to edge with a sine over a full turn, as the N's strips do, so the shade (light to solid along the sweep) turns
+ * like a ribbon inside the outline and the twist climbs from row to row. Rows near the pointer widen a little, within the canvas.
+ */
+function layoutFigure(r: Renderer, p: GlyphPreset, figure: Figure, aspect: number, time: number, height: number, mouseY: number, mouseOn: number): number {
+  const rows = BASE_ROWS * p.density;
+  const rowCount = Math.ceil(rows) + 1;
+  const cellH = aspect / rows;
+  const cellW = cellH * CELL_ASPECT;
+  // Full figure height in canvas widths; the animated height (a swap or the first grow) squashes it vertically only.
+  const figH = Math.min(p.height * aspect, (2 * p.mag) / figure.aspect);
+  const halfW = figure.aspect * 0.5 * figH;
+  const animH = figH * (height / Math.max(p.height, 0.001));
+  const midY = (p.centerY ?? 0.5) * aspect;
+  const y0 = midY - animH * 0.5;
+  // How far from the centre a cell centre may sit, so no glyph is cut off at the canvas edge. The frame is 1 tall, so
+  // frame x maps to 0.5 + x * figH in canvas widths.
+  const edge = 0.5 - cellW * 0.5;
+  const phaseTime = time * 90;
+  let out = r.cells;
+  let n = 0;
+  const ensure = (extra: number) => {
+    if ((n + extra) * 3 <= out.length) return;
+    const grown = new Float32Array(Math.max(out.length * 2, (n + extra) * 3));
+    grown.set(out.subarray(0, n * 3));
+    r.cells = out = grown;
+  };
+  for (let row = 0; row < rowCount; row++) {
+    const posY = (row + 0.5) * cellH;
+    if (posY < y0 || posY > y0 + animH) continue;
+    const fy = (posY - y0) / Math.max(animH, 1e-6);
+    const prox = mouseOn * Math.exp(-Math.abs(posY - mouseY) / Math.max(p.reach, 0.01));
+    const widen = fitWiden(1 + p.widen * prox * p.pull * 0.5, halfW, edge - halfW);
+    for (let part = 0; part < figure.parts.length; part++) {
+      figureSpanBuffer.length = 0;
+      const spans = figureSpans(figure, part, fy, cellH / Math.max(animH, 1e-6), figureSpanBuffer);
+      const dir = figure.parts[part].dir ?? 1;
+      for (let s = 0; s < spans; s++) {
+        const from = 0.5 + figureSpanBuffer[s * 2] * figH * widen;
+        const to = 0.5 + figureSpanBuffer[s * 2 + 1] * figH * widen;
+        const mid = (from + to) * 0.5;
+        const half = Math.max(0, (to - from) * 0.5 - cellW * 0.5);
+        const count = Math.min(FIGURE_MAX_CELLS, Math.max(2, Math.ceil(((to - from) / cellW) * FIGURE_FILL)));
+        ensure(count);
+        const base = dir * row * p.freqY + part * 47 + phaseTime;
+        for (let j = 0; j < count; j++) {
+          const sine = Math.sin(((base + (j * 360) / count) * Math.PI) / 180);
+          out[n * 3] = Math.max(0.5 - edge, Math.min(0.5 + edge, mid + half * sine));
+          out[n * 3 + 1] = posY;
+          out[n * 3 + 2] = Math.floor((count > 1 ? j / (count - 1) : 0) * 3.999) + 1;
+          n++;
+        }
+      }
+    }
+  }
+  return n;
+}
+
 /**
  * Where every glyph cell sits, as (x, y, shade) triples written into r.cells; returns how many cells there are.
  * x runs 0..1 across the canvas and y 0..aspect upward, both measured in canvas widths. Each row places `cols` cells
@@ -419,6 +487,7 @@ function layoutInfinity(r: Renderer, p: GlyphPreset, aspect: number, time: numbe
 /** Exported so a numeric test can check that the pointer widening stays inside the canvas. */
 export function layoutCells(r: Renderer, p: GlyphPreset, aspect: number, time: number, height: number, mouseY: number, mouseOn: number): number {
   if (p.shape === 'infinity') return layoutInfinity(r, p, aspect, time, height, mouseY, mouseOn);
+  if (isFigure(p.shape)) return layoutFigure(r, p, FIGURES[p.shape], aspect, time, height, mouseY, mouseOn);
   const cols = Math.min(64, Math.max(1, Math.floor(p.cols)));
   const rows = BASE_ROWS * p.density;
   const rowCount = Math.ceil(rows) + 1;
