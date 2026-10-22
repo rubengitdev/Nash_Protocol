@@ -14,7 +14,7 @@ const COLUMNS: Array<{ label: string; links: Array<{ name: string; href: string 
             { name: 'Docs', href: '/docs' },
             { name: 'Features', href: '/#features' },
             { name: 'How it works', href: '/#how-it-works' },
-            { name: 'Smart contracts', href: '/#contracts' },
+            { name: 'Smart contracts', href: '/contracts' },
             { name: 'FAQ', href: '/faq' },
         ],
     },

@@ -8,7 +8,7 @@ import { ChinaMarketTable } from "../../../components/china/ChinaMarketTable";
 export default function ChinaMarketsPage() {
   return (
     <AppPage
-      banner="bands"
+      banner="pagoda"
       back
       eyebrow="Chinese Equities · Robinhood Chain"
       title="Tokenized Chinese Equities"

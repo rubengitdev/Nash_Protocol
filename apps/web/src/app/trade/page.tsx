@@ -25,7 +25,7 @@ export default function TradePage() {
   if (configured)
     return (
       <AppPage
-        banner="opposing"
+        banner="arrows"
         eyebrow={`${configured.symbol} / USDG`}
         title="Trade with USDG margin."
         description="Open or close a Long or Short position. Quotes include swap fees and price impact; stale prices or paused markets block new exposure."
@@ -178,7 +178,7 @@ function PonsTradeWorkspace() {
 
   return (
     <div className="trade-page">
-      <PageRibbon shape="opposing" compact />
+      <PageRibbon shape="arrows" compact />
       <div className="trade-header">
         <div className="market-info flex items-center justify-between gap-3 sm:gap-4 flex-wrap">
           <div className="flex items-center gap-3 sm:gap-4 flex-wrap min-w-0">

@@ -8,7 +8,7 @@ import { marketDeployments } from "../../lib/market-deployments";
 export default function MarketsPage() {
   return (
     <AppPage
-      banner="strands"
+      banner="candles"
       eyebrow="Market directory"
       title="Find your next market."
       description="Explore tokenized equities, compare market parameters, and choose where to put your assets to work."

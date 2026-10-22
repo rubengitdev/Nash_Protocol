@@ -12,7 +12,7 @@ export default function PonsMarketsPage() {
 
   return (
     <AppPage
-      banner="spiral"
+      banner="curve"
       back
       eyebrow="Pons Markets"
       title="Pons Graduated Assets"
