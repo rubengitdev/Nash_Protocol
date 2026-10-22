@@ -102,7 +102,7 @@ export default function ChinaAssetDetailPage({
 
   return (
     <AppPage
-      banner="bands"
+      banner="pagoda"
       back
       backHref="/markets/china"
       backLabel="← Chinese Equities Directory"

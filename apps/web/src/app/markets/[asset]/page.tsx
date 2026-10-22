@@ -36,7 +36,7 @@ function UnconfiguredMarketDetail({ params }: { params: { asset: string } }) {
   const title = market ? market.name : asset ? asset.name : "Market not found";
   return (
     <AppPage
-      banner="strands"
+      banner="candles"
       back
       eyebrow="Market overview"
       title={title}
