@@ -77,7 +77,7 @@
 }
 
 /* Single token source: mirrors apps/web/tailwind.config.ts theme.extend.colors.
-   Two themes, switched by `data-theme` on <html>: dark (the default, set on <html> by layout.tsx) and light. Light is the newt.foundation palette:
+   Two themes, switched by `data-theme` on <html>: light (the default, set on <html> by layout.tsx) and dark. Light is the newt.foundation palette:
    bone #fefdf9 ground, coal #010101 ink, hairlines at 10% ink, secondary text at 60% ink.
    Colour is reserved for meaning: green for go and good, red for loss or short, amber for caution. The primary
    action is the inverse of the surface (black on light, bone on dark). Names such as --green and --emerald predate
