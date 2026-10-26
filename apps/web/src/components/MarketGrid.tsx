@@ -6,6 +6,7 @@ import { assetCatalog, marketPath } from "../lib/asset-catalog";
 import { MarketConfig } from "@nash/types";
 import { useReferencePrices } from "../hooks/useReferencePrices";
 import { EmptyPriceValue } from "./EmptyPriceValue";
+import { PONS_VISIBLE } from "../lib/pons-visible";
 
 interface MarketGridProps {
   markets?: MarketConfig[];
@@ -75,20 +76,22 @@ export function MarketGrid({ markets }: MarketGridProps) {
 
       {/* Market Cross-Links — same real surfaces listed on /markets */}
       <div className="market-crosslinks">
-        <div className="app-panel pons-crosslink">
-          <div className="app-section-label">
-            <span>Pons graduated assets</span>
+        {PONS_VISIBLE && (
+          <div className="app-panel pons-crosslink">
+            <div className="app-section-label">
+              <span>Pons graduated assets</span>
+            </div>
+            <h3>Pons Markets</h3>
+            <p className="app-note">
+              Tokens that graduate from Pons bonding curves become candidates
+              for leverage trading. Discover eligible assets and their market
+              parameters.
+            </p>
+            <Link className="app-button secondary" href="/markets/pons">
+              Explore Pons markets ↗
+            </Link>
           </div>
-          <h3>Pons Markets</h3>
-          <p className="app-note">
-            Tokens that graduate from Pons bonding curves become candidates
-            for leverage trading. Discover eligible assets and their market
-            parameters.
-          </p>
-          <Link className="app-button secondary" href="/markets/pons">
-            Explore Pons markets ↗
-          </Link>
-        </div>
+        )}
         <div className="app-panel china-crosslink">
           <div className="app-section-label">
             <span>Chinese Equities · Robinhood Chain</span>

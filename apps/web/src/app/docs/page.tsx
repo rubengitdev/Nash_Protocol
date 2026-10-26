@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { MaxLeverage, NetworkStatus } from "../../components/docs/NetworkText";
+import { PONS_VISIBLE } from "../../lib/pons-visible";
 
 export const metadata: Metadata = {
   title: "Docs",
@@ -112,11 +113,15 @@ export default function DocsPage() {
               isolated USDG credit, spot swaps, and spot-backed leverage. See{" "}
               <Link href="/markets/china">Chinese equities</Link>.
             </p>
-            <h3>Pons</h3>
-            <p>
-              Tokens that completed the Pons bonding curve and meet liquidity, market cap, and oracle requirements for
-              leverage trading. See <Link href="/markets/pons">Pons markets</Link>.
-            </p>
+            {PONS_VISIBLE && (
+              <>
+                <h3>Pons</h3>
+                <p>
+                  Tokens that completed the Pons bonding curve and meet liquidity, market cap, and oracle requirements for
+                  leverage trading. See <Link href="/markets/pons">Pons markets</Link>.
+                </p>
+              </>
+            )}
           </section>
 
           <section id="earn">

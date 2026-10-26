@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { PONS_VISIBLE } from "@/lib/pons-visible";
 import { ponsClient } from "@/lib/pons-client";
 import type { PonsMarketEntry, OracleStatus } from "@/lib/pons-client";
 import { OracleHealthIndicator } from "@/components/OracleHealthIndicator";
@@ -31,6 +33,19 @@ export default function TradePage() {
         description="Open or close a Long or Short position. Quotes include swap fees and price impact; stale prices or paused markets block new exposure."
       >
         <MarginTradePanel market={configured} />
+      </AppPage>
+    );
+  if (!PONS_VISIBLE)
+    return (
+      <AppPage
+        banner="arrows"
+        eyebrow="Trade"
+        title="Trade with USDG margin."
+        description="Pick a market to open a Long or Short position."
+      >
+        <Link className="app-button" href="/markets">
+          Choose a market ↗
+        </Link>
       </AppPage>
     );
   return <PonsTradeWorkspace />;
