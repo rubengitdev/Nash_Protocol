@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { marketPath } from "../lib/asset-catalog";
 import { MarketConfig, VaultConfig } from "@nash/types";
+import { EARN_VISIBLE } from "../lib/earn-visible";
 
 interface ProductTabsProps {
   markets?: MarketConfig[];
@@ -27,7 +28,11 @@ export function ProductTabs({
   useEffect(() => {
     function handleCustomSelect(e: Event) {
       const customEvent = e as CustomEvent<{ tab: TabType }>;
-      if (customEvent.detail && customEvent.detail.tab) {
+      if (
+        customEvent.detail &&
+        customEvent.detail.tab &&
+        (EARN_VISIBLE || customEvent.detail.tab !== "earn")
+      ) {
         setActiveTab(customEvent.detail.tab);
       }
     }
@@ -40,7 +45,9 @@ export function ProductTabs({
     event: React.KeyboardEvent<HTMLButtonElement>,
     currentTab: TabType,
   ) => {
-    const tabs: TabType[] = ["borrow", "earn", "leverage"];
+    const tabs: TabType[] = EARN_VISIBLE
+      ? ["borrow", "earn", "leverage"]
+      : ["borrow", "leverage"];
     let nextIndex = tabs.indexOf(currentTab);
 
     if (event.key === "ArrowRight") {
@@ -124,17 +131,19 @@ export function ProductTabs({
             >
               Borrow
             </button>
-            <button
-              id="tab-earn"
-              role="tab"
-              aria-selected={activeTab === "earn"}
-              aria-controls="panel-earn"
-              tabIndex={activeTab === "earn" ? 0 : -1}
-              onClick={() => setActiveTab("earn")}
-              onKeyDown={(e) => handleKeyDown(e, "earn")}
-            >
-              Earn
-            </button>
+            {EARN_VISIBLE && (
+              <button
+                id="tab-earn"
+                role="tab"
+                aria-selected={activeTab === "earn"}
+                aria-controls="panel-earn"
+                tabIndex={activeTab === "earn" ? 0 : -1}
+                onClick={() => setActiveTab("earn")}
+                onKeyDown={(e) => handleKeyDown(e, "earn")}
+              >
+                Earn
+              </button>
+            )}
             <button
               id="tab-leverage"
               role="tab"
@@ -428,14 +437,16 @@ export function ProductTabs({
           <span className="product-fact-label">Borrow</span>
           <strong>30% example LTV</strong>
         </button>
-        <button
-          type="button"
-          className={`product-fact ${activeTab === "earn" ? "active" : ""}`}
-          onClick={() => setActiveTab("earn")}
-        >
-          <span className="product-fact-label">Earn</span>
-          <strong>TSLA · AMZN · PLTR vault assets</strong>
-        </button>
+        {EARN_VISIBLE && (
+          <button
+            type="button"
+            className={`product-fact ${activeTab === "earn" ? "active" : ""}`}
+            onClick={() => setActiveTab("earn")}
+          >
+            <span className="product-fact-label">Earn</span>
+            <strong>TSLA · AMZN · PLTR vault assets</strong>
+          </button>
+        )}
         <button
           type="button"
           className={`product-fact ${activeTab === "leverage" ? "active" : ""}`}

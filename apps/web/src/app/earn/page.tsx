@@ -5,10 +5,13 @@ import React from "react";
 import { useNetworkMode } from "../../hooks/useNetworkMode";
 import { useNashVault } from "../../hooks/useNashVault";
 import { VaultCard, VaultCardSkeleton } from "../../components/VaultCard";
+import { EARN_VISIBLE } from "../../lib/earn-visible";
+import { notFound } from "next/navigation";
 
 export default function EarnPage() {
   const { networkMode } = useNetworkMode();
   const { vaults, isLoading, error, refetch } = useNashVault(networkMode);
+  if (!EARN_VISIBLE) notFound();
 
   return (
     <AppPage
