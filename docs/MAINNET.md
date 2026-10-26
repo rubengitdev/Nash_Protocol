@@ -94,6 +94,11 @@ Mainnet markets launch capped at 1.5× leverage.
 
 ### Phase 7: Monitoring
 
+**Watcher and liquidator (no database, no AutoProtect).** `node scripts/mainnet-watch.mjs` follows the eight pairs' events to learn every borrower, then re-reads each borrower's health from the chain every 30 seconds. It alerts on an unreadable oracle price, a project wallet under `WATCH_MIN_OWNER_ETH`, a borrower under health 1.2 and a liquidatable borrower (stdout, plus `WATCH_WEBHOOK_URL` if set). `--once` runs a single pass and exits 1 while an alert is active. Install it as a service with `bash scripts/ops/install-watch-service.sh`. With `--liquidate` and `LIQUIDATOR_PRIVATE_KEY` it also liquidates, but only from a **separate hot wallet** holding gas ETH and the debt tokens (USDG for long pairs, the stock token for short pairs); it refuses the project owner key. Liquidation pays a 5% bonus in seized collateral. `node scripts/rehearse-liquidation-fork.mjs` proves the whole path on a mainnet fork. The AutoProtect module is deliberately not run: it repays the borrower's debt out of the caller's own funds and swap-based deleveraging is not implemented.
+
+The Supabase indexer (`scripts/run-supabase-indexer.sh`) fills `rh_lending_*` tables for history. The website reads history from the chain directly, so it is optional; it needs the mainnet database password and project ref.
+
+
 Watch logs, HTTP error rate, publisher heartbeat, keeper actions and oracle freshness. Review caps at 24 h and 72 h; raise only by a transaction from the project wallet.
 
 ## 3. Address registry
