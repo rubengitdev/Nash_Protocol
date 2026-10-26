@@ -50,7 +50,9 @@ const policy = {
   gasBufferBps: 13000,
   maxGasLimit: "1500000",
   longLeveragesBps: [12500, 15000],
-  shortExposureBps: [10000, 12500],
+  // The mainnet short markets cap LTV at 40% (maxLtvBps 4000). A short of exposure e (debt value over margin) opens at
+  // about e / (1 + e) LTV, so 100% and 125% exposure (testnet values, 60% cap there) revert with "Max LTV limit".
+  shortExposureBps: [5000, 6000],
 };
 
 const tokens = { USDG: usdg };
