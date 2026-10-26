@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { MaxLeverage, NetworkStatus } from "../../components/docs/NetworkText";
 import { PONS_VISIBLE } from "../../lib/pons-visible";
+import { EARN_VISIBLE } from "../../lib/earn-visible";
 
 export const metadata: Metadata = {
   title: "Docs",
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 
 // Every sentence here restates copy the site already shows (landing, FAQ, page headers). Nothing is added that the
 // product does not already say about itself.
-const SECTIONS = [
+const ALL_SECTIONS = [
   { id: "overview", title: "Overview" },
   { id: "how-it-works", title: "How it works" },
   { id: "markets", title: "Markets" },
@@ -22,6 +23,7 @@ const SECTIONS = [
   { id: "risks", title: "Risks" },
   { id: "status", title: "Status" },
 ];
+const SECTIONS = ALL_SECTIONS.filter((section) => EARN_VISIBLE || section.id !== "earn");
 
 export default function DocsPage() {
   return (
@@ -124,14 +126,16 @@ export default function DocsPage() {
             )}
           </section>
 
-          <section id="earn">
-            <h2>Earn</h2>
-            <p>
-              Supply stablecoins to ERC-4626 vaults and earn from borrowers across isolated markets. Review each
-              vault’s allocation, utilization, and withdrawal conditions before you deposit. Risk you can size, one
-              market at a time. Browse the <Link href="/earn">vaults</Link>.
-            </p>
-          </section>
+          {EARN_VISIBLE && (
+            <section id="earn">
+              <h2>Earn</h2>
+              <p>
+                Supply stablecoins to ERC-4626 vaults and earn from borrowers across isolated markets. Review each
+                vault’s allocation, utilization, and withdrawal conditions before you deposit. Risk you can size, one
+                market at a time. Browse the <Link href="/earn">vaults</Link>.
+              </p>
+            </section>
+          )}
 
           <section id="lending">
             <h2>Lending</h2>

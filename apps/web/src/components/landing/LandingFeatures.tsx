@@ -7,6 +7,8 @@ import { Emblem } from '../Emblem';
 import { GlyphField } from '../glyph/GlyphField';
 import { STAGE_PRESETS, type GlyphShape } from '../glyph/glyphPresets';
 import { useNetworkMode } from '../../hooks/useNetworkMode';
+import { PONS_VISIBLE } from '../../lib/pons-visible';
+import { EARN_VISIBLE } from '../../lib/earn-visible';
 
 interface Feature {
   id: string;
@@ -18,7 +20,7 @@ interface Feature {
 
 // Copy comes from text already shown elsewhere on the site (landing, FAQ, page headers). {MAXLEV} is filled in from the
 // network: mainnet markets launch capped at 1.5x, testnet runs the full 2.5x range.
-const FEATURES: Feature[] = [
+const ALL_FEATURES: Feature[] = [
   {
     id: 'earn',
     title: 'Earn',
@@ -63,6 +65,9 @@ const FEATURES: Feature[] = [
     body: 'An automated keeper defense that partially deleverages your position as it nears the risk threshold you set, before a third-party liquidation can occur.',
   },
 ];
+const FEATURES = ALL_FEATURES.filter(
+  (feature) => (PONS_VISIBLE || feature.id !== 'pons') && (EARN_VISIBLE || feature.id !== 'earn'),
+);
 
 /**
  * Features: one ribbon above, six cards below. Picking a card collapses the ribbon to a stub and regrows it as that
