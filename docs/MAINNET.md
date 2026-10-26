@@ -85,20 +85,12 @@ Mainnet markets launch capped at 1.5× leverage.
 `node scripts/check-mainnet-readiness.mjs` is read-only and exits 1 until every condition below holds. Run it before and after each step; `MIN_POOL_USDG`, `MIN_PAIR_USDG` and `MIN_OWNER_ETH` set the liquidity floors.
 
 1. **Fund the project wallet** with ETH for gas, USDG, and the stock tokens that seed the pools. Caps in the registry stay as they are until the pairs and pools hold real liquidity: raising a cap without liquidity changes nothing, and the current micro caps bound the loss while it is thin.
-2. **Database (mainnet Supabase project):** apply `supabase/migrations/*`, then run `supabase/mainnet-catalog.sql` once (the Earn page lists `vaults` rows and nothing writes them). Point the API project's `SUPABASE_URL` and keys at this project.
-3. **Unpause on chain**, signed from the owner's terminal (`--interactive` prompts for the key, nothing is stored):
-
-   ```bash
-   RPC=https://rpc.mainnet.chain.robinhood.com
-   for c in leverageRouter shortRouter autoProtect; do
-     cast send "$(jq -r .addresses.$c packages/contracts/deployments/mainnet-4663.json)" 'setPaused(bool)' false --rpc-url $RPC --interactive
-   done
-   cast send "$(jq -r .addresses.vault packages/contracts/deployments/mainnet-4663.json)" 'setDepositsPaused(bool)' false --rpc-url $RPC --interactive
-   ```
-
-4. **Web flags:** `node scripts/generate-mainnet-app-config.mjs --launch` prints schema-validated values for `PROTOCOL_ADDRESSES`, `MARKET_DEPLOYMENTS_JSON` (every market `enabled`), `LENDING_DEPLOYMENT_JSON`, `MARGIN_DEPLOYMENT_JSON`, `LENDING_ENABLED=true` and `MARGIN_TRADING_ENABLED=true`. Set them in the `nash-protocol-mainnet` Vercel project (Production) and redeploy. Leave `TRADING_ENABLED=false`: the web schema rejects lending or margin together with the legacy flag.
-5. Pons stays hidden on mainnet while `PONS_DEPLOYMENT_JSON` is unset (`apps/web/src/lib/pons-visible.ts`).
-6. Run the readiness script again, then a supervised deposit, borrow, repay, withdraw, long, short and vault deposit with small amounts.
+2. **Database (mainnet Supabase project):** apply `supabase/migrations/*`, then run `supabase/mainnet-catalog.sql` once (needed only once Earn ships: the Earn page lists `vaults` rows and nothing writes them). Point the API project's `SUPABASE_URL` and keys at this project.
+3. **Unpause on chain**, signed from the owner's terminal: `bash scripts/ops/unpause-mainnet.sh` opens LeverageRouter, ShortRouter, AutoProtect and the vault. Then run `bash scripts/ops/pause-mainnet-unused.sh`, which closes the vault and AutoProtect again: NashVault only holds deposits (no allocation, no yield) and no keeper runs, so neither has a working product yet. Reopen each one with `setDepositsPaused(false)` / `setPaused(false)` when its strategy or keeper ships.
+4. **Web flags:** `bash scripts/ops/enable-mainnet-web.sh on` sets the schema-validated values from `node scripts/generate-mainnet-app-config.mjs --launch` (`MARKET_DEPLOYMENTS_JSON` with every market `enabled`, `LENDING_DEPLOYMENT_JSON`, `MARGIN_DEPLOYMENT_JSON`, `LENDING_ENABLED=true`, `MARGIN_TRADING_ENABLED=true`) in the `nash-protocol-mainnet` Vercel project and redeploys it. `off` is the emergency switch. Leave `TRADING_ENABLED=false`: the web schema rejects it together with lending or margin. Short exposure is 0.5x and 0.6x of margin: the mainnet short markets cap LTV at 40% and a short opens at about e / (1 + e), so the testnet values (1.0x and 1.25x) revert with "Max LTV limit". To offer more short exposure, raise the short markets' `maxLtvBps` first (testnet uses 6000 with liquidation at 8000), then widen `shortExposureBps` in the generator.
+5. Pons and Earn stay hidden on mainnet while `PONS_DEPLOYMENT_JSON` is unset (`apps/web/src/lib/pons-visible.ts`, `earn-visible.ts`).
+6. `node --import tsx scripts/rehearse-mainnet-fork.mjs` replays deposit, borrow, repay, withdraw, long and short (open and close, every policy option, every market) on a local fork with the website's own client code; it sends no mainnet transaction. Run it after any policy or contract change.
+7. Run the readiness script again, then a supervised deposit, borrow, repay, withdraw, long and short with small amounts.
 
 ### Phase 7: Monitoring
 
