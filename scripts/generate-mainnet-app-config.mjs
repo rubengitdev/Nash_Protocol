@@ -4,6 +4,9 @@ import { createRequire } from "node:module";
 // Builds the mainnet application deployment variables (PROTOCOL_ADDRESSES and
 // MARKET_DEPLOYMENTS_JSON) from the verified deployment record and on-chain code hashes,
 // then validates them with the web environment schema. Prints JSON; no transactions.
+// With --launch it also emits the enablement variables (every market enabled, lending and margin on,
+// the first market as the accepted single deployment); apply those only after the on-chain gates pass
+// (node scripts/check-mainnet-readiness.mjs).
 const require = createRequire(
   new URL("../apps/keeper/package.json", import.meta.url),
 );
@@ -14,6 +17,7 @@ const webRequire = createRequire(
 const { clientSchema, validate } = webRequire("./config/environment.cjs");
 
 const CHAIN_ID = 4663;
+const launch = process.argv.includes("--launch");
 const record = JSON.parse(
   readFileSync("packages/contracts/deployments/mainnet-4663.json", "utf8"),
 );
@@ -109,7 +113,7 @@ for (const m of config.markets.filter((x) => record.markets?.[x.symbol])) {
   };
   rows.push({
     symbol: m.symbol,
-    enabled: false,
+    enabled: launch,
     long,
     margin: {
       chainId: CHAIN_ID,
@@ -141,6 +145,16 @@ const values = {
   }),
   MARKET_DEPLOYMENTS_JSON: JSON.stringify(rows),
 };
+if (launch) {
+  if (!rows.length) throw Error("NO_MARKETS");
+  Object.assign(values, {
+    TRADING_ENABLED: "false",
+    LENDING_ENABLED: "true",
+    MARGIN_TRADING_ENABLED: "true",
+    LENDING_DEPLOYMENT_JSON: JSON.stringify(rows[0].long),
+    MARGIN_DEPLOYMENT_JSON: JSON.stringify(rows[0].margin),
+  });
+}
 validate(clientSchema, {
   NETWORK_MODE: "MAINNET",
   CHAIN_ID: String(CHAIN_ID),

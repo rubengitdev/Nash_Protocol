@@ -6,9 +6,12 @@ import { PonsVaultPanel } from "../../../components/PonsVaultPanel";
 import { ponsDeployment, ponsEnabled } from "../../../lib/pons-perp-client";
 import { MetricsSkeleton } from "../../../components/LoadingSkeleton";
 import { usePonsMarkets } from "../../../hooks/usePonsMarkets";
+import { PONS_VISIBLE } from "../../../lib/pons-visible";
+import { notFound } from "next/navigation";
 
 export default function PonsMarketsPage() {
   const { markets, isLoading, isRefetching, error, refetch, lastUpdated } = usePonsMarkets();
+  if (!PONS_VISIBLE) notFound();
 
   return (
     <AppPage
