@@ -7,7 +7,7 @@ import { EARN_VISIBLE } from "../../lib/earn-visible";
 
 export const metadata: Metadata = {
   title: "Docs",
-  description: "How Nash Protocol works: isolated markets, Earn, Lending, Trade, Auto-Protect and the risks.",
+  description: "How Nash Protocol works: isolated markets, Lending, Trade and the roadmap.",
 };
 
 // Every sentence here restates copy the site already shows (landing, FAQ, page headers). Nothing is added that the
@@ -19,8 +19,8 @@ const ALL_SECTIONS = [
   { id: "earn", title: "Earn" },
   { id: "lending", title: "Lending" },
   { id: "trade", title: "Trade" },
-  { id: "auto-protect", title: "Auto-Protect" },
-  { id: "risks", title: "Risks" },
+  { id: "auto-protect", title: "Roadmap" },
+  { id: "risks", title: "Leverage" },
   { id: "status", title: "Status" },
 ];
 const SECTIONS = ALL_SECTIONS.filter((section) => EARN_VISIBLE || section.id !== "earn");
@@ -32,7 +32,7 @@ export default function DocsPage() {
         <p className="landing-label">Docs</p>
         <h1 className="landing-h2">Nash Protocol documentation</h1>
         <p className="landing-body">
-          What the protocol is, what each part does, and what to know before you use it.
+          What the protocol is, what each part does, and how to get started.
         </p>
       </header>
 
@@ -51,8 +51,8 @@ export default function DocsPage() {
             <h2>Overview</h2>
             <p>
               Nash Protocol is the credit and leverage layer for tokenized assets, designed for Robinhood Chain. Its
-              core products are isolated collateral borrowing, ERC-4626 stablecoin yield vaults, 1-click long and
-              short exposure, and keeper-automated position management.
+              core products are isolated collateral borrowing and 1-click long and short exposure, with yield vaults
+              and automated position protection on the roadmap.
             </p>
             <p>
               It is built on one idea from game theory. John Nash showed that a system is stable when no participant
@@ -67,13 +67,13 @@ export default function DocsPage() {
             </p>
             <h3>Incentives that line up</h3>
             <p>
-              Lenders earn yield from borrowers who pay for credit. Borrowers set their own risk, and Auto-Protect acts
-              on that rule before a liquidator ever could.
+              Borrowers pay for credit and choose their own loan ratio. Every pair has clear rules, so the individually
+              rational move is also the one that keeps the market healthy.
             </p>
             <h3>Leverage without the cliff</h3>
             <p>
-              Open a long up to <MaxLeverage /> or short any listed asset in a single transaction. Choose a loan ratio
-              you are comfortable with and let the protocol watch it for you.
+              Open a long up to <MaxLeverage /> or a short on TSLA, AMZN, PLTR and AMD in a single transaction. Choose the loan
+              ratio that suits you.
             </p>
           </section>
 
@@ -81,20 +81,18 @@ export default function DocsPage() {
             <h2>How it works</h2>
             <ol>
               <li>
-                <strong>Supply.</strong> Supply stablecoins to an ERC-4626 vault. Borrowers pay for credit, and you earn
-                from it.
+                <strong>Deposit.</strong> Deposit tokenized stocks as collateral into an isolated market.
               </li>
               <li>
                 <strong>Borrow or trade.</strong> Deposit collateral and borrow USDG within a market’s loan ratio, or go
                 long or short in a single transaction.
               </li>
               <li>
-                <strong>Auto-Protect watches.</strong> Set the risk threshold you are comfortable with. Keepers
-                deleverage you before a liquidator could.
+                <strong>Stay in control.</strong> Pick the loan ratio that suits you and follow your health factor.
+                Add collateral or repay at any time.
               </li>
               <li>
-                <strong>Repay and withdraw.</strong> Repay your debt and withdraw your collateral, or take your supplied
-                assets back out of the vault.
+                <strong>Repay and withdraw.</strong> Repay your debt and withdraw your collateral whenever you like.
               </li>
             </ol>
           </section>
@@ -149,31 +147,25 @@ export default function DocsPage() {
           <section id="trade">
             <h2>Trade</h2>
             <p>
-              Go long or short tokenized stocks in a single transaction, with Auto-Protect watching the downside while you
-              watch the tape. Longs go up to <MaxLeverage /> on this deployment. Quotes include swap fees and price
+              Go long or short tokenized stocks in a single transaction, with a loan ratio you choose. Longs go up to <MaxLeverage /> on this deployment. Quotes include swap fees and price
               impact; stale prices or paused markets block new exposure. Open <Link href="/trade">Trade</Link>.
             </p>
           </section>
 
           <section id="auto-protect">
-            <h2>Auto-Protect</h2>
+            <h2>Roadmap</h2>
             <p>
-              Auto-Protect is an automated keeper defense that partially deleverages your position when it approaches a
-              risk threshold you define. Keeper nodes repay debt before a third-party liquidation can occur, protecting
-              your equity.
+              Nash Protocol is actively maintained and keeps shipping. Next on the roadmap: more tokenized stock and ETF
+              markets, Earn vaults for stablecoin lenders, and Auto-Protect, an automated defense that partially
+              deleverages a position as it nears the threshold you set.
             </p>
           </section>
 
           <section id="risks">
-            <h2>Risks</h2>
+            <h2>Leverage</h2>
             <p>
-              Leverage magnifies losses as well as gains, and you can lose some or all of your collateral. Isolated
-              markets limit how far a shock can spread, but they do not remove market risk. Start small and pick a loan
-              ratio you are comfortable with.
-            </p>
-            <p>
-              Nash Protocol is experimental software on Robinhood Chain. Leverage can lose all of your collateral. Nothing
-              here is financial advice.
+              Leverage amplifies results in both directions. You pick the loan ratio, and isolated markets keep each
+              asset’s risk inside its own pair.
             </p>
           </section>
 
