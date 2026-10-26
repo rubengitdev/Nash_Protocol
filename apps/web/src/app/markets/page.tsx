@@ -4,6 +4,7 @@ import { env } from "../../env.mjs";
 import { AppPage } from "../../components/AppPage";
 import { assetCatalog, marketPath } from "../../lib/asset-catalog";
 import { marketDeployments } from "../../lib/market-deployments";
+import { PONS_VISIBLE } from "../../lib/pons-visible";
 
 export default function MarketsPage() {
   return (
@@ -64,19 +65,21 @@ export default function MarketsPage() {
           ))}
         </div>
       </section>
-      <section className="app-panel fx-card pons-crosslink" style={{ marginTop: 32 }}>
-        <div className="app-section-label">
-          <span>02 / Pons graduated assets</span>
-        </div>
-        <h2>Pons Markets</h2>
-        <p className="app-note">
-          Tokens that graduate from Pons bonding curves become candidates for
-          leverage trading. Discover eligible assets and their market parameters.
-        </p>
-        <Link className="app-button secondary" href="/markets/pons">
-          Explore Pons markets ↗
-        </Link>
-      </section>
+      {PONS_VISIBLE && (
+        <section className="app-panel fx-card pons-crosslink" style={{ marginTop: 32 }}>
+          <div className="app-section-label">
+            <span>02 / Pons graduated assets</span>
+          </div>
+          <h2>Pons Markets</h2>
+          <p className="app-note">
+            Tokens that graduate from Pons bonding curves become candidates for
+            leverage trading. Discover eligible assets and their market parameters.
+          </p>
+          <Link className="app-button secondary" href="/markets/pons">
+            Explore Pons markets ↗
+          </Link>
+        </section>
+      )}
       <section className="app-panel fx-card china-crosslink" style={{ marginTop: 24 }}>
         <div className="app-section-label">
           <span>03 / Chinese Equities · Robinhood Chain</span>

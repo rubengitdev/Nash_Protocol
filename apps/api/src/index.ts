@@ -8,7 +8,7 @@ import { portfolioRouter } from "./routes/portfolio.js";
 import { activityRouter } from "./routes/activity.js";
 import { autoProtectRouter } from "./routes/autoProtect.js";
 import { liquidationsRouter } from "./routes/liquidations.js";
-import { isLiveSupabase } from "./supabase.js";
+import { isLiveSupabase, supabase } from "./supabase.js";
 
 const app = express();
 
@@ -44,13 +44,18 @@ app.use((req, _res, next) => {
 });
 
 // Health check endpoint
-app.get("/health", (_req, res) => {
-  res.json({
-    status: "degraded",
-    testnetReady: false,
+app.get("/health", async (_req, res) => {
+  const { error } = await supabase
+    .from("vaults")
+    .select("id", { head: true, count: "exact" })
+    .eq("network", config.NETWORK_MODE);
+  const databaseVerified = !error;
+  res.status(databaseVerified ? 200 : 503).json({
+    status: databaseVerified ? "ok" : "degraded",
+    testnetReady: databaseVerified,
     writesEnabled: config.TRADING_ENABLED,
-    databaseVerified: false,
-    reason: "Deployment and canonical indexing require verification",
+    databaseVerified,
+    reason: databaseVerified ? undefined : "Database query failed",
     service: "Nash Protocol REST API",
     version: "1.0.0",
     mode: config.NODE_ENV,

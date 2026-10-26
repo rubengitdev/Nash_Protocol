@@ -80,6 +80,26 @@ Domain and TLS attached; every page smoke-tested on chain 4663; no testnet addre
 
 Mainnet markets launch capped at 1.5× leverage.
 
+#### Launch gate (all features at once)
+
+`node scripts/check-mainnet-readiness.mjs` is read-only and exits 1 until every condition below holds. Run it before and after each step; `MIN_POOL_USDG`, `MIN_PAIR_USDG` and `MIN_OWNER_ETH` set the liquidity floors.
+
+1. **Fund the project wallet** with ETH for gas, USDG, and the stock tokens that seed the pools. Caps in the registry stay as they are until the pairs and pools hold real liquidity: raising a cap without liquidity changes nothing, and the current micro caps bound the loss while it is thin.
+2. **Database (mainnet Supabase project):** apply `supabase/migrations/*`, then run `supabase/mainnet-catalog.sql` once (the Earn page lists `vaults` rows and nothing writes them). Point the API project's `SUPABASE_URL` and keys at this project.
+3. **Unpause on chain**, signed from the owner's terminal (`--interactive` prompts for the key, nothing is stored):
+
+   ```bash
+   RPC=https://rpc.mainnet.chain.robinhood.com
+   for c in leverageRouter shortRouter autoProtect; do
+     cast send "$(jq -r .addresses.$c packages/contracts/deployments/mainnet-4663.json)" 'setPaused(bool)' false --rpc-url $RPC --interactive
+   done
+   cast send "$(jq -r .addresses.vault packages/contracts/deployments/mainnet-4663.json)" 'setDepositsPaused(bool)' false --rpc-url $RPC --interactive
+   ```
+
+4. **Web flags:** `node scripts/generate-mainnet-app-config.mjs --launch` prints schema-validated values for `PROTOCOL_ADDRESSES`, `MARKET_DEPLOYMENTS_JSON` (every market `enabled`), `LENDING_DEPLOYMENT_JSON`, `MARGIN_DEPLOYMENT_JSON`, `LENDING_ENABLED=true` and `MARGIN_TRADING_ENABLED=true`. Set them in the `nash-protocol-mainnet` Vercel project (Production) and redeploy. Leave `TRADING_ENABLED=false`: the web schema rejects lending or margin together with the legacy flag.
+5. Pons stays hidden on mainnet while `PONS_DEPLOYMENT_JSON` is unset (`apps/web/src/lib/pons-visible.ts`).
+6. Run the readiness script again, then a supervised deposit, borrow, repay, withdraw, long, short and vault deposit with small amounts.
+
 ### Phase 7: Monitoring
 
 Watch logs, HTTP error rate, publisher heartbeat, keeper actions and oracle freshness. Review caps at 24 h and 72 h; raise only by a transaction from the project wallet.
