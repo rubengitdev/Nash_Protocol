@@ -16,7 +16,7 @@ export function NetworkStatus() {
     <p>
       {isTestnet
         ? 'Lending and Long/Short are available market by market once a market’s price feed, liquidity and launch checks pass. Earn and Auto-Protect open as each is verified. Markets that are not open yet are shown as paused.'
-        : 'Lending and Long/Short are open on TSLA, AMZN, PLTR and AMD at launch caps. Auto-Protect opens once its keeper is verified. Earn is not available yet. Prices come from Chainlink.'}
+        : 'Lending and Long/Short are live on Robinhood Chain mainnet for TSLA, AMZN, PLTR and AMD, with more markets, Earn vaults and Auto-Protect on the Nash roadmap. Nash Protocol is actively maintained and shipping.'}
     </p>
   );
 }

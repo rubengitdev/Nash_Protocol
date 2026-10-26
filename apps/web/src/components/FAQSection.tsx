@@ -6,15 +6,15 @@ import { X_URL, HAS_X } from "../lib/social";
 import { useNetworkMode } from "../hooks/useNetworkMode";
 const MAINNET_ANSWERS: Record<string, string> = {
   "How does borrowing work?":
-    "Deposit collateral into an enabled lending market, then borrow USDG within its LTV limits. TSLA, AMZN, PLTR and AMD markets are open on Robinhood Chain mainnet at launch caps, so size limits are small. Prices come from Chainlink.",
-  "Can I trade in this preview?":
-    "Yes, at launch caps. Lending and Long/Short are open on TSLA, AMZN, PLTR and AMD on Robinhood Chain mainnet. Auto-Protect opens once its keeper is verified. Earn is not available yet.",
+    "Deposit collateral into an enabled lending market, then borrow USDG within its LTV limits. TSLA, AMZN, PLTR and AMD markets are live on Robinhood Chain mainnet, each with its own isolated pair and onchain price feed.",
+  "Can I trade right now?":
+    "Yes. Lending and Long/Short are live on TSLA, AMZN, PLTR and AMD on Robinhood Chain mainnet. More markets, Earn vaults and Auto-Protect are on the Nash roadmap, and the team keeps shipping.",
 };
 const FAQ_ITEMS = [
   {
     question: "What is Nash Protocol?",
     answer:
-      "Nash Protocol is the credit and leverage layer for tokenized assets, designed for Robinhood Chain. Its core products are isolated collateral borrowing, ERC-4626 stablecoin yield vaults, 1-click long and short exposure, and keeper-automated position management.",
+      "Nash Protocol is the credit and leverage layer for tokenized assets, designed for Robinhood Chain. Its core products are isolated collateral borrowing, 1-click long and short exposure, and more on the roadmap, including yield vaults and automated position protection.",
   },
   {
     question: "Why “Nash”?",
@@ -29,15 +29,15 @@ const FAQ_ITEMS = [
   {
     question: "What is Auto-Protect?",
     answer:
-      "Auto-Protect is an automated keeper defense that partially deleverages your position when it approaches a risk threshold you define. Keeper nodes repay debt before a third-party liquidation can occur, protecting your equity.",
+      "Auto-Protect is the planned protection layer for leveraged positions: it partially deleverages a position as it nears a risk threshold you define. It is part of the Nash roadmap and rolls out on Robinhood Chain as it is ready.",
   },
   {
-    question: "Is leverage risky?",
+    question: "How does leverage work?",
     answer:
-      "Yes. Leverage magnifies losses as well as gains, and you can lose some or all of your collateral. Isolated markets limit how far a shock can spread, but they do not remove market risk. Start small and pick a loan ratio you are comfortable with.",
+      "Leverage amplifies results in both directions. You pick the loan ratio, and isolated markets keep each asset’s risk inside its own pair.",
   },
   {
-    question: "Can I trade in this preview?",
+    question: "Can I trade right now?",
     answer:
       "Lending and Long/Short are available market by market once a market’s price feed, liquidity and launch checks pass. Earn and Auto-Protect open as each is verified. Markets that are not open yet are shown as paused.",
   },
