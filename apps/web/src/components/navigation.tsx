@@ -1,5 +1,6 @@
 import React from 'react';
 import { PONS_VISIBLE } from '../lib/pons-visible';
+import { EARN_VISIBLE } from '../lib/earn-visible';
 
 // The landing header carries no page links; the app header shows every area.
 export const APP_NAV_LINKS = [
@@ -11,7 +12,9 @@ export const APP_NAV_LINKS = [
     { name: 'Earn', href: '/earn' },
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'Analytics', href: '/analytics' },
-].filter((link) => PONS_VISIBLE || link.href !== '/markets/pons');
+].filter(
+    (link) => (PONS_VISIBLE || link.href !== '/markets/pons') && (EARN_VISIBLE || link.href !== '/earn'),
+);
 
 /** The silver N mark on a black tile: the mark is only ever placed on black (docs/BRAND.md). */
 export function BrandMark({ size = 36 }: { size?: number }) {

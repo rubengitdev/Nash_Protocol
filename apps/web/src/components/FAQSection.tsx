@@ -6,9 +6,9 @@ import { X_URL, HAS_X } from "../lib/social";
 import { useNetworkMode } from "../hooks/useNetworkMode";
 const MAINNET_ANSWERS: Record<string, string> = {
   "How does borrowing work?":
-    "Deposit collateral into an enabled lending market, then borrow USDG within its LTV limits. TSLA, AMZN, PLTR and AMD markets are deployed on Robinhood Chain mainnet and stay paused until each one is opened. Prices come from Chainlink.",
+    "Deposit collateral into an enabled lending market, then borrow USDG within its LTV limits. TSLA, AMZN, PLTR and AMD markets are open on Robinhood Chain mainnet at launch caps, so size limits are small. Prices come from Chainlink.",
   "Can I trade in this preview?":
-    "Not yet. The mainnet contracts are deployed and every market is paused. Lending, Long/Short, Earn and Auto-Protect open market by market after launch checks pass.",
+    "Yes, at launch caps. Lending and Long/Short are open on TSLA, AMZN, PLTR and AMD on Robinhood Chain mainnet. Auto-Protect opens once its keeper is verified. Earn is not available yet.",
 };
 const FAQ_ITEMS = [
   {

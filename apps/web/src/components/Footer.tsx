@@ -7,6 +7,7 @@ import { X_URL, X_LABEL, X_TITLE, HAS_X } from '../lib/social';
 import { BrandMark } from './navigation';
 import { CaChip } from './CaChip';
 import { PONS_VISIBLE } from '../lib/pons-visible';
+import { EARN_VISIBLE } from '../lib/earn-visible';
 
 const COLUMNS: Array<{ label: string; links: Array<{ name: string; href: string }> }> = [
     {
@@ -26,7 +27,7 @@ const COLUMNS: Array<{ label: string; links: Array<{ name: string; href: string 
             { name: 'Lending', href: '/lending' },
             { name: 'Trade', href: '/trade' },
             { name: 'Earn', href: '/earn' },
-        ],
+        ].filter((link) => EARN_VISIBLE || link.href !== '/earn'),
     },
     {
         label: 'Protocol',

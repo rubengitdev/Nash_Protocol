@@ -3,8 +3,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { useInView } from './useInView';
+import { EARN_VISIBLE } from '../../lib/earn-visible';
 
-const PERSONAS = [
+const ALL_PERSONAS = [
   {
     role: 'The DeFi day trader',
     line: 'Long or short tokenized stocks in one transaction, with Auto-Protect watching the downside while you watch the tape.',
@@ -30,6 +31,8 @@ const PERSONAS = [
     href: '/analytics',
   },
 ];
+const PERSONAS = ALL_PERSONAS.filter((persona) => EARN_VISIBLE || persona.href !== '/earn');
+const WAYS_IN = ['ZERO', 'ONE', 'TWO', 'THREE', 'FOUR'][PERSONAS.length];
 
 const PRINCIPLES = [
   ['Decentralized', 'Governed by the community, for the community.'],
@@ -45,7 +48,7 @@ export function Participate() {
     <section ref={ref} className="nash-participate section-wrap" id="participate" data-in={inView} aria-labelledby="participate-title">
       <div className="section-topline">
         <span>§ 08 / PARTICIPATE</span>
-        <span>FOUR WAYS IN</span>
+        <span>{WAYS_IN} WAYS IN</span>
       </div>
       <h2 id="participate-title" className="nash-big nash-big-sm">
         Built for everyone <em>at the table.</em>
