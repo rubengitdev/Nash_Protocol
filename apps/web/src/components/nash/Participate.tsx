@@ -8,7 +8,7 @@ import { EARN_VISIBLE } from '../../lib/earn-visible';
 const ALL_PERSONAS = [
   {
     role: 'The DeFi day trader',
-    line: 'Long or short tokenized stocks in one transaction, with Auto-Protect watching the downside while you watch the tape.',
+    line: 'Long or short tokenized stocks in one transaction, with a loan ratio you choose and live health tracking while you watch the tape.',
     cta: 'Open Trade',
     href: '/trade',
   },
@@ -20,7 +20,7 @@ const ALL_PERSONAS = [
   },
   {
     role: 'The newcomer',
-    line: 'Start with an idea you already know: borrow against what you own. Pick a loan ratio you are comfortable with. We keep an eye on it.',
+    line: 'Start with an idea you already know: borrow against what you own. Pick a loan ratio that suits you and follow it live.',
     cta: 'Try lending',
     href: '/lending',
   },
@@ -35,7 +35,7 @@ const PERSONAS = ALL_PERSONAS.filter((persona) => EARN_VISIBLE || persona.href !
 const WAYS_IN = ['ZERO', 'ONE', 'TWO', 'THREE', 'FOUR'][PERSONAS.length];
 
 const PRINCIPLES = [
-  ['Decentralized', 'Governed by the community, for the community.'],
+  ['Onchain', 'Contracts live on Robinhood Chain and open to inspect on Blockscout.'],
   ['Transparent', 'Every transaction and every decision is public on-chain.'],
   ['Resilient', 'Isolated markets cap the blast radius of any shock.'],
   ['Efficient', 'Incentives reward honest prices and sensible capital.'],

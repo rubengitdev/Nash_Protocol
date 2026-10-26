@@ -8,8 +8,8 @@ import { STEP_PRESETS } from '../glyph/glyphPresets';
 // the product copy. The figure names the idea: a cone filling, two strands crossing, a watchful diamond, an hourglass.
 const STEPS = [
   {
-    title: 'Supply',
-    body: 'Supply stablecoins to an ERC-4626 vault. Borrowers pay for credit, and you earn from it.',
+    title: 'Deposit',
+    body: 'Deposit tokenized stocks as collateral into an isolated market. Each market is its own sealed room.',
     preset: STEP_PRESETS.supply,
   },
   {
@@ -18,13 +18,13 @@ const STEPS = [
     preset: STEP_PRESETS.borrow,
   },
   {
-    title: 'Auto-Protect watches',
-    body: 'Set the risk threshold you are comfortable with. Keepers deleverage you before a liquidator could.',
+    title: 'Stay in control',
+    body: 'Pick the loan ratio that suits you and follow your health factor live. Add collateral or repay at any time.',
     preset: STEP_PRESETS.protect,
   },
   {
     title: 'Repay and withdraw',
-    body: 'Repay your debt and withdraw your collateral, or take your supplied assets back out of the vault.',
+    body: 'Repay your debt and withdraw your collateral whenever you like.',
     preset: STEP_PRESETS.close,
   },
 ];
@@ -37,7 +37,7 @@ export function LandingHowItWorks() {
         <h2 id="how-title" className="landing-h2">
           How it works
         </h2>
-        <p className="landing-body">Four steps from supply to withdrawal. Every market is its own room, so each step stays contained.</p>
+        <p className="landing-body">Four steps from deposit to withdrawal. Every market is its own room, so each step stays clean and simple.</p>
       </div>
 
       <ol className="steps">

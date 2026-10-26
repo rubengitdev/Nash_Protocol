@@ -41,7 +41,7 @@ const ALL_FEATURES: Feature[] = [
     title: 'Trade',
     shape: 'arrows',
     href: '/trade',
-    body: 'Open a long up to {MAXLEV} or short any listed asset in a single transaction. Choose a loan ratio you are comfortable with.',
+    body: 'Open a long up to {MAXLEV} or a short on TSLA, AMZN, PLTR and AMD in a single transaction. You choose the loan ratio.',
   },
   {
     id: 'china',
@@ -62,7 +62,7 @@ const ALL_FEATURES: Feature[] = [
     title: 'Auto-Protect',
     shape: 'shield',
     href: '/lending',
-    body: 'An automated keeper defense that partially deleverages your position as it nears the risk threshold you set, before a third-party liquidation can occur.',
+    body: 'Automated protection for leveraged positions, part of the Nash roadmap and rolling out on Robinhood Chain.',
   },
 ];
 const FEATURES = ALL_FEATURES.filter(

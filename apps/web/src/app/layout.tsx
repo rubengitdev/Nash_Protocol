@@ -19,21 +19,21 @@ export const metadata: Metadata = {
     template: "%s | Nash Protocol",
   },
   description:
-    "The credit and leverage layer for tokenized stocks and ETFs on Robinhood Chain. Isolated markets, aligned incentives, and positions that protect themselves.",
+    "The credit and leverage layer for tokenized stocks and ETFs on Robinhood Chain. Isolated markets, aligned incentives, and clear rules.",
   applicationName: "Nash Protocol",
   openGraph: {
     type: "website",
     siteName: "Nash Protocol",
     title: "Nash Protocol | Credit & Leverage at Equilibrium",
     description:
-      "Isolated lending markets, up to 2.5x leverage and Auto-Protect for tokenized assets on Robinhood Chain.",
+      "Isolated lending markets and 1-click long and short trading for tokenized stocks on Robinhood Chain.",
     images: [{ url: "/og.png", width: 1200, height: 630, alt: "Nash Protocol" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Nash Protocol | Credit & Leverage at Equilibrium",
     description:
-      "Isolated lending markets, up to 2.5x leverage and Auto-Protect for tokenized assets on Robinhood Chain.",
+      "Isolated lending markets and 1-click long and short trading for tokenized stocks on Robinhood Chain.",
     images: ["/og.png"],
   },
 };
