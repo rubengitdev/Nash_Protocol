@@ -3714,6 +3714,18 @@ button.ca-chip {
 button.ca-chip:hover {
   border-color: var(--text);
 }
+/* Wide screens have room for the whole address in the header. */
+.ca-chip-long {
+  display: none;
+}
+@media (min-width: 1280px) {
+  .ca-chip-short {
+    display: none;
+  }
+  .ca-chip-long {
+    display: inline;
+  }
+}
 @media (max-width: 1279px) {
   .site-header[data-variant="app"] .brand-name {
     display: none;
