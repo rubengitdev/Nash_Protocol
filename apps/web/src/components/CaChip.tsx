@@ -8,9 +8,10 @@ const truncate = (address: string) => (address.length > 14 ? `${address.slice(0,
 
 /**
  * The contract address of the Nash token. Until NEXT_PUBLIC_TOKEN_CA is set it reads "Coming soon" and does nothing;
- * once set it shows the shortened address and copies the full one on click.
+ * once set it shows the shortened address and copies the full one on click. `fullOnWide` swaps in the whole address
+ * on wide screens (see .ca-chip-long in globals.css) and keeps the shortened one where the header is tight.
  */
-export function CaChip({ className = '', full = false }: { className?: string; full?: boolean }) {
+export function CaChip({ className = '', full = false, fullOnWide = false }: { className?: string; full?: boolean; fullOnWide?: boolean }) {
   const address = (env.TOKEN_CA ?? '').trim();
   const [copied, setCopied] = useState(false);
 
@@ -36,7 +37,14 @@ export function CaChip({ className = '', full = false }: { className?: string; f
   return (
     <button type="button" className={`ca-chip fx-flare ${className}`} data-nav-item="" onClick={copy} title={address} aria-label={`Copy contract address ${address}`}>
       <span className="ca-chip-label">CA</span>
-      <span className="ca-chip-value">{full ? address : truncate(address)}</span>
+      {fullOnWide ? (
+        <>
+          <span className="ca-chip-value ca-chip-short">{truncate(address)}</span>
+          <span className="ca-chip-value ca-chip-long">{address}</span>
+        </>
+      ) : (
+        <span className="ca-chip-value">{full ? address : truncate(address)}</span>
+      )}
       {copied ? <Check size={13} aria-hidden="true" /> : <Copy size={13} aria-hidden="true" />}
     </button>
   );
