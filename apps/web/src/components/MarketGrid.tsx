@@ -7,6 +7,7 @@ import { MarketConfig } from "@nash/types";
 import { useReferencePrices } from "../hooks/useReferencePrices";
 import { EmptyPriceValue } from "./EmptyPriceValue";
 import { PONS_VISIBLE } from "../lib/pons-visible";
+import { CHINA_VISIBLE } from "../lib/china-visible";
 
 interface MarketGridProps {
   markets?: MarketConfig[];
@@ -92,20 +93,22 @@ export function MarketGrid({ markets }: MarketGridProps) {
             </Link>
           </div>
         )}
-        <div className="app-panel china-crosslink">
-          <div className="app-section-label">
-            <span>Chinese Equities · Robinhood Chain</span>
+        {CHINA_VISIBLE && (
+          <div className="app-panel china-crosslink">
+            <div className="app-section-label">
+              <span>Chinese Equities · Robinhood Chain</span>
+            </div>
+            <h3>Tokenized Chinese Equities</h3>
+            <p className="app-note">
+              Discover tokenized exposure to leading Chinese companies through
+              verified US-listed ADRs on Robinhood Chain, featuring isolated
+              USDG credit and spot-backed leverage.
+            </p>
+            <Link className="app-button" href="/markets/china">
+              Explore China markets ↗
+            </Link>
           </div>
-          <h3>Tokenized Chinese Equities</h3>
-          <p className="app-note">
-            Discover tokenized exposure to leading Chinese companies through
-            verified US-listed ADRs on Robinhood Chain, featuring isolated
-            USDG credit and spot-backed leverage.
-          </p>
-          <Link className="app-button" href="/markets/china">
-            Explore China markets ↗
-          </Link>
-        </div>
+        )}
       </div>
     </section>
   );
