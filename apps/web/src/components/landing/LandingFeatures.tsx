@@ -9,6 +9,7 @@ import { STAGE_PRESETS, type GlyphShape } from '../glyph/glyphPresets';
 import { useNetworkMode } from '../../hooks/useNetworkMode';
 import { PONS_VISIBLE } from '../../lib/pons-visible';
 import { EARN_VISIBLE } from '../../lib/earn-visible';
+import { CHINA_VISIBLE } from '../../lib/china-visible';
 
 interface Feature {
   id: string;
@@ -66,7 +67,10 @@ const ALL_FEATURES: Feature[] = [
   },
 ];
 const FEATURES = ALL_FEATURES.filter(
-  (feature) => (PONS_VISIBLE || feature.id !== 'pons') && (EARN_VISIBLE || feature.id !== 'earn'),
+  (feature) =>
+    (PONS_VISIBLE || feature.id !== 'pons') &&
+    (EARN_VISIBLE || feature.id !== 'earn') &&
+    (CHINA_VISIBLE || feature.id !== 'china'),
 );
 
 /**

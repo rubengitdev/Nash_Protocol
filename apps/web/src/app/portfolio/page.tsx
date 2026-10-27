@@ -21,6 +21,7 @@ import {
   type ChineseEquityPosition,
 } from "../../lib/chinese-equities-client";
 import { ChinaPositionsTable } from "../../components/china/ChinaPositionsTable";
+import { CHINA_VISIBLE } from "../../lib/china-visible";
 const usd = (value: bigint | null) =>
   value === null ? <EmptyPriceValue /> : `$${formatUnits(value, 18)}`;
 function MarketPositions({ market }: { market: MarketDeployment }) {
@@ -156,7 +157,7 @@ export default function PortfolioPage() {
   const { address, chainId } = useAccount();
   const [selected, setSelected] = useState(marketDeployments[0]?.symbol ?? "");
   const [chinaPositions, setChinaPositions] = useState<ChineseEquityPosition[]>(() => {
-    return loadStoredChinesePositions();
+    return CHINA_VISIBLE ? loadStoredChinesePositions() : [];
   });
 
   const handleChinaPositionClosed = (posId: string) => {
@@ -180,24 +181,32 @@ export default function PortfolioPage() {
       banner="ring"
       eyebrow="Your portfolio"
       title="Your positions, together."
-      description="Review collateral, debt and equity across your configured markets and tokenized Chinese equities."
+      description={
+        CHINA_VISIBLE
+          ? "Review collateral, debt and equity across your configured markets and tokenized Chinese equities."
+          : "Review collateral, debt and equity across your configured markets."
+      }
     >
-      {/* SECTION 01: TOKENIZED CHINESE EQUITIES (ISOLATED MARGIN) */}
-      <div className="app-section-label">
-        <span>01 / Tokenized Chinese Equities (Isolated Margin)</span>
-      </div>
+      {CHINA_VISIBLE && (
+        <>
+          {/* SECTION 01: TOKENIZED CHINESE EQUITIES (ISOLATED MARGIN) */}
+          <div className="app-section-label">
+            <span>01 / Tokenized Chinese Equities (Isolated Margin)</span>
+          </div>
 
-      <section className="mb-10">
-        <ChinaPositionsTable
-          positions={chinaPositions}
-          onPositionClosed={handleChinaPositionClosed}
-          onPositionUpdated={handleChinaPositionUpdated}
-        />
-      </section>
+          <section className="mb-10">
+            <ChinaPositionsTable
+              positions={chinaPositions}
+              onPositionClosed={handleChinaPositionClosed}
+              onPositionUpdated={handleChinaPositionUpdated}
+            />
+          </section>
+        </>
+      )}
 
       {/* SECTION 02: CONFIGURED MARKETS (ON-CHAIN) */}
       <div className="app-section-label">
-        <span>02 / US Equities &amp; Configured Markets</span>
+        <span>{CHINA_VISIBLE ? "02" : "01"} / US Equities &amp; Configured Markets</span>
       </div>
 
       {!address ? (

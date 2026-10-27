@@ -5,6 +5,7 @@ import { AppPage } from "../../components/AppPage";
 import { assetCatalog, marketPath } from "../../lib/asset-catalog";
 import { marketDeployments } from "../../lib/market-deployments";
 import { PONS_VISIBLE } from "../../lib/pons-visible";
+import { CHINA_VISIBLE } from "../../lib/china-visible";
 
 export default function MarketsPage() {
   return (
@@ -80,18 +81,20 @@ export default function MarketsPage() {
           </Link>
         </section>
       )}
-      <section className="app-panel fx-card china-crosslink" style={{ marginTop: 24 }}>
-        <div className="app-section-label">
-          <span>03 / Chinese Equities · Robinhood Chain</span>
-        </div>
-        <h2>Tokenized Chinese Equities</h2>
-        <p className="app-note">
-          Discover tokenized exposure to leading Chinese companies through verified US-listed ADRs on Robinhood Chain, featuring isolated USDG credit and spot-backed leverage.
-        </p>
-        <Link className="app-button" href="/markets/china">
-          Explore China Markets ↗
-        </Link>
-      </section>
+      {CHINA_VISIBLE && (
+        <section className="app-panel fx-card china-crosslink" style={{ marginTop: 24 }}>
+          <div className="app-section-label">
+            <span>03 / Chinese Equities · Robinhood Chain</span>
+          </div>
+          <h2>Tokenized Chinese Equities</h2>
+          <p className="app-note">
+            Discover tokenized exposure to leading Chinese companies through verified US-listed ADRs on Robinhood Chain, featuring isolated USDG credit and spot-backed leverage.
+          </p>
+          <Link className="app-button" href="/markets/china">
+            Explore China Markets ↗
+          </Link>
+        </section>
+      )}
     </AppPage>
   );
 }
