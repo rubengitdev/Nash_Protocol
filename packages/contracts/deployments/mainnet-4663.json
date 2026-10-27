@@ -45,7 +45,11 @@
     "long-slv": "0x23Eb2809bE30bbeB83B6c4A39c77C762375213BE",
     "short-slv": "0xfE74302f983cDADF23207c5faa7d1eEe52A6f977",
     "pool-slv": "0x6109E91aee1005B8bcE5428aFc164b7eAfBbB044",
-    "margin-slv": "0xCE86Bb6d1D75a963A79dBa2Cd792c2CBDF5697B4"
+    "margin-slv": "0xCE86Bb6d1D75a963A79dBa2Cd792c2CBDF5697B4",
+    "long-qqq": "0x88BCef494dDc39eE0592B230558b18dC177Ef734",
+    "short-qqq": "0x8E9F9453DC39BA3A85e66010ed62D63b66974C93",
+    "pool-qqq": "0xc19D906522030866B3D090F4bf3F762286bb579f",
+    "margin-qqq": "0xEdCF5F9DefeD78D57641Da03246E8Db18D8Fb608"
   },
   "markets": {
     "TSLA": {
@@ -89,6 +93,13 @@
       "longMarketId": "0xc369e7bd513bce419637e90cff02bd4c575b654fb1ee2330c11abf40c7db7136",
       "shortMarketId": "0x7bf47650893aad65504fcd866533b1eee0e942d22f60eab385ce6f8c51cfa357",
       "status": "PAUSED"
+    },
+    "QQQ": {
+      "token": "0xD5f3879160bc7c32ebb4dC785F8a4F505888de68",
+      "feed": "0x80901d846d5D7B030F26B480776EE3b29374C2ae",
+      "longMarketId": "0x0048288b5ccab8e0fbde9dedbdad207992d93ea1d1bb796ddcf3f39d8d57d5f8",
+      "shortMarketId": "0x8abc66e1499c08a5ed7c9c6e2dcea5f23eb9ca28d2a50261daf891d60428207a",
+      "status": "PAUSED"
     }
   },
   "usdg": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
@@ -99,7 +110,8 @@
     "PLTR": "199030000000000000000",
     "AMD": "547670000000000000000",
     "SGOV": "101398428380000000000",
-    "SLV": "47855950000000000000"
+    "SLV": "47855950000000000000",
+    "QQQ": "713259495960000000000"
   },
   "transactions": {
     "deploy-impl-NashMarketRegistry": "0x2c3453d8d9a521861c821fe96f232e22e79f100202d132c8c4f1552e34649dca",
@@ -165,7 +177,16 @@
     "deploy-short-slv": "0xebaa3f719f14eb6d647e4daf18244737e56c51885c2f4d8278bb9d1ad534a1fd",
     "register-short-slv": "0x2cd7cebd25a99bd3465c8b2a7a3d061108be9c22b0165047b1c5aeafa3aa54f4",
     "pause-short-slv": "0xa362596012af1cc72740f9aedcd4bc0882b5d7bcab1064f0d66f0650a16cf43f",
-    "deploy-margin-slv": "0x66f1ec261a8b5271e45567642cfd5aa334fe248fc016b886f53d2af0aa8d85ea"
+    "deploy-margin-slv": "0x66f1ec261a8b5271e45567642cfd5aa334fe248fc016b886f53d2af0aa8d85ea",
+    "add-feed-qqq": "0x07f34209cb10170c1aa487c2c324109a5f29bbe5f2feeff3e2c4a8977c71519a",
+    "create-pool-qqq": "0x103b8d7ec3294c7d64f25b129175fb0d274eb1a7b2299050b3043d0ba6ba84e8",
+    "deploy-long-qqq": "0x1ccf17a216d806ee833cb5b632cbbdccb6179059bab35c0ae182b98c1629c60d",
+    "register-long-qqq": "0x3e4e62f1d1fda012965af0e011288a8ff7db199746881392c1e5195d7e951b9d",
+    "pause-long-qqq": "0xbfa2dcdaba5f1972197e587a3ee3a893939db24a65ef6ffcf8ce42aef537d542",
+    "deploy-short-qqq": "0x51f74f1e18c77a2d0fb7f8bb022d42b72fb2af16ebc9d75f9a1df7acfa4f449b",
+    "register-short-qqq": "0xb117839b9795cd990dafe5b2b090eb909b9fbfad7496e9c354a752ee731f81ad",
+    "pause-short-qqq": "0xec5aae7cf6da2b98c58d9bb6df6fa0fe8b31377d532887beeb05e10ae8644673",
+    "deploy-margin-qqq": "0xef62b0bd257cdd3a3929c5b8e55311108d33adf0645315458ba996d6ab31a200"
   },
   "spentEth": "0.000491698025252",
   "retired": {
