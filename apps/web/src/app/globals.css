@@ -4477,3 +4477,23 @@ a.ca-chip:hover {
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
+
+/* Markets directory: US stocks and ETFs listed as separate groups. */
+.catalog-group + .catalog-group {
+  margin-top: 28px;
+}
+.catalog-group-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.catalog-group-title span {
+  font-weight: 400;
+  color: var(--muted);
+}
