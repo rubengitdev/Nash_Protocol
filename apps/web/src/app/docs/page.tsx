@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MaxLeverage, NetworkStatus } from "../../components/docs/NetworkText";
 import { PONS_VISIBLE } from "../../lib/pons-visible";
 import { EARN_VISIBLE } from "../../lib/earn-visible";
+import { CHINA_VISIBLE } from "../../lib/china-visible";
 
 export const metadata: Metadata = {
   title: "Docs",
@@ -107,12 +108,16 @@ export default function DocsPage() {
               Explore tokenized equities, compare market parameters, and choose where to put your assets to work in the{" "}
               <Link href="/markets">market directory</Link>.
             </p>
-            <h3>Chinese equities</h3>
-            <p>
-              Access verified tokenized Chinese company exposure through US-listed ADRs on Robinhood Chain, featuring
-              isolated USDG credit, spot swaps, and spot-backed leverage. See{" "}
-              <Link href="/markets/china">Chinese equities</Link>.
-            </p>
+            {CHINA_VISIBLE && (
+              <>
+                <h3>Chinese equities</h3>
+                <p>
+                  Access verified tokenized Chinese company exposure through US-listed ADRs on Robinhood Chain, featuring
+                  isolated USDG credit, spot swaps, and spot-backed leverage. See{" "}
+                  <Link href="/markets/china">Chinese equities</Link>.
+                </p>
+              </>
+            )}
             {PONS_VISIBLE && (
               <>
                 <h3>Pons</h3>

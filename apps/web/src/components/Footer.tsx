@@ -8,6 +8,7 @@ import { BrandMark } from './navigation';
 import { CaChip } from './CaChip';
 import { PONS_VISIBLE } from '../lib/pons-visible';
 import { EARN_VISIBLE } from '../lib/earn-visible';
+import { CHINA_VISIBLE } from '../lib/china-visible';
 
 const COLUMNS: Array<{ label: string; links: Array<{ name: string; href: string }> }> = [
     {
@@ -36,7 +37,10 @@ const COLUMNS: Array<{ label: string; links: Array<{ name: string; href: string 
             { name: 'Analytics', href: '/analytics' },
             { name: 'China equities', href: '/markets/china' },
             { name: 'Pons markets', href: '/markets/pons' },
-        ].filter((link) => PONS_VISIBLE || link.href !== '/markets/pons'),
+        ].filter(
+            (link) =>
+                (PONS_VISIBLE || link.href !== '/markets/pons') && (CHINA_VISIBLE || link.href !== '/markets/china'),
+        ),
     },
 ];
 
