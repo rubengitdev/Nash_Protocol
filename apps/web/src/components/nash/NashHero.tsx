@@ -5,7 +5,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { CABadge } from '../CABadge';
 import { env } from '../../env.mjs';
-import { useNetworkMode } from '../../hooks/useNetworkMode';
+import { MAX_LEVERAGE_LABEL } from '../../lib/leverage';
 import { HeroFormulas } from './HeroFormulas';
 
 // three.js is only needed here, and only in the browser.
@@ -18,9 +18,7 @@ export function NashHero() {
   const onFail = useCallback(() => setFailed(true), []);
   const tokenCA = env.TOKEN_CA ?? '';
   const hero = useRef<HTMLElement>(null);
-  const { isTestnet } = useNetworkMode();
-  // Mainnet markets launch capped at 1.5x; testnet runs the full 2.5x range.
-  const maxLeverage = isTestnet ? '2.5×' : '1.5×';
+  const maxLeverage = MAX_LEVERAGE_LABEL;
 
   // Pointer parallax for the formula layer: two CSS variables, updated at most once per frame.
   useEffect(() => {

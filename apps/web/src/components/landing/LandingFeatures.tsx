@@ -6,7 +6,7 @@ import { ArrowRight } from 'lucide-react';
 import { Emblem } from '../Emblem';
 import { GlyphField } from '../glyph/GlyphField';
 import { STAGE_PRESETS, type GlyphShape } from '../glyph/glyphPresets';
-import { useNetworkMode } from '../../hooks/useNetworkMode';
+import { MAX_LEVERAGE_LABEL } from '../../lib/leverage';
 import { PONS_VISIBLE } from '../../lib/pons-visible';
 import { EARN_VISIBLE } from '../../lib/earn-visible';
 import { CHINA_VISIBLE } from '../../lib/china-visible';
@@ -20,7 +20,7 @@ interface Feature {
 }
 
 // Copy comes from text already shown elsewhere on the site (landing, FAQ, page headers). {MAXLEV} is filled in from the
-// network: mainnet markets launch capped at 1.5x, testnet runs the full 2.5x range.
+// leverage cap (the same on both networks).
 const ALL_FEATURES: Feature[] = [
   {
     id: 'earn',
@@ -78,8 +78,7 @@ const FEATURES = ALL_FEATURES.filter(
  * feature's figure. The cards are tabs (arrow keys move between them); the stage is the panel they control.
  */
 export function LandingFeatures() {
-  const { isTestnet } = useNetworkMode();
-  const maxLeverage = isTestnet ? '2.5×' : '1.5×';
+  const maxLeverage = MAX_LEVERAGE_LABEL;
   const [index, setIndex] = useState(0);
   const tabs = useRef<Array<HTMLButtonElement | null>>([]);
   const active = FEATURES[index];
