@@ -37,9 +37,16 @@ const USDG_FEE = 100; // USDG/WETH 0.01% pool, the deepest on the chain
 const SLIPPAGE_BPS = 100n;
 // Micro opening needs per market: 0.001 stock for the short pair plus $0.25 of stock for the pool,
 // and 0.25 + 0.25 USDG, plus 0.05 USDG spare. A 5% buffer on stock covers price moves before the opening.
-const USDG_FOR_MARKETS = BigInt(STOCKS.length) * 500000n + 50000n;
-const STOCK_USD_FOR_POOL = 0.25;
-const STOCK_FOR_SHORT = 0.001;
+// MAINNET_ENABLE_SIZE picks the same size as enable-rh-mainnet-markets.mjs (micro by default, nano for a small wallet).
+const BUY_SIZES = {
+  micro: { usdgPerMarket: 500000n, stockForShort: 0.001, stockUsdForPool: 0.25 },
+  nano: { usdgPerMarket: 100000n, stockForShort: 0.0001, stockUsdForPool: 0.05 },
+};
+const BUY_SIZE = BUY_SIZES[process.env.MAINNET_ENABLE_SIZE ?? "micro"];
+if (!BUY_SIZE) throw Error("MAINNET_ENABLE_SIZE_MUST_BE_NANO_OR_MICRO");
+const USDG_FOR_MARKETS = BigInt(STOCKS.length) * BUY_SIZE.usdgPerMarket + 50000n;
+const STOCK_USD_FOR_POOL = BUY_SIZE.stockUsdForPool;
+const STOCK_FOR_SHORT = BUY_SIZE.stockForShort;
 const BUFFER = 1.05;
 
 const check = (ok, code) => {
@@ -213,11 +220,16 @@ try {
   console.log(`Targets: USDG ${fmt(USDG_FOR_MARKETS, 6)}, ` + STOCKS.map((s) => `${s.symbol} ${fmt(need[s.symbol], 18)}`).join(", "));
   if (mode === "--plan") {
     fork = await startFork(env.RPC_URL);
-    const final = await buy(clients(fork.url, account), account.address, need, (x) => log({ fork: true, ...x }));
+    const local = clients(fork.url, account);
+    // The fork reserves more for gas than a swap costs, so a small real balance fails the rehearsal. Give the fork
+    // 1 ETH (as the other rehearsals do) and report the spend against the real balance.
+    const forkStart = 10n ** 18n;
+    await local.client.request({ method: "anvil_setBalance", params: [account.address, v.toHex(forkStart)] });
+    const final = await buy(local, account.address, need, (x) => log({ fork: true, ...x }));
     fork.stop();
     fork = undefined;
-    const spent = ethBefore - v.parseEther(final.ETH);
-    console.log(JSON.stringify({ rehearsal: "PASSED", ethSpentOnFork: fmt(spent, 18), ethLeftOnFork: final.ETH, balancesOnFork: final }, null, 2));
+    const spent = forkStart - v.parseEther(final.ETH);
+    console.log(JSON.stringify({ rehearsal: "PASSED", ethSpentOnFork: fmt(spent, 18), ethLeftAfter: fmt(ethBefore - spent, 18), balancesOnFork: final }, null, 2));
   } else {
     check(env.MAINNET_SWAP_BROADCAST_ENABLED === "true", "MAINNET_BROADCAST_NOT_AUTHORIZED");
     const final = await buy(main, account.address, need, log);
