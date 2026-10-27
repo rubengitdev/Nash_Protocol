@@ -54,7 +54,7 @@ export function Header() {
                     </Link>
 
                     {isLanding ? (
-                        <CaChip className="site-ca" />
+                        <CaChip className="site-ca" fullOnWide />
                     ) : (
                         <nav className="site-nav" aria-label="Main navigation">
                             {APP_NAV_LINKS.map((link) => {
