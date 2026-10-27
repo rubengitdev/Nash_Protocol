@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAccount } from 'wagmi';
@@ -17,17 +17,6 @@ export function Header() {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const { address, isConnected } = useAccount();
-    // While a header item is hovered or keyboard-focused, the other items soften (see data-nav-focus in globals.css).
-    // The focused item is marked with data-hovered straight on the element, so each item needs no state of its own.
-    const headerRef = useRef<HTMLElement>(null);
-    const [navFocus, setNavFocus] = useState(false);
-    const focusItem = (target: EventTarget | null) => {
-        const item = target instanceof Element ? target.closest('[data-nav-item]') : null;
-        headerRef.current?.querySelectorAll('[data-hovered]').forEach((node) => node.removeAttribute('data-hovered'));
-        item?.setAttribute('data-hovered', 'true');
-        setNavFocus(Boolean(item));
-    };
-
     const formattedAddress = address
         ? `${address.slice(0, 6)}...${address.slice(-4)}`
         : undefined;
@@ -45,7 +34,6 @@ export function Header() {
     // Close the drawer when the route changes.
     useEffect(() => {
         setIsMobileNavOpen(false);
-        focusItem(null);
     }, [pathname]);
 
     return (
@@ -55,17 +43,9 @@ export function Header() {
             </a>
 
             <header
-                ref={headerRef}
                 className="site-header"
                 data-variant={isLanding ? 'landing' : 'app'}
                 data-scrolled={scrolled || !isLanding ? 'true' : 'false'}
-                data-nav-focus={navFocus ? 'true' : 'false'}
-                onMouseOver={(e) => focusItem(e.target)}
-                onMouseLeave={() => focusItem(null)}
-                onFocus={(e) => {
-                    if (e.target instanceof Element && e.target.matches(':focus-visible')) focusItem(e.target);
-                }}
-                onBlur={() => focusItem(null)}
             >
                 <div className="site-header-inner">
                     <Link href="/" className="brand" aria-label="Nash Protocol home" data-nav-item="">

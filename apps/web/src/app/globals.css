@@ -3731,17 +3731,10 @@ button.ca-chip:hover {
   }
 }
 
-/* Hovering a nav link focuses it: the other header items soften. */
+/* Header items ease their own hover colors; hovering one leaves the others untouched. */
 .site-header [data-nav-item] {
-  transition: opacity 0.28s var(--ease-newton), color 0.3s var(--ease-newton),
-    background-color 0.3s var(--ease-newton), border-color 0.3s var(--ease-newton), box-shadow 0.3s var(--ease-newton),
-    transform 0.12s var(--ease-newton);
-}
-.site-header[data-nav-focus="true"] [data-nav-item]:not([data-hovered="true"]) {
-  opacity: 0.45;
-}
-.site-header[data-nav-focus="true"] .nav-link[data-hovered="true"] {
-  color: var(--text);
+  transition: color 0.3s var(--ease-newton), background-color 0.3s var(--ease-newton),
+    border-color 0.3s var(--ease-newton), box-shadow 0.3s var(--ease-newton), transform 0.12s var(--ease-newton);
 }
 @media (prefers-reduced-motion: reduce) {
   .site-header [data-nav-item] {
