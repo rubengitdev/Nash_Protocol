@@ -92,15 +92,17 @@ Mainnet markets launch capped at 1.5× leverage.
 6. `node --import tsx scripts/rehearse-mainnet-fork.mjs` replays deposit, borrow, repay, withdraw, long and short (open and close, every policy option, every market) on a local fork with the website's own client code; it sends no mainnet transaction. Run it after any policy or contract change.
 7. Run the readiness script again, then a supervised deposit, borrow, repay, withdraw, long and short with small amounts.
 
-### Adding the ETF markets (SPY, QQQ, SGOV, SLV)
+### Adding the ETF markets (SGOV and SLV now, SPY and QQQ when funded)
 
 The four ETF markets are in `scripts/mainnet-full-deploy.config.json` (token and feed addresses taken from `api.robinhood.com/rhj/assets` and the Robinhood mainnet feed list on 2026-10-27; each token has an active Uniswap v3 pool against USDG, fee tier set in `scripts/buy-mainnet-market-tokens.mjs`). Same recipe as every post-launch market: long and short pair, Uniswap V2 pool, margin router, micro caps, registered paused, opened at micro size.
 
-Funding at 2026-10-27 prices (micro size, 5% buffer on stock): about $1.07 SPY, $0.96 QQQ, $0.37 SGOV, $0.31 SLV, plus 2.05 USDG and about $0.6 of gas, so roughly **0.0019 ETH** across all four. The project wallet held about 0.0005 ETH, so top it up first, or add the markets one at a time.
+Funding at 2026-10-27 prices (micro size, 5% buffer on stock). Each market needs 0.5 USDG, 0.001 stock for the short pair and $0.25 of stock for the pool, plus about 0.00004 ETH of gas: about $1.07 SPY, $0.96 QQQ, $0.37 SGOV, $0.31 SLV in stock. The project wallet holds about 0.000525 ETH and 1.07 USDG with no top-up planned, so **only SGOV and SLV fit** (about 0.0004 ETH in total; the 1.07 USDG covers both, no USDG purchase). SPY and QQQ each cost about the whole ETH balance; add them only after the wallet is funded. Run SGOV first, read the plan's quotes, and abort at the `ADD` prompt if the ETH cost is above the wallet balance minus 0.0001 ETH (keep that for emergency pauses, which cost about 0.000002 ETH each).
 
 ```bash
-bash scripts/add-rh-mainnet-market.sh SPY   # then QQQ, SGOV, SLV; each run prints a rehearsal and asks you to type ADD <SYMBOL>
+bash scripts/add-rh-mainnet-market.sh SGOV   # then SLV; each run prints a rehearsal and asks you to type ADD <SYMBOL>
 ```
+
+Lower `WATCH_MIN_OWNER_ETH` for the `nash-watch` service (for example 0.0001) after this, or the watcher alerts on the low balance.
 
 After each market is open: `bash scripts/ops/enable-mainnet-web.sh on`, add the four ETF entries to `PYTH_FEEDS_JSON` in the Vercel mainnet project (see `apps/web/.env.mainnet.example`; optional, the web validates without them), then promote `main` to `mainnet`. ETF catalog rows are `mainnetOnly`: the testnet scope ignores them until official testnet ETF tokens exist.
 
