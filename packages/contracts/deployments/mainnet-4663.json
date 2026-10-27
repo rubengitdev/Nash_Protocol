@@ -17,7 +17,7 @@
     "vault": "0xA29A58864C48112d5373C9e18E89Ec568b5Ea58c",
     "impl-LeverageRouter": "0x15046C7457f81a198C4973B18293e68407682115",
     "leverageRouter": "0x8125aa942B5720505CB0DbeFe9E9873AAbD39aEA",
-    "impl-VerifiedFeedOracle": "0x1374493f701846843d7B40BFA7887ae4B32EB5c8",
+    "impl-VerifiedFeedOracle": "0x2b787e9Cd4Da80F31C84258062137c7dF286C37F",
     "oracle": "0x117c0383422aB1D47DBDB612eF3E4FE10c5B7B08",
     "impl-NashPair": "0xb9bbbEE335CE264135c19fFd82e17BCEd1061453",
     "long-tsla": "0xdD6A49012f37C90896C6613fD800F3F8Eb9eb530",
@@ -37,7 +37,15 @@
     "margin-tsla": "0xB44482189F461584a082c41a8667548a0d8bE83F",
     "margin-amzn": "0x909E687F128a1aF30700abAC5979001fd8975656",
     "margin-pltr": "0x94A4F1b2bc283dB2557E74A1efF4E398fC636286",
-    "margin-amd": "0xB9593aE582f4FB1dbd9Bc09A007221D6B1b77a02"
+    "margin-amd": "0xB9593aE582f4FB1dbd9Bc09A007221D6B1b77a02",
+    "long-sgov": "0xCc79BF1b79469402C1730E70b730f370b70a6e9C",
+    "short-sgov": "0x5cd8489b797Af2995f3a0B125d872660b5c85BE4",
+    "pool-sgov": "0x9896797AfBd8ec5beFB087D43E7d1e377089Cc47",
+    "margin-sgov": "0xdfe10305E91A6A56cB25Ef84E13D997d24B18b8D",
+    "long-slv": "0x23Eb2809bE30bbeB83B6c4A39c77C762375213BE",
+    "short-slv": "0xfE74302f983cDADF23207c5faa7d1eEe52A6f977",
+    "pool-slv": "0x6109E91aee1005B8bcE5428aFc164b7eAfBbB044",
+    "margin-slv": "0xCE86Bb6d1D75a963A79dBa2Cd792c2CBDF5697B4"
   },
   "markets": {
     "TSLA": {
@@ -67,6 +75,20 @@
       "longMarketId": "0x9245e881cd4179af5e9117fca3ed5672437c168e8f08f3610669602be1ab0bff",
       "shortMarketId": "0xe97572a3771b1853826fe6fdc63c358513e9e9d455bbd062b7395c987c57eea5",
       "status": "PAUSED"
+    },
+    "SGOV": {
+      "token": "0x92FD66527192E3e61d4DDd13322Aa222DE86F9B5",
+      "feed": "0xa0DF4ee0fFf975306345875E3548Fcc519577A11",
+      "longMarketId": "0x4535fa93ab75356c65833429ce3cb5a0b91004b04872d9dced2edd2c8a487530",
+      "shortMarketId": "0xa9089aee420d27f0a25fb5cf9a20672505ff5c0f95bae4e24aefc07af1ec2858",
+      "status": "PAUSED"
+    },
+    "SLV": {
+      "token": "0x411eFb0E7f985935DAec3D4C3ebaEa0d0AD7D89f",
+      "feed": "0x209b73908e92Ae021826eD79609845451Ecba2ce",
+      "longMarketId": "0xc369e7bd513bce419637e90cff02bd4c575b654fb1ee2330c11abf40c7db7136",
+      "shortMarketId": "0x7bf47650893aad65504fcd866533b1eee0e942d22f60eab385ce6f8c51cfa357",
+      "status": "PAUSED"
     }
   },
   "usdg": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
@@ -75,7 +97,9 @@
     "TSLA": "360539999990000000000",
     "AMZN": "253125000000000000000",
     "PLTR": "199030000000000000000",
-    "AMD": "547670000000000000000"
+    "AMD": "547670000000000000000",
+    "SGOV": "101398428380000000000",
+    "SLV": "47855950000000000000"
   },
   "transactions": {
     "deploy-impl-NashMarketRegistry": "0x2c3453d8d9a521861c821fe96f232e22e79f100202d132c8c4f1552e34649dca",
@@ -90,7 +114,7 @@
     "deploy-vault": "0x8372bf47f1f265b1e83bfb2ffaa306ef606026254652ac189f3e31f5e150c71e",
     "deploy-impl-LeverageRouter": "0x92901cf10d00dcd9ac8f999674c2090831ec5c835a65113dd6dad9146b51fb23",
     "deploy-leverageRouter": "0xedd27ef994537f94f789a863f644c9eb3302d4bc46d3a66fb5eb0a6440ee5e15",
-    "deploy-impl-VerifiedFeedOracle": "0x5740bc925e022d514edba61cfae61419a8c98618b5b2215475efab2f80245cb2",
+    "deploy-impl-VerifiedFeedOracle": "0xe9ddf20256c1f5cd2573e520da89d1ab345cef3b249c054870b954796cfcfb42",
     "deploy-oracle": "0xc58a4996e827b325ee46f09d2a76181a2489766cebf827e60ff0e39fccf13a7c",
     "deploy-impl-NashPair": "0x8aa63cfa40aa24110f299b3e4b32044b03bc18d74b513e8e9a7895711e9949f9",
     "deploy-long-tsla": "0x212c7528e580d2ca33c171d8b65a16349629daadfd6ac50e40c2335a83c7b797",
@@ -122,7 +146,32 @@
     "deploy-margin-amzn": "0x9536fbeedc33146428b77bf6040baa3ab48dcb05b5f27d42e9b52a261598630a",
     "deploy-margin-pltr": "0x1e2ee56cb396f560011a1f2f3f77024052332a22af8a26f531b23794256caf53",
     "deploy-margin-amd": "0x361c9b1c30050fd3e51268535f272ff4cdffae12b8342b73d8b00a0c7f530bf4",
-    "authorize-lending-router": "0xde2bb5529ab6f0ea0bcf099d2ba6c7dd794dd89c8f49022d0fcd6d6eda3d1769"
+    "authorize-lending-router": "0xde2bb5529ab6f0ea0bcf099d2ba6c7dd794dd89c8f49022d0fcd6d6eda3d1769",
+    "upgrade-oracle": "0x974970925e4152fb6983c937166733187a819631b3230292b36a2dc1f40189bd",
+    "add-feed-sgov": "0x2d275d8321574312ed4025cba063d20ac6732674d2c7439be204344313ef3133",
+    "create-pool-sgov": "0x1ff60b179d743b407e1caa54266bb42946c22386f52ccdf137de55b66f807b43",
+    "deploy-long-sgov": "0x02af90313b02b91b958fc2ce75b1716bfa74dbb7d9c6441bc905b9f56b713a61",
+    "register-long-sgov": "0xdb8b0354d03bb6bf9c631bb0b40bb2ebc78ea3abc5d0f4226208b68149d2dac1",
+    "pause-long-sgov": "0xf728a82403579e083c47ce8f2a08b88b2a13e5ee695597205235713b12eca548",
+    "deploy-short-sgov": "0xfa859a76673d5ebf53b878649796ba25061c801aa5be4791694ba426ecf29c72",
+    "register-short-sgov": "0xd5595bb5a26dcfd0803e11a3171f01f907bdf41a72ad8eed5433a942d4b0b2fd",
+    "pause-short-sgov": "0xe2940c82662e9f6b4715db1c6eb2fcc83669ea1f50d9550b3f2211c6f60477d1",
+    "deploy-margin-sgov": "0x363c60559f79baefbfdefd9ca77967b5987d988f3b244ba19c5a887bad64de27",
+    "add-feed-slv": "0x9b9ce608082fbf59885ee783536548d2b382cde7094445299b78516285eeb076",
+    "create-pool-slv": "0xfc3418c9893d0d81f19dcc764e85507cafc6e717116e6a845c6344073cb49d4d",
+    "deploy-long-slv": "0x6565d99715e432e6c6060ccffc364ebc85b4ade6545b476b40ca604565571216",
+    "register-long-slv": "0x1be5a5d590462763aac0f8789e8d872f8df6088c7ea74a33dad82067d5021345",
+    "pause-long-slv": "0x067530207ad95527b33850546e1f633a0343dd843f3465a21690867781bfbb88",
+    "deploy-short-slv": "0xebaa3f719f14eb6d647e4daf18244737e56c51885c2f4d8278bb9d1ad534a1fd",
+    "register-short-slv": "0x2cd7cebd25a99bd3465c8b2a7a3d061108be9c22b0165047b1c5aeafa3aa54f4",
+    "pause-short-slv": "0xa362596012af1cc72740f9aedcd4bc0882b5d7bcab1064f0d66f0650a16cf43f",
+    "deploy-margin-slv": "0x66f1ec261a8b5271e45567642cfd5aa334fe248fc016b886f53d2af0aa8d85ea"
   },
-  "spentEth": "0.000491698025252"
+  "spentEth": "0.000491698025252",
+  "retired": {
+    "impl-VerifiedFeedOracle": {
+      "address": "0x745bB9Ebc8AdE0547486dB82C98C6d0863b95f39",
+      "transaction": "0x08977d9e565600e784d1f46c858c058ab92379d8c5d77488a6d9f30c49952d98"
+    }
+  }
 }
