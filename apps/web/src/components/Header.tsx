@@ -17,7 +17,7 @@ export function Header() {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const { address, isConnected } = useAccount();
-    // While a header item is hovered or keyboard-focused, the rest of the page and the other items blur (see .nav-veil).
+    // While a header item is hovered or keyboard-focused, the other items soften (see data-nav-focus in globals.css).
     // The focused item is marked with data-hovered straight on the element, so each item needs no state of its own.
     const headerRef = useRef<HTMLElement>(null);
     const [navFocus, setNavFocus] = useState(false);
@@ -42,12 +42,6 @@ export function Header() {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
-    // The focus veil blurs whatever is behind it, so the glyph fields hold still while it is up.
-    useEffect(() => {
-        document.documentElement.toggleAttribute('data-glyph-pause', navFocus);
-        return () => document.documentElement.removeAttribute('data-glyph-pause');
-    }, [navFocus]);
-
     // Close the drawer when the route changes.
     useEffect(() => {
         setIsMobileNavOpen(false);
@@ -59,8 +53,6 @@ export function Header() {
             <a className="skip" href="#main">
                 Skip to content
             </a>
-
-            <div className="nav-veil" data-on={navFocus ? 'true' : 'false'} aria-hidden="true" />
 
             <header
                 ref={headerRef}
