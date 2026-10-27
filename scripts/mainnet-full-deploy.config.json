@@ -205,8 +205,7 @@
         "maxLeverageBps": 12500,
         "supplyCapRaw": "5000000",
         "borrowCapRaw": "1000000000000000"
-      },
-      "webEnabled": false
+      }
     },
     {
       "symbol": "SGOV",
