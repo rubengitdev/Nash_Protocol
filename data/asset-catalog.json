@@ -38,5 +38,45 @@
     "className": "amd",
     "indexStr": "05 / 05",
     "featured": true
+  },
+  {
+    "ticker": "SPY",
+    "name": "SPDR S&P 500 ETF",
+    "image": "/assets/spy.svg",
+    "className": "spy",
+    "indexStr": "06 / 09",
+    "featured": false,
+    "category": "ETFs",
+    "mainnetOnly": true
+  },
+  {
+    "ticker": "QQQ",
+    "name": "Invesco QQQ",
+    "image": "/assets/qqq.svg",
+    "className": "qqq",
+    "indexStr": "07 / 09",
+    "featured": false,
+    "category": "ETFs",
+    "mainnetOnly": true
+  },
+  {
+    "ticker": "SGOV",
+    "name": "iShares 0-3 Month Treasury Bond",
+    "image": "/assets/sgov.svg",
+    "className": "sgov",
+    "indexStr": "08 / 09",
+    "featured": false,
+    "category": "ETFs",
+    "mainnetOnly": true
+  },
+  {
+    "ticker": "SLV",
+    "name": "iShares Silver Trust",
+    "image": "/assets/slv.svg",
+    "className": "slv",
+    "indexStr": "09 / 09",
+    "featured": false,
+    "category": "ETFs",
+    "mainnetOnly": true
   }
 ]

@@ -24,7 +24,7 @@ const FACTORY = "0x1f7d7550B1b028f7571E69A784071F0205FD2EfA";
 const WETH = "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73";
 const USDG = "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168";
 // Fee tier of the deepest Uniswap v3 stock/USDG pool per market.
-const STOCK_FEES = { TSLA: 3000, AMZN: 3000, PLTR: 3000, AMD: 3000, NVDA: 500 };
+const STOCK_FEES = { TSLA: 3000, AMZN: 3000, PLTR: 3000, AMD: 3000, NVDA: 500, SPY: 500, QQQ: 500, SGOV: 500, SLV: 3000 };
 // MAINNET_BUY_MARKETS selects the markets (default: the four launch markets), e.g. "NVDA".
 const ALL_MARKETS = JSON.parse(readFileSync("scripts/mainnet-full-deploy.config.json", "utf8")).markets;
 const selected = (process.env.MAINNET_BUY_MARKETS ?? "TSLA,AMZN,PLTR,AMD").split(",").map((x) => x.trim().toUpperCase()).filter(Boolean);
