@@ -220,11 +220,16 @@ try {
   console.log(`Targets: USDG ${fmt(USDG_FOR_MARKETS, 6)}, ` + STOCKS.map((s) => `${s.symbol} ${fmt(need[s.symbol], 18)}`).join(", "));
   if (mode === "--plan") {
     fork = await startFork(env.RPC_URL);
-    const final = await buy(clients(fork.url, account), account.address, need, (x) => log({ fork: true, ...x }));
+    const local = clients(fork.url, account);
+    // The fork reserves more for gas than a swap costs, so a small real balance fails the rehearsal. Give the fork
+    // 1 ETH (as the other rehearsals do) and report the spend against the real balance.
+    const forkStart = 10n ** 18n;
+    await local.client.request({ method: "anvil_setBalance", params: [account.address, v.toHex(forkStart)] });
+    const final = await buy(local, account.address, need, (x) => log({ fork: true, ...x }));
     fork.stop();
     fork = undefined;
-    const spent = ethBefore - v.parseEther(final.ETH);
-    console.log(JSON.stringify({ rehearsal: "PASSED", ethSpentOnFork: fmt(spent, 18), ethLeftOnFork: final.ETH, balancesOnFork: final }, null, 2));
+    const spent = forkStart - v.parseEther(final.ETH);
+    console.log(JSON.stringify({ rehearsal: "PASSED", ethSpentOnFork: fmt(spent, 18), ethLeftAfter: fmt(ethBefore - spent, 18), balancesOnFork: final }, null, 2));
   } else {
     check(env.MAINNET_SWAP_BROADCAST_ENABLED === "true", "MAINNET_BROADCAST_NOT_AUTHORIZED");
     const final = await buy(main, account.address, need, log);
