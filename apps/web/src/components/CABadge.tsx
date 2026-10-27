@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { env } from '../env.mjs';
+import { TOKEN_EXPLORER_URL } from '../lib/networks';
 
 interface CABadgeProps {
   address?: string;
@@ -50,7 +50,7 @@ export function CABadge({ address, className = '', truncate = false }: CABadgePr
   };
 
   // Lets holders confirm on the explorer that this is the real token.
-  const explorerHref = `${env.EXPLORER_URL.replace(/\/$/, '')}/token/${cleanAddress}`;
+  const explorerHref = `${TOKEN_EXPLORER_URL}/token/${cleanAddress}`;
 
   return (
     <span className="inline-flex items-center gap-1.5 max-w-full">
