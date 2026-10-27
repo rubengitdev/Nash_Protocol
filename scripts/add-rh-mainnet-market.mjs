@@ -210,7 +210,9 @@ async function verifyAdded(client, record, config, m, x, ids) {
   const reg = artifact("NashMarketRegistry").abi;
   const oracle = artifact("VerifiedFeedOracle");
   const impl = await implementationOf(client, record.addresses.oracle);
-  check(same(impl, x["impl-VerifiedFeedOracle"]), "ORACLE_IMPLEMENTATION_MISMATCH");
+  // Markets rehearsed before any was broadcast each plan their own oracle upgrade, so the live implementation can be a
+  // later market's; accept it when it is the one in the deployment record. The runtime check below still applies.
+  check(same(impl, x["impl-VerifiedFeedOracle"]) || same(impl, record.addresses["impl-VerifiedFeedOracle"]), "ORACLE_IMPLEMENTATION_MISMATCH");
   check(normalizeRuntime(await client.getCode({ address: impl }), oracle.immutableReferences) === normalizeRuntime(oracle.runtime, oracle.immutableReferences), "ORACLE_RUNTIME_MISMATCH");
   const price = await read(record.addresses.oracle, oracle.abi, "getPrice", [m.token]);
   for (const t of [config.oracle.stable, ...config.markets.filter((n) => record.markets[n.symbol])])
