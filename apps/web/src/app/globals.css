@@ -3663,46 +3663,100 @@ button:hover .arrow-chip {
   height: 7px;
   border-radius: 50%;
   background: var(--go);
+  flex-shrink: 0;
 }
-.net-switch-option[data-network="testnet"] .net-badge-dot {
+.net-menu[data-network="testnet"] > .net-menu-trigger .net-badge-dot,
+.net-menu-item[data-network="testnet"] .net-badge-dot {
   background: var(--warn);
 }
-/* Mainnet / Testnet switch: the active side is filled, the other side links to its deployment. */
-.net-switch {
-  display: inline-flex;
-  align-items: stretch;
-  border: 1px solid var(--line-strong);
-  border-radius: 2px;
+/* Network dropdown: the trigger shows the current network and its chain id, the list links to the other deployment. */
+.net-menu {
+  position: relative;
+  display: inline-block;
+}
+.net-menu-trigger,
+.net-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--display);
   font-size: 11px;
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0.02em;
   white-space: nowrap;
+  color: var(--text);
 }
-.net-switch-option {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
+.net-menu-trigger {
   padding: 7px 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  background: transparent;
+  cursor: pointer;
+}
+.net-menu-trigger:hover,
+.net-menu-trigger[aria-expanded="true"] {
+  border-color: var(--text);
+}
+.net-menu-chain {
+  font-weight: 400;
+  color: var(--muted);
+}
+.net-menu-chevron {
+  color: var(--muted);
+  transition: transform 0.2s var(--ease-newton);
+}
+.net-menu-trigger[aria-expanded="true"] .net-menu-chevron {
+  transform: rotate(180deg);
+}
+.net-menu-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 100%;
+  z-index: 60;
+  padding: 4px;
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  background: var(--panel);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--text) 12%, transparent);
+}
+.net-menu-item {
+  padding: 9px 10px;
+  border-radius: 2px;
   color: var(--muted);
   text-decoration: none;
 }
-.net-switch-option + .net-switch-option {
-  border-left: 1px solid var(--line-strong);
+.net-menu-item .net-menu-name {
+  margin-right: auto;
+  padding-right: 14px;
 }
-.net-switch-option[data-active="true"] {
+.net-menu-item[data-active="true"] {
   color: var(--text);
   background: var(--panel-subtle, color-mix(in srgb, var(--text) 8%, transparent));
   cursor: default;
 }
-a.net-switch-option:hover {
+a.net-menu-item:hover {
   color: var(--text);
+  background: var(--panel-subtle, color-mix(in srgb, var(--text) 8%, transparent));
 }
-/* The mobile menu styles every link as a full-width row; the switch keeps its own padding. */
-.mobile-nav .net-switch-option {
+/* The mobile menu styles every link and button as a full-width row; the dropdown keeps its own look and opens in the flow. */
+.mobile-nav .net-menu-trigger {
   padding: 7px 11px;
+  border: 1px solid var(--line-strong);
+}
+.mobile-nav .net-menu-item {
+  padding: 9px 10px;
   border-bottom: 0;
+}
+.mobile-nav .ca-chip {
+  padding: 7px 11px;
+  border: 1px solid var(--line-strong);
+}
+.mobile-nav .net-menu-list {
+  position: static;
+  margin-top: 6px;
+  box-shadow: none;
 }
 .ca-chip {
   display: inline-flex;
