@@ -7,6 +7,13 @@ import { marketDeployments } from "../../lib/market-deployments";
 import { PONS_VISIBLE } from "../../lib/pons-visible";
 import { CHINA_VISIBLE } from "../../lib/china-visible";
 
+// ETFs in the catalog; every other ticker is a US stock.
+const ETF_TICKERS = new Set(["SPY", "QQQ", "SGOV", "SLV"]);
+const CATALOG_GROUPS = [
+  { id: "us", title: "US stocks", assets: assetCatalog.filter((a) => !ETF_TICKERS.has(a.ticker)) },
+  { id: "etf", title: "ETFs", assets: assetCatalog.filter((a) => ETF_TICKERS.has(a.ticker)) },
+].filter((g) => g.assets.length > 0);
+
 export default function MarketsPage() {
   return (
     <AppPage
@@ -42,29 +49,36 @@ export default function MarketsPage() {
           <h2 id="catalog-title">Explore the assets.</h2>
           <span>{assetCatalog.length} target markets · availability below</span>
         </div>
-        <div className="asset-directory">
-          {assetCatalog.map((asset) => (
-            <Link
-              className="directory-card"
-              href={marketPath(asset.ticker)}
-              key={asset.ticker}
-            >
-              <img src={asset.image} alt="" />
-              <div>
-                <strong>{asset.ticker}</strong>
-                <span>{asset.name}</span>
-                <small className="directory-readiness">
-                  {marketDeployments.some((x) => x.symbol === asset.ticker)
-                    ? "Contracts configured · live checks required"
-                    : env.PROTOCOL_ADDRESSES.tokens[asset.ticker]
-                      ? "Token configured · contracts pending"
-                      : "Token verification pending"}
-                </small>
-              </div>
-              <span aria-hidden="true">↗</span>
-            </Link>
-          ))}
-        </div>
+        {CATALOG_GROUPS.map((group) => (
+          <div key={group.id} className="catalog-group">
+            <h3 className="catalog-group-title">
+              {group.title} <span>{group.assets.length}</span>
+            </h3>
+            <div className="asset-directory">
+              {group.assets.map((asset) => (
+                <Link
+                  className="directory-card"
+                  href={marketPath(asset.ticker)}
+                  key={asset.ticker}
+                >
+                  <img src={asset.image} alt="" />
+                  <div>
+                    <strong>{asset.ticker}</strong>
+                    <span>{asset.name}</span>
+                    <small className="directory-readiness">
+                      {marketDeployments.some((x) => x.symbol === asset.ticker)
+                        ? "Contracts configured · live checks required"
+                        : env.PROTOCOL_ADDRESSES.tokens[asset.ticker]
+                          ? "Token configured · contracts pending"
+                          : "Token verification pending"}
+                    </small>
+                  </div>
+                  <span aria-hidden="true">↗</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        ))}
       </section>
       {PONS_VISIBLE && (
         <section className="app-panel fx-card pons-crosslink" style={{ marginTop: 32 }}>
