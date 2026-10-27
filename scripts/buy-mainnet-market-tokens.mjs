@@ -37,9 +37,16 @@ const USDG_FEE = 100; // USDG/WETH 0.01% pool, the deepest on the chain
 const SLIPPAGE_BPS = 100n;
 // Micro opening needs per market: 0.001 stock for the short pair plus $0.25 of stock for the pool,
 // and 0.25 + 0.25 USDG, plus 0.05 USDG spare. A 5% buffer on stock covers price moves before the opening.
-const USDG_FOR_MARKETS = BigInt(STOCKS.length) * 500000n + 50000n;
-const STOCK_USD_FOR_POOL = 0.25;
-const STOCK_FOR_SHORT = 0.001;
+// MAINNET_ENABLE_SIZE picks the same size as enable-rh-mainnet-markets.mjs (micro by default, nano for a small wallet).
+const BUY_SIZES = {
+  micro: { usdgPerMarket: 500000n, stockForShort: 0.001, stockUsdForPool: 0.25 },
+  nano: { usdgPerMarket: 100000n, stockForShort: 0.0001, stockUsdForPool: 0.05 },
+};
+const BUY_SIZE = BUY_SIZES[process.env.MAINNET_ENABLE_SIZE ?? "micro"];
+if (!BUY_SIZE) throw Error("MAINNET_ENABLE_SIZE_MUST_BE_NANO_OR_MICRO");
+const USDG_FOR_MARKETS = BigInt(STOCKS.length) * BUY_SIZE.usdgPerMarket + 50000n;
+const STOCK_USD_FOR_POOL = BUY_SIZE.stockUsdForPool;
+const STOCK_FOR_SHORT = BUY_SIZE.stockForShort;
 const BUFFER = 1.05;
 
 const check = (ok, code) => {

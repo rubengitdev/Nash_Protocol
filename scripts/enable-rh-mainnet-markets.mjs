@@ -45,6 +45,16 @@ const SIZES = {
       short: { supply: 5_000000n, borrow: 10n ** 15n }, // 5 USDG, 0.001 stock
     },
   },
+  // nano: for a wallet too small for micro. Quarter of the pool and long liquidity, a tenth of the short stock.
+  nano: {
+    longDebtLiquidity: 50000n, // 0.05 USDG
+    shortStockLiquidity: 10n ** 14n, // 0.0001 stock
+    poolUsdg: 50000n, // 0.05 USDG, matched by the same USD value of stock
+    caps: {
+      long: { supply: 2n * 10n ** 15n, borrow: 50000n }, // 0.002 stock, 0.05 USDG
+      short: { supply: 1_000000n, borrow: 10n ** 14n }, // 1 USDG, 0.0001 stock
+    },
+  },
   demo: {
     longDebtLiquidity: 5_000000n,
     shortStockLiquidity: 10n ** 16n,
@@ -57,7 +67,7 @@ const SIZES = {
 };
 const SIZE_NAME = process.env.MAINNET_ENABLE_SIZE ?? "micro";
 const SIZE = SIZES[SIZE_NAME];
-if (!SIZE) throw Error("MAINNET_ENABLE_SIZE_MUST_BE_MICRO_OR_DEMO");
+if (!SIZE) throw Error("MAINNET_ENABLE_SIZE_MUST_BE_NANO_MICRO_OR_DEMO");
 const LONG_DEBT_LIQUIDITY = SIZE.longDebtLiquidity;
 const SHORT_STOCK_LIQUIDITY = SIZE.shortStockLiquidity;
 const POOL_USDG = SIZE.poolUsdg;
