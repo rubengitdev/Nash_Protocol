@@ -297,7 +297,12 @@ try {
     stage = "plan";
     check(!record.markets[symbol], "MARKET_ALREADY_RECORDED");
     check(!existsSync(statePath), "JOURNAL_EXISTS_RESUME_WITH_RUN");
-    const needsUpgrade = same(await implementationOf(main.client, record.addresses.oracle), launchOracleImpl);
+    // Upgrade only while the live oracle code differs from the current VerifiedFeedOracle (it lacks owner-only addFeed).
+    const currentOracle = artifact("VerifiedFeedOracle");
+    const liveImpl = await implementationOf(main.client, record.addresses.oracle);
+    const needsUpgrade =
+      normalizeRuntime(await main.client.getCode({ address: liveImpl }), currentOracle.immutableReferences) !==
+      normalizeRuntime(currentOracle.runtime, currentOracle.immutableReferences);
     const { ops, ids } = operations(record, config, m, needsUpgrade);
     stage = "fork-rehearsal";
     fork = await startFork(env.RPC_URL);
