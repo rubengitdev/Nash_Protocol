@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useInView } from './useInView';
-import { useNetworkMode } from '../../hooks/useNetworkMode';
+import { MAX_LEVERAGE_LABEL } from '../../lib/leverage';
 
 const BLOCKS = [
   {
@@ -27,9 +27,7 @@ const BLOCKS = [
 
 export function Manifesto() {
   const { ref, inView } = useInView<HTMLElement>(0.12);
-  const { isTestnet } = useNetworkMode();
-  // Mainnet markets launch capped at 1.5x; testnet runs the full 2.5x range.
-  const maxLeverage = isTestnet ? '2.5×' : '1.5×';
+  const maxLeverage = MAX_LEVERAGE_LABEL;
   return (
     <section
       ref={ref}

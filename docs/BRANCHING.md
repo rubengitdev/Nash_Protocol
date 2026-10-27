@@ -43,4 +43,4 @@ The website runs on Vercel, one project per network. Both projects use root `app
 
 GitHub can take up to about 10 minutes to hand a push to Vercel. Only if no new Production deployment has appeared after that (check `vercel ls <project>`), deploy by hand from a clean checkout of `main`: `vercel link --yes --project <project>` (delete the `.env.local` it writes), then `vercel deploy --prod --yes`.
 
-The web build reads public configuration at build time and secrets at runtime (see the `Dockerfile` header), so the same code serves either network with different variables.
+The web build reads public configuration at build time and secrets at runtime (see the `Dockerfile` header), so the same code serves either network with different variables. The Mainnet | Testnet switch in the header (`NetworkBadge.tsx`, `lib/network-switch.ts`) just links between the two domains; there is no runtime network selection.

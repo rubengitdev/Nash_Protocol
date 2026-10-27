@@ -73,7 +73,7 @@ export default function DocsPage() {
             </p>
             <h3>Leverage without the cliff</h3>
             <p>
-              Open a long up to <MaxLeverage /> or a short on TSLA, AMZN, PLTR and AMD in a single transaction. Choose the loan
+              Open a long up to <MaxLeverage /> or a short on tokenized stocks and ETFs in a single transaction. Choose the loan
               ratio that suits you.
             </p>
           </section>
