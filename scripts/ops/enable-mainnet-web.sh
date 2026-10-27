@@ -22,7 +22,7 @@ set_env() { # name value
 case "$MODE" in
   on)
     LAUNCH="$(node scripts/generate-mainnet-app-config.mjs --launch)" || { echo "Config did not validate"; exit 1; }
-    for key in LENDING_ENABLED MARGIN_TRADING_ENABLED LENDING_DEPLOYMENT_JSON MARGIN_DEPLOYMENT_JSON MARKET_DEPLOYMENTS_JSON; do
+    for key in LENDING_ENABLED MARGIN_TRADING_ENABLED PROTOCOL_ADDRESSES LENDING_DEPLOYMENT_JSON MARGIN_DEPLOYMENT_JSON MARKET_DEPLOYMENTS_JSON; do
       set_env "$key" "$(printf '%s' "$LAUNCH" | jq -j --arg k "$key" '.[$k]')"
     done
     ;;

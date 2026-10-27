@@ -179,7 +179,8 @@ async function verifyOpen(client, record, config) {
       poolUsdg: stableReserve,
     };
   }
-  for (const role of ["leverageRouter", "shortRouter", "autoProtect"])
+  // LeverageRouter and ShortRouter were opened at launch (unpause-mainnet.sh); AutoProtect has no keeper and must stay paused.
+  for (const role of ["autoProtect"])
     check(await client.readContract({ address: a[role], abi: artifact(role === "autoProtect" ? "AutoProtectModule" : role === "shortRouter" ? "ShortRouter" : "LeverageRouter"), functionName: "isPaused" }), `MUST_STAY_PAUSED_${role}`);
   return result;
 }

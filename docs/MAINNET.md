@@ -92,6 +92,27 @@ Mainnet markets launch capped at 1.5× leverage.
 6. `node --import tsx scripts/rehearse-mainnet-fork.mjs` replays deposit, borrow, repay, withdraw, long and short (open and close, every policy option, every market) on a local fork with the website's own client code; it sends no mainnet transaction. Run it after any policy or contract change.
 7. Run the readiness script again, then a supervised deposit, borrow, repay, withdraw, long and short with small amounts.
 
+### Adding the ETF markets (SGOV and SLV now, SPY and QQQ when funded)
+
+The four ETF markets are in `scripts/mainnet-full-deploy.config.json` (token and feed addresses taken from `api.robinhood.com/rhj/assets` and the Robinhood mainnet feed list on 2026-10-27; each token has an active Uniswap v3 pool against USDG, fee tier set in `scripts/buy-mainnet-market-tokens.mjs`). Same recipe as every post-launch market: long and short pair, Uniswap V2 pool, margin router, micro caps, registered paused, opened at micro size.
+
+Funding at 2026-10-27 prices, checked against the live Uniswap v3 quoter (micro size). Each market needs 0.5 USDG, plus 0.001 stock for the short pair and $0.25 of stock for the pool. `buy-mainnet-market-tokens.mjs` pays for the stock **in USDG**, and buys any USDG shortfall with ETH. The project wallet holds about 0.000525 ETH and 1.07 USDG with no top-up planned, so **only SGOV and SLV fit**:
+
+| Run | USDG needed | USDG held | ETH spent on swaps | Gas (deploy, swaps, open) |
+| :--- | ---: | ---: | ---: | ---: |
+| SGOV | 0.92 (0.55 + 0.37 for the stock) | 1.07 | 0 | about 0.00006 ETH |
+| SLV | 0.87 (0.55 + 0.31 for the stock) | about 0.20 | about 0.00029 (0.67 USDG) | about 0.00006 ETH |
+
+Total about 0.00041 ETH, leaving about 0.0001 ETH. A doubled gas price still leaves about 0.00004 ETH. SPY and QQQ cost about $1 of stock each (about 0.0004 ETH), so each one spends nearly the whole balance; add them only after the wallet is funded. Abort at the `ADD` prompt if a rehearsal quote leaves less than 0.0001 ETH (keep that for emergency pauses, about 0.000002 ETH each).
+
+```bash
+bash scripts/add-rh-mainnet-market.sh SGOV   # then SLV; each run prints a rehearsal and asks you to type ADD <SYMBOL>
+```
+
+Lower `WATCH_MIN_OWNER_ETH` for the `nash-watch` service (for example 0.0001) after this, or the watcher alerts on the low balance.
+
+After each market is open: `bash scripts/ops/enable-mainnet-web.sh on`, add the four ETF entries to `PYTH_FEEDS_JSON` in the Vercel mainnet project (see `apps/web/.env.mainnet.example`; optional, the web validates without them), then promote `main` to `mainnet`. ETF catalog rows are `mainnetOnly`: the testnet scope ignores them until official testnet ETF tokens exist.
+
 ### Phase 7: Monitoring
 
 **Watcher and liquidator (no database, no AutoProtect).** `node scripts/mainnet-watch.mjs` follows the eight pairs' events to learn every borrower, then re-reads each borrower's health from the chain every 30 seconds. It alerts on an unreadable oracle price, a project wallet under `WATCH_MIN_OWNER_ETH`, a borrower under health 1.2 and a liquidatable borrower (stdout, plus `WATCH_WEBHOOK_URL` if set). `--once` runs a single pass and exits 1 while an alert is active. Install it as a service with `bash scripts/ops/install-watch-service.sh`. With `--liquidate` and `LIQUIDATOR_PRIVATE_KEY` it also liquidates, but only from a **separate hot wallet** holding gas ETH and the debt tokens (USDG for long pairs, the stock token for short pairs); it refuses the project owner key. Liquidation pays a 5% bonus in seized collateral. `node scripts/rehearse-liquidation-fork.mjs` proves the whole path on a mainnet fork. The AutoProtect module is deliberately not run: it repays the borrower's debt out of the caller's own funds and swap-based deleveraging is not implemented.

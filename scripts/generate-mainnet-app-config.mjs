@@ -59,7 +59,8 @@ const tokens = { USDG: usdg };
 const pairs = {};
 const rows = [];
 // Only markets present in the deployment record (a market added after launch has no pair or router yet).
-for (const m of config.markets.filter((x) => record.markets?.[x.symbol])) {
+// A market with webEnabled false stays off the website until it is opened on chain (remove the flag then).
+for (const m of config.markets.filter((x) => record.markets?.[x.symbol] && x.webEnabled !== false)) {
   const s = m.symbol.toLowerCase();
   const token = v.getAddress(m.token);
   tokens[m.symbol] = token;
