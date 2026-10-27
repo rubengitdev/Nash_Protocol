@@ -5,3 +5,6 @@ export type SupportedChainId =
     (typeof NETWORK_CHAIN_IDS)[keyof typeof NETWORK_CHAIN_IDS];
 export const isSupportedChainId = (id: number): id is SupportedChainId =>
     Object.values(NETWORK_CHAIN_IDS).includes(id as SupportedChainId);
+
+// The NASH token lives on mainnet, so its explorer link points there whichever deployment shows the address.
+export const TOKEN_EXPLORER_URL = "https://robinhoodchain.blockscout.com";
