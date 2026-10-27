@@ -3658,11 +3658,19 @@ button:hover .arrow-chip {
 .site-ca {
   margin-left: 4px;
 }
-.net-badge {
+.net-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--go);
+}
+.net-switch-option[data-network="testnet"] .net-badge-dot {
+  background: var(--warn);
+}
+/* Mainnet / Testnet switch: the active side is filled, the other side links to its deployment. */
+.net-switch {
   display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 11px;
+  align-items: stretch;
   border: 1px solid var(--line-strong);
   border-radius: 2px;
   font-family: var(--display);
@@ -3671,17 +3679,30 @@ button:hover .arrow-chip {
   line-height: 1;
   letter-spacing: 0.02em;
   white-space: nowrap;
+}
+.net-switch-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 11px;
+  color: var(--muted);
+  text-decoration: none;
+}
+.net-switch-option + .net-switch-option {
+  border-left: 1px solid var(--line-strong);
+}
+.net-switch-option[data-active="true"] {
   color: var(--text);
+  background: var(--panel-subtle, color-mix(in srgb, var(--text) 8%, transparent));
   cursor: default;
 }
-.net-badge-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--go);
+a.net-switch-option:hover {
+  color: var(--text);
 }
-.net-badge[data-network="testnet"] .net-badge-dot {
-  background: var(--warn);
+/* The mobile menu styles every link as a full-width row; the switch keeps its own padding. */
+.mobile-nav .net-switch-option {
+  padding: 7px 11px;
+  border-bottom: 0;
 }
 .ca-chip {
   display: inline-flex;
