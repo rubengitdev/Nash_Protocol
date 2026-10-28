@@ -49,7 +49,11 @@
     "long-qqq": "0x88BCef494dDc39eE0592B230558b18dC177Ef734",
     "short-qqq": "0x8E9F9453DC39BA3A85e66010ed62D63b66974C93",
     "pool-qqq": "0xc19D906522030866B3D090F4bf3F762286bb579f",
-    "margin-qqq": "0xEdCF5F9DefeD78D57641Da03246E8Db18D8Fb608"
+    "margin-qqq": "0xEdCF5F9DefeD78D57641Da03246E8Db18D8Fb608",
+    "long-baba": "0x59E05812Ab309998819d19BA3B98d18c7406443D",
+    "short-baba": "0x6650515dDe589776becfAE60F61C5D0834F176B1",
+    "pool-baba": "0x5CBa730A48eAfd06DDA8070BaD32955aA08dB2B3",
+    "margin-baba": "0xa3b9aaE51e1A7244C2197e1C15680d72Df6c17e1"
   },
   "markets": {
     "TSLA": {
@@ -100,6 +104,13 @@
       "longMarketId": "0x0048288b5ccab8e0fbde9dedbdad207992d93ea1d1bb796ddcf3f39d8d57d5f8",
       "shortMarketId": "0x8abc66e1499c08a5ed7c9c6e2dcea5f23eb9ca28d2a50261daf891d60428207a",
       "status": "PAUSED"
+    },
+    "BABA": {
+      "token": "0xad25Ac6C84D497db898fa1E8387bf6Af3532a1c4",
+      "feed": "0x62Cc8F9b5f56a33c9C8A60c8B92779f523c4E984",
+      "longMarketId": "0x2c93213c14e83af409ae6fee8531517b196e10aacb16ec8bd99a5e0512e86c07",
+      "shortMarketId": "0x05767ca5bef9b3dd872eee4f3dc5f914cf771167d803688d0be3ce92ad7db620",
+      "status": "PAUSED"
     }
   },
   "usdg": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
@@ -111,7 +122,8 @@
     "AMD": "547670000000000000000",
     "SGOV": "101398428380000000000",
     "SLV": "47855950000000000000",
-    "QQQ": "713259495960000000000"
+    "QQQ": "713259495960000000000",
+    "BABA": "101289999990000000000"
   },
   "transactions": {
     "deploy-impl-NashMarketRegistry": "0x2c3453d8d9a521861c821fe96f232e22e79f100202d132c8c4f1552e34649dca",
@@ -186,7 +198,16 @@
     "deploy-short-qqq": "0x51f74f1e18c77a2d0fb7f8bb022d42b72fb2af16ebc9d75f9a1df7acfa4f449b",
     "register-short-qqq": "0xb117839b9795cd990dafe5b2b090eb909b9fbfad7496e9c354a752ee731f81ad",
     "pause-short-qqq": "0xec5aae7cf6da2b98c58d9bb6df6fa0fe8b31377d532887beeb05e10ae8644673",
-    "deploy-margin-qqq": "0xef62b0bd257cdd3a3929c5b8e55311108d33adf0645315458ba996d6ab31a200"
+    "deploy-margin-qqq": "0xef62b0bd257cdd3a3929c5b8e55311108d33adf0645315458ba996d6ab31a200",
+    "add-feed-baba": "0x37c7ae336e54bb39e75dc85908401a03c5dbb5ae8b5804ca3085a3283a9fc391",
+    "create-pool-baba": "0x8f49ea53279aa26b14bfd71c54014d00eb86d15d7738cc40d93e0d3d859a061b",
+    "deploy-long-baba": "0xce6142534fe67dfa02450012570e9c4be7a94e77257ecb41b3c80d474b241d2c",
+    "register-long-baba": "0xd8b04bff8919b70b45eb49117c9c8d99007c2e853eb4abed83ac6ba0b360de0e",
+    "pause-long-baba": "0x196bb3eb91a5e50508a479d776a6206001b274efb3ac5ed734ccc7799251641a",
+    "deploy-short-baba": "0x4529ec583198644d3e46d645e9b41c9642d511e2b3cf481386fa30c6a64274f9",
+    "register-short-baba": "0xe00c2f976df7e8f73da962e8fd9e9e1a83bda5eb545438a343dd9d794fec9559",
+    "pause-short-baba": "0xdce18b7a9b8215fa42e745971a695e7590bafc1ee5628c33d7be61195fe472f7",
+    "deploy-margin-baba": "0xc373faae55466385ae20674176f0eb883da11cfb659284932ffed86c6e222b8a"
   },
   "spentEth": "0.000491698025252",
   "retired": {

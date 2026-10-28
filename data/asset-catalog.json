@@ -78,5 +78,15 @@
     "featured": false,
     "category": "ETFs",
     "mainnetOnly": true
+  },
+  {
+    "ticker": "BABA",
+    "name": "Alibaba Group",
+    "image": "/assets/baba.svg",
+    "className": "baba",
+    "indexStr": "10 / 10",
+    "featured": false,
+    "category": "China",
+    "mainnetOnly": true
   }
 ]

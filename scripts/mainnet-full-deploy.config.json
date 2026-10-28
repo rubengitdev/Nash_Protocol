@@ -262,6 +262,34 @@
         "supplyCapRaw": "5000000",
         "borrowCapRaw": "1000000000000000"
       }
+    },
+    {
+      "symbol": "BABA",
+      "token": "0xad25Ac6C84D497db898fa1E8387bf6Af3532a1c4",
+      "decimals": 18,
+      "feed": "0x62Cc8F9b5f56a33c9C8A60c8B92779f523c4E984",
+      "feedDescription": "Robinhood BABA / USD",
+      "maxAge": 93600,
+      "minPrice18": "25000000000000000000",
+      "maxPrice18": "500000000000000000000",
+      "addedAfterLaunch": true,
+      "category": "China",
+      "long": {
+        "slug": "nash-baba-usdg-mainnet",
+        "maxLtvBps": 5000,
+        "liquidationLtvBps": 6500,
+        "maxLeverageBps": 15000,
+        "supplyCapRaw": "10000000000000000",
+        "borrowCapRaw": "250000"
+      },
+      "short": {
+        "slug": "nash-baba-usdg-short-mainnet",
+        "maxLtvBps": 4000,
+        "liquidationLtvBps": 6000,
+        "maxLeverageBps": 12500,
+        "supplyCapRaw": "5000000",
+        "borrowCapRaw": "1000000000000000"
+      }
     }
   ]
 }

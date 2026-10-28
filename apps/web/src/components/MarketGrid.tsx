@@ -100,9 +100,9 @@ export function MarketGrid({ markets }: MarketGridProps) {
             </div>
             <h3>Tokenized Chinese Equities</h3>
             <p className="app-note">
-              Discover tokenized exposure to leading Chinese companies through
-              verified US-listed ADRs on Robinhood Chain, featuring isolated
-              USDG credit and spot-backed leverage.
+              Tokenized exposure to Chinese companies through US-listed ADRs on
+              Robinhood Chain, with isolated USDG lending and long and short
+              margin.
             </p>
             <Link className="app-button" href="/markets/china">
               Explore China markets ↗

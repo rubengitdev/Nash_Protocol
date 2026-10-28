@@ -1,5 +1,8 @@
-import { env } from "../env.mjs";
+import { marketDeployments } from "./market-deployments";
 
-// The Chinese Equities area is a simulation: static catalog data and a mock wallet-signature flow with no contracts
-// behind it. It stays hidden on mainnet until real Chinese-equity markets are deployed.
-export const CHINA_VISIBLE = env.NETWORK_MODE !== "MAINNET";
+// China Equities is the set of deployed markets whose ticker is in the China group of the asset catalog
+// (data/asset-catalog.json). The page stays hidden on a network until one of them is deployed and enabled.
+import catalog from "../../../../data/asset-catalog.json";
+
+export const CHINA_TICKERS: string[] = catalog.filter((a) => (a as { category?: string }).category === "China").map((a) => a.ticker);
+export const CHINA_VISIBLE = marketDeployments.some((x) => x.enabled && CHINA_TICKERS.includes(x.symbol));

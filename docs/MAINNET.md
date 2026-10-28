@@ -113,6 +113,19 @@ Lower `WATCH_MIN_OWNER_ETH` for the `nash-watch` service (for example 0.0001) af
 
 After each market is open: `bash scripts/ops/enable-mainnet-web.sh on`, add the four ETF entries to `PYTH_FEEDS_JSON` in the Vercel mainnet project (see `apps/web/.env.mainnet.example`; optional, the web validates without them), then promote `main` to `mainnet`. ETF catalog rows are `mainnetOnly`: the testnet scope ignores them until official testnet ETF tokens exist.
 
+### Adding the China market (BABA)
+
+BABA (Alibaba ADS, Robinhood token `0xad25…a1c4`, Chainlink feed `0x62Cc…E984`) is in `scripts/mainnet-full-deploy.config.json` with `category: "China"` and in the catalog as `mainnetOnly`. It is the only Chinese equity that can be listed today: FUTU has a Robinhood token but no onchain price feed, and Robinhood publishes no other Chinese ADR tokens (BIDU, JD, PDD and NIO exist only as Ondo products on other chains; TSM, UMC and EWT are Taiwan). The China page and nav entry appear on a network only when a China market is deployed and enabled (`apps/web/src/lib/china-visible.ts`).
+
+Cheapest listing is nano size: about 0.00004 ETH of gas on mainnet (the fork rehearsal over-reports 0.000136 ETH) plus about 0.21 USDG of tokens (0.15 USDG and 0.0006 BABA bought with USDG).
+
+```bash
+MAINNET_ENABLE_SIZE=nano bash scripts/add-rh-mainnet-market.sh BABA
+bash scripts/ops/enable-mainnet-web.sh on   # then add the BABA entry to PYTH_FEEDS_JSON (optional) and promote main
+```
+
+At nano size the pool holds 0.05 USDG and the short side 0.0001 BABA, so keep test orders under about 0.005 USDG of margin.
+
 ### Phase 7: Monitoring
 
 **Watcher and liquidator (no database, no AutoProtect).** `node scripts/mainnet-watch.mjs` follows the eight pairs' events to learn every borrower, then re-reads each borrower's health from the chain every 30 seconds. It alerts on an unreadable oracle price, a project wallet under `WATCH_MIN_OWNER_ETH`, a borrower under health 1.2 and a liquidatable borrower (stdout, plus `WATCH_WEBHOOK_URL` if set). `--once` runs a single pass and exits 1 while an alert is active. Install it as a service with `bash scripts/ops/install-watch-service.sh`. With `--liquidate` and `LIQUIDATOR_PRIVATE_KEY` it also liquidates, but only from a **separate hot wallet** holding gas ETH and the debt tokens (USDG for long pairs, the stock token for short pairs); it refuses the project owner key. Liquidation pays a 5% bonus in seized collateral. `node scripts/rehearse-liquidation-fork.mjs` proves the whole path on a mainnet fork. The AutoProtect module is deliberately not run: it repays the borrower's debt out of the caller's own funds and swap-based deleveraging is not implemented.

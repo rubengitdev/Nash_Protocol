@@ -49,7 +49,7 @@ const ALL_FEATURES: Feature[] = [
     title: 'China Equities',
     shape: 'pagoda',
     href: '/markets/china',
-    body: 'Verified tokenized Chinese company exposure through US-listed ADRs on Robinhood Chain: isolated USDG credit, spot swaps and spot-backed leverage.',
+    body: 'Tokenized exposure to Chinese companies through US-listed ADRs on Robinhood Chain: isolated USDG lending and long and short margin.',
   },
   {
     id: 'pons',

@@ -1,9 +1,9 @@
 const { z } = require('zod');
 const catalog = require('../../../data/asset-catalog.json');
 const symbols = catalog.map((asset) => asset.ticker);
-const etfSymbols = new Set(
+const optionalFeedSymbols = new Set(
     catalog
-        .filter((asset) => asset.category === 'ETFs')
+        .filter((asset) => asset.category === 'ETFs' || asset.category === 'China')
         .map((asset) => asset.ticker),
 );
 const feed = (symbol) =>
@@ -18,8 +18,8 @@ const feeds = z
         Object.fromEntries(
             symbols.map((symbol) => [
                 symbol,
-                // ETF feeds are optional so an environment written before an ETF listing keeps validating.
-                etfSymbols.has(symbol) ? feed(symbol).optional() : feed(symbol),
+                // ETF and China feeds are optional so an environment written before their listing keeps validating.
+                optionalFeedSymbols.has(symbol) ? feed(symbol).optional() : feed(symbol),
             ]),
         ),
     )

@@ -5,13 +5,15 @@ import { AppPage } from "../../components/AppPage";
 import { assetCatalog, marketPath } from "../../lib/asset-catalog";
 import { marketDeployments } from "../../lib/market-deployments";
 import { PONS_VISIBLE } from "../../lib/pons-visible";
-import { CHINA_VISIBLE } from "../../lib/china-visible";
+import { CHINA_TICKERS, CHINA_VISIBLE } from "../../lib/china-visible";
 
-// ETFs in the catalog; every other ticker is a US stock.
+// ETFs and China ADRs in the catalog; every other ticker is a US stock.
 const ETF_TICKERS = new Set(["SPY", "QQQ", "SGOV", "SLV"]);
+const CHINA_SET = new Set(CHINA_TICKERS);
 const CATALOG_GROUPS = [
-  { id: "us", title: "US stocks", assets: assetCatalog.filter((a) => !ETF_TICKERS.has(a.ticker)) },
+  { id: "us", title: "US stocks", assets: assetCatalog.filter((a) => !ETF_TICKERS.has(a.ticker) && !CHINA_SET.has(a.ticker)) },
   { id: "etf", title: "ETFs", assets: assetCatalog.filter((a) => ETF_TICKERS.has(a.ticker)) },
+  { id: "china", title: "China equities", assets: assetCatalog.filter((a) => CHINA_SET.has(a.ticker)) },
 ].filter((g) => g.assets.length > 0);
 
 export default function MarketsPage() {
@@ -102,7 +104,7 @@ export default function MarketsPage() {
           </div>
           <h2>Tokenized Chinese Equities</h2>
           <p className="app-note">
-            Discover tokenized exposure to leading Chinese companies through verified US-listed ADRs on Robinhood Chain, featuring isolated USDG credit and spot-backed leverage.
+            Tokenized exposure to Chinese companies through US-listed ADRs on Robinhood Chain, with isolated USDG lending and long and short margin.
           </p>
           <Link className="app-button" href="/markets/china">
             Explore China Markets ↗

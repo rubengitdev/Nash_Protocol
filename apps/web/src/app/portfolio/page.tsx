@@ -15,13 +15,6 @@ import {
 import { readMarginSnapshot } from "../../lib/margin-client";
 import { snapshotClient } from "../../lib/snapshot-client";
 import { env } from "../../env.mjs";
-import {
-  loadStoredChinesePositions,
-  saveStoredChinesePositions,
-  type ChineseEquityPosition,
-} from "../../lib/chinese-equities-client";
-import { ChinaPositionsTable } from "../../components/china/ChinaPositionsTable";
-import { CHINA_VISIBLE } from "../../lib/china-visible";
 const usd = (value: bigint | null) =>
   value === null ? <EmptyPriceValue /> : `$${formatUnits(value, 18)}`;
 function MarketPositions({ market }: { market: MarketDeployment }) {
@@ -156,57 +149,15 @@ function MarketPositions({ market }: { market: MarketDeployment }) {
 export default function PortfolioPage() {
   const { address, chainId } = useAccount();
   const [selected, setSelected] = useState(marketDeployments[0]?.symbol ?? "");
-  const [chinaPositions, setChinaPositions] = useState<ChineseEquityPosition[]>(() => {
-    return CHINA_VISIBLE ? loadStoredChinesePositions() : [];
-  });
-
-  const handleChinaPositionClosed = (posId: string) => {
-    setChinaPositions((prev) => {
-      const next = prev.filter((p) => p.id !== posId);
-      saveStoredChinesePositions(next);
-      return next;
-    });
-  };
-
-  const handleChinaPositionUpdated = (updatedPos: ChineseEquityPosition) => {
-    setChinaPositions((prev) => {
-      const next = prev.map((p) => (p.id === updatedPos.id ? updatedPos : p));
-      saveStoredChinesePositions(next);
-      return next;
-    });
-  };
-
   return (
     <AppPage
       banner="ring"
       eyebrow="Your portfolio"
       title="Your positions, together."
-      description={
-        CHINA_VISIBLE
-          ? "Review collateral, debt and equity across your configured markets and tokenized Chinese equities."
-          : "Review collateral, debt and equity across your configured markets."
-      }
+      description="Review collateral, debt and equity across your configured markets."
     >
-      {CHINA_VISIBLE && (
-        <>
-          {/* SECTION 01: TOKENIZED CHINESE EQUITIES (ISOLATED MARGIN) */}
-          <div className="app-section-label">
-            <span>01 / Tokenized Chinese Equities (Isolated Margin)</span>
-          </div>
-
-          <section className="mb-10">
-            <ChinaPositionsTable
-              positions={chinaPositions}
-              onPositionClosed={handleChinaPositionClosed}
-              onPositionUpdated={handleChinaPositionUpdated}
-            />
-          </section>
-        </>
-      )}
-
-      {/* SECTION 02: CONFIGURED MARKETS (ON-CHAIN) */}
       <div className="app-section-label">
-        <span>{CHINA_VISIBLE ? "02" : "01"} / US Equities &amp; Configured Markets</span>
+        <span>01 / Configured markets</span>
       </div>
 
       {!address ? (

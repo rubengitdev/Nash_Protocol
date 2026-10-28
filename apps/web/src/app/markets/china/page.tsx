@@ -1,158 +1,108 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
 import { AppPage } from "../../../components/AppPage";
-import { ChinaMarketTable } from "../../../components/china/ChinaMarketTable";
+import { AssetLogo } from "../../../components/AssetLogo";
+import { CHINA_TICKERS } from "../../../lib/china-visible";
+import { getChineseAssetBySymbol, chineseEquitiesCatalog } from "../../../lib/chinese-equities-client";
+import { explorerAddressUrl } from "../../../lib/contract-directory";
+import { marketDeployments } from "../../../lib/market-deployments";
+import { marketPath, tradePath } from "../../../lib/asset-catalog";
+
+const live = marketDeployments.filter((x) => x.enabled && CHINA_TICKERS.includes(x.symbol));
+// Tokens on Robinhood Chain that have no Nash market yet because they lack an onchain price feed.
+const waiting = chineseEquitiesCatalog.filter(
+  (a) => a.tokenAddress && a.targetChainId === 4663 && !marketDeployments.some((x) => x.symbol === a.ticker),
+);
 
 export default function ChinaMarketsPage() {
   return (
     <AppPage
       banner="pagoda"
       back
-      eyebrow="Chinese Equities · Robinhood Chain"
-      title="Tokenized Chinese Equities"
-      description="Access verified tokenized Chinese company exposure through US-listed ADRs on Robinhood Chain, featuring isolated USDG credit, spot swaps, and spot-backed leverage."
+      eyebrow="China Equities · Robinhood Chain"
+      title="Chinese equities, onchain."
+      description="Tokenized exposure to Chinese companies through US-listed ADRs on Robinhood Chain, with isolated USDG lending and long and short margin."
     >
-      {/* SECTION: PROTOCOL STATS BAR */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-3 bg-raised border border-line p-4 rounded-sm mb-8 font-sans lg:whitespace-nowrap">
-        <div className="border-r border-line-soft pr-3 last:border-0 lg:whitespace-nowrap">
-          <span className="text-[11px] text-muted uppercase tracking-wider font-display block lg:whitespace-nowrap">
-            Total Equity Collateral
-          </span>
-          <span className="text-lg md:text-xl font-bold font-mono text-fg block mt-1 lg:whitespace-nowrap">
-            $8,750
-          </span>
-          <span className="text-[10px] text-fg-2 font-mono mt-0.5 block lg:whitespace-nowrap">
-            Across 20 Active Retail Wallets
-          </span>
-        </div>
-
-        <div className="border-r border-line-soft pr-3 last:border-0 pl-0 md:pl-2 lg:whitespace-nowrap">
-          <span className="text-[11px] text-muted uppercase tracking-wider font-display block lg:whitespace-nowrap">
-            24h Tokenized Volume
-          </span>
-          <span className="text-lg md:text-xl font-bold font-mono text-fg block mt-1 lg:whitespace-nowrap">
-            $2,340
-          </span>
-          <span className="text-[10px] text-muted font-mono mt-0.5 block lg:whitespace-nowrap">
-            AMM &amp; RFQ Retail Flow
-          </span>
-        </div>
-
-        <div className="border-r border-line-soft pr-3 last:border-0 mt-3 md:mt-0 lg:whitespace-nowrap">
-          <span className="text-[11px] text-muted uppercase tracking-wider font-display block lg:whitespace-nowrap">
-            Available USDG Liquidity
-          </span>
-          <span className="text-lg md:text-xl font-bold font-mono text-fg-2 block mt-1 lg:whitespace-nowrap">
-            $16,200
-          </span>
-          <span className="text-[10px] text-muted font-mono mt-0.5 block lg:whitespace-nowrap">
-            18.6% Pool Utilization
-          </span>
-        </div>
-
-        <div className="pl-0 md:pl-2 mt-3 md:mt-0 lg:whitespace-nowrap">
-          <span className="text-[11px] text-muted uppercase tracking-wider font-display block lg:whitespace-nowrap">
-            Market Session
-          </span>
-          <div className="flex items-center gap-1.5 mt-1 lg:whitespace-nowrap">
-            <span className="w-2 h-2 rounded-full bg-go animate-pulse shrink-0" />
-            <span className="text-sm font-bold font-display text-fg lg:whitespace-nowrap">
-              US Regular Hours
-            </span>
-          </div>
-          <span className="text-[10px] text-muted block mt-0.5 font-mono lg:whitespace-nowrap">
-            Closes in 3h 48m · 09:30-16:00 ET
-          </span>
-        </div>
-      </section>
-
-      {/* SECTION 01: ASSET DIRECTORY TABLE */}
       <div className="app-section-label">
-        <span>01 / Asset directory &amp; verification matrix</span>
+        <span>01 / Live markets</span>
+        <span>{live.length} open</span>
       </div>
-
-      <section className="mb-10">
-        <ChinaMarketTable />
-      </section>
-
-      {/* SECTION 02: ARCHITECTURE & REGULATORY BOUNDARIES */}
-      <div className="app-section-label">
-        <span>02 / Product boundaries &amp; investor disclosures</span>
+      <div className="asset-directory">
+        {live.map((market) => {
+          const asset = getChineseAssetBySymbol(market.symbol);
+          return (
+            <section className="app-panel market-overview" key={market.symbol}>
+              <div className="market-identity">
+                <AssetLogo symbol={market.symbol} size="lg" />
+                <div>
+                  <h2>{market.symbol} / USDG</h2>
+                  <span>{asset?.company ?? market.symbol}</span>
+                </div>
+                <span className="app-badge">Live</span>
+              </div>
+              {asset && (
+                <dl className="market-metrics">
+                  {[
+                    ["Instrument", asset.instrumentType],
+                    ["Listing", `${asset.underlyingExchange} · ${asset.underlyingCurrency}`],
+                    ["ISIN", asset.isin],
+                    ["Token issuer", asset.tokenIssuer ?? "Unavailable"],
+                  ].map(([label, value]) => (
+                    <div key={label}>
+                      <dt>{label}</dt>
+                      <dd style={{ fontSize: 18 }}>{value}</dd>
+                    </div>
+                  ))}
+                  {asset.tokenAddress && (
+                    <div>
+                      <dt>Token</dt>
+                      <dd style={{ fontSize: 18 }}>
+                        <a className="text-action" href={explorerAddressUrl(asset.tokenAddress)} target="_blank" rel="noreferrer">
+                          {asset.tokenAddress.slice(0, 6)}…{asset.tokenAddress.slice(-4)} ↗
+                        </a>
+                      </dd>
+                    </div>
+                  )}
+                </dl>
+              )}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center", marginTop: 16 }}>
+                <Link className="app-button" href={tradePath(market.symbol)}>
+                  Trade {market.symbol} ↗
+                </Link>
+                <Link className="app-button secondary" href={`/lending?asset=${market.symbol}`}>
+                  Lend and borrow ↗
+                </Link>
+                <Link className="text-action" href={marketPath(market.symbol)}>
+                  Market details ↗
+                </Link>
+              </div>
+            </section>
+          );
+        })}
       </div>
-
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="app-panel border border-line bg-raised p-5 rounded-sm">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-fg-2 font-display font-bold text-sm">
-              01
-            </span>
-            <h3 className="text-sm font-bold font-display text-fg">
-              Exact Tokenholder Entitlement
-            </h3>
+      {waiting.length > 0 && (
+        <>
+          <div className="app-section-label">
+            <span>02 / Next</span>
           </div>
-          <p className="text-xs text-muted leading-relaxed">
-            Robinhood Stock Tokens are issued by Robinhood Assets (Jersey) Limited as
-            contractual security-linked debt securities tracking economic total return.
-            Holding a token does not convey direct equity ownership, shareholder voting
-            rights, or legal claims on mainland operating subsidiaries.
+          <p className="app-note">
+            These tokens already exist on Robinhood Chain. A market opens as soon as a price feed is published onchain.
           </p>
-        </div>
-
-        <div className="app-panel border border-line bg-raised p-5 rounded-sm">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-fg-2 font-display font-bold text-sm">
-              02
-            </span>
-            <h3 className="text-sm font-bold font-display text-fg">
-              Isolated Credit &amp; Debt Boundary
-            </h3>
+          <div className="asset-directory">
+            {waiting.map((asset) => (
+              <div className="directory-card" key={asset.ticker}>
+                <AssetLogo symbol={asset.ticker} />
+                <div>
+                  <strong>{asset.ticker}</strong>
+                  <span>{asset.name}</span>
+                  <small className="directory-readiness">Token live · price feed pending</small>
+                </div>
+              </div>
+            ))}
           </div>
-          <p className="text-xs text-muted leading-relaxed">
-            Each Chinese equity market operates under an isolated risk and liquidity pool.
-            Collateral deposits in BABA, BIDU, or NIO back isolated debt in USDG; losses
-            or liquidations within Chinese equities do not cross-subsidize or impair
-            US Equities or Pons module vaults.
-          </p>
-        </div>
-
-        <div className="app-panel border border-line bg-raised p-5 rounded-sm">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-fg-2 font-display font-bold text-sm">
-              03
-            </span>
-            <h3 className="text-sm font-bold font-display text-fg">
-              Corporate Action &amp; Pricing Multiplier
-            </h3>
-          </div>
-          <p className="text-xs text-muted leading-relaxed">
-            Chainlink Tokenized Equity feeds normalize cash dividends and stock splits
-            via on-chain multipliers. Raw token units remain immutable in custody, while
-            valuations round down for collateral credit and round up for debt obligations
-            to protect protocol solvency.
-          </p>
-        </div>
-
-        <div className="app-panel border border-line bg-raised p-5 rounded-sm">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-fg-2 font-display font-bold text-sm">
-              04
-            </span>
-            <h3 className="text-sm font-bold font-display text-fg">
-              Short Selling Status: Disabled
-            </h3>
-          </div>
-          <p className="text-xs text-muted leading-relaxed">
-            Short positions remain strictly disabled under reason code{" "}
-            <code className="bg-panel-subtle text-fg-2 px-1 py-0.5 rounded text-[11px] font-mono">
-              SHORT_INVENTORY_UNAVAILABLE
-            </code>
-            . True spot shorting requires separate verified stock borrow inventory and
-            transfer approval on Robinhood Chain before activation.
-          </p>
-        </div>
-      </section>
+        </>
+      )}
     </AppPage>
   );
 }

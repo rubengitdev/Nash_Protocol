@@ -112,8 +112,8 @@ export default function DocsPage() {
               <>
                 <h3>Chinese equities</h3>
                 <p>
-                  Access verified tokenized Chinese company exposure through US-listed ADRs on Robinhood Chain, featuring
-                  isolated USDG credit, spot swaps, and spot-backed leverage. See{" "}
+                  Tokenized exposure to Chinese companies through US-listed ADRs on Robinhood Chain, with isolated USDG
+                  lending and long and short margin. See{" "}
                   <Link href="/markets/china">Chinese equities</Link>.
                 </p>
               </>
